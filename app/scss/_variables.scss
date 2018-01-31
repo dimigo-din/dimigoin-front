@@ -1,0 +1,27 @@
+/* Colors */
+$black-80: rgba(21, 19, 19, 0.8);
+$black-50: rgba(21, 19, 19, 0.5);
+$black-10: rgba(21, 19, 19, 0.1);
+$black-10-invert: $black-80;
+
+$red: #e83c3d;
+$red-dark: #ad3030;
+$red-invert: #fff;
+
+$black: #151313;
+$black-invert: #fff;
+
+$pink: #ff8081;
+$pink-invert: $black;
+
+$orange: #f5693d;
+$orange-invert: #000;
+
+$turquoise: #00b4a1;
+$turquoise-invert: #fff;
+
+$bg: #f7f7f7;
+
+/* Utilities.. */
+$title: $black;
+$subtitle: $black-80;

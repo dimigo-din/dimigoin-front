@@ -1,0 +1,45 @@
+@import '../_mixins.scss';
+
+.text--s {
+    font-size: 12px;
+}
+
+.text--r {
+    font-size: 16px;
+}
+
+.text--m {
+    font-size: 18px;
+}
+
+.text--l {
+    font-size: 24px;
+}
+
+.text--xl {
+    font-size: 36px;
+}
+
+.text--2xl {
+    font-size: 48px;
+}
+
+.text--3xl {
+    font-size: 64px;
+}
+
+.font--light {
+    font-weight: 300;
+}
+
+.font--regular {
+    font-weight: 400;
+}
+
+.font--bold {
+    font-weight: 700;
+}
+
+.font--extra-bold {
+    font-weight: 800;
+}
