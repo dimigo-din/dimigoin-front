@@ -40,14 +40,6 @@ export default {
     methods: {
         click (e) {
             this.$emit('click', e)
-        },
-
-        addRipple () {
-
-        },
-
-        cleanRipple () {
-
         }
     }
 }
@@ -55,8 +47,9 @@ export default {
 
 <template>
     <a :class="computedClass"
-        @click="click"
         :href="href"
+        v-ripple="'rgba(255, 255, 255, .2)'"
+        @click="click"
     >
         <dimi-loader
             v-if="loading"
@@ -65,10 +58,6 @@ export default {
             @mouseup="debounce(cleanRipple, 2000)"
         ></dimi-loader>
         <slot v-else></slot>
-        <div
-            v-if="ripple"
-            class="c-btn__ripple"
-        ></div>
     </a>
 </template>
 
@@ -96,29 +85,6 @@ export default {
 
 .c-btn--cursor-disable {
     cursor: default;
-}
-
-.c-btn__ripple {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    & span {
-        transform: scale(0);
-        border-radius: 100%;
-        position: absolute;
-        opacity: 0.75;
-        background-color: #fff;
-        animation: ripple 1000ms;
-    }
-}
-
-@keyframes ripple {
- to {
-   opacity  : 0;
-   transform: scale(2);
- }
 }
 
 </style>

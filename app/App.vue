@@ -1,7 +1,6 @@
 <template>
     <div>
         <dimi-button
-
         >안녕하세요</dimi-button>
     </div>
 </template>
