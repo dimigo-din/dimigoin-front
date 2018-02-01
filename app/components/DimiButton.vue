@@ -54,8 +54,6 @@ export default {
         <dimi-loader
             v-if="loading"
             :color="this.computedColor"
-            @mousedown="addRipple"
-            @mouseup="debounce(cleanRipple, 2000)"
         ></dimi-loader>
         <slot v-else></slot>
     </a>
