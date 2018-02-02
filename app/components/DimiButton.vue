@@ -9,8 +9,11 @@ import DimiLoader from './DimiLoader.vue'
 
 export default {
     name: 'DimiButton',
+
     mixins: [PositionableFactory(['left', 'right']), Colorable, Hoverable],
+
     components: { DimiLoader },
+
     props: {
         loading: Boolean,
         href: String,
@@ -18,10 +21,12 @@ export default {
         large: Boolean,
         ripple: Boolean
     },
+
     data: () => ({
         defaultColor: 'red',
         defaultHoverColor: 'red-dark'
     }),
+
     computed: {
             computedClass () {
                 const classes = {
@@ -37,6 +42,7 @@ export default {
                 return classes
             }
     },
+
     methods: {
         click (e) {
             this.$emit('click', e)

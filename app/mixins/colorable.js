@@ -13,12 +13,15 @@ export default {
         computedColorClass() {
             return this.color || this.defaultColor
         },
+
         computedTextColorClass() {
             return this.computedColorClass + '--text'
         },
+
         hasColor () {
             return this.computedColorClass
         },
+
         hasTextColor () {
             return this.computedColorClass
         }

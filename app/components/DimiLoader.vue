@@ -1,12 +1,14 @@
 <script>
 export default {
     name: 'DimiLoader',
+
     props: {
         size: {
             type: Number,
             default: 32
         }
     },
+
     computed: {}
 }
 </script>

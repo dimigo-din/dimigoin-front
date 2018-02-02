@@ -1,15 +1,13 @@
 <script>
 export default {
     name: 'DimiCard',
+
     props: {
         color: String
     },
-    computed: {
-        style () {
-            return {
 
-            }
-        }
+    computed: {
+
     }
 }
 </script>
