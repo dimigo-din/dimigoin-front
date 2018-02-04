@@ -1,12 +1,12 @@
-.float-right {
+.h-float-right {
     float: right;
 }
 
-.float-left {
+.h-float-left {
     float: left;
 }
 
-.clearfix {
+.h-clearfix {
     &::after {
         content: "";
         display: table;

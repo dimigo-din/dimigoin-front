@@ -11,10 +11,11 @@ export default {
 
     computed: {
         computedHoverClass () {
-            return 'hover:' + (this.hoverColor || this.defaultHoverColor)
+            return `h-${this.hoverColor || this.defaultHoverColor}--hover`
         },
+
         hasHoverClass () {
-            return this.computedHoverClass
+            return !!(this.hoverColor || this.defaultHoverColor)
         }
     }
 }

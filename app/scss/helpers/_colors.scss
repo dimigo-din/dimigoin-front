@@ -1,61 +1,38 @@
 @import '../_variables.scss';
 
-.black {
+.h-black {
     background-color: $black;
+    &--light {
+        background-color: $gray-dark;
+    }
+    &--lighten {
+        color: $gray;
+    }
+    &--lightest {
+        color: $gray-light;
+    }
 }
 
-.black-text {
-    color: $black-invert;
-}
-
-.black-80 {
-    background-color: $black-80;
-}
-
-.black-50 {
-    background-color: $black-50;
-}
-
-.black-10 {
-    background-color: $black-10;
-}
-
-.black-10--text {
-    color: $black-invert;
-}
-
-.red {
+.h-red {
     background-color: $red;
+    &--dark {
+        background-color: $red-dark;
+        &--hover {
+            &:hover {
+                background-color: $red-dark;
+            }
+        }
+    }
 }
 
-.red--text {
-    color: $red-invert;
-}
-
-.pink {
+.h-pink {
     background-color: $pink;
 }
 
-.pink--text {
-    color: $pink-invert;
-}
-
-.orange {
+.h-orange {
     background-color: $orange;
 }
 
-.orange--text {
-    color: $orange-invert;
-}
-
-.turquoise {
+.h-turquoise {
     background-color: $turquoise;
-}
-
-.turquoise--text {
-    color: $turquoise-invert;
-}
-
-.hover\:red-dark:hover {
-    background-color: $red-dark;
 }

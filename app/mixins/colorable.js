@@ -2,28 +2,30 @@ export default {
     name: 'colorable',
 
     props: {
-        color: String
+        color: String,
+        textColor: String
     },
 
     data: () => ({
-        defaultColor: null
+        defaultColor: null,
+        defaultTextcolor: null
     }),
 
     computed: {
         computedColorClass() {
-            return this.color || this.defaultColor
+            return `h-${this.color || this.defaultColor}`
         },
 
         computedTextColorClass() {
-            return this.computedColorClass + '--text'
+            return `h-text--${this.textColor || this.defaultTextcolor}`
         },
 
         hasColor () {
-            return this.computedColorClass
+            return !!(this.color || this.defaultColor)
         },
 
         hasTextColor () {
-            return this.computedColorClass
+            return !!(this.textColor || this.defaultTextcolor)
         }
     }
 }

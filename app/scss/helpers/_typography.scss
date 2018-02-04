@@ -1,45 +1,72 @@
 @import '../_mixins.scss';
+@import '../_variables.scss';
 
-.text--s {
-    font-size: 12px;
+.h-text {
+    &--s {
+        font-size: 12px;
+    }
+    &--r {
+        font-size: 16px;
+    }
+    &--m {
+        font-size: 18px;
+    }
+    &--l {
+        font-size: 24px;
+    }
+    &--xl {
+        font-size: 36px;
+    }
+    &--2xl {
+        font-size: 48px;
+    }
+    &--3xl {
+        font-size: 64px;
+    }
+
+    &--white {
+        color: $white;
+    }
+    &--black {
+        color: $black;
+    }
+    &--gray {
+        color: $gray;
+        &--dark {
+            color: $gray-dark;
+        }
+        &--light {
+            color: $gray-light
+        }
+    }
+    &--red {
+        color: $red;
+        &--dark {
+            color: $red-dark;
+        }
+    }
+    &--pink {
+        color: $pink;
+    }
+    &--orange {
+        color: $orange;
+    }
+    &--turquoise {
+        color: $turquoise;
+    }
 }
 
-.text--r {
-    font-size: 16px;
-}
-
-.text--m {
-    font-size: 18px;
-}
-
-.text--l {
-    font-size: 24px;
-}
-
-.text--xl {
-    font-size: 36px;
-}
-
-.text--2xl {
-    font-size: 48px;
-}
-
-.text--3xl {
-    font-size: 64px;
-}
-
-.font--light {
-    font-weight: 300;
-}
-
-.font--regular {
-    font-weight: 400;
-}
-
-.font--bold {
-    font-weight: 700;
-}
-
-.font--extra-bold {
-    font-weight: 800;
+.h-font {
+    &--light {
+        font-weight: 300;
+    }
+    &--regular {
+        font-weight: 400;
+    }
+    &--bold {
+        font-weight: 700;
+    }
+    &--extra-bold {
+        font-weight: 800;
+    }
 }
