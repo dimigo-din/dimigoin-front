@@ -17,10 +17,8 @@
     background-color: $red;
     &--dark {
         background-color: $red-dark;
-        &--hover {
-            &:hover {
-                background-color: $red-dark;
-            }
+        &--hover:hover {
+            background-color: $red-dark;
         }
     }
 }
