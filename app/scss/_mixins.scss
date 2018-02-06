@@ -2,3 +2,19 @@
     border: solid 1px rgba(21, 19, 19, 0.05);
     border-radius: 6px;
 }
+
+@mixin font-light {
+    font-weight: 300;
+}
+
+@mixin font-regular {
+    font-weight: 400;
+}
+
+@mixin font-bold {
+    font-weight: 700;
+}
+
+@mixin font-extra-bold {
+    font-weight: 800;
+}

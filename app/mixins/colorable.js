@@ -17,7 +17,7 @@ export default {
         },
 
         computedTextColorClass() {
-            return `h-text--${this.textColor || this.defaultTextcolor}`
+            return `h-text-${this.textColor || this.defaultTextcolor}`
         },
 
         hasColor () {

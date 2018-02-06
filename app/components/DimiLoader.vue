@@ -14,7 +14,7 @@ export default {
 </script>
 
 <template>
-    <div class="c-loader"></div>
+    <div class="c-loader">loading</div>
 </template>
 
 <style lang="scss" scoped>

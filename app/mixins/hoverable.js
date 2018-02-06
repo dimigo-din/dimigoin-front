@@ -11,7 +11,7 @@ export default {
 
     computed: {
         computedHoverClass () {
-            return `h-${this.hoverColor || this.defaultHoverColor}--hover`
+            return `h-${this.hoverColor || this.defaultHoverColor}:hover`
         },
 
         hasHoverClass () {

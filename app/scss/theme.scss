@@ -1,8 +1,8 @@
 @import './reset';
-@import './_variables';
-@import './helpers/_all.scss';
+@import './variables';
+@import './helpers/all';
 
-body {
-    font-family: 'NanumSquareRound', system-ui;
+#app {
     background-color: $bg;
+    font-family: 'NanumSquareRound', system-ui;
 }

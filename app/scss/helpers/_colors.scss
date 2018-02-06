@@ -2,22 +2,22 @@
 
 .h-black {
     background-color: $black;
-    &--light {
+    &-light {
         background-color: $gray-dark;
     }
-    &--lighten {
-        color: $gray;
+    &-lighten {
+        background-color: $gray;
     }
-    &--lightest {
-        color: $gray-light;
+    &-lightest {
+        background-color: $gray-light;
     }
 }
 
 .h-red {
     background-color: $red;
-    &--dark {
+    &-dark {
         background-color: $red-dark;
-        &--hover:hover {
+        &\:hover:hover {
             background-color: $red-dark;
         }
     }

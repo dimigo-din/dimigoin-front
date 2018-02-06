@@ -2,71 +2,71 @@
 @import '../_variables.scss';
 
 .h-text {
-    &--s {
+    &-s {
         font-size: 12px;
     }
-    &--r {
+    &-r {
         font-size: 16px;
     }
-    &--m {
+    &-m {
         font-size: 18px;
     }
-    &--l {
+    &-l {
         font-size: 24px;
     }
-    &--xl {
+    &-xl {
         font-size: 36px;
     }
-    &--2xl {
+    &-2xl {
         font-size: 48px;
     }
-    &--3xl {
+    &-3xl {
         font-size: 64px;
     }
 
-    &--white {
+    &-white {
         color: $white;
     }
-    &--black {
+    &-black {
         color: $black;
     }
-    &--gray {
+    &-gray {
         color: $gray;
-        &--dark {
+        &-dark {
             color: $gray-dark;
         }
-        &--light {
+        &-light {
             color: $gray-light
         }
     }
-    &--red {
+    &-red {
         color: $red;
-        &--dark {
+        &-dark {
             color: $red-dark;
         }
     }
-    &--pink {
+    &-pink {
         color: $pink;
     }
-    &--orange {
+    &-orange {
         color: $orange;
     }
-    &--turquoise {
+    &-turquoise {
         color: $turquoise;
     }
 }
 
 .h-font {
-    &--light {
-        font-weight: 300;
+    &-light {
+        @include font-light;
     }
-    &--regular {
-        font-weight: 400;
+    &-regular {
+        @include font-regular;
     }
-    &--bold {
-        font-weight: 700;
+    &-bold {
+        @include font-bold;
     }
-    &--extra-bold {
-        font-weight: 800;
+    &-extra-bold {
+        @include font-extra-bold;
     }
 }

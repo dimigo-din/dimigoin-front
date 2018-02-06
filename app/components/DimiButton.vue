@@ -29,21 +29,21 @@ export default {
     data: () => ({
         defaultColor: 'red',
         defaultTextcolor: 'white',
-        defaultHoverColor: 'red--dark'
+        defaultHoverColor: 'red-dark'
     }),
 
     computed: {
             computedClass () {
                 const classes = {
                     'c-btn': true,
-                    'h-font--extra-bold': true,
+                    'h-font-extra-bold': true,
                     [this.computedColorClass]: this.hasColor,
                     [this.computedTextColorClass]: this.hasTextColor,
                     [this.computedHoverClass]: this.hasHoverClass && this.isActive,
                     'h-float-right': this.right,
                     'h-float-left': this.left,
-                    'h-text--s': this.small,
-                    'h-text--l': this.large,
+                    'h-text-s': this.small,
+                    'h-text-l': this.large,
                     'c-btn--text': this.text,
                     'c-btn--cursor-disable': !this.isActive
                 }
@@ -72,7 +72,7 @@ export default {
 
 <template>
     <a
-        v-if="!loading"
+        v-if="!loading && active"
         :class="computedClass"
         :href="href"
         v-ripple="'rgba(255, 255, 255, .2)'"
