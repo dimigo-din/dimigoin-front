@@ -63,26 +63,26 @@ export default {
 .c-meal-item {
     @extend .h-text-gray;
     word-break: keep-all;
-    &:not(:last-child, :first-child) {
+    &:not(:last-child):not(:first-child) {
         margin: 1.5em 0 1.5em 0;
     }
 
     &__title {
-        @extend .h-text-m;
+        @extend .h-text-r;
         @extend .h-font-bold;
         margin-bottom: .5em;
     }
     &__content {
-        @extend .h-font-regular;
-        line-height: normal;
+        @extend .h-text-xs;
+        line-height: 1.6;
     }
 
     &--current {
-        & .c-meal-item__title {
+        .c-meal-item__title {
             @extend .h-text-red;
         }
 
-        & .c-meal-item__content {
+        .c-meal-item__content {
             @extend .h-text-black;
         }
     }
