@@ -1,9 +1,4 @@
 <script>
-
-const breakfast = new Date(new Date().setHours(7, 50, 0))
-const lunch = new Date(new Date().setHours(13, 10, 0))
-const dinner = new Date(new Date().setHours(18, 50, 0))
-
 export default {
   name: 'DimiMealItem',
 

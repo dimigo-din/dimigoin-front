@@ -99,7 +99,7 @@ export default {
   >
     <dimi-loader
       v-if="loading"
-      :color="this.computedTextColorClass"
+      :color="computedTextColorClass"
     />
     <slot v-else/>
   </a>
