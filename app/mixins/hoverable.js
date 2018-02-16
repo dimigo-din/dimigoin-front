@@ -1,21 +1,21 @@
 export default {
-    name: 'hoverable',
+  name: 'hoverable',
 
-    props: {
-        hoverColor: String
+  props: {
+    hoverColor: String
+  },
+
+  data: () => ({
+    defaultHoverColor: null
+  }),
+
+  computed: {
+    computedHoverClass () {
+      return `h-${this.hoverColor || this.defaultHoverColor}:hover`
     },
 
-    data: () => ({
-        defaultHoverColor: null
-    }),
-
-    computed: {
-        computedHoverClass () {
-            return `h-${this.hoverColor || this.defaultHoverColor}:hover`
-        },
-
-        hasHoverClass () {
-            return !!(this.hoverColor || this.defaultHoverColor)
-        }
+    hasHoverClass () {
+      return !!(this.hoverColor || this.defaultHoverColor)
     }
+  }
 }

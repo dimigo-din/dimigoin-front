@@ -5,87 +5,74 @@ const lunch = new Date(new Date().setHours(13, 10, 0))
 const dinner = new Date(new Date().setHours(18, 50, 0))
 
 export default {
-    name: 'DimiMealItem',
+  name: 'DimiMealItem',
 
-    props: {
-        breakfast: Boolean,
-        lunch: Boolean,
-        dinner: Boolean,
-        snack: Boolean
+  props: {
+    meal: {
+      type: String,
+      default: '아침? 점심? 저녁?'
+    },
+    current: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    computedClass () {
+      return {
+        'c-meal-item': true,
+        'c-meal-item--current': this.current
+      }
     },
 
-    computed: {
-        meal () {
-            if (this.breakfast) return ['b', '아침']
-            if (this.lunch) return ['l', '점심']
-            if (this.dinner) return ['d', '저녁']
-            if (this.snack) return ['s', '간식']
-        },
-
-        isCurrent () {
-            const now = new Date()
-
-            return true
-        },
-
-        computedClass () {
-            return {
-                'c-meal-item': true,
-                'c-meal-item--current': this.isCurrent
-            }
-        },
-
-        title () {
-            return this.meal[1]
-        },
-
-        content () {
-            return '고추참치 / 붕어빵 / 호떡 / 이천쌀밥 / 고무고무 / 꼬깔콘 / 도미노피자 1조각 / 프라랑스 야쿠르트 / 도완김'
-        }
+    title () {
+      return this.meal
     }
+  }
 }
 </script>
 
 <template>
-    <div :class="computedClass">
-        <h4 class="c-meal-item__title">
-            {{ meal[1] }}
-        </h4>
-        <div class="c-meal-item__content">
-            {{content}}
-        </div>
+  <div :class="computedClass">
+    <h4 class="c-meal-item__title">
+      {{ title }}
+    </h4>
+    <div class="c-meal-item__content">
+      <slot/>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 @import '../scss/helpers/typography';
 
 .c-meal-item {
-    @extend .h-text-gray;
-    word-break: keep-all;
-    &:not(:last-child):not(:first-child) {
-        margin: 1.5em 0 1.5em 0;
+  @extend .h-text-gray;
+  word-break: keep-all;
+  &:not(:last-child):not(:first-child) {
+    margin: 1.5em 0 1.5em 0;
+  }
+
+  &__title {
+    @extend .h-text-r;
+    @extend .h-font-bold;
+    margin-bottom: .5em;
+  }
+  &__content {
+    @extend .h-text-xs;
+    line-height: 1.6;
+  }
+
+  &--current {
+    .c-meal-item__title {
+      @extend .h-text-red;
     }
 
-    &__title {
-        @extend .h-text-r;
-        @extend .h-font-bold;
-        margin-bottom: .5em;
+    .c-meal-item__content {
+      @extend .h-text-black;
     }
-    &__content {
-        @extend .h-text-xs;
-        line-height: 1.6;
-    }
-
-    &--current {
-        .c-meal-item__title {
-            @extend .h-text-red;
-        }
-
-        .c-meal-item__content {
-            @extend .h-text-black;
-        }
-    }
+  }
 }
 
 </style>

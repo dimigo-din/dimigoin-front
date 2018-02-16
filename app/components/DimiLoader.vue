@@ -1,31 +1,31 @@
 <script>
 export default {
-    name: 'DimiLoader',
+  name: 'DimiLoader',
 
-    props: {
-        size: {
-            type: Number,
-            default: 32
-        }
-    },
+  props: {
+    size: {
+      type: Number,
+      default: 32
+    }
+  },
 
-    computed: {}
+  computed: {}
 }
 </script>
 
 <template>
-    <div class="c-loader">loading</div>
+  <div class="c-loader">loading</div>
 </template>
 
 <style lang="scss" scoped>
 
 @keyframes loading {
-    from {
-        transform: rotate(20deg);
-    }
-    to {
-        transform: rotate(380deg);
-    }
+  from {
+    transform: rotate(20deg);
+  }
+  to {
+    transform: rotate(380deg);
+  }
 }
 
 .c-loader,
