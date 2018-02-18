@@ -93,7 +93,7 @@ export default {
             }
             // Specify parent element due to css priority rules.
             & .c-login__section__content__login-btn {
-                top: 3em;
+                margin-top: 3em;
                 align-self: center;
                 padding: .625em 2.75em;
             }

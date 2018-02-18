@@ -23,7 +23,7 @@ export default {
     },
     href: {
       type: String,
-      default: ''
+      default: undefined
     },
     small: {
       type: Boolean,
@@ -112,6 +112,7 @@ export default {
   padding: 0.8em 2.7em;
   border-radius: 2rem;
   appearance: none;
+  text-decoration: none;
   align-items: center;
   justify-content: center;
   position: relative;
