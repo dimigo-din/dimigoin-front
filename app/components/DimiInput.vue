@@ -5,11 +5,11 @@ export default {
 </script>
 
 <template>
-  <input class="input">
+  <input class="c-input">
 </template>
 
 <style lang="scss" scoped>
-.input {
+.c-input {
   appearance: none;
   border: none;
   height: 3em;
