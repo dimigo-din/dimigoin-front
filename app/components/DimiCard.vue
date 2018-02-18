@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .c-card {
-  positon: relative;
+  position: relative;
   max-width: 100%;
   background-color: #fff;
   @include dimi-border;
