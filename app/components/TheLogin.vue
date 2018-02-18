@@ -45,7 +45,7 @@ export default {
             type="password"
           />
           <dimi-button
-            class="c-login__section__content__login-btn"
+            class="c-login__submit-btn"
             :loading="pending"
             large
             @click="login"
@@ -91,13 +91,13 @@ export default {
             &--mt {
                 margin-top:8em;
             }
-            // Specify parent element due to css priority rules.
-            & .c-login__section__content__login-btn {
-                margin-top: 3em;
-                align-self: center;
-                padding: .625em 2.75em;
-            }
         }
+      // Specify parent element due to css priority rules.
+      & .c-login__submit-btn {
+          margin-top: 3em;
+          align-self: center;
+          padding: .625em 2.75em;
+      }
     }
 }
 </style>
