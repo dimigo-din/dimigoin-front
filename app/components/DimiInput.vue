@@ -10,6 +10,7 @@ export default {
 
 <style lang="scss" scoped>
 .c-input {
+  font-family: 'NanumSquareRound', sans-serif;
   appearance: none;
   border: none;
   height: 3em;

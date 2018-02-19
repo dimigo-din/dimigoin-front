@@ -40,11 +40,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/helpers/typography';
+@import '../scss/helpers/all';
 
 .c-meal-item {
   @extend .h-text-gray;
   word-break: keep-all;
+  min-height: 4.275em;
   &:not(:last-child):not(:first-child) {
     margin: 1.5em 0 1.5em 0;
   }

@@ -10,7 +10,7 @@ export default {
   components: { TheLogin },
   computed: {
     ...mapState({
-      isLoggedIn: state => state.account.isLoggedIn
+      isLoggedIn: state => state.account.auth.isLoggedIn
     })
   }
 }

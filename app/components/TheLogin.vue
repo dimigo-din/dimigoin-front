@@ -8,14 +8,17 @@ import DimiInput from './DimiInput.vue'
 
 export default {
   name: 'TheLogin',
+
   components: { DimiButton, DimiCard, DimiMeal, DimiInput },
+
   computed: {
-    ...mapState({
-      pending: state => state.account.pending
+    ...mapState('account', {
+      pending: ({ auth }) => auth.pending
     })
   },
+
   methods: {
-    ...mapActions(['login'])
+    ...mapActions('account', ['login'])
   }
 }
 </script>
@@ -34,7 +37,7 @@ export default {
         </div>
       </div>
       <div class="c-login__section">
-        <h2 class="c-login__section__title">Login</h2>
+        <h2 class="c-login__section__title">로그인</h2>
         <div class="c-login__section__content c-login__section__content--mt">
           <dimi-input
             placeholder="아이디"
@@ -60,9 +63,6 @@ export default {
 .container {
     display: flex;
     align-items: center;
-    margin: 0 auto;
-    position: relative;
-    max-width: 1024px;
     height: 100vh;
 }
 
@@ -89,7 +89,7 @@ export default {
             justify-content: center;
             margin-top: 3em;
             &--mt {
-                margin-top:8em;
+                margin-top: 7em;
             }
         }
       // Specify parent element due to css priority rules.

@@ -4,6 +4,8 @@ const MEAL_REQUEST = 'MEAL:MEAL_REQUEST'
 const MEAL_SUCCESS = 'MEAL:MEAL_SUCCESS'
 
 export default {
+  namespaced: true,
+
   state: {
     breakfast: '',
     lunch: '',
