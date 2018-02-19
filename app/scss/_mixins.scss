@@ -17,3 +17,15 @@
 @mixin font-extra-bold {
     font-weight: 800;
 }
+
+@mixin from($device) {
+	@media screen and (min-width: $device) {
+		@content;
+	}
+}
+
+@mixin until($device) {
+	@media screen and (max-width: $device - 1) {
+		@content;
+	}	
+}

@@ -16,6 +16,7 @@
   "author": "a1p4ca",
   "license": "MIT",
   "dependencies": {
+    "avalanche-css": "^1.3.0",
     "babel-polyfill": "^6.26.0",
     "normalize.css": "^7.0.0",
     "sass-resources-loader": "^1.3.1",
@@ -39,6 +40,7 @@
     "eslint-config-vue": "^2.0.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "eslint-plugin-vue": "^4.2.2",
     "extract-text-webpack-plugin": "^3.0.2",
