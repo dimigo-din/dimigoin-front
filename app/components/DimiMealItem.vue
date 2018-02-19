@@ -46,6 +46,9 @@ export default {
   @extend .h-text-gray;
   word-break: keep-all;
   min-height: 4.275em;
+  &:last-child {
+    min-height: 3em;
+  }
   &:not(:last-child):not(:first-child) {
     margin: 1.5em 0 1.5em 0;
   }
