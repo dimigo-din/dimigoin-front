@@ -6,6 +6,10 @@ export default {
     shadow: {
       type: Boolean,
       default: false
+    },
+    hover: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -13,7 +17,8 @@ export default {
     computedClass () {
       const classes = {
         'c-card': true,
-        'c-card--shadow': this.shadow
+        'c-card--shadow': this.shadow,
+        'c-card--hover': this.hover
       }
       return classes
     }
@@ -35,6 +40,13 @@ export default {
   @include dimi-border;
   &--shadow {
     box-shadow: 0px 6px 12px 0 rgba(21, 19, 19, 0.1);
+  }
+  &--hover {
+    transition: .5s box-shadow ease;
+    &:hover {
+      box-shadow: 0px 16px 36px 0 rgba(21, 19, 19, 0.15);
+      z-index: 100;
+    }
   }
 }
 </style>
