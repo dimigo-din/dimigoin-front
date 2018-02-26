@@ -1,31 +1,31 @@
 @mixin dimi-border {
-    border-radius: 6px;
+  border-radius: 6px;
 }
 
 @mixin font-light {
-    font-weight: 300;
+  font-weight: 300;
 }
 
 @mixin font-regular {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 @mixin font-bold {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 @mixin font-extra-bold {
-    font-weight: 800;
+  font-weight: 800;
 }
 
 @mixin from($device) {
-	@media screen and (min-width: $device) {
-		@content;
-	}
+  @media screen and (min-width: $device) {
+    @content;
+  }
 }
 
 @mixin until($device) {
-	@media screen and (max-width: $device - 1) {
-		@content;
-	}	
+  @media screen and (max-width: $device - 1) {
+    @content;
+  }
 }
