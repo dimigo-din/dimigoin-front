@@ -15,6 +15,7 @@ export default {
 <style lang="scss" scoped>
 .menu {
   padding: 12px 12px 12px 0;
+  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 </style>

@@ -13,6 +13,7 @@
 @import '../../scss/helpers/typography';
 
 .content {
+  margin-top: 2rem;
   &__header {
     font-size: 28px;
     @include font-bold;
