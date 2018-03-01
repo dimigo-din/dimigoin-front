@@ -40,7 +40,7 @@ const router = new VueRouter({
           meta: { title: '신청 > 간식 신청' }
         },
         {
-          path: 'club',
+          path: 'circle',
           name: 'request/circle',
           component: RequestCircle,
           meta: { title: '신청 > 동아리 가입 신청' }
