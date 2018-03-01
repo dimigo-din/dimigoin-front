@@ -6,6 +6,7 @@ import Login from './Login.vue'
 import Request from './request/Request.vue'
 import RequestInfo from './request/RequestInfo.vue'
 import RequestCircle from './request/RequestCircle.vue'
+import RequestAfterschool from './request/RequestAfterschool.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,7 @@ const router = new VueRouter({
         {
           path: 'afterschool',
           name: 'request/afterschool',
+          component: RequestAfterschool,
           meta: { title: '신청 > 방과 후 활동 신청' }
         },
         {
