@@ -9,26 +9,16 @@ export default {
 </script>
 
 <template>
-  <div class="request-info">
-    <content-wrapper>
-      <h1
-        class="request-info__title"
-        slot="header"
-      >
-        신청 현황
-      </h1>
-      <dimi-card
-        class="request-info__content"
-        slot="main"
-      >
+  <content-wrapper>
+    <h1 slot="header">
+      <span class="icon-list"/>나의 신청 현황
+    </h1>
+    <dimi-card slot="main">
 
-      </dimi-card>
-    </content-wrapper>
-  </div>
+    </dimi-card>
+  </content-wrapper>
 </template>
 
 <style lang="scss" scoped>
-.request-info {
 
-}
 </style>

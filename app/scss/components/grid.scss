@@ -30,8 +30,8 @@ limitations under the License.
   flex: 0 1 auto;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-right: -0.5rem;
-  margin-left: -0.5rem;
+  margin-right: -1rem;
+  margin-left: -1rem;
 }
 
 .row.reverse {
@@ -45,7 +45,7 @@ limitations under the License.
 
 // columns sizes(xs, sm, md, lg)
 $sizes: (xs: null, sm: 49rem, md: 65rem, lg: 76rem);
-$gutter: 4rem;
+$gutter: 3rem;
 $container-sizes: (
   xs: null,
   sm: map-get($sizes, sm) - $gutter,
@@ -56,12 +56,12 @@ $container-sizes: (
 
 // column helpers
 @mixin col-offset($column) {
-  margin-left: 100% / 12 * $column;
+  margin-left: 100% / 24 * $column;
 }
 
 @mixin col-numbered($column) {
-  flex-basis: 100% / 12 * $column;
-  max-width: 100% / 12 * $column;
+  flex-basis: 100% / 24 * $column;
+  max-width: 100% / 24 * $column;
 }
 
 @mixin break($breakpoint) {
@@ -84,8 +84,8 @@ $container-sizes: (
     %col-base-#{$size} {
       box-sizing: border-box;
       flex: 0 0 auto;
-      padding-right: 0.5rem;
-      padding-left: 0.5rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
     }
 
     %col-auto-#{$size} {
@@ -99,14 +99,14 @@ $container-sizes: (
       @extend %col-auto-#{$size};
     }
 
-    @for $i from 0 through 12 {
+    @for $i from 0 through 24 {
       .col-#{$size}-offset-#{$i} {
         @extend %col-base-#{$size};
         @include col-offset($i);
       }
     }
 
-    @for $i from 1 through 12 {
+    @for $i from 1 through 24 {
       .col-#{$size}-#{$i} {
         @extend %col-base-#{$size};
         @include col-numbered($i);
