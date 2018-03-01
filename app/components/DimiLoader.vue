@@ -28,15 +28,15 @@ export default {
   }
 }
 
-.c-loader,
-.c-loader::before,
-.c-loader::after {
+.loader,
+.loader::before,
+.loader::after {
     animation: loading 1s infinite linear;
     border-radius: 50%;
 }
 
-.c-loader::before,
-.c-loader::after {
+.loader::before,
+.loader::after {
     content: "";
     width: 80%;
     height: 80%;

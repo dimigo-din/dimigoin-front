@@ -1,72 +1,60 @@
-.h-text {
-    &-s {
-        font-size: 12px;
-    }
-    &-xs {
-        font-size: 14px;
-    }
-    &-r {
-        font-size: 16px;
-    }
-    &-m {
-        font-size: 18px;
-    }
-    &-l {
-        font-size: 24px;
-    }
-    &-xl {
-        font-size: 36px;
-    }
-    &-2xl {
-        font-size: 48px;
-    }
-    &-3xl {
-        font-size: 64px;
-    }
+%h-text {
+  &-s {
+    font-size: 12px !important;
+  }
+  &-xs {
+    font-size: 14px !important;
+  }
+  &-r {
+    font-size: 16px !important;
+  }
+  &-m {
+    font-size: 18px !important;
+  }
+  &-l {
+    font-size: 24px !important;
+  }
+  &-xl {
+    font-size: 36px !important;
+  }
+  &-2xl {
+    font-size: 48px !important;
+  }
+  &-3xl {
+    font-size: 64px !important;
+  }
 
-    &-white {
-        color: $white;
+  &-white {
+    color: $white !important;
+  }
+  &-black {
+    color: $black !important;
+  }
+  &-gray {
+    color: $gray !important;
+    &-dark {
+      color: $gray-dark !important;
     }
-    &-black {
-        color: $black;
-    }
-    &-gray {
-        color: $gray;
-        &-dark {
-            color: $gray-dark;
-        }
-        &-light {
-            color: $gray-light
-        }
-    }
-    &-red {
-        color: $red;
-        &-dark {
-            color: $red-dark;
-        }
-    }
-    &-pink {
-        color: $pink;
-    }
-    &-orange {
-        color: $orange;
-    }
-    &-turquoise {
-        color: $turquoise;
-    }
-}
-
-.h-font {
     &-light {
-        @include font-light;
+      color: $gray-light !important;
     }
-    &-regular {
-        @include font-regular;
+    &-lighten {
+      color: $gray-lighten !important;
     }
-    &-bold {
-        @include font-bold;
+  }
+  &-red {
+    color: $red !important;
+    &-dark {
+      color: $red-dark !important;
     }
-    &-extra-bold {
-        @include font-extra-bold;
-    }
+  }
+  &-pink {
+    color: $pink !important;
+  }
+  &-orange {
+    color: $orange !important;
+  }
+  &-turquoise {
+    color: $turquoise !important;
+  }
 }

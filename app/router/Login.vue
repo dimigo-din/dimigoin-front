@@ -1,10 +1,10 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 
-import DimiButton from './DimiButton.vue'
-import DimiCard from './DimiCard.vue'
-import DimiMeal from './DimiMeal.vue'
-import DimiInput from './DimiInput.vue'
+import DimiButton from '../components/DimiButton.vue'
+import DimiCard from '../components/DimiCard.vue'
+import DimiMeal from '../components/DimiMeal.vue'
+import DimiInput from '../components/DimiInput.vue'
 
 export default {
   name: 'TheLogin',
@@ -13,8 +13,13 @@ export default {
 
   computed: {
     ...mapState('account', {
-      pending: ({ auth }) => auth.pending
+      pending: ({ auth }) => auth.pending,
+      isLoggedIn: ({ auth }) => auth.isLoggedIn
     })
+  },
+
+  created () {
+    if (this.isLoggedIn) this.$router.push('/')
   },
 
   methods: {
@@ -75,7 +80,7 @@ export default {
         width: 50%;
         padding: 4em;
         &:not(:last-child) {
-            border-right: solid 1px $gray-light;
+            border-right: solid 1px $gray-lighten;
         }
         &__title {
             position: relative;

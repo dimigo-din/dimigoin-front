@@ -5,17 +5,17 @@ export default {
 </script>
 
 <template>
-  <input class="c-input">
+  <input class="input">
 </template>
 
 <style lang="scss" scoped>
-.c-input {
+.input {
   font-family: 'NanumSquareRound', sans-serif;
   appearance: none;
   border: none;
   height: 3em;
   min-width: 25em;
-  background-color: #f3f3f3;
+  background-color: $gray-lighten;
   border-radius: 20px;
   &:not(:last-child) {
     margin-bottom: 2em;

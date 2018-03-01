@@ -5,18 +5,16 @@ $red-dark: #ad3030;
 $white: #fff;
 $black: #151313;
 
-$gray-dark: lighten($black, 26%);
-$gray: lighten($black, 40%);
-$gray-light: lighten($black, 85%);
+$gray-dark: #5d5c5c;
+$gray: #929292;
+$gray-light: #a7a7a7;
+$gray-lighten: #e8e8e8;
 
 $pink: #ff8081;
-$pink-invert: $black;
 
 $orange: #f5693d;
-$orange-invert: $black;
 
 $turquoise: #00b4a1;
-$turquoise-invert: #fff;
 
 $bg: #f7f7f7;
 
@@ -33,3 +31,20 @@ $desktop: 960px + (2 * $gap) !default;
 $widescreen: 1152px + (2 * $gap) !default;
 // 1344px container + 4rem
 $fullhd: 1344px + (2 * $gap) !default;
+
+/* stylelint-disable */
+/* For scss to js variable sharing */
+/*
+:export {
+  red: $red;
+  red-dark: $red-dark;
+  white: $white;
+  gray-dark: $gray-dark;
+  gray: $gray;
+  gray-light: $gray-light;
+  gray-lighten: $gray-lighten;
+  pink: $pink;
+  orange: $orange;
+  turquoise: $turquoise;
+}
+*/

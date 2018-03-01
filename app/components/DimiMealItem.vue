@@ -16,8 +16,8 @@ export default {
   computed: {
     computedClass () {
       return {
-        'c-meal-item': true,
-        'c-meal-item--current': this.current
+        'meal-item': true,
+        'meal-item--current': this.current
       }
     },
 
@@ -30,20 +30,20 @@ export default {
 
 <template>
   <div :class="computedClass">
-    <h4 class="c-meal-item__title">
+    <h4 class="meal-item__title">
       {{ title }}
     </h4>
-    <div class="c-meal-item__content">
+    <div class="meal-item__content">
       <slot/>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/helpers/all';
+@import '../scss/helpers/typography';
 
-.c-meal-item {
-  @extend .h-text-gray;
+.meal-item {
+  @extend %h-text-gray;
   word-break: keep-all;
   min-height: 4.275em;
   &:last-child {
@@ -54,22 +54,22 @@ export default {
   }
 
   &__title {
-    @extend .h-text-r;
-    @extend .h-font-bold;
+    @extend %h-text-r;
+    @include font-bold;
     margin-bottom: .5em;
   }
   &__content {
-    @extend .h-text-xs;
+    @extend %h-text-xs;
     line-height: 1.6;
   }
 
   &--current {
-    .c-meal-item__title {
-      @extend .h-text-red;
+    .meal-item__title {
+      @extend %h-text-red;
     }
 
-    .c-meal-item__content {
-      @extend .h-text-black;
+    .meal-item__content {
+      @extend %h-text-black;
     }
   }
 }

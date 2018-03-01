@@ -10,7 +10,7 @@ export default {
     breakfast: '',
     lunch: '',
     dinner: '',
-    snack: '',
+    nosh: '',
     pending: false,
     isFetched: false
   },
@@ -24,7 +24,7 @@ export default {
       state.breakfast = meal[0]
       state.lunch = meal[1]
       state.dinner = meal[2]
-      state.snack = meal[3]
+      state.nosh = meal[3]
 
       state.isFetched = true
       state.pending = false

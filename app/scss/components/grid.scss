@@ -1,0 +1,159 @@
+/*
+Copyright 2013 Kristofer Joseph
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+// containers
+.container,
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+// rows
+.row {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+}
+
+.row.reverse {
+  flex-direction: row-reverse;
+}
+
+.col.reverse {
+  flex-direction: column-reverse;
+}
+
+
+// columns sizes(xs, sm, md, lg)
+$sizes: (xs: null, sm: 49rem, md: 65rem, lg: 76rem);
+$gutter: 4rem;
+$container-sizes: (
+  xs: null,
+  sm: map-get($sizes, sm) - $gutter,
+  md: map-get($sizes, md) - $gutter,
+  lg: map-get($sizes, lg) - $gutter
+);
+
+
+// column helpers
+@mixin col-offset($column) {
+  margin-left: 100% / 12 * $column;
+}
+
+@mixin col-numbered($column) {
+  flex-basis: 100% / 12 * $column;
+  max-width: 100% / 12 * $column;
+}
+
+@mixin break($breakpoint) {
+  @if $breakpoint {
+    @media only screen and (min-width: $breakpoint) { @content; }
+  }
+  @else {
+    @content;
+  }
+}
+
+// build columns for each size is sizes map
+@each $size, $breakpoint in $sizes {
+
+  @include break($breakpoint) {
+    .container {
+      width: map-get($container-sizes, $size);
+    }
+
+    %col-base-#{$size} {
+      box-sizing: border-box;
+      flex: 0 0 auto;
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    }
+
+    %col-auto-#{$size} {
+      flex-grow: 1;
+      flex-basis: 0;
+      max-width: 100%;
+    }
+
+    .col-#{$size} {
+      @extend %col-base-#{$size};
+      @extend %col-auto-#{$size};
+    }
+
+    @for $i from 0 through 12 {
+      .col-#{$size}-offset-#{$i} {
+        @extend %col-base-#{$size};
+        @include col-offset($i);
+      }
+    }
+
+    @for $i from 1 through 12 {
+      .col-#{$size}-#{$i} {
+        @extend %col-base-#{$size};
+        @include col-numbered($i);
+      }
+    }
+
+    .start-#{$size} {
+      justify-content: flex-start;
+      text-align: start;
+    }
+
+    .center-#{$size} {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .end-#{$size} {
+      justify-content: flex-end;
+      text-align: end;
+    }
+
+    .top-#{$size} {
+      align-items: flex-start;
+    }
+
+    .middle-#{$size} {
+      align-items: center;
+    }
+
+    .bottom-#{$size} {
+      align-items: flex-end;
+    }
+
+    .around-#{$size} {
+      justify-content: space-around;
+    }
+
+    .between-#{$size} {
+      justify-content: space-between;
+    }
+
+    .first-#{$size} {
+      order: -1;
+    }
+
+    .last-#{$size} {
+      order: 1;
+    }
+  }
+}

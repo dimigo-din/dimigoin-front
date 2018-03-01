@@ -18,7 +18,8 @@ export default {
       const classes = {
         'c-card': true,
         'c-card--shadow': this.shadow,
-        'c-card--hover': this.hover
+        'c-card--hover': this.hover,
+        'c-card--border': !this.shadow
       }
       return classes
     }
@@ -35,17 +36,19 @@ export default {
 <style lang="scss" scoped>
 .c-card {
   position: relative;
-  max-width: 100%;
-  background-color: #fff;
-  @include dimi-border;
+  background-color: $white;
+  border-radius: 6px;
   &--shadow {
-    box-shadow: 0px 6px 12px 0 rgba(21, 19, 19, 0.1);
+    box-shadow: 0 6px 12px 0 rgba(21, 19, 19, 0.1);
+  }
+  &--border {
+    border: solid 1px $gray-lighten;
   }
   &--hover {
-    transition: .5s box-shadow ease;
+    transition: .5s box-shadow ease, 0s z-index .5s;
     &:hover {
       box-shadow: 0px 16px 36px 0 rgba(21, 19, 19, 0.15);
-      z-index: 100;
+      z-index: 1;
     }
   }
 }

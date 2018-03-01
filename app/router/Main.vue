@@ -1,10 +1,10 @@
 <script>
-import DimiMeal from './DimiMeal.vue'
-import DimiCard from './DimiCard.vue'
+import DimiMeal from '../components/DimiMeal.vue'
+import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'TheMain',
+  name: 'Main',
 
   components: { DimiMeal, DimiCard },
 
@@ -14,7 +14,7 @@ export default {
   },
 
   async mounted () {
-    await this.fetchServiceList()
+    if (this.serviceList.length === 0) await this.fetchServiceList()
     this.setServiceCardHeight()
     window.addEventListener('resize', this.setServiceCardHeight)
   },
@@ -49,7 +49,7 @@ export default {
             class="info__notice section__content"
             shadow
           >
-            a
+            TODO
           </dimi-card>
         </section>
       </div>
@@ -76,6 +76,7 @@ export default {
               :key="`service-${index}`"
               class="service__card"
               shadow
+              hover
             >{{ service.name }}</dimi-card>
           </div>
         </section>
@@ -85,10 +86,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/helpers/all';
+@import '../scss/helpers/typography';
 
+// TODO responsive
 .container {
-  padding: 1em;
+  padding-top: 1em;
+  width: 55em;
 }
 
 .column {
@@ -96,7 +99,7 @@ export default {
   flex-direction: column;
   flex: 1;
   align-items: stretch;
-  margin: .75em;
+  margin: .5em;
 }
 
 .section {
@@ -104,9 +107,9 @@ export default {
   flex-direction: column;
   margin-bottom: 2rem;
   &__title {
-    @extend .h-text-l;
-    @extend .h-font-bold;
-    @extend .h-text-gray-dark;
+    @extend %h-text-l;
+    @include font-bold;
+    @extend %h-text-gray-dark;
     margin: 1rem 0;
   }
   &__content {
@@ -117,8 +120,8 @@ export default {
 }
 
 .brand {
-  @extend .h-text-xl;
-  @extend .h-font-extra-bold;
+  @extend %h-text-xl;
+  @include font-extra-bold;
   text-align: center;
   margin: 2rem;
 }

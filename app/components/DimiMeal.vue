@@ -8,7 +8,7 @@ export default {
   components: { DimiMealItem },
 
   computed: {
-    ...mapState('meal', ['breakfast', 'lunch', 'dinner', 'snack'])
+    ...mapState('meal', ['breakfast', 'lunch', 'dinner', 'nosh'])
   },
 
   async mounted () {
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <div class="c-meal-list">
+  <div class="meal-list">
     <dimi-meal-item
       meal="아침"
       :current="isBetween(0, 815)">{{ breakfast }}</dimi-meal-item>
@@ -38,13 +38,13 @@ export default {
       :current="isBetween(1341, 1920)">{{ dinner }}</dimi-meal-item>
     <dimi-meal-item
       meal="간식"
-      :current="isBetween(1921, 2140)">{{ snack }}</dimi-meal-item>
+      :current="isBetween(1921, 2140)">{{ nosh }}</dimi-meal-item>
   </div>
 </template>
 
 <style lang="scss" scoped>
 
-.c-meal-list {
+.meal-list {
   color: $gray;
 }
 
