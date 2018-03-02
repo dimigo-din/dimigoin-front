@@ -25,12 +25,13 @@ export default {
 </script>
 
 <template>
-  <span :class="computedClass"/>
+  <hr :class="computedClass">
 </template>
 
 <style lang="scss">
 .divider {
   position: absolute;
+  border: 0;
 
   &--horizontal {
     border-top: solid 1px $gray-lighten;
