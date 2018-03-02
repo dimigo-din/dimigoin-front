@@ -44,8 +44,8 @@ limitations under the License.
 
 
 // columns sizes(xs, sm, md, lg)
-$sizes: (xs: null, sm: 49rem, md: 65rem, lg: 76rem);
-$gutter: 3rem;
+$sizes: (xs: null, sm: $tablet, md: $desktop, lg: $widescreen);
+$gutter: $gap;
 $container-sizes: (
   xs: null,
   sm: map-get($sizes, sm) - $gutter,
@@ -70,6 +70,12 @@ $container-sizes: (
   }
   @else {
     @content;
+  }
+}
+
+@include from($widescreen) {
+  .container.container--naive {
+    width: $desktop - (2 * $gap);
   }
 }
 
