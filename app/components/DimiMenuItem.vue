@@ -12,6 +12,7 @@ export default {
     computedClass () {
       return {
         'menu-item': true,
+        'menu-item--disable': !this.isActive,
         'menu-item--active': this.isActive
       }
     },
@@ -37,10 +38,12 @@ export default {
   text-decoration: none;
   padding: .6em 0 .6em 3em;
   border-radius: 0 4em 4em 0;
-  color: $gray-light;
   @extend %h-text-r;
   @include font-bold;
 
+  &--disable {
+    @extend %h-text-gray-light;
+  }
   &--active {
     background-color: $red;
     @extend %h-text-white;

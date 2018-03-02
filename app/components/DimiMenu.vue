@@ -14,7 +14,7 @@ export default {
 
 <style lang="scss">
 .menu {
-  padding: 12px 12px 12px 0;
+  padding: 0.75rem 0.75rem 0.75rem 0 !important;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
