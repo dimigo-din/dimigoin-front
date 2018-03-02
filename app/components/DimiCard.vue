@@ -33,7 +33,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .c-card {
   position: relative;
   background-color: $white;

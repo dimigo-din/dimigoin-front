@@ -12,7 +12,7 @@ export default {
   <dimi-card class="menu"><slot/></dimi-card>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .menu {
   padding: 12px 12px 12px 0;
   margin-top: 2rem;

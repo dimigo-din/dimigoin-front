@@ -28,7 +28,7 @@ export default {
   <span :class="computedClass"/>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .divider {
   position: absolute;
   &--horizontal {

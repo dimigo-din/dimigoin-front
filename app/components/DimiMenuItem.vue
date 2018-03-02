@@ -29,7 +29,7 @@ export default {
     :to="to"><slot/></router-link>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../scss/helpers/typography';
 
 .menu-item {

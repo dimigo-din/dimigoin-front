@@ -77,7 +77,7 @@ export default {
   </a>
 </template>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '../scss/helpers/typography';
 
 .btn {

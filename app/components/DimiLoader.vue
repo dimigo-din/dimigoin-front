@@ -17,7 +17,7 @@ export default {
   <div class="c-loader">loading</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 @keyframes loading {
   from {

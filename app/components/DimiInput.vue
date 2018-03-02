@@ -8,7 +8,7 @@ export default {
   <input class="input">
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .input {
   font-family: 'NanumSquareRound', sans-serif;
   appearance: none;
