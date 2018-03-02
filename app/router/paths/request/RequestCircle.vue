@@ -1,5 +1,5 @@
 <script>
-import ContentWrapper from '../layout/ContentWrapper.vue'
+import ContentWrapper from '../../partial/ContentWrapper.vue'
 
 export default {
   name: 'RequestCircle',

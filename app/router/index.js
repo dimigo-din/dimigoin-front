@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 import Main from './Main.vue'
 import Login from './Login.vue'
 
-import Request from './request/Request.vue'
-import RequestInfo from './request/RequestInfo.vue'
-import RequestCircle from './request/RequestCircle.vue'
-import RequestAfterschool from './request/RequestAfterschool.vue'
+import Request from './paths/request/Request.vue'
+import RequestInfo from './paths/request/RequestInfo.vue'
+import RequestCircle from './paths/request/RequestCircle.vue'
+import RequestAfterschool from './paths/request/RequestAfterschool.vue'
 
 Vue.use(VueRouter)
 

@@ -1,6 +1,6 @@
 <script>
-import DimiCard from '../../components/DimiCard.vue'
-import ContentWrapper from '../layout/ContentWrapper.vue'
+import DimiCard from '../../../components/DimiCard.vue'
+import ContentWrapper from '../../partial/ContentWrapper.vue'
 
 export default {
   name: 'RequestInfo',

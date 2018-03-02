@@ -1,7 +1,7 @@
 <script>
-import DefaultNavbar from '../layout/DefaultNavbar.vue'
-import DimiMenu from '../../components/DimiMenu.vue'
-import DimiMenuItem from '../../components/DimiMenuItem.vue'
+import DefaultNavbar from '../../partial/DefaultNavbar.vue'
+import DimiMenu from '../../../components/DimiMenu.vue'
+import DimiMenuItem from '../../../components/DimiMenuItem.vue'
 
 export default {
   name: 'Request',
