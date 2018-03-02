@@ -31,15 +31,17 @@ export default {
 <style lang="scss">
 .divider {
   position: absolute;
+
   &--horizontal {
-    right: 0;
-    left: 0;
     border-top: solid 1px $gray-lighten;
+    left: 0;
+    right: 0;
   }
+
   &--vertical {
-    top: 0;
-    bottom: 0;
     border-left: solid 1px $gray-lighten;
+    bottom: 0;
+    top: 0;
   }
 }
 </style>

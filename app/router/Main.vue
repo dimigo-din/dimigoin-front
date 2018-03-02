@@ -93,23 +93,25 @@ export default {
 }
 
 .column {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   align-items: stretch;
-  margin: .5em;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0.5em;
 }
 
 .section {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
+
   &__title {
     @extend %h-text-l;
-    @include font-bold;
     @extend %h-text-gray-dark;
+    @include font-bold;
     margin: 1rem 0;
   }
+
   &__content {
     display: flex;
     flex: 1;
@@ -119,16 +121,18 @@ export default {
 .brand {
   @extend %h-text-xl;
   @include font-extra-bold;
+  margin: 3rem 0;
   text-align: center;
-  margin: 3rem 0 3rem 0;
 }
 
 .info {
   display: flex;
+
   &__notification,
   &__meal {
     flex: 1;
   }
+
   &__meal {
     min-height: 15rem;
   }
@@ -136,11 +140,13 @@ export default {
 
 .service {
   display: flex;
+
   &__cards {
     display: flex;
     flex-wrap: wrap;
     margin: -1rem 0 0 -1rem;
   }
+
   &__card {
     flex: 1 25%;
     margin: 1rem 0 0 1rem;

@@ -17,10 +17,13 @@ limitations under the License.
 // containers
 .container,
 .container-fluid {
-  margin-right: auto;
   margin-left: auto;
-  padding-right: 2rem;
+  margin-right: auto;
   padding-left: 2rem;
+
+
+
+  padding-right: 2rem;
 }
 
 // rows
@@ -30,8 +33,8 @@ limitations under the License.
   flex: 0 1 auto;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-right: -1rem;
   margin-left: -1rem;
+  margin-right: -1rem;
 }
 
 .row.reverse {
@@ -90,13 +93,13 @@ $container-sizes: (
     %col-base-#{$size} {
       box-sizing: border-box;
       flex: 0 0 auto;
-      padding-right: 1rem;
       padding-left: 1rem;
+      padding-right: 1rem;
     }
 
     %col-auto-#{$size} {
-      flex-grow: 1;
       flex-basis: 0;
+      flex-grow: 1;
       max-width: 100%;
     }
 

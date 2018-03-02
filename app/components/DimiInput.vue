@@ -31,16 +31,17 @@ export default {
 
 <style lang="scss">
 .input {
-  font-family: 'NanumSquareRound', sans-serif;
   appearance: none;
-  border: none;
+  background-color: $gray-lighten;
+  border: 0;
+  border-radius: 20px;
+  font-family: 'NanumSquareRound', sans-serif;
   height: 3em;
   min-width: 25em;
-  background-color: $gray-lighten;
-  border-radius: 20px;
+  padding-left: 2em;
+
   &:not(:last-child) {
     margin-bottom: 2em;
   }
-  padding-left: 2em;
 }
 </style>

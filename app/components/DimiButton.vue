@@ -1,6 +1,5 @@
 <script>
 import DimiLoader from './DimiLoader.vue'
-import variables from '../scss/_variables.scss'
 
 export default {
   name: 'DimiButton',
@@ -81,35 +80,40 @@ export default {
 @import '../scss/helpers/typography';
 
 .btn {
-  display: inline-flex;
-  padding: 0.8em 2.7em;
-  border-radius: 2rem;
-  appearance: none;
-  text-decoration: none;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  user-select: none;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  background-color: $red;
-  color: $white;
-  transition: .5s background-color ease;
   @include font-extra-bold;
+  align-items: center;
+  appearance: none;
+  background-color: $red;
+  border-radius: 2rem;
+  color: $white;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+  padding: 0.8em 2.7em;
+  position: relative;
+  text-decoration: none;
+  transition: 0.5s background-color ease;
+  user-select: none;
+  white-space: nowrap;
+
   &--gray {
     background-color: $gray-lighten;
     color: $gray;
   }
+
   &--text {
     background-color: transparent;
   }
+
   &--cursor-disable {
     cursor: default;
   }
+
   &--large {
     @extend %h-text-l;
   }
+
   &--small {
     @extend %h-text-s;
   }

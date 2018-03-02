@@ -44,33 +44,36 @@ export default {
 
 .meal-item {
   @extend %h-text-gray;
-  word-break: keep-all;
   min-height: 4.275em;
+  word-break: keep-all;
+
   &:last-child {
     min-height: 3em;
   }
+
   &:not(:last-child):not(:first-child) {
-    margin: 1.5em 0 1.5em 0;
+    margin: 1.5em 0;
   }
 
   &__title {
     @extend %h-text-r;
     @include font-bold;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
   }
+
   &__content {
     @extend %h-text-xs;
     line-height: 1.6;
   }
+}
 
-  &--current {
-    .meal-item__title {
-      @extend %h-text-red;
-    }
+.meal-item--current {
+  .meal-item__title {
+    @extend %h-text-red;
+  }
 
-    .meal-item__content {
-      @extend %h-text-black;
-    }
+  .meal-item__content {
+    @extend %h-text-black;
   }
 }
 

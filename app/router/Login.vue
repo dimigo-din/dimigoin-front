@@ -59,16 +59,16 @@ export default {
       class="c-login"
       shadow
     >
-      <div class="c-login__section">
-        <h2 class="c-login__section__title">오늘의 급식</h2>
-        <div class="c-login__section__content">
+      <div class="section">
+        <h2 class="section__title">오늘의 급식</h2>
+        <div class="section__content">
           <dimi-meal/>
         </div>
       </div>
       <dimi-divider vertical/>
-      <div class="c-login__section">
-        <h2 class="c-login__section__title">로그인</h2>
-        <div class="c-login__section__content c-login__section__content--mt">
+      <div class="section">
+        <h2 class="section__title">로그인</h2>
+        <div class="section__content section__content--mt">
           <dimi-input
             placeholder="아이디"
             type="text"
@@ -95,41 +95,46 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  display: flex;
   align-items: center;
+  display: flex;
   height: 100vh;
 }
 
 .c-login {
-  width: 100%;
   display: flex;
   justify-content: center;
-  &__section {
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 50%;
+
+  &__title {
+    @include font-extra-bold;
+    font-size: 2.25em;
+    position: relative;
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
-    width: 50%;
-    padding: 2rem;
-    &__title {
-      position: relative;
-      font-size: 2.25em;
-      @include font-extra-bold;
-    }
-    &__content {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin-top: 3em;
-      &--mt {
-        margin-top: 7em;
-      }
-    }
-    // Specify parent element due to css priority rules.
-    & .c-login__submit-btn {
-      margin-top: 3em;
-      align-self: center;
-      padding: .625em 2.75em;
-    }
+    justify-content: center;
+    margin-top: 3em;
+    position: relative;
+  }
+
+  &__content--mt {
+    margin-top: 7em;
+  }
+
+  // Specify parent element due to css priority rules.
+  .c-login__submit-btn {
+    align-self: center;
+    margin-top: 3em;
+    padding: 0.625em 2.75em;
   }
 }
 </style>

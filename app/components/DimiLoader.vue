@@ -23,6 +23,7 @@ export default {
   from {
     transform: rotate(20deg);
   }
+
   to {
     transform: rotate(380deg);
   }
@@ -31,16 +32,16 @@ export default {
 .loader,
 .loader::before,
 .loader::after {
-    animation: loading 1s infinite linear;
-    border-radius: 50%;
+  animation: loading 1s infinite linear;
+  border-radius: 50%;
 }
 
 .loader::before,
 .loader::after {
-    content: "";
-    width: 80%;
-    height: 80%;
-    position: absolute;
+  content: '';
+  height: 80%;
+  position: absolute;
+  width: 80%;
 }
 
 </style>

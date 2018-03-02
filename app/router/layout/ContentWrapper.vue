@@ -14,12 +14,12 @@
 
 .content {
   margin-top: 2rem;
+
   &__header {
-    font-size: 28px;
-    @include font-bold;
     @extend %h-text-gray-dark;
+    @include font-bold;
+    font-size: 28px;
     margin-bottom: 1rem;
   }
-  &__main { }
 }
 </style>

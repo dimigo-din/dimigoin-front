@@ -34,19 +34,20 @@ export default {
 @import '../scss/helpers/typography';
 
 .menu-item {
-  display: block;
-  text-decoration: none;
-  padding: .6em 0 .6em 3em;
-  border-radius: 0 4em 4em 0;
   @extend %h-text-r;
   @include font-bold;
+  border-radius: 0 4em 4em 0;
+  display: block;
+  padding: 0.6em 0 0.6em 3em;
+  text-decoration: none;
 
   &--disable {
     @extend %h-text-gray-light;
   }
+
   &--active {
-    background-color: $red;
     @extend %h-text-white;
+    background-color: $red;
   }
 }
 </style>
