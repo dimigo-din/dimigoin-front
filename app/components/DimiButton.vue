@@ -52,14 +52,6 @@ export default {
 
     isActive () {
       return !this.loading && this.active
-    },
-
-    styles () {
-      console.log(variables)
-      return {
-        backgroundColor: variables[this.color],
-        color: variables[this.textColor]
-      }
     }
   },
 
@@ -74,7 +66,6 @@ export default {
 <template>
   <a
     :class="computedClass"
-    :style="styles"
     :href="href"
     v-ripple="'rgba(255, 255, 255, .2)'"
     @click="click"
