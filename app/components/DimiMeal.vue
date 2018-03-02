@@ -12,7 +12,7 @@ export default {
   },
 
   async mounted () {
-    await this.$store.dispatch('meal/fetchMeal')
+    if (!this.$store.state.meal.isFetched) await this.$store.dispatch('meal/fetchMeal')
   },
 
   methods: {
