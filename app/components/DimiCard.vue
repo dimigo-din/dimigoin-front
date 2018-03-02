@@ -38,6 +38,7 @@ export default {
   position: relative;
   background-color: $white;
   border-radius: 6px;
+  padding: 1.25rem;
   &--shadow {
     box-shadow: 0 6px 12px 0 rgba(21, 19, 19, 0.1);
   }

@@ -30,8 +30,8 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <h1 class="brand">DIMIGOIN</h1>
+  <div class="container container--naive">
+    <h1 class="brand"><span class="icon-dimigo"/>DIMIGOIN</h1>
     <div class="info">
       <div class="column">
         <section class="info__profile section">
@@ -88,10 +88,8 @@ export default {
 <style lang="scss" scoped>
 @import '../scss/helpers/typography';
 
-// TODO responsive
 .container {
-  padding-top: 1em;
-  width: 55em;
+  padding-top: 1rem;
 }
 
 .column {
@@ -114,7 +112,6 @@ export default {
   }
   &__content {
     display: flex;
-    padding: 1em;
     flex: 1;
   }
 }
@@ -123,34 +120,30 @@ export default {
   @extend %h-text-xl;
   @include font-extra-bold;
   text-align: center;
-  margin: 2rem;
-}
-
-.info,
-.service {
-  display: flex;
+  margin: 3rem 0 3rem 0;
 }
 
 .info {
+  display: flex;
   &__notification,
   &__meal {
     flex: 1;
   }
   &__meal {
-    min-height: 15em;
+    min-height: 15rem;
   }
 }
 
 .service {
+  display: flex;
   &__cards {
     display: flex;
     flex-wrap: wrap;
     margin: -1rem 0 0 -1rem;
   }
   &__card {
-    display: flex;
+    flex: 1 25%;
     margin: 1rem 0 0 1rem;
-    width: calc(25% - 1rem);
   }
 }
 
