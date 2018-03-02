@@ -4,19 +4,13 @@ import * as types from './mutation-types'
 export default {
   state: {
     token: window.localStorage.getItem('token'),
-    isLoggedIn: !!window.localStorage.getItem('token'),
-    pending: false
+    isLoggedIn: !!window.localStorage.getItem('token')
   },
 
   mutations: {
-    [types.LOGIN_REQUEST] (state) {
-      state.pending = true
-    },
-
     [types.LOGIN_SUCCESS] (state, { token }) {
       this.token = token
       state.isLoggedIn = true
-      state.pending = false
     },
 
     [types.LOGOUT] (state) {
@@ -27,8 +21,8 @@ export default {
 
   actions: {
     async login ({ commit }, { id, password }) {
-      commit(types.LOGIN_REQUEST)
       const token = await getAccessToken(id, password)
+      console.log(id, password, 'hi')
 
       if (!token) {
         const err = new Error()

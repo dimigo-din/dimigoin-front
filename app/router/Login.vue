@@ -12,11 +12,25 @@ export default {
 
   components: { DimiButton, DimiCard, DimiMeal, DimiInput, DimiDivider },
 
+  data () {
+    return {
+      id: '',
+      password: '',
+      pending: false,
+      error: false
+    }
+  },
+
   computed: {
     ...mapState('account', {
-      pending: ({ auth }) => auth.pending,
       isLoggedIn: ({ auth }) => auth.isLoggedIn
     })
+  },
+
+  watch: {
+    isLoggedIn () {
+      if (this.isLoggedIn) this.$router.push('/')
+    }
   },
 
   created () {
@@ -24,6 +38,16 @@ export default {
   },
 
   methods: {
+    async confirmLoggingIn () {
+      try {
+        this.pending = true
+        await this.login({ id: this.id, password: this.password })
+      } catch (err) {
+        // TODO message according to error type
+        this.error = err
+      }
+      this.pending = false
+    },
     ...mapActions('account', ['login'])
   }
 }
@@ -48,17 +72,21 @@ export default {
           <dimi-input
             placeholder="아이디"
             type="text"
+            v-model="id"
           />
           <dimi-input
             placeholder="비밀번호"
             type="password"
+            v-model="password"
           />
           <dimi-button
             class="c-login__submit-btn"
             :loading="pending"
             large
-            @click="login"
-          >LOGIN</dimi-button>
+            @click="confirmLoggingIn"
+          >
+            LOGIN
+          </dimi-button>
         </div>
       </div>
     </dimi-card>
