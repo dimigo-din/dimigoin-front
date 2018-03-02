@@ -1,11 +1,32 @@
 <script>
 export default {
-  name: 'DimiInput'
+  name: 'DimiInput',
+
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
+
+  data () {
+    return {
+      innerValue: this.value
+    }
+  },
+
+  watch: {
+    innerValue (val) {
+      this.$emit('input', val)
+    }
+  }
 }
 </script>
 
 <template>
-  <input class="input">
+  <input
+    class="input"
+    v-model="innerValue">
 </template>
 
 <style lang="scss">
