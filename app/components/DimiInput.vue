@@ -36,12 +36,10 @@ export default {
   border: 0;
   border-radius: 20px;
   font-family: 'NanumSquareRound', sans-serif;
-  height: 3em;
-  min-width: 25em;
-  padding-left: 2em;
+  padding: 0.75em 0 0.75em 1.75em;
 
-  &:not(:last-child) {
-    margin-bottom: 2em;
+  ::placeholder {
+    color: $gray-light;
   }
 }
 </style>

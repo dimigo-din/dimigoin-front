@@ -43,7 +43,3 @@ export default {
     <slot/>
   </dimi-button>
 </template>
-
-<style lang="scss">
-
-</style>

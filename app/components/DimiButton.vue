@@ -80,7 +80,6 @@ export default {
 @import '../scss/helpers/typography';
 
 .btn {
-  @include font-extra-bold;
   align-items: center;
   appearance: none;
   background-color: $red;
