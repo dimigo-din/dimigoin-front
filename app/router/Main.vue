@@ -9,7 +9,12 @@ export default {
   components: { DimiMeal, DimiCard },
 
   computed: {
-    ...mapState('account', ['notifications']),
+    ...mapState('account', {
+      name: ({ informations }) => informations.name,
+      photoUrl: ({ informations }) => informations.photoUrl,
+      grade: ({ informations }) => informations.grade,
+      klass: ({ informations }) => informations.klass
+    }),
     ...mapState('service', ['serviceList'])
   },
 
@@ -24,6 +29,12 @@ export default {
       const cards = document.querySelectorAll('.service__card')
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
     },
+
+    logout () {
+      this.$store.dispatch('account/logout')
+      this.$router.push({ name: 'login' })
+    },
+
     ...mapActions('service', ['fetchServiceList'])
   }
 }
@@ -40,16 +51,28 @@ export default {
             class="info__profile section__content"
             shadow
           >
-            a <br> a
+            <div class="profile-info">
+              <span class="profile-info__serial">
+                {{ `${grade}학년 ${klass}반` }}
+              </span>
+              <span class="profile-info__name">
+                {{ name }}
+              </span>
+            </div>
+            <div class="info__profile__nav">
+              <a
+                class="icon-logout logout-btn"
+                @click="logout"/>
+            </div>
           </dimi-card>
         </section>
         <section class="info__notification section">
-          <h2 class="section__title">알림({{ notifications.length }})</h2>
+          <h2 class="section__title">알림</h2>
           <dimi-card
             class="info__notice section__content"
             shadow
           >
-            TODO
+            새로운 디미고인에 오신 것을 환영합니다!
           </dimi-card>
         </section>
       </div>
@@ -77,7 +100,13 @@ export default {
               class="service__card"
               shadow
               hover
-            >{{ service.name }}</dimi-card>
+            >
+              <div class="service__card__icon">
+                <span :class="service.icon"/>
+              </div>
+              <h4 class="service__card__title">{{ service.title }}</h4>
+              <p class="service__card__description">{{ service.description }}</p>
+            </dimi-card>
           </div>
         </section>
       </div>
@@ -97,7 +126,7 @@ export default {
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin: 0.5em;
+  margin: 0.5rem;
 }
 
 .section {
@@ -128,6 +157,11 @@ export default {
 .info {
   display: flex;
 
+  &__profile {
+    display: flex;
+    justify-content: space-between;
+  }
+
   &__notification,
   &__meal {
     flex: 1;
@@ -138,19 +172,50 @@ export default {
   }
 }
 
-.service {
-  display: flex;
-
-  &__cards {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -1rem 0 0 -1rem;
+.profile-info {
+  font-size: 20px;
+  &__serial {
+    color: $gray;
   }
-
-  &__card {
-    flex: 1 25%;
-    margin: 1rem 0 0 1rem;
+  &__name {
+    color: $black;
   }
 }
 
+.service__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+}
+
+.service__card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &__icon {
+    @extend %h-text-3xl;
+  }
+
+  &__title {
+    @extend %h-text-l;
+    @include font-extra-bold;
+
+    margin-top: 1.2rem;
+  }
+
+  &__description {
+    font-size: 14px;
+
+    color: $gray;
+    margin-top: 0.85rem;
+    word-break: keep-all;
+  }
+}
+
+logout-btn {
+  cursor: pointer;
+}
 </style>

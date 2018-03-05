@@ -1,4 +1,4 @@
-import { getMeal } from '../../../src/api'
+import { getTodayMeal } from '../../../src/api'
 
 const MEAL_REQUEST = 'MEAL:MEAL_REQUEST'
 const MEAL_SUCCESS = 'MEAL:MEAL_SUCCESS'
@@ -10,8 +10,7 @@ export default {
     breakfast: '',
     lunch: '',
     dinner: '',
-    nosh: '',
-    pending: false,
+    snack: '',
     isFetched: false
   },
 
@@ -21,13 +20,12 @@ export default {
     },
 
     [MEAL_SUCCESS] (state, { meal }) {
-      state.breakfast = meal[0]
-      state.lunch = meal[1]
-      state.dinner = meal[2]
-      state.nosh = meal[3]
+      state.breakfast = meal.breakfast
+      state.lunch = meal.lunch
+      state.dinner = meal.dinner
+      state.snack = meal.snack
 
       state.isFetched = true
-      state.pending = false
     }
   },
 
@@ -35,7 +33,7 @@ export default {
     async fetchMeal ({commit}) {
       commit(MEAL_REQUEST)
       commit(MEAL_SUCCESS, {
-        meal: await getMeal()
+        meal: await getTodayMeal()
       })
     }
   }

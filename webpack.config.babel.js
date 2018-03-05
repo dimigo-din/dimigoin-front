@@ -96,9 +96,20 @@ const webpackConfig = {
         }
       },
       {
-        test: /\.(png|jpe?g|gif|svg|ttf|woff2?|eot)$/,
+        test: /\.(png|jpe?g|gif|ttf|woff2?|eot)$/,
         loader: 'file-loader',
         options: { name: '[name].[ext]?[hash]' }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'vue-svg-loader',
+        options: {
+          svgo: {
+            plugins: [
+              { removeViewBox: false }
+            ]
+          }
+        }
       }
     ]
   },

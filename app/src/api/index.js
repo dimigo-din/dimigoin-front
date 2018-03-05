@@ -1,3 +1,4 @@
-export { getAccessToken } from './auth'
-export { getMeal } from './meal'
+export { register, getAccessToken, verifyStudent } from './auth'
+export { getTodayMeal } from './meal'
 export { getServiceList } from './service'
+export { default as axios } from './axios'

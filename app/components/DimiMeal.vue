@@ -7,12 +7,32 @@ export default {
 
   components: { DimiMealItem },
 
+  filters: {
+    beautifulMeal (value) {
+      return value.split('/').join(' | ')
+    }
+  },
+
+  data () {
+    return {
+      pending: false
+    }
+  },
+
   computed: {
-    ...mapState('meal', ['breakfast', 'lunch', 'dinner', 'nosh'])
+    ...mapState('meal', ['breakfast', 'lunch', 'dinner', 'snack'])
   },
 
   async mounted () {
-    if (!this.$store.state.meal.isFetched) await this.$store.dispatch('meal/fetchMeal')
+    if (!this.$store.state.meal.isFetched) {
+      this.pending = true
+      try {
+        await this.$store.dispatch('meal/fetchMeal')
+      } catch (err) {
+        console.error(err)
+      }
+      this.pending = false
+    }
   },
 
   methods: {
@@ -29,16 +49,16 @@ export default {
   <div class="meal-list">
     <dimi-meal-item
       meal="아침"
-      :current="isBetween(0, 815)">{{ breakfast }}</dimi-meal-item>
+      :current="isBetween(0, 815)">{{ breakfast | beautifulMeal }}</dimi-meal-item>
     <dimi-meal-item
       meal="점심"
-      :current="isBetween(816, 1340)">{{ lunch }}</dimi-meal-item>
+      :current="isBetween(816, 1340)">{{ lunch | beautifulMeal }}</dimi-meal-item>
     <dimi-meal-item
       meal="저녁"
-      :current="isBetween(1341, 1920)">{{ dinner }}</dimi-meal-item>
+      :current="isBetween(1341, 1920)">{{ dinner | beautifulMeal }}</dimi-meal-item>
     <dimi-meal-item
       meal="간식"
-      :current="isBetween(1921, 2140)">{{ nosh }}</dimi-meal-item>
+      :current="isBetween(1921, 2140)">{{ snack | beautifulMeal }}</dimi-meal-item>
   </div>
 </template>
 

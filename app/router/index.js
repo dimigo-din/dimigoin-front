@@ -1,12 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Main from './Main.vue'
-import Login from './Login.vue'
+
+import Register from './paths/auth/register/Register.vue'
+import RegisterStepOne from './paths/auth/register/RegisterStepOne.vue'
+import RegisterStepTwo from './paths/auth/register/RegisterStepTwo.vue'
+import RegisterStepThree from './paths/auth/register/RegisterStepThree.vue'
+import RegisterSideOne from './paths/auth/register/RegisterSideOne.vue'
+import RegisterSideTwo from './paths/auth/register/RegisterSideTwo.vue'
+import RegisterSideThree from './paths/auth/register/RegisterSideThree.vue'
+
+import Login from './paths/auth/Login.vue'
 
 import Request from './paths/request/Request.vue'
 import RequestInfo from './paths/request/RequestInfo.vue'
 import RequestCircle from './paths/request/RequestCircle.vue'
 import RequestAfterschool from './paths/request/RequestAfterschool.vue'
+
+import NotFound from './NotFound.vue'
+
+import { withPrefix } from '../src/util'
 
 Vue.use(VueRouter)
 
@@ -18,12 +32,51 @@ const router = new VueRouter({
       component: Main,
       meta: { title: 'DIMIGOIN' }
     },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-      meta: { title: '디미고인 로그인' }
-    },
+    ...withPrefix('/auth', [
+      {
+        path: '/login',
+        name: 'login',
+        component: Login,
+        meta: { title: '로그인' }
+      },
+      {
+        path: '/register',
+        component: Register,
+        children: [
+          {
+            path: '',
+            name: 'register',
+            redirect: { name: 'register/step/1' }
+          },
+          {
+            path: 'step/1',
+            name: 'register/step/1',
+            components: {
+              side: RegisterSideOne,
+              form: RegisterStepOne
+            },
+            meta: { title: '회원가입' }
+          },
+          {
+            path: 'step/2',
+            name: 'register/step/2',
+            components: {
+              side: RegisterSideTwo,
+              form: RegisterStepTwo
+            },
+            meta: { title: '회원가입' }
+          },
+          {
+            path: 'step/3',
+            name: 'register/step/3',
+            components: {
+              side: RegisterSideThree,
+              form: RegisterStepThree
+            }
+          }
+        ]
+      }
+    ]),
     {
       path: '/request',
       component: Request,
@@ -67,12 +120,16 @@ const router = new VueRouter({
           meta: { title: '신청 > 잔류 신청' }
         }
       ]
+    },
+    {
+      path: '*',
+      component: NotFound
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
+  if (to.meta.title) document.title = to.meta.title
   next()
 })
 

@@ -1,11 +1,13 @@
-import { sleep } from '../util'
+import axios from './axios'
 
-export async function getMeal (id, password) {
-  await sleep(1000)
-  return [
-    '고추잡채 / 쌀밥 / 쇠고기미역국 / 어묵쏙치즈 / 참나물무침 / 포기김치 / 사과 / 한국야쿠르트 / 완제김',
-    '훈제오리 / 잡곡밥 / 된장찌개 / 오꼬노미야끼 / 하루나겉절이 / 쌈무 / 포기김치 / 찹쌀떡 / 그린샐러드 / 살구쥬스',
-    '돼지갈비찜 / 쌀밥 / 순두부찌개 / 납작왕만두 / 탕평채 / 열무나물 / 깍두기 / 방울토마토 / 키위쥬스',
-    '머핀 / 우유속에바나나'
-  ]
+export async function getTodayMeal () {
+  const res = await axios.get('/dimibobes/today/')
+
+  switch (res.status) {
+    case 404:
+      return { breakfast: 'X', lunch: 'X', dinner: 'X', snack: 'X' }
+    case 200:
+  }
+
+  return res.data
 }

@@ -39,7 +39,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../scss/helpers/typography';
 
 .meal-item {

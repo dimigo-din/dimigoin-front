@@ -1,28 +1,45 @@
-import { getAccessToken } from '../../../src/api'
+import { register, getAccessToken, verifyStudent } from '../../../src/api'
+import { setAuthorizationToken, parseToken } from '../../../src/util'
+import axios from '../../../src/api/axios'
 import * as types from './mutation-types'
 
 export default {
   state: {
     token: window.localStorage.getItem('token'),
-    isLoggedIn: !!window.localStorage.getItem('token')
+    isLoggedIn: !!window.localStorage.getItem('token'),
+    needVerify: false
   },
 
   mutations: {
-    [types.LOGIN_SUCCESS] (state, { token }) {
-      this.token = token
+    [types.LOGIN] (state, { token, needVerify }) {
+      window.localStorage.setItem('token', token)
+      setAuthorizationToken(axios, token)
+
+      state.needVerify = needVerify
+      state.token = token
       state.isLoggedIn = true
     },
 
     [types.LOGOUT] (state) {
+      window.localStorage.removeItem('token')
+      setAuthorizationToken(axios, '')
+
       state.token = null
       state.isLoggedIn = false
     }
   },
 
   actions: {
+    async register (ctx, payload) {
+      await register(payload)
+    },
+
+    async verify (ctx, { authcode }) {
+      await verifyStudent(authcode)
+    },
+
     async login ({ commit }, { id, password }) {
-      const token = await getAccessToken(id, password)
-      console.log(id, password, 'hi')
+      const { token, needVerify } = await getAccessToken(id, password)
 
       if (!token) {
         const err = new Error()
@@ -31,12 +48,23 @@ export default {
         throw err
       }
 
-      window.localStorage.setItem('token', token)
-      commit(types.LOGIN_SUCCESS, { token })
+      const info = parseToken(token)
+
+      commit(types.LOGIN, { token, needVerify })
+      commit(types.UPDATE_INFO, {
+        idx: info.idx,
+        name: info.name,
+        userType: info['user_type'],
+        email: info.email,
+        photoUrl: info.photo,
+        serial: info.serial,
+        grade: info.grade,
+        klass: info.klass,
+        number: info.number
+      })
     },
 
     logout ({ commit }) {
-      window.localStorage.clear()
       commit(types.LOGOUT)
     }
   }
