@@ -1,11 +1,4 @@
-import { superstruct } from 'superstruct'
 import axios from './axios'
-
-const struct = superstruct({
-  types: {
-    email: v => /.+@.+\..+/.test(v)
-  }
-})
 
 /**
  * @param id

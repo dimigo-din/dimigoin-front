@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js build
+  /usr/bin/node /usr/share/yarn/bin/yarn.js lint:js
 
 PATH: 
   /home/chalk/.rbenv/bin:/home/chalk/.config/yarn/global/node_modules/.bin:/snap/bin:/home/chalk/bin:/usr/local/bin:/home/chalk/.rbenv/bin:/home/chalk/.config/yarn/global/node_modules/.bin:/snap/bin:/home/chalk/bin:/usr/local/bin:/home/chalk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-9-oracle/bin:/usr/lib/jvm/java-9-oracle/db/bin
@@ -49,7 +49,7 @@ npm manifest:
       "babel-cli": "^6.26.0",
       "babel-core": "^6.26.0",
       "babel-eslint": "^8.2.2",
-      "babel-loader": "^8.0.0-beta.0",
+      "babel-loader": "^7.1.4",
       "babel-preset-env": "^1.6.1",
       "babel-preset-stage-3": "^6.24.1",
       "cross-env": "^5.1.3",
@@ -657,9 +657,9 @@ Lockfile:
       babel-runtime "^6.22.0"
       babel-template "^6.24.1"
   
-  babel-loader@^8.0.0-beta.0:
-    version "8.0.0-beta.2"
-    resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.0.0-beta.2.tgz#4d5b67c964dc8c9cba866fd13d6b90df3acf8723"
+  babel-loader@7:
+    version "7.1.4"
+    resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.1.4.tgz#e3463938bd4e6d55d1c174c5485d406a188ed015"
     dependencies:
       find-cache-dir "^1.0.0"
       loader-utils "^1.0.2"
@@ -7653,9 +7653,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: sh
-  Arguments: -c cross-env NODE_ENV=production webpack --progress --hide-modules
+  Arguments: -c eslint . --ext .js,.vue
   Directory: /home/chalk/github/dimigoin-front
   Output:
   

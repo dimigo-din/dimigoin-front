@@ -10,7 +10,6 @@ import store from './store'
 import router from './router'
 
 sync(store, router)
-console.log('wowowo')
 
 Vue.directive('ripple', Ripple)
 Vue.use(swal)
