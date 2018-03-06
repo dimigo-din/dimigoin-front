@@ -116,6 +116,7 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
+
   &__input {
     margin-bottom: 1rem;
   }

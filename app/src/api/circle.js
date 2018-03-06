@@ -9,5 +9,5 @@ export async function getCircleList () {
     case 200:
   }
 
-  const {  } = res.data['circle_apply']
+  const { } = res.data['circle_apply']
 }

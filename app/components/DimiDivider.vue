@@ -30,8 +30,8 @@ export default {
 
 <style lang="scss">
 .divider {
-  position: absolute;
   border: 0;
+  position: absolute;
 
   &--horizontal {
     border-top: solid 1px $gray-lighten;
