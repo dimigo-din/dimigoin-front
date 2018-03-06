@@ -1,16 +1,13 @@
 {
-    "presets": [
-        [
-            "env",
-            {
-                "targets": {
-                    "uglify": true,
-                    "ie": 10,
-                    "chrome": 50,
-                    "safari": 10
-                }
-            }
-        ],
-        "stage-3"
-    ]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["last 2 versions", "safari >= 7"]
+        }
+      }
+    ],
+    "@babel/preset-stage-3"
+  ]
 }
