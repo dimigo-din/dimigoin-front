@@ -72,12 +72,14 @@ export default {
             placeholder="아이디"
             type="text"
             v-model="id"
+            @enter="confirmLoggingIn"
           />
           <dimi-input
             class="c-login__input"
             placeholder="비밀번호"
             type="password"
             v-model="password"
+            @enter="confirmLoggingIn"
           />
           <dimi-button
             class="c-login__submit-btn"

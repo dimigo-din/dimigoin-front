@@ -50,7 +50,8 @@ export default {
       :class="computedClass"
       v-model="innerValue"
       :type="type"
-      :placeholder="placeholder">
+      :placeholder="placeholder"
+      @keyup.enter="$emit('enter')">
     <p
       v-if="errorMessage"
       class="input__error-message"
