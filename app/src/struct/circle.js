@@ -19,7 +19,7 @@ export const Circle = (circle) => {
 }
 
 export const CircleApplicant = (applicant) => {
-  return _CircleApply({
+  return _CircleApplicant({
     idx: applicant['idx'],
     circleIdx: applicant['circle_idx'],
     userIdx: applicant['user_idx'],

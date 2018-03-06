@@ -21,6 +21,7 @@ import RequestAfterschool from './paths/request/RequestAfterschool.vue'
 import NotFound from './NotFound.vue'
 
 import { withPrefix } from '../src/util'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -129,8 +130,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const { account: { auth: { isLoggedIn } }} = store.state
+
   if (to.meta.title) document.title = to.meta.title
-  next()
+
+  if (isLoggedIn || /login|register/.test(to.path)) {
+    next()
+    return
+  }
+
+  next({ name: 'login' })
 })
 
 export default router
