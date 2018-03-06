@@ -22,6 +22,7 @@ export default {
 
     [types.LOGOUT] (state) {
       window.localStorage.removeItem('token')
+      window.localStorage.removeItem('vuex')
       setAuthorizationToken(axios, '')
 
       state.token = null
