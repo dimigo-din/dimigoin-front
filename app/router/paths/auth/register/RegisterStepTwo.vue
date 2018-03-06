@@ -36,6 +36,10 @@ export default {
     }
   },
 
+  created () {
+    if (Object.keys(this.mergeFormData()).length < 8) this.$router.push({ name: 'register/step/1' })
+  },
+
   methods: {
     previous () {
       this.$router.push({
