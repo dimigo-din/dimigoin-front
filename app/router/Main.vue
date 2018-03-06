@@ -45,10 +45,10 @@ export default {
     <h1 class="brand"><span class="icon-dimigo"/>DIMIGOIN</h1>
     <div class="info">
       <div class="column">
-        <section class="info__profile section">
-          <h2 class="section__title">프로필</h2>
+        <section class="info__profile info-section">
+          <h2 class="info-section__title">프로필</h2>
           <dimi-card
-            class="info__profile section__content"
+            class="info__profile info-section__content"
             shadow
           >
             <div class="profile-info">
@@ -66,10 +66,10 @@ export default {
             </div>
           </dimi-card>
         </section>
-        <section class="info__notification section">
-          <h2 class="section__title">알림</h2>
+        <section class="info__notification info-section">
+          <h2 class="info-section__title">알림</h2>
           <dimi-card
-            class="info__notice section__content"
+            class="info__notice info-section__content"
             shadow
           >
             새로운 디미고인에 오신 것을 환영합니다!
@@ -77,10 +77,10 @@ export default {
         </section>
       </div>
       <div class="column">
-        <section class="info__meal section">
-          <h2 class="section__title">오늘의 급식</h2>
+        <section class="info__meal info-section">
+          <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
-            class="info__meal section__content"
+            class="info__meal info-section__content"
             shadow
           >
             <dimi-meal/>
@@ -91,8 +91,8 @@ export default {
     </div>
     <div class="service">
       <div class="column">
-        <section class="section">
-          <h2 class="section__title">서비스</h2>
+        <section class="info-section">
+          <h2 class="info-section__title">서비스</h2>
           <div class="service__cards">
             <dimi-card
               v-for="(service, index) in serviceList"
@@ -129,7 +129,7 @@ export default {
   margin: 0.5rem;
 }
 
-.section {
+.info-section {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
