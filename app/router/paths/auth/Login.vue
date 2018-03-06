@@ -37,8 +37,9 @@ export default {
         this.pending = true
         await this.login({ id: this.id, password: this.password })
       } catch (err) {
-        console.log(err)
-        this.$swal('에러!', err.message, 'error')
+        await this.$swal('에러!', err.message, 'error')
+        this.pending = false
+        return
       }
 
       this.pending = false
