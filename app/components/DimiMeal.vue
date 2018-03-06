@@ -9,6 +9,7 @@ export default {
 
   filters: {
     beautifulMeal (value) {
+      if (!value) return 'X'
       return value.split('/').join(' | ')
     }
   },
