@@ -3,28 +3,16 @@ export default {
   name: 'DimiBadge',
 
   props: {
-    aloes: {
-      type: Boolean,
-      default: false
-    },
-    orange: {
-      type: Boolean,
-      default: false
-    },
-    gray: {
-      type: Boolean,
-      default: false
+    color: {
+      type: String,
+      default: 'aloes',
+      validator: c => ['aloes', 'orange', 'gray'].includes(c)
     }
   },
 
   computed: {
     computedClass () {
-      return {
-        'badge': true,
-        'badge--aloes': this.aloes,
-        'badge--orange': this.orange,
-        'badge--gray': this.gray
-      }
+      return ['badge', 'badge--' + this.color]
     }
   }
 }
@@ -37,7 +25,10 @@ export default {
 <style lang="scss">
 .badge {
   font-size: 14px;
-  padding: 0.3em 1.5em;
+  line-height: 0.86;
+  padding: 0.3em 1.1em;
+  border-radius: 10px;
+  text-align: center;
 
   &--aloes {
     background-color: $aloes;
@@ -50,7 +41,7 @@ export default {
   }
 
   &--gray {
-    background-color: $gray;
+    background-color: $gray-lighter;
     color: $gray-dark;
   }
 }

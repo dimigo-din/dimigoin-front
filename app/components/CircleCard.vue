@@ -1,10 +1,11 @@
 <script>
 import DimiCard from './DimiCard.vue'
+import DimiBadge from './DimiBadge.vue'
 
 export default {
   name: 'CircleCard',
 
-  components: { DimiCard },
+  components: { DimiCard, DimiBadge },
 
   props: {
     circle: {
@@ -15,7 +16,26 @@ export default {
 
   computed: {
     hasBadge () {
-      return true // TODO
+      const { status } = this.circle
+      return ['passed', 'failed', 'waiting'].includes(status) // TODO
+    }
+  },
+
+  methods: {
+    colorOf ({ status }) {
+      switch (status) {
+        case 'passed': return 'aloes'
+        case 'failed': return 'orange'
+        case 'waiting': return 'gray'
+      }
+    },
+
+    colorNameOf ({ status }) {
+      switch (status) {
+        case 'passed': return '합격'
+        case 'failed': return '불합격'
+        case 'waiting': return '보류'
+      }
     }
   }
 }
@@ -23,11 +43,25 @@ export default {
 
 <template>
   <dimi-card class="circle-card">
-    <div class="circle-card__info"></div>
-    <div class="circle-card__description"></div>
-    <div
+    <div class="circle-card__info">
+      <img
+        class="circle-card__logo"
+        :title="circle.title || '동아리 로고 이미지'"
+        :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
+      >
+
+      <div>
+        <h4 class="circle-card__name">{{ circle.name }}</h4>
+        <h5 class="circle-card__category">{{ circle.category }}</h5>
+      </div>
+    </div>
+    <div class="circle-card__description">{{ circle.description }}</div>
+    <dimi-badge
       v-if="hasBadge"
-      class="circle-card__badge"></div>
+      class="circle-card__badge"
+      :color="colorOf(circle)">
+      <slot>{{ colorNameOf(circle) }}</slot>
+    </dimi-badge>
   </dimi-card>
 </template>
 
@@ -37,12 +71,31 @@ export default {
     display: flex;
   }
 
-  &__description {
+  &__logo {
+    margin-right: 20px;
+  }
 
+  &__name {
+    margin-top: 12px;
+  }
+
+  &__category {
+    size: 14px;
+    margin-top: 6px;
+    color: $gray-light;
+  }
+
+  &__description {
+    color: $black;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-top: 12px;
   }
 
   &__badge {
-
+    max-width: 40px;
+    margin-left: auto;
   }
 }
+
 </style>
