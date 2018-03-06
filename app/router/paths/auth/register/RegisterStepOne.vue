@@ -128,7 +128,7 @@ export default {
         />
       </div>
       <div class="register__nav">
-        <div class="register__nav__start"></div>
+        <div class="register__nav__start"/>
         <div class="register__circles">
           <div class="register__nav__circle register__nav__circle--active"/>
           <div class="register__nav__circle"/>

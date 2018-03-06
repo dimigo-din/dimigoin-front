@@ -35,9 +35,9 @@ export default {
 
 <style lang="scss">
 .c-card {
+  background-color: $white;
   border-radius: 6px;
   padding: 1.25rem;
-  background-color: $white;
   position: relative;
 
   &--shadow {

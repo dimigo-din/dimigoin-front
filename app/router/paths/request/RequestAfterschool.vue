@@ -13,9 +13,7 @@ export default {
     <h1 slot="header">
       <span class="icon-ball"/>2018년 상반기 방과 후 활동 신청
     </h1>
-    <dimi-card slot="main">
-
-    </dimi-card>
+    <dimi-card slot="main"/>
   </content-wrapper>
 </template>
 

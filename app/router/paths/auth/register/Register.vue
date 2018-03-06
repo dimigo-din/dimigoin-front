@@ -43,18 +43,18 @@ export default {
 @import '../../../../scss/helpers/typography';
 
 .register {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
 
   &__title {
     @extend %h-text-xl;
 
     @include font-extra-bold;
+    margin-top: 5rem;
 
     user-select: none;
-    margin-top: 5rem;
     word-spacing: 0.325em;
   }
 
@@ -64,10 +64,10 @@ export default {
   }
 
   &__content {
-    margin-top: 6rem;
-    display: flex;
     align-items: center;
+    display: flex;
     height: 50%;
+    margin-top: 6rem;
   }
 
   &__card {
@@ -80,10 +80,11 @@ export default {
 }
 
 .form__field {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   margin: 1.5rem 0;
+
   .register__input {
     flex: 1 0;
     font-size: 14px;
@@ -91,19 +92,19 @@ export default {
 }
 
 .form__label {
-  font-size: 14px;
-  text-align: start;
   @extend %h-text-gray-dark;
   @include font-regular;
+  font-size: 14px;
   padding: 0.5em 0;
+  text-align: start;
 }
 
 .gender-radio {
-  flex: 1 0;
   display: flex;
-  position: relative;
+  flex: 1 0;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 
   &__item {
     @include font-bold;
@@ -149,13 +150,13 @@ export default {
   position: relative;
 
   &__circle {
-    position: absolute;
-    width: 12px;
+    background-color: $red;
+    border-radius: 50%;
     height: 12px;
     margin: 0.5rem;
-    border-radius: 50%;
-    background-color: $red;
     opacity: 0.3;
+    position: absolute;
+    width: 12px;
   }
 
   &__circle--active {
@@ -169,13 +170,13 @@ export default {
   }
 
   &__title {
-    @include font-bold;
 
     @extend %h-text-l;
     @extend %h-text-black;
+    @include font-bold;
+    margin-top: 2rem;
 
     user-select: none;
-    margin-top: 2rem;
   }
 }
 </style>

@@ -69,12 +69,12 @@ export default {
 
 .input {
   appearance: none;
-  width: 100%;
   background-color: $gray-lighten;
   border: 0;
   border-radius: 20px;
   font-family: 'NanumSquareRound', sans-serif;
   padding: 0.75em 1.75em;
+  width: 100%;
 
   &::placeholder {
     color: $gray;
@@ -85,11 +85,11 @@ export default {
   }
 
   &__error-message {
-    position: absolute;
-    color: $red;
-    padding-left: 1em;
-    margin-top: 0.375em;
     @extend %h-text-s;
+    color: $red;
+    margin-top: 0.375em;
+    padding-left: 1em;
+    position: absolute;
   }
 }
 

@@ -35,10 +35,10 @@ export default {
 
 <style lang="scss" scoped>
 .not-found {
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   height: 100vh;
+  justify-content: center;
   user-select: none;
 
   &__col {
@@ -54,22 +54,22 @@ export default {
   }
 
   &__message {
-    font-size: 16px;
     color: $black;
+    font-size: 16px;
+    line-height: 1.6;
     margin-top: 3.25rem;
     width: 14em;
     word-break: keep-all;
-    line-height: 1.6;
   }
 
   &__back {
     @include font-bold;
+    color: $red;
+    cursor: pointer;
+    display: block;
 
     font-size: 16px;
-    display: block;
-    color: $red;
     margin-top: 1rem;
-    cursor: pointer;
   }
 }
 </style>

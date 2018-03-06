@@ -62,6 +62,7 @@ export default {
             <div class="info__profile__nav">
               <a
                 class="icon-logout logout-btn"
+                title="로그아웃"
                 @click="logout"/>
             </div>
           </dimi-card>
@@ -174,9 +175,11 @@ export default {
 
 .profile-info {
   font-size: 20px;
+
   &__serial {
     color: $gray;
   }
+
   &__name {
     color: $black;
   }
@@ -184,17 +187,18 @@ export default {
 
 .service__cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 .service__card {
+  align-items: center;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  cursor: pointer;
+
   &__icon {
     @extend %h-text-3xl;
   }
@@ -207,15 +211,15 @@ export default {
   }
 
   &__description {
-    font-size: 14px;
 
     color: $gray;
+    font-size: 14px;
     margin-top: 0.85rem;
     word-break: keep-all;
   }
 }
 
-logout-btn {
+.logout-btn {
   cursor: pointer;
 }
 </style>
