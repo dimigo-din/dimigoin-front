@@ -18,11 +18,10 @@ export default {
     hasBadge () {
       const { status } = this.circle
       return ['passed', 'failed', 'waiting'].includes(status) // TODO
-    }
-  },
+    },
 
-  methods: {
-    colorOf ({ status }) {
+    color () {
+      const { status } = this.circle
       switch (status) {
         case 'passed': return 'aloes'
         case 'failed': return 'orange'
@@ -30,12 +29,20 @@ export default {
       }
     },
 
-    colorNameOf ({ status }) {
+    colorName () {
+      const { status } = this.circle
       switch (status) {
         case 'passed': return '합격'
         case 'failed': return '불합격'
         case 'waiting': return '보류'
       }
+    }
+  },
+
+  methods: {
+    openModal () {
+      // TODO
+      alert(this.circle.name)
     }
   }
 }
@@ -48,19 +55,20 @@ export default {
         class="circle-card__logo"
         :title="circle.title || '동아리 로고 이미지'"
         :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
+        @click="openModal"
       >
 
       <div>
-        <h4 class="circle-card__name">{{ circle.name }}</h4>
-        <h5 class="circle-card__category">{{ circle.category }}</h5>
+        <h4 class="circle-card__name" @click="openModal">{{ circle.name }}</h4>
+        <h5 class="circle-card__category" @click="openModal">{{ circle.category }}</h5>
       </div>
     </div>
-    <div class="circle-card__description">{{ circle.description }}</div>
+    <div class="circle-card__description" @click="openModal">{{ circle.description }}</div>
     <dimi-badge
       v-if="hasBadge"
       class="circle-card__badge"
-      :color="colorOf(circle)">
-      <slot>{{ colorNameOf(circle) }}</slot>
+      :color="color">
+      <slot>{{ colorName }}</slot>
     </dimi-badge>
   </dimi-card>
 </template>
