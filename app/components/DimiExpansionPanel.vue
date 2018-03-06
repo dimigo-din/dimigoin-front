@@ -4,7 +4,11 @@ export default {
 }
 </script>
 
-<template/>
+<template>
+  <div>
+    <!-- TODO -->
+  </div>
+</template>
 
 <style lang="scss">
 

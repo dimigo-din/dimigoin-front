@@ -35,7 +35,7 @@ export default {
 
   methods: {
     clickBadge () {
-      if (!this.executable) return
+      // if (!this.executable) return
       // TODO show dropdown or just input event
     }
   }
