@@ -11,9 +11,9 @@ export default {
   <header>
     <dimi-navbar>
       <router-link
-        class="brand"
         slot="brand"
         :to="{ name: 'main' }"
+        class="brand"
       >
         <span class="icon-dimigo"/>DIMIGOIN
       </router-link>

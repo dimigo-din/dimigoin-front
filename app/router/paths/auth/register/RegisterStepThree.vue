@@ -47,17 +47,17 @@ export default {
           class="form__label"
           for="input-authcode">인증 코드</label>
         <dimi-input
-          class="register__input"
           id="input-authcode"
-          placeholder="인증코드를 정확하게 입력하세요"
           v-model="formData.authcode.value"
           :error-message="formData.authcode.error"
+          class="register__input"
+          placeholder="인증코드를 정확하게 입력하세요"
         />
       </div>
       <div class="register__final-btn">
         <dimi-button
-          @click="confirm"
-          :loading="pending">인증</dimi-button>
+          :loading="pending"
+          @click="confirm">인증</dimi-button>
       </div>
     </div>
   </dimi-card>

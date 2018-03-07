@@ -64,9 +64,9 @@ export default {
 
 <template>
   <a
+    v-ripple="'rgba(255, 255, 255, .2)'"
     :class="computedClass"
     :href="href"
-    v-ripple="'rgba(255, 255, 255, .2)'"
     @click="click"
   >
     <dimi-loader

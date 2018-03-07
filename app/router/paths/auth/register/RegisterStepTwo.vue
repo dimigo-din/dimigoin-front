@@ -91,11 +91,11 @@ export default {
           class="form__label"
           for="input-id">아이디</label>
         <dimi-input
-          class="register__input"
           id="input-id"
-          placeholder="아이디를 입력하세요"
           v-model="formData.id.value"
           :error-message="formData.id.error"
+          class="register__input"
+          placeholder="아이디를 입력하세요"
         />
       </div>
       <div class="form__field">
@@ -103,12 +103,12 @@ export default {
           class="form__label"
           for="input-password">비밀번호</label>
         <dimi-input
-          class="register__input"
           id="input-password"
-          placeholder="비밀번호를 입력하세요"
-          type="password"
           v-model="formData.password.value"
           :error-message="formData.password.error"
+          type="password"
+          class="register__input"
+          placeholder="비밀번호를 입력하세요"
         />
       </div>
       <div class="form__field">
@@ -116,12 +116,12 @@ export default {
           class="form__label"
           for="input-repassword">비밀번호 확인</label>
         <dimi-input
-          class="register__input"
           id="input-repassword"
-          placeholder="비밀번호를 한번 더 입력하세요"
-          type="password"
           v-model="formData.repassword.value"
           :error-message="formData.repassword.error"
+          type="password"
+          class="register__input"
+          placeholder="비밀번호를 한번 더 입력하세요"
         />
       </div>
       <div class="register__nav">

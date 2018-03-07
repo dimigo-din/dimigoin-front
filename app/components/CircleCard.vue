@@ -52,22 +52,30 @@ export default {
   <dimi-card class="circle-card">
     <div class="circle-card__info">
       <img
-        class="circle-card__logo"
-        :title="circle.title || '동아리 로고 이미지'"
         :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
-        @click="openModal"
-      >
+        :title="circle.title || '동아리 로고 이미지'"
+        class="circle-card__logo"
+        @click="openModal">
 
       <div>
-        <h4 class="circle-card__name" @click="openModal">{{ circle.name }}</h4>
-        <h5 class="circle-card__category" @click="openModal">{{ circle.category }}</h5>
+        <h4
+          class="circle-card__name"
+          @click="openModal">{{ circle.name }}</h4>
+
+        <h5
+          class="circle-card__category"
+          @click="openModal">{{ circle.category }}</h5>
       </div>
     </div>
-    <div class="circle-card__description" @click="openModal">{{ circle.description }}</div>
+
+    <div
+      class="circle-card__description"
+      @click="openModal">{{ circle.description }}</div>
+
     <dimi-badge
       v-if="hasBadge"
-      class="circle-card__badge"
-      :color="color">
+      :color="color"
+      class="circle-card__badge">
       <slot>{{ colorName }}</slot>
     </dimi-badge>
   </dimi-card>

@@ -50,8 +50,8 @@ export default {
       <span class="icon-club"/>2018년 동아리 가입 신청
     </h1>
     <div
-      class="circle"
-      slot="main">
+      slot="main"
+      class="circle">
       <section class="circle__section">
         <h2 class="circle__title">신청한 동아리</h2>
         <div class="circle__circles">

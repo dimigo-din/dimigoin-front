@@ -16,7 +16,7 @@ export default {
 
   mutations: {
     [types.UPDATE_INFO] (state, payload) {
-      Object.keys(payload).forEach(v => state[v] = payload[v])
+      Object.keys(payload).forEach(v => (state[v] = payload[v]))
     }
   }
 }
