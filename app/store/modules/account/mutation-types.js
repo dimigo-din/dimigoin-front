@@ -1,4 +1,5 @@
 export const REGISTER = 'ACCOUNT:REGISTER'
+export const VERIFY = 'ACCOUNT:VERIFY'
 
 export const LOGIN = 'ACCOUNT:LOGIN_SUCCESS'
 export const LOGOUT = 'ACCOUNT:LOGOUT'

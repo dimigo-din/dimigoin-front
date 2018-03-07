@@ -130,7 +130,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const { account: { auth: { isLoggedIn } }} = store.state
+  const { account: { auth: { isLoggedIn } } } = store.state
 
   if (to.meta.title) document.title = to.meta.title
 

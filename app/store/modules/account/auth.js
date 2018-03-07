@@ -11,6 +11,10 @@ export default {
   },
 
   mutations: {
+    [types.VERIFY] (state) {
+      state.needVerify = false
+    },
+
     [types.LOGIN] (state, { token, needVerify }) {
       window.localStorage.setItem('token', token)
       setAuthorizationToken(axios, token)
@@ -35,8 +39,9 @@ export default {
       await register(payload)
     },
 
-    async verify (ctx, { authcode }) {
+    async verify ({ commit }, { authcode }) {
       await verifyStudent(authcode)
+      commit(types.VERIFY)
     },
 
     async login ({ commit }, { id, password }) {

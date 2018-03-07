@@ -3,7 +3,10 @@
 @import './helpers/all';
 @import './components/all';
 
-.root {
+html {
   background-color: $bg;
+}
+
+.root {
   font-family: 'NanumSquareRound', system-ui, sans-serif;
 }

@@ -11,15 +11,16 @@ export default {
   <header>
     <dimi-navbar>
       <router-link
-        class="brand"
         slot="brand"
         :to="{ name: 'main' }"
+        class="brand"
       >
         <span class="icon-dimigo"/>DIMIGOIN
       </router-link>
-      <div slot="end">
-        디미인
-      </div>
+      <span slot="end">
+        {{ $store.state.account.informations.name }}
+        <span class="icon-logout"/>
+      </span>
     </dimi-navbar>
   </header>
 </template>

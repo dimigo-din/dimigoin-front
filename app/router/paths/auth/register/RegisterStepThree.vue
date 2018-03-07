@@ -21,7 +21,7 @@ export default {
   },
 
   created () {
-    if (!this.$store.state.account.isLoggedIn) this.$router.back()
+    if (!this.$store.state.account.auth.isLoggedIn) this.$router.back()
   },
 
   methods: {

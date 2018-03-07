@@ -7,27 +7,15 @@ export default {
       default: '',
       required: true
     }
-  },
-  computed: {
-    computedClass () {
-      return {
-        'menu-item': true,
-        'menu-item--disable': !this.isActive,
-        'menu-item--active': this.isActive
-      }
-    },
-    isActive () {
-      const { path, name } = this.$store.state.route
-      return path === this.to || name === this.to.name
-    }
   }
 }
 </script>
 
 <template>
   <router-link
-    :class="computedClass"
-    :to="to"><slot/></router-link>
+    :to="to"
+    class="menu-item"
+    exact-active-class="menu-item--active"><slot/></router-link>
 </template>
 
 <style lang="scss">
@@ -35,19 +23,16 @@ export default {
 
 .menu-item {
   @extend %h-text-r;
+  @extend %h-text-gray-light;
   @include font-bold;
   border-radius: 0 4em 4em 0;
   display: block;
   padding: 0.6em 0 0.6em 3em;
   text-decoration: none;
 
-  &--disable {
-    @extend %h-text-gray-light;
-  }
-
-  &--active {
+  &--active.menu-item {
     @extend %h-text-white;
-    background-color: $red;
+    background-color: $red !important;
   }
 }
 </style>

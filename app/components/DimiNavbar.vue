@@ -27,7 +27,7 @@ export default {
   box-shadow: 0 4px 16px 0 rgba(21, 19, 19, 0.1);
   display: flex;
   min-height: 3.5rem;
-  width: 100vw;
+  width: 100%;
 
   &__wrapper {
     display: flex;
@@ -41,15 +41,17 @@ export default {
 
   &__menu {
     display: flex;
+    flex: 1 0;
     justify-content: space-between;
+    align-items: center;
   }
 
   &__start {
-    justify-self: flex-start;
+
   }
 
   &__end {
-    justify-self: flex-end;
+
   }
 }
 </style>
