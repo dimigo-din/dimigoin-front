@@ -67,23 +67,23 @@ export default {
         <h2 class="section__title">로그인</h2>
         <div class="section__content section__content--mt">
           <dimi-input
+            v-model="id"
             class="c-login__input"
             placeholder="아이디"
             type="text"
-            v-model="id"
             @enter="confirmLoggingIn"
           />
           <dimi-input
+            v-model="password"
             class="c-login__input"
             placeholder="비밀번호"
             type="password"
-            v-model="password"
             @enter="confirmLoggingIn"
           />
           <dimi-button
-            class="c-login__submit-btn"
             :loading="pending"
             large
+            class="c-login__submit-btn"
             @click="confirmLoggingIn"
           >
             LOGIN

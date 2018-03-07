@@ -49,17 +49,20 @@ export default {
 <template>
   <div class="meal-list">
     <dimi-meal-item
-      meal="아침"
-      :current="isBetween(0, 815)">{{ breakfast | beautifulMeal }}</dimi-meal-item>
+      :current="isBetween(0, 815)"
+      meal="아침">{{ breakfast | beautifulMeal }}</dimi-meal-item>
+
     <dimi-meal-item
-      meal="점심"
-      :current="isBetween(816, 1340)">{{ lunch | beautifulMeal }}</dimi-meal-item>
+      :current="isBetween(816, 1340)"
+      meal="점심">{{ lunch | beautifulMeal }}</dimi-meal-item>
+
     <dimi-meal-item
-      meal="저녁"
-      :current="isBetween(1341, 1920)">{{ dinner | beautifulMeal }}</dimi-meal-item>
+      :current="isBetween(1341, 1920)"
+      meal="저녁">{{ dinner | beautifulMeal }}</dimi-meal-item>
+
     <dimi-meal-item
-      meal="간식"
-      :current="isBetween(1921, 2140)">{{ snack | beautifulMeal }}</dimi-meal-item>
+      :current="isBetween(1921, 2140)"
+      meal="간식">{{ snack | beautifulMeal }}</dimi-meal-item>
   </div>
 </template>
 
