@@ -35,9 +35,10 @@ export default {
     colorName () {
       const { status } = this.circle
       switch (status) { // TODO
-        case 'passed': return '합격'
+        case 'final': return '최종 결정'
+        case 'accept': return '합격'
         case 'failed': return '불합격'
-        case 'waiting': return '보류'
+        case 'waiting': return '대기 중'
       }
     }
   },
