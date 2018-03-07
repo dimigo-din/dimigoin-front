@@ -1,8 +1,16 @@
 import axios from './axios'
-import { CircleApplicant } from '../struct/circle'
+import { Circle, CircleApplicant } from '../struct/circle'
 
 export async function getCircles () {
-  return []
+  const res = await axios.get('/circles/')
+
+  switch (res.status) {
+    case 404:
+      throw new Error('동아리가 없습니다.')
+    case 200:
+  }
+
+  return res.data['circles'].map(Circle)
 }
 
 export async function getCircleApplicant (circleIdx) {
@@ -10,7 +18,7 @@ export async function getCircleApplicant (circleIdx) {
 
   switch (res.status) {
     case 404:
-      throw new Error('데이터가 없습니다.')
+      throw new Error('동아리 지원자가 없습니다.')
     case 200:
   }
 
