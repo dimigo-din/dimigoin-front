@@ -156,11 +156,13 @@ export default {
 }
 
 .info {
+  min-height: 480px;
   display: flex;
 
   &__profile {
     display: flex;
     justify-content: space-between;
+    min-height: 18px;
   }
 
   &__notification,
