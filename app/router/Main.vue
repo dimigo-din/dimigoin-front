@@ -20,12 +20,12 @@ export default {
 
   async mounted () {
     if (this.serviceList.length === 0) await this.fetchServiceList()
-    this.setServiceCardHeight()
-    window.addEventListener('resize', this.setServiceCardHeight)
+    this.updateServiceCardHeight()
+    window.addEventListener('resize', this.updateServiceCardHeight)
   },
 
   methods: {
-    setServiceCardHeight () {
+    updateServiceCardHeight () {
       const cards = document.querySelectorAll('.service__card')
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
     },
@@ -87,14 +87,13 @@ export default {
         <section class="info__meal info-section">
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
-            class="info__meal info-section__content"
+            class="info-section__content"
             shadow
           >
             <dimi-meal/>
           </dimi-card>
         </section>
       </div>
-
     </div>
     <div class="service">
       <div class="column">
@@ -171,6 +170,12 @@ export default {
     display: block;
   }
 
+  .column {
+    @include until($tablet) {
+      display: block;
+    }
+  }
+
   &__profile {
     display: flex;
     justify-content: space-between;
@@ -179,6 +184,10 @@ export default {
 
   &__notification,
   &__meal {
+    @include until($tablet) {
+      display: block;
+    }
+
     flex: 1;
   }
 
@@ -204,6 +213,9 @@ export default {
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  @include until($tablet) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
 }
 
 .service__card {
@@ -214,27 +226,38 @@ export default {
   justify-content: center;
 
   &--disabled.service__card {
-    background-color: $gray-lighten;
-    cursor: not-allowed;
+    display: none;
   }
 
   &__icon {
-    @extend %h-text-3xl;
+    font-size: 64px;
+    @include until($tablet) {
+      font-size: 42px;
+    }
   }
 
   &__title {
-    @extend %h-text-l;
+    font-size: 24px;
+    word-break: keep-all;
+    text-align: center;
     @include font-extra-bold;
+
+    @include until($tablet) {
+      font-size: 16px;
+    }
 
     margin-top: 1.2rem;
   }
 
   &__description {
-
     color: $gray;
     font-size: 14px;
     margin-top: 0.85rem;
     word-break: keep-all;
+    text-align: center;
+    @include until($tablet) {
+      display: none;
+    }
   }
 }
 
