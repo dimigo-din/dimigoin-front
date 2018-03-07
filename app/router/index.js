@@ -15,6 +15,7 @@ import Login from './paths/auth/Login.vue'
 
 import Request from './paths/request/Request.vue'
 import RequestInfo from './paths/request/RequestInfo.vue'
+import RequestDraft from './paths/request/RequestDraft.vue'
 import RequestCircle from './paths/request/RequestCircle.vue'
 import RequestAfterschool from './paths/request/RequestAfterschool.vue'
 
@@ -92,11 +93,6 @@ const router = new VueRouter({
           meta: { title: '신청 > 나의 신청 현황' }
         },
         {
-          path: 'nosh',
-          name: 'request/nosh',
-          meta: { title: '신청 > 간식 신청' }
-        },
-        {
           path: 'circle',
           name: 'request/circle',
           component: RequestCircle,
@@ -106,22 +102,23 @@ const router = new VueRouter({
           path: 'afterschool',
           name: 'request/afterschool',
           component: RequestAfterschool,
-          meta: { title: '신청 > 방과 후 활동 신청' }
+          meta: { title: '신청 > 방과 후 활동 신청', draft: true }
         },
         {
           path: 'counsel',
           name: 'request/counsel',
-          meta: { title: '신청 > 상담 신청' }
+          meta: { title: '신청 > 상담 신청', draft: true }
         },
         {
           path: 'internet',
           name: 'request/internet',
-          meta: { title: '신청 > 인강실 신청' }
+          meta: { title: '신청 > 인강실 신청', draft: true }
         },
         {
-          path: 'stay',
-          name: 'request/stay',
-          meta: { title: '신청 > 잔류 신청' }
+          path: 'draft',
+          name: 'request/draft',
+          component: RequestDraft,
+          meta: { title: '신청 > 준비 중' }
         }
       ]
     },
@@ -141,17 +138,15 @@ const router = new VueRouter({
   ]
 })
 
+const authRequired = path =>
+  !store.state.account.auth.isLoggedIn && !/login|register/.test(path)
+
 router.beforeEach((to, from, next) => {
-  const { account: { auth: { isLoggedIn } } } = store.state
-
   if (to.meta.title) document.title = to.meta.title
+  if (authRequired(to.path)) return void next({ name: 'login' })
+  if (to.meta.draft) return void next({ name: 'request/draft' })
 
-  if (isLoggedIn || /login|register/.test(to.path)) {
-    next()
-    return
-  }
-
-  next({ name: 'login' })
+  next()
 })
 
 export default router
