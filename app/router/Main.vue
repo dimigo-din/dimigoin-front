@@ -18,8 +18,11 @@ export default {
     ...mapState('service', ['serviceList'])
   },
 
+  async created () {
+    await this.fetchServiceList()
+  },
+
   async mounted () {
-    if (this.serviceList.length === 0) await this.fetchServiceList()
     this.updateServiceCardHeight()
     window.addEventListener('resize', this.updateServiceCardHeight)
   },
