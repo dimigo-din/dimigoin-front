@@ -6,8 +6,11 @@ import * as types from './mutation-types'
 export default {
   state: {
     token: window.localStorage.getItem('token'),
-    isLoggedIn: !!window.localStorage.getItem('token'),
     needVerify: false
+  },
+
+  getters: {
+    isLoggedIn: state => !!state.token
   },
 
   mutations: {
