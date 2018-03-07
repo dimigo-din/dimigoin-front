@@ -2,10 +2,11 @@
 import DimiCard from './DimiCard.vue'
 import DimiBadge from './DimiBadge.vue'
 import DimiModal from './DimiModal.vue'
+import DimiButton from './DimiButton.vue'
 
 export default {
   name: 'CircleCard',
-  components: { DimiCard, DimiBadge, DimiModal },
+  components: { DimiCard, DimiBadge, DimiModal, DimiButton },
 
   props: {
     circle: {
@@ -13,6 +14,8 @@ export default {
       default: () => ({})
     }
   },
+
+  data: () => ({ submitted: false }), // TODO
 
   computed: {
     hasBadge () {
@@ -41,8 +44,12 @@ export default {
 
   methods: {
     openModal () {
-      // TODO
       this.$modal.show(this.circle.name)
+    },
+
+    toggleSubmit () { // TODO
+      if (this.submitted && !confirm('정말로 취소하시겠어요?')) return
+      this.submitted = !this.submitted
     }
   }
 }
@@ -58,7 +65,8 @@ export default {
         <img
           :src="circle.profileImg || 'http://via.placeholder.com/64x64'"
           :title="circle.title || '동아리 로고 이미지'"
-          width="64" height="64"
+          width="64"
+          height="64"
           class="circle-card__logo">
 
         <div>
@@ -85,7 +93,8 @@ export default {
         <img
           :src="circle.profileImg || 'http://via.placeholder.com/80x80'"
           :title="circle.title || '동아리 로고 이미지'"
-          width="80" height="80"
+          width="80"
+          height="80"
           class="circle-card__modal-logo">
 
         <div>
@@ -107,6 +116,14 @@ export default {
           </div>
         </div>
       </div>
+
+      <div class="circle-card__modal-description">{{ circle.description }}</div>
+
+      <dimi-button
+        :class="`circle-card__${submitted ? 'post-' : ''}submit-btn`"
+        @click="toggleSubmit">
+        신청{{ submitted ? '취소' : '하기' }}
+      </dimi-button>
     </dimi-modal>
   </div>
 </template>
@@ -183,6 +200,25 @@ export default {
     font-size: 16px;
     line-height: 1.8;
     color: $gray-light;
+  }
+
+  &__modal-description {
+    color: $black;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-top: 32px;
+  }
+
+  &__submit-btn, &__post-submit-btn {
+    float: right;
+    margin-top: 20px;
+    @include font-bold;
+  }
+
+  &__post-submit-btn {
+    color: $black !important;
+    background-color: $gray-lighter !important;
+
   }
 }
 

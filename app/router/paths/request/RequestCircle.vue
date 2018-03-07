@@ -4,7 +4,7 @@ import CircleCard from '../../../components/CircleCard.vue'
 
 import * as circle from '../../../src/api/circle'
 
-const coinDescription = '부통령이 공식적인 상원의장이지만 부통령이 실제로 상원에 있는 경우는 드물다. 대신 상원임시의장(President protempore)가 대행하는 경우가 많다'
+const coinDescription = '부통령이 공식적인 상원의장이지만 부통령이 실제로 상원에 있는 경우는 드물다. 대신 상원임시의장(President protempore)가 대행하는 경우가 많다.'
 
 export default {
   name: 'RequestCircle',
