@@ -1,7 +1,16 @@
 import { struct } from 'superstruct'
 
 const _Circle = struct({
-  // TODO
+  name: 'string',
+  description: 'string',
+  category: 'string',
+  profileImg: 'string',
+  backgroundImg: 'string',
+  applyStartDate: 'string',
+  applyEndDate: 'string',
+  chairIdx: 'string',
+  chairSerial: 'string',
+  chairName: 'string'
 })
 
 const _CircleApplicant = struct({
@@ -12,9 +21,18 @@ const _CircleApplicant = struct({
   time: 'string'
 })
 
-export const Circle = (circle) => {
+export const Circle = (applicant) => {
   return _Circle({
-    // TODO
+    name: applicant['name'],
+    description: applicant['description'],
+    category: applicant['category'],
+    profileImg: applicant['profile_img'],
+    backgroundImg: applicant['background_img'],
+    applyStartDate: applicant['apply_start_date'],
+    applyEndDate: applicant['apply_end_date'],
+    chairIdx: applicant['chair_idx'],
+    chairSerial: applicant['chair_serial'],
+    chairName: applicant['chair_name']
   })
 }
 
