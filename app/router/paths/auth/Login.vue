@@ -57,13 +57,6 @@ export default {
       shadow
     >
       <div class="section">
-        <h2 class="section__title">오늘의 급식</h2>
-        <div class="section__content">
-          <dimi-meal/>
-        </div>
-      </div>
-      <dimi-divider vertical/>
-      <div class="section">
         <h2 class="section__title">로그인</h2>
         <div class="section__content section__content--mt">
           <dimi-input
@@ -99,6 +92,14 @@ export default {
           </p>
         </div>
       </div>
+      <dimi-divider vertical/>
+      <dimi-divider horizontal/>
+      <div class="section">
+        <h2 class="section__title">오늘의 급식</h2>
+        <div class="section__content">
+          <dimi-meal/>
+        </div>
+      </div>
     </dimi-card>
   </div>
 </template>
@@ -114,6 +115,7 @@ export default {
   @include until($tablet) {
     display: block;
     padding: 12px;
+    height: unset;
   }
 }
 
@@ -122,12 +124,25 @@ export default {
   justify-content: center;
   width: 100%;
 
+  .divider--horizontal { display: none; }
+
   @include until($tablet) {
     width: unset;
+    display: block;
+
+    .divider--vertical { display: none; }
+    .divider--horizontal { display: block; }
   }
 
   &__input {
     margin-bottom: 1rem;
+  }
+
+  .section:first-child {
+    order: 2;
+  }
+  .section:last-child {
+    order: 1;
   }
 }
 
@@ -136,6 +151,10 @@ export default {
   flex-direction: column;
   padding: 2rem;
   width: 50%;
+
+  @include until($tablet) {
+    width: unset;
+  }
 
   &__title {
     @include font-extra-bold;
@@ -153,6 +172,10 @@ export default {
 
   &__content--mt {
     margin-top: 7em;
+
+    @include until($tablet) {
+      margin-top: 1.5em;
+    }
   }
 
   // Specify parent element due to css priority rules.
@@ -162,6 +185,10 @@ export default {
     align-self: center;
     margin-top: 3rem;
     padding: 0.625em 2.75em;
+
+    @include until($tablet) {
+      margin-top: 0.8rem;
+    }
   }
 
   .c-login__register-description {
