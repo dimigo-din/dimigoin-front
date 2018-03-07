@@ -1,11 +1,11 @@
 <script>
 import DimiCard from './DimiCard.vue'
 import DimiBadge from './DimiBadge.vue'
+import DimiModal from './DimiModal.vue'
 
 export default {
   name: 'CircleCard',
-
-  components: { DimiCard, DimiBadge },
+  components: { DimiCard, DimiBadge, DimiModal },
 
   props: {
     circle: {
@@ -31,7 +31,7 @@ export default {
 
     colorName () {
       const { status } = this.circle
-      switch (status) {
+      switch (status) { // TODO
         case 'passed': return '합격'
         case 'failed': return '불합격'
         case 'waiting': return '보류'
@@ -42,7 +42,7 @@ export default {
   methods: {
     openModal () {
       // TODO
-      alert(this.circle.name)
+      this.$modal.show(this.circle.name)
     }
   }
 }
@@ -73,6 +73,13 @@ export default {
       class="circle-card__badge">
       <slot>{{ colorName }}</slot>
     </dimi-badge>
+
+    <dimi-modal
+      :name="circle.name"
+      class="circle-card__modal">
+
+      <h2>{{ circle.name }}</h2>
+    </dimi-modal>
   </dimi-card>
 </template>
 
@@ -106,6 +113,10 @@ export default {
   &__badge {
     max-width: 40px;
     margin-left: auto;
+  }
+
+  &__modal {
+    padding: 24px;
   }
 }
 
