@@ -89,14 +89,13 @@ export default {
             LOGIN
           </dimi-button>
           <p class="c-login__register-description">
-            or
+            또는
             <router-link
               :to="{ name: 'register' }"
               class="c-login__register-link"
             >
-              register
+              회원가입
             </router-link>
-            (season limited)
           </p>
         </div>
       </div>
