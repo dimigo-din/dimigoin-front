@@ -111,12 +111,21 @@ export default {
   align-items: center;
   display: flex;
   height: 100vh;
+
+  @include until($tablet) {
+    display: block;
+    padding: 12px;
+  }
 }
 
 .c-login {
   display: flex;
   justify-content: center;
   width: 100%;
+
+  @include until($tablet) {
+    width: unset;
+  }
 
   &__input {
     margin-bottom: 1rem;

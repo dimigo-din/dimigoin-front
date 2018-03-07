@@ -159,6 +159,11 @@ export default {
   min-height: 480px;
   display: flex;
 
+  @include until($tablet) {
+    width: 100%;
+    display: block;
+  }
+
   &__profile {
     display: flex;
     justify-content: space-between;
