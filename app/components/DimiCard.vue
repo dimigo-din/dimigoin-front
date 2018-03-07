@@ -28,9 +28,7 @@ export default {
 </script>
 
 <template>
-  <div
-    :class="computedClass"
-    @click="$emit('click')">
+  <div :class="computedClass">
     <slot/>
   </div>
 </template>

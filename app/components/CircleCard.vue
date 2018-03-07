@@ -49,38 +49,39 @@ export default {
 </script>
 
 <template>
-  <dimi-card
-    class="circle-card"
-    @click.native="openModal">
+  <div>
+    <dimi-card
+      class="circle-card"
+      @click.native="openModal">
 
-    <div class="circle-card__info">
-      <img
-        :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
-        :title="circle.title || '동아리 로고 이미지'"
-        class="circle-card__logo">
+      <div class="circle-card__info">
+        <img
+          :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
+          :title="circle.title || '동아리 로고 이미지'"
+          class="circle-card__logo">
 
-      <div>
-        <h4 class="circle-card__name">{{ circle.name }}</h4>
-        <h5 class="circle-card__category">{{ circle.category }}</h5>
+        <div>
+          <h4 class="circle-card__name">{{ circle.name }}</h4>
+          <h5 class="circle-card__category">{{ circle.category }}</h5>
+        </div>
       </div>
-    </div>
 
-    <div class="circle-card__description">{{ circle.description }}</div>
+      <div class="circle-card__description">{{ circle.description }}</div>
 
-    <dimi-badge
-      v-if="hasBadge"
-      :color="color"
-      class="circle-card__badge">
-      <slot>{{ colorName }}</slot>
-    </dimi-badge>
+      <dimi-badge
+        v-if="hasBadge"
+        :color="color"
+        class="circle-card__badge">
+        <slot>{{ colorName }}</slot>
+      </dimi-badge>
+    </dimi-card>
 
     <dimi-modal
       :name="circle.name"
       class="circle-card__modal">
-
       <h2>{{ circle.name }}</h2>
     </dimi-modal>
-  </dimi-card>
+  </div>
 </template>
 
 <style lang="scss">
