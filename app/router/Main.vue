@@ -214,8 +214,7 @@ export default {
   justify-content: center;
 
   &--disabled.service__card {
-    background-color: $gray-lighten;
-    cursor: not-allowed;
+    display: none;
   }
 
   &__icon {
