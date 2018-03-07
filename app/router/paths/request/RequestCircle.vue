@@ -4,8 +4,6 @@ import CircleCard from '../../../components/CircleCard.vue'
 
 import * as circle from '../../../src/api/circle'
 
-const coinDescription = '부통령이 공식적인 상원의장이지만 부통령이 실제로 상원에 있는 경우는 드물다. 대신 상원임시의장(President protempore)가 대행하는 경우가 많다.'
-
 export default {
   name: 'RequestCircle',
 
@@ -20,22 +18,7 @@ export default {
 
   computed: {
     appliedCircles () {
-      // TODO: Fetch *real* data
 
-      const statusList = ['passed', 'failed', 'waiting']
-      const base = {
-        category: '교육',
-        description: coinDescription,
-        profileImg: 'https://developer.cdn.mozilla.net/media/img/mdn-logo-sm.png',
-        chairName: '류코인',
-        chairSerial: 'nmxy'
-      }
-
-      const set = () => statusList
-        .map(status => Object.assign({}, base, { status }))
-
-      return [...set(), ...set(), ...set()].slice(0, -1)
-        .map((o, i) => Object.assign(o, { name: `IT Factory COIN ${i}` }))
     }
   },
 
