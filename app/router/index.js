@@ -23,6 +23,9 @@ import NotFound from './NotFound.vue'
 import { withPrefix } from '../src/util'
 import store from '../store'
 
+// TODO only for test
+import CAR from '../components/CircleApplicantRow.vue'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -122,6 +125,15 @@ const router = new VueRouter({
         }
       ]
     },
+
+    // TODO only for test
+    {
+      path: '/test-car',
+      name: 'test-car',
+      component: CAR,
+      meta: { title: 'CircleApplicantRow.vue' }
+    },
+
     {
       path: '*',
       component: NotFound

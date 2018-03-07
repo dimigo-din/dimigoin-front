@@ -56,8 +56,9 @@ export default {
 
       <div class="circle-card__info">
         <img
-          :src="circle.imageUrl || 'http://via.placeholder.com/59x64'"
+          :src="circle.profileImg || 'http://via.placeholder.com/64x64'"
           :title="circle.title || '동아리 로고 이미지'"
+          width="64" height="64"
           class="circle-card__logo">
 
         <div>
@@ -79,7 +80,33 @@ export default {
     <dimi-modal
       :name="circle.name"
       class="circle-card__modal">
-      <h2>{{ circle.name }}</h2>
+
+      <div class="circle-card__modal-header">
+        <img
+          :src="circle.profileImg || 'http://via.placeholder.com/80x80'"
+          :title="circle.title || '동아리 로고 이미지'"
+          width="80" height="80"
+          class="circle-card__modal-logo">
+
+        <div>
+          <h4 class="circle-card__modal-name">{{ circle.name }}</h4>
+          <div>
+            <span class="circle-card__modal-info">
+              <span class="circle-card__modal-info-key">분류</span>
+              <span class="circle-card__modal-info-value">{{ circle.category }}</span>
+            </span>
+
+            <span class="circle-card__modal-info">
+              <span class="circle-card__modal-info-key">동장</span>
+              <span class="circle-card__modal-info-value">
+                {{ circle.chairSerial[0] }}학년
+                {{ circle.chairSerial[1] }}반
+                {{ circle.chairName }}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
     </dimi-modal>
   </div>
 </template>
@@ -118,6 +145,44 @@ export default {
 
   &__modal {
     padding: 24px;
+  }
+
+  &__modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 24px;
+  }
+
+  &__modal-name {
+    @include font-bold;
+  }
+
+  &__modal-logo {
+    margin-right: 24px;
+  }
+
+  &__modal-name {
+    color: $black;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  &__modal-info + &__modal-info {
+    margin-left: 12px;
+  }
+
+  &__modal-info-key {
+    font-size: 16px;
+    line-height: 1.8;
+    color: $gray-dark;
+  }
+
+  &__modal-info-value {
+    font-size: 16px;
+    line-height: 1.8;
+    color: $gray-light;
   }
 }
 
