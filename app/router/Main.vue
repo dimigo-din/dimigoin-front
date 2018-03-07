@@ -35,6 +35,12 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
+    clickServiceCard (service) {
+      if (!service.url) return
+      if (service.url.startsWith('http')) return window.open(service.url, '_blank')
+      this.$router.push({ name: service.url })
+    },
+
     ...mapActions('service', ['fetchServiceList'])
   }
 }
@@ -98,9 +104,10 @@ export default {
             <dimi-card
               v-for="(service, index) in serviceList"
               :key="`service-${index}`"
-              class="service__card"
+              :class="{ 'service__card': true, 'service__card--disabled': !service.url }"
               shadow
               hover
+              @click="clickServiceCard(service)"
             >
               <div class="service__card__icon">
                 <span :class="service.icon"/>
@@ -205,6 +212,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  &--disabled.service__card {
+    background-color: $gray-lighten;
+    cursor: not-allowed;
+  }
 
   &__icon {
     @extend %h-text-3xl;
