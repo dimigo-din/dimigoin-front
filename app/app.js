@@ -16,10 +16,9 @@ Vue.directive('ripple', Ripple)
 Vue.use(swal)
 Vue.use(VModal)
 
-/* eslint-disable no-new */
-new Vue({
+console.log(new Vue({
   store,
   router,
   el: '#app',
   render: h => h(App)
-})
+}))
