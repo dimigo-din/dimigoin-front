@@ -69,6 +69,7 @@ export default {
         }, {}))
         this.$router.push({ name: 'login' })
       } catch (err) {
+        console.error('register', err)
         this.$swal('에러!', err.message, 'error')
       }
       this.pending = false
