@@ -29,6 +29,7 @@ export default {
     &__thinking {
       width: auto;
       height: 80vh;
+      opacity: 0.02;
     }
   }
 </style>
