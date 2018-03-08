@@ -44,6 +44,10 @@ export default {
     flex: 1 0;
     justify-content: space-between;
     align-items: center;
+
+    @include until($tablet) {
+      display: none;
+    }
   }
 
   &__start {
