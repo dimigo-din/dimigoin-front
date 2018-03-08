@@ -39,16 +39,17 @@ export default {
     },
 
     updateMealCardHeight () {
-      const meals = [...document.getElementsByClassName('meal-item')]
-      const mealHeight = meals.reduce((h, meal) => h + meal.offsetHeight, 72) // margin: 24px * 3
-
       const col = document.querySelector('.info .column:last-child')
-      const titleHeight = col.querySelector('.info-section__title').offsetHeight
-      col.style.minHeight =
-        mealHeight +
+      const meals = [...document.getElementsByClassName('meal-item')]
+
+      if (!col || !meals.length) return
+      const m = meals.reduce((h, meal) => h + meal.offsetHeight, 0)
+      const t = col.querySelector('.info-section__title').offsetHeight
+
+      col.style.minHeight = t + m +
+        72 + // total margin between 4 meal items
         40 + // card paddings
         32 + // section bottom margin
-        titleHeight +
         24 // title bottom margin
     },
 
