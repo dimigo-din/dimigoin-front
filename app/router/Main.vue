@@ -122,7 +122,7 @@ export default {
               :class="{ 'service__card': true, 'service__card--disabled': !service.url }"
               shadow
               hover
-              @click="clickServiceCard(service)">
+              @click.native="clickServiceCard(service)">
 
               <div class="service__card__icon">
                 <span :class="service.icon"/>
