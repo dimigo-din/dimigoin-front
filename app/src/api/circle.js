@@ -8,7 +8,7 @@ export async function getCircles () {
   } catch ({ response: res }) {
     switch (res.status) {
       case 404:
-        throw new Error('동아리가 없습니다.')
+        return []
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
@@ -17,7 +17,7 @@ export async function getCircles () {
 
 export async function getCircleApplicant (circleIdx) {
   try {
-    const res = await axios.get(`/circles/apply/${circleIdx}/`)
+    const res = await axios.get(`/circles/apply/${circleIdx}`)
     return res.data['circle_apply'].map(CircleApplicant)
   } catch ({ response: res }) {
     switch (res.status) {
@@ -31,7 +31,7 @@ export async function getCircleApplicant (circleIdx) {
 
 export async function applyCircle (circleIdx) {
   try {
-    await axios.put(`/circles/apply/${circleIdx}/`)
+    await axios.put(`/circles/apply/${circleIdx}`)
   } catch ({ response: res }) {
     switch (res.status) {
       case 403:
