@@ -30,8 +30,18 @@ export default {
       return handleStatus.getColorByStatus(this.circle.status)
     },
 
-    colorName () {
+    badgeText () {
       return handleStatus.getMessageByStatus(this.circle.status)
+    },
+
+    buttonText () {
+      return this.circle.status ? '신청 취소' : '신청하기'
+    },
+
+    deadline () {
+      const now = Date.now()
+      return now > new Date(this.circle.applyStartDate).getTime() &&
+        now < new Date(this.circle.applyEndDate).getDate()
     }
   },
 
@@ -40,9 +50,9 @@ export default {
       this.$modal.show(this.circle.name)
     },
 
-    toggleSubmit () { // TODO
-      if (this.submitted && !confirm('정말로 취소하시겠어요?')) return
-      this.submitted = !this.submitted
+    toggleSubmit () {
+      if (!this.deadline) this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
+      // TODO
     }
   }
 }
@@ -56,8 +66,8 @@ export default {
 
       <div class="circle-card__info">
         <img
-          :src="circle.profileImg || 'http://via.placeholder.com/64x64'"
-          :title="circle.title || '동아리 로고 이미지'"
+          :src="circle.profileImg"
+          :title="circle.title"
           width="64"
           height="64"
           class="circle-card__logo">
@@ -74,7 +84,7 @@ export default {
         v-if="hasBadge"
         :color="color"
         class="circle-card__badge">
-        <slot>{{ colorName }}</slot>
+        <slot>{{ badgeText }}</slot>
       </dimi-badge>
     </dimi-card>
 
@@ -84,8 +94,8 @@ export default {
 
       <div class="circle-card__modal-header">
         <img
-          :src="circle.profileImg || 'http://via.placeholder.com/80x80'"
-          :title="circle.title || '동아리 로고 이미지'"
+          :src="circle.profileImg"
+          :title="circle.title"
           width="80"
           height="80"
           class="circle-card__modal-logo">
@@ -113,9 +123,9 @@ export default {
       <div class="circle-card__modal-description">{{ circle.description }}</div>
 
       <dimi-button
-        :class="`circle-card__${submitted ? 'post-' : ''}submit-btn`"
+        :class="`circle-card__submit-btn`"
         @click="toggleSubmit">
-        신청{{ submitted ? '취소' : '하기' }}
+        {{ buttonText }}
       </dimi-button>
     </dimi-modal>
   </div>

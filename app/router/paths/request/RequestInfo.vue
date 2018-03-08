@@ -15,9 +15,13 @@ export default {
       <span class="icon-list"/>나의 신청 현황 (테스트)
     </h1>
 
-    <dimi-card slot="main" class="r-info">
-      <dimi-badge class="r-info__badge">
-        <span class="icon-ok r-info__badge-icon"/>신청
+    <dimi-card
+      slot="main"
+      class="r-info">
+      <dimi-badge
+        color="orange"
+        class="r-info__badge">
+        <span class="icon-cross r-info__badge-icon"/>미신청
       </dimi-badge>
 
       <span class="r-info__title">
@@ -26,6 +30,7 @@ export default {
 
       <table class="r-info__list">
         <tbody>
+        <!--
           <tr>
             <td class="r-info__list-key">대기 중</td>
             <td class="r-info__list-value">JNJ Communication</td>
@@ -38,6 +43,7 @@ export default {
             <td class="r-info__list-key">불합격</td>
             <td class="r-info__list-value">New Turn</td>
           </tr>
+        -->
         </tbody>
       </table>
     </dimi-card>
