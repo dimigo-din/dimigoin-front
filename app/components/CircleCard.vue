@@ -4,6 +4,8 @@ import DimiBadge from './DimiBadge.vue'
 import DimiModal from './DimiModal.vue'
 import DimiButton from './DimiButton.vue'
 
+import * as handleStatus from '../src/util/handle-circle-status'
+
 export default {
   name: 'CircleCard',
   components: { DimiCard, DimiBadge, DimiModal, DimiButton },
@@ -11,35 +13,25 @@ export default {
   props: {
     circle: {
       type: Object,
-      default: () => ({})
+      required: true
     }
   },
 
-  data: () => ({ submitted: false }), // TODO
+  data: () => ({
+    pending: false
+  }),
 
   computed: {
     hasBadge () {
-      const { status } = this.circle
-      return ['passed', 'failed', 'waiting'].includes(status) // TODO
+      return handleStatus.hasStatus(this.circle.status)
     },
 
     color () {
-      const { status } = this.circle
-      switch (status) {
-        case 'passed': return 'aloes'
-        case 'failed': return 'orange'
-        case 'waiting': return 'gray'
-      }
+      return handleStatus.getColorByStatus(this.circle.status)
     },
 
     colorName () {
-      const { status } = this.circle
-      switch (status) { // TODO
-        case 'final': return '최종 결정'
-        case 'accept': return '합격'
-        case 'failed': return '불합격'
-        case 'waiting': return '대기 중'
-      }
+      return handleStatus.getMessageByStatus(this.circle.status)
     }
   },
 
