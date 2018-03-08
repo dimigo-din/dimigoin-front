@@ -3,7 +3,15 @@ import DimiNavbar from '../../components/DimiNavbar.vue'
 
 export default {
   name: 'DefaultNavbar',
-  components: { DimiNavbar }
+
+  components: { DimiNavbar },
+
+  methods: {
+    async logout () {
+      await this.$store.dispatch('account/logout')
+      this.$router.push({ name: 'login' })
+    }
+  }
 }
 </script>
 
@@ -19,7 +27,10 @@ export default {
       </router-link>
       <span slot="end">
         {{ $store.state.account.informations.name }}
-        <span class="icon-logout"/>
+        <a
+          class="icon-logout logout-btn"
+          title="로그아웃"
+          @click="logout"/>
       </span>
     </dimi-navbar>
   </header>
@@ -31,5 +42,9 @@ export default {
 .brand {
   @extend %h-text-black;
   text-decoration: none;
+}
+
+.logout-btn {
+  cursor: pointer;
 }
 </style>

@@ -36,8 +36,8 @@ export default {
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
     },
 
-    logout () {
-      this.$store.dispatch('account/logout')
+    async logout () {
+      await this.$store.dispatch('account/logout')
       this.$router.push({ name: 'login' })
     },
 
