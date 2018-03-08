@@ -9,7 +9,10 @@ export default {
 
 <template>
   <div class="register">
-    <h1 class="register__title">
+    <h1
+      class="register__title"
+      @click="$router.push('/')">
+
       <span class="icon-dimigo"/>DIMIGOIN
       <span class="register__subtitle">회원가입</span>
     </h1>
@@ -56,6 +59,7 @@ export default {
 
     user-select: none;
     word-spacing: 0.325em;
+    cursor: pointer;
   }
 
   &__subtitle {
@@ -170,12 +174,10 @@ export default {
   }
 
   &__title {
-
     @extend %h-text-l;
     @extend %h-text-black;
     @include font-bold;
     margin-top: 2rem;
-
     user-select: none;
   }
 }
