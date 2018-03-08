@@ -7,6 +7,7 @@ export default {
   name: 'Main',
 
   components: { DimiMeal, DimiCard },
+  data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
     ...mapState('account', {
@@ -54,15 +55,26 @@ export default {
 
 <template>
   <div class="container container--naive">
-    <h1 class="brand"><span class="icon-dimigo"/>DIMIGOIN</h1>
+    <h1 class="brand">
+      <span class="icon-dimigo"/>DIMIGOIN
+    </h1>
     <div class="info">
       <div class="column">
         <section class="info__profile info-section">
           <h2 class="info-section__title">프로필</h2>
           <dimi-card
-            class="info__profile info-section__content"
             shadow
-          >
+            class="info__profile info-section__content">
+
+            <img
+              v-if="photoUrl"
+              :src="photoCDN + photoUrl"
+              class="profile-info__photo">
+
+            <span
+              v-else
+              class="profile-info__default-photo icon-profile"/>
+
             <div class="profile-info">
               <span class="profile-info__serial">
                 {{ `${grade}학년 ${klass}반` }}
@@ -71,20 +83,18 @@ export default {
                 {{ name }}
               </span>
             </div>
-            <div class="info__profile__nav">
-              <a
-                class="icon-logout logout-btn"
-                title="로그아웃"
-                @click="logout"/>
-            </div>
+
+            <a
+              class="icon-logout logout-btn"
+              title="로그아웃"
+              @click="logout"/>
           </dimi-card>
         </section>
         <section class="info__notification info-section">
           <h2 class="info-section__title">알림</h2>
           <dimi-card
             class="info__notice info-section__content"
-            shadow
-          >
+            shadow>
             새로운 디미고인에 오신 것을 환영합니다!
           </dimi-card>
         </section>
@@ -94,8 +104,7 @@ export default {
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
             class="info-section__content"
-            shadow
-          >
+            shadow>
             <dimi-meal/>
           </dimi-card>
         </section>
@@ -112,8 +121,8 @@ export default {
               :class="{ 'service__card': true, 'service__card--disabled': !service.url }"
               shadow
               hover
-              @click="clickServiceCard(service)"
-            >
+              @click="clickServiceCard(service)">
+
               <div class="service__card__icon">
                 <span :class="service.icon"/>
               </div>
@@ -183,9 +192,8 @@ export default {
   }
 
   &__profile {
-    display: flex;
-    justify-content: space-between;
-    min-height: 18px;
+    // display: flex;
+    // justify-content: space-between;
   }
 
   &__notification,
@@ -204,6 +212,24 @@ export default {
 
 .profile-info {
   font-size: 20px;
+
+  &__photo, &__default-photo {
+    width: 44px;
+    height: 44px;
+    margin-right: 15px;
+  }
+
+  &__photo {
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid $gray-lighter;
+  }
+
+  &__default-photo::before {
+    font-size: 44px;
+    margin-left: 0;
+    margin-right: 0;
+  }
 
   &__serial {
     color: $gray;
