@@ -64,23 +64,24 @@ export default {
           <h2 class="info-section__title">프로필</h2>
           <dimi-card
             shadow
-            class="info__profile info-section__content">
+            class="info__profile-card info-section__content">
 
-            <img
-              v-if="photoUrl"
-              :src="photoCDN + photoUrl"
-              class="profile-info__photo">
+            <div class="profile-info__left">
+              <img
+                v-if="photoUrl"
+                :src="photoCDN + photoUrl"
+                class="profile-info__photo">
+              <span
+                v-else
+                class="profile-info__default-photo icon-profile"/>
 
-            <span
-              v-else
-              class="profile-info__default-photo icon-profile"/>
-
-            <div class="profile-info">
-              <span class="profile-info__serial">
-                {{ `${grade}학년 ${klass}반` }}
-              </span>
-              <span class="profile-info__name">
-                {{ name }}
+              <span class="profile-info">
+                <span class="profile-info__serial">
+                  {{ `${grade}학년 ${klass}반` }}
+                </span>
+                <span class="profile-info__name">
+                  {{ name }}
+                </span>
               </span>
             </div>
 
@@ -191,9 +192,13 @@ export default {
     }
   }
 
-  &__profile {
-    // display: flex;
-    // justify-content: space-between;
+  &__profile, &__profile-card {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__profile-card {
+    align-items: center;
   }
 
   &__notification,
@@ -212,6 +217,11 @@ export default {
 
 .profile-info {
   font-size: 20px;
+
+  &__left {
+    display: flex;
+    align-items: center;
+  }
 
   &__photo, &__default-photo {
     width: 44px;
