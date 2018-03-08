@@ -21,6 +21,7 @@ export default {
   async created () {
     this.autoLogin()
     await this.fetchServiceList()
+    this.updateServiceCardHeight()
   },
 
   async mounted () {

@@ -93,12 +93,12 @@ export default {
           <dimi-button-radio
             v-model="formData.gender.value"
             class="gender-radio__item"
-            name="m"
+            name="M"
           >남성</dimi-button-radio>
           <dimi-button-radio
             v-model="formData.gender.value"
             class="gender-radio__item"
-            name="f"
+            name="F"
           >여성</dimi-button-radio>
         </div>
       </div>
