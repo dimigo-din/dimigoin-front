@@ -305,5 +305,6 @@ export default {
 
 .logout-btn {
   cursor: pointer;
+  font-size: 23px;
 }
 </style>
