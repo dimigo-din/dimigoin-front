@@ -33,6 +33,7 @@ export default {
         console.error(err)
       }
       this.pending = false
+      this.$emit('postFetch')
     }
   },
 

@@ -26,14 +26,30 @@ export default {
   },
 
   async mounted () {
-    this.updateServiceCardHeight()
-    window.addEventListener('resize', this.updateServiceCardHeight)
+    window.addEventListener('resize', () => {
+      this.updateMealCardHeight()
+      this.updateServiceCardHeight()
+    })
   },
 
   methods: {
     updateServiceCardHeight () {
       const cards = document.querySelectorAll('.service__card')
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
+    },
+
+    updateMealCardHeight () {
+      const meals = [...document.getElementsByClassName('meal-item')]
+      const mealHeight = meals.reduce((h, meal) => h + meal.offsetHeight, 72) // margin: 24px * 3
+
+      const col = document.querySelector('.info .column:last-child')
+      const titleHeight = col.querySelector('.info-section__title').offsetHeight
+      col.style.minHeight =
+        mealHeight +
+        40 + // card paddings
+        32 + // section bottom margin
+        titleHeight +
+        24 // title bottom margin
     },
 
     async logout () {
@@ -106,7 +122,7 @@ export default {
           <dimi-card
             class="info-section__content"
             shadow>
-            <dimi-meal/>
+            <dimi-meal @postFetch="updateMealCardHeight"/>
           </dimi-card>
         </section>
       </div>
@@ -189,6 +205,7 @@ export default {
   .column {
     @include until($tablet) {
       display: block;
+      min-height: unset !important;
     }
   }
 
@@ -199,6 +216,7 @@ export default {
 
   &__profile-card {
     align-items: center;
+    min-height: 46px; // 44 (image height) + 1+1 (image borders)
   }
 
   &__notification,
