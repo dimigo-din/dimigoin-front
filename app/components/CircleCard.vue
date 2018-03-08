@@ -18,6 +18,7 @@ export default {
   },
 
   data: () => ({
+    opened: false,
     pending: false
   }),
 
@@ -46,10 +47,6 @@ export default {
   },
 
   methods: {
-    openModal () {
-      this.$modal.show(this.circle.name)
-    },
-
     toggleSubmit () {
       if (!this.deadline) this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
       // TODO
@@ -62,7 +59,7 @@ export default {
   <div>
     <dimi-card
       class="circle-card"
-      @click.native="openModal">
+      @click.native="opened = true">
 
       <div class="circle-card__info">
         <img
@@ -89,7 +86,8 @@ export default {
     </dimi-card>
 
     <dimi-modal
-      :name="circle.name"
+      :opened="opened"
+      @close="opened = false"
       class="circle-card__modal">
 
       <div class="circle-card__modal-header">
