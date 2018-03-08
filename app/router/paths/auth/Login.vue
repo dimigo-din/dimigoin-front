@@ -21,10 +21,7 @@ export default {
   },
 
   computed: {
-    ...mapState('account', {
-      isLoggedIn: ({ auth }) => auth.isLoggedIn,
-      needVerify: ({ auth }) => auth.needVerify
-    })
+    ...mapState('account', ['isLoggedIn', 'needVerify'])
   },
 
   created () {

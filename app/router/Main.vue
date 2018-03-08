@@ -19,6 +19,7 @@ export default {
   },
 
   async created () {
+    this.autoLogin()
     await this.fetchServiceList()
   },
 
@@ -44,6 +45,7 @@ export default {
       this.$router.push({ name: service.url })
     },
 
+    ...mapActions('account', ['autoLogin']),
     ...mapActions('service', ['fetchServiceList'])
   }
 }

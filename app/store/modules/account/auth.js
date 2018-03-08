@@ -6,11 +6,8 @@ import * as types from './mutation-types'
 export default {
   state: {
     token: window.localStorage.getItem('token'),
+    isLoggedIn: !!window.localStorage.getItem('token'),
     needVerify: false
-  },
-
-  getters: {
-    isLoggedIn: state => !!state.token
   },
 
   mutations: {
@@ -29,7 +26,6 @@ export default {
 
     [types.LOGOUT] (state) {
       window.localStorage.removeItem('token')
-      window.localStorage.removeItem('vuex')
       setAuthorizationToken(axios, '')
 
       state.token = null
@@ -47,9 +43,16 @@ export default {
       commit(types.VERIFY)
     },
 
-    async login ({ commit }, { id, password }) {
-      const { token, needVerify } = await getAccessToken(id, password)
+    async autoLogin ({ dispatch, state }) {
+      if (state.isLoggedIn) dispatch('loginWithToken', state)
+    },
 
+    async login ({ dispatch }, { id, password }) {
+      const { token, needVerify } = await getAccessToken(id, password)
+      dispatch('loginWithToken', { token, needVerify })
+    },
+
+    async loginWithToken ({ commit }, { token, needVerify }) {
       if (!token) {
         const err = new Error()
         err.name = 'NoTokenError'
