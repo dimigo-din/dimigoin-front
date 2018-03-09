@@ -67,3 +67,18 @@ export async function applyCircle (circleIdx) {
     }
   }
 }
+
+export async function cancelCircle (circleIdx) {
+  try {
+    await axios.delete(`/circles/apply/${circleIdx}`)
+  } catch ({ message, reponse: res }) {
+    switch (res.status) {
+      case 403:
+        throw new Error('동아리 신청 기간이 아닙니다.')
+      case 404:
+        throw new Error('존재하지 않는 동아리입니다.')
+      default:
+        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
+    }
+  }
+}
