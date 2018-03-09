@@ -161,6 +161,7 @@ export default {
 
   &__name {
     margin-top: 12px;
+    line-height: 16px;
   }
 
   &__category {
@@ -240,6 +241,10 @@ export default {
   &__post-submit-btn {
     color: $black !important;
     background-color: $gray-lighter !important;
+  }
+
+  &__logo, &__modal-logo {
+    object-fit: contain;
   }
 }
 
