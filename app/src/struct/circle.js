@@ -26,7 +26,7 @@ export const Circle = (applicant) => {
     description: applicant['description'],
     category: applicant['category'],
     profileImg: applicant['profile_img'] ||
-      require(`../../assets/avatar/${1 + Math.round(Math.random() * 5)}.jpg`),
+      require(`../../assets/avatar/${Math.ceil(Math.random() * 5)}.jpg`),
     applyStartDate: applicant['apply_start_date'],
     applyEndDate: applicant['apply_end_date'],
     chairIdx: applicant['chair_idx'],

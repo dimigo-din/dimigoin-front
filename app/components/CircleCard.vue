@@ -66,7 +66,10 @@ export default {
     },
 
     toggleSubmit () {
-      if (!this.deadline) this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
+      if (!this.deadline) {
+        return this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
+      }
+
       // TODO
     }
   }
@@ -176,6 +179,10 @@ export default {
     line-height: 1.8;
     margin-top: 12px;
     height: 14 * 1.8 * 3; // 3 lines
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   &__badge {

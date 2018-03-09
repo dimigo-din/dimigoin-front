@@ -18,7 +18,7 @@ export default {
 
   computed: {
     appliedCircles () {
-
+      return []
     }
   },
 
@@ -38,7 +38,10 @@ export default {
     <div
       slot="main"
       class="circle">
-      <section class="circle__section">
+      <section
+        v-show="appliedCircles.length > 0"
+        class="circle__section">
+
         <h2 class="circle__title">신청한 동아리</h2>
         <div class="circle__circles">
           <circle-card
