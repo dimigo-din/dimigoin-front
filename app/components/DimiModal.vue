@@ -1,37 +1,64 @@
 <template>
-  <modal :name="name">
-    <span
-      class="icon-cross"
-      @click="close"/>
-    <slot/>
-  </modal>
+  <div
+    v-if="opened"
+    :opened="opened"
+    class="modal__overlay"
+    @click.stop="close">
+
+    <div
+      class="modal"
+      @click.stop>
+      <span
+        class="icon-cross"
+        @click.stop="close"/>
+
+      <slot/>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      required: true
+    opened: {
+      type: Boolean,
+      default: false
     }
   },
 
   methods: {
     close () {
-      this.$modal.hide(this.name)
+      this.$emit('close')
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .v--modal {
+  .modal {
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+
+    padding: 24px;
+    max-width: 700px;
+
     border-radius: 6px;
     border: solid 1px $gray-lighten;
-    box-shadow: 0px 16px 36px -12px rgba(0,0,0,.5);
-    padding: 24px;
 
-    &-overlay {
+    background-color: $white;
+    box-shadow: 0px 16px 36px -12px rgba(0,0,0,.5);
+
+    &__overlay {
+      z-index: 999;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100vh;
+      box-sizing: border-box;
+
+      display: flex;
+      align-items: center;
+
       background: rgba(#151313, .7);
     }
 
