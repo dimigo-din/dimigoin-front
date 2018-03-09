@@ -90,7 +90,8 @@ const webpackConfig = {
             'scss': scssExtract,
             'css': cssLoaders,
             'js': {
-              loader: 'babel-loader'
+              loader: 'babel-loader',
+              exclude: '/node_modules/'
             }
           }
         }
