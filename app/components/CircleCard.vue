@@ -4,6 +4,7 @@ import DimiBadge from './DimiBadge.vue'
 import DimiModal from './DimiModal.vue'
 import DimiButton from './DimiButton.vue'
 
+import lineClamp from 'line-clamp'
 import * as handleStatus from '../src/util/handle-circle-status'
 
 export default {
@@ -44,6 +45,12 @@ export default {
       return now > new Date(this.circle.applyStartDate).getTime() &&
         now < new Date(this.circle.applyEndDate).getDate()
     }
+  },
+
+  mounted () {
+    document
+      .querySelectorAll('.circle-card__description')
+      .forEach(description => lineClamp(description, 4))
   },
 
   methods: {
@@ -87,8 +94,8 @@ export default {
 
     <dimi-modal
       :opened="opened"
-      @close="opened = false"
-      class="circle-card__modal">
+      class="circle-card__modal"
+      @close="opened = false">
 
       <div class="circle-card__modal-header">
         <img
@@ -154,12 +161,7 @@ export default {
     font-size: 14px;
     line-height: 1.8;
     margin-top: 12px;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
     height: 14 * 1.8 * 3; // 3 lines
-
-    // TODO: Multiline ellipsis
   }
 
   &__badge {
