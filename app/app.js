@@ -11,6 +11,7 @@ import router from './router'
 
 sync(store, router)
 
+Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)
 Vue.use(swal)
 
