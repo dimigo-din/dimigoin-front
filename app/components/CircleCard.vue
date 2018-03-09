@@ -154,6 +154,12 @@ export default {
     font-size: 14px;
     line-height: 1.8;
     margin-top: 12px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 14 * 1.8 * 3; // 3 lines
+
+    // TODO: Multiline ellipsis
   }
 
   &__badge {
