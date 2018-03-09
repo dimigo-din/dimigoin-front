@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss">
   .modal {
-    margin: 0 auto;
+    margin: 5vh auto;
     position: relative;
     box-sizing: border-box;
 
@@ -53,11 +53,12 @@ export default {
       z-index: 999;
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100vh;
       box-sizing: border-box;
 
-      display: flex;
-      align-items: center;
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+      overflow-y: auto;
 
       background: rgba(#151313, .7);
     }

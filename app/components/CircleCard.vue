@@ -47,13 +47,24 @@ export default {
     }
   },
 
+  watch: {
+    circle () {
+      this.updateClamp()
+    }
+  },
+
   mounted () {
-    document
-      .querySelectorAll('.circle-card__description')
-      .forEach(description => lineClamp(description, 4))
+    this.updateClamp()
+    window.addEventListener('resize', () => this.updateClamp())
   },
 
   methods: {
+    updateClamp () {
+      document
+        .querySelectorAll('.circle-card__description')
+        .forEach(description => lineClamp(description, 4))
+    },
+
     toggleSubmit () {
       if (!this.deadline) this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
       // TODO
@@ -132,6 +143,8 @@ export default {
         @click="toggleSubmit">
         {{ buttonText }}
       </dimi-button>
+
+      <div style="clear: both;"/>
     </dimi-modal>
   </div>
 </template>
@@ -227,7 +240,6 @@ export default {
   &__post-submit-btn {
     color: $black !important;
     background-color: $gray-lighter !important;
-
   }
 }
 
