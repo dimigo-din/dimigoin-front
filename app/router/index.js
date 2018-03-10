@@ -24,7 +24,8 @@ const router = new VueRouter({
       component: NotFound
     },
     ...routers.auth,
-    ...routers.request
+    ...routers.request,
+    ...routers.manage
   ]
 })
 
