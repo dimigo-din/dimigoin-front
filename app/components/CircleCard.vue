@@ -42,13 +42,11 @@ export default {
     },
 
     applyable () {
-      return !handleStatus.hasStatus(this.circle.status) &&
-        this.deadline
+      return !handleStatus.hasStatus(this.circle.status)
     },
 
     cancelable () {
-      return this.circle.status === handleStatus.WAIT &&
-        this.deadline
+      return this.circle.status === handleStatus.WAIT
     },
 
     finish () {
@@ -170,7 +168,7 @@ export default {
 
       <dimi-button
         v-if="!finish"
-        :gray="applyable"
+        :gray="!(applyable && deadline)"
         :class="{
           'circle-card__submit-btn': true,
           'circle-card__submit-btn--post': hasBadge
