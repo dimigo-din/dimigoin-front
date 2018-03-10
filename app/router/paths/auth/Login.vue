@@ -22,8 +22,7 @@ export default {
 
   computed: {
     ...mapState('account', {
-      isLoggedIn: ({ auth }) => auth.isLoggedIn,
-      needVerify: ({ auth }) => auth.needVerify
+      isLoggedIn: ({ auth }) => auth.isLoggedIn
     })
   },
 
@@ -43,8 +42,7 @@ export default {
         return
       }
 
-      if (this.needVerify) this.$router.push({ name: 'register/step/3' })
-      else this.$router.push({ name: 'main' })
+      this.$router.push({ name: 'main' })
     },
     ...mapActions('account', ['login'])
   }

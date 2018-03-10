@@ -44,12 +44,12 @@ export default {
     },
 
     async autoLogin ({ dispatch, state }) {
-      if (state.isLoggedIn) dispatch('loginWithToken', state)
+      if (state.isLoggedIn) await dispatch('loginWithToken', state)
     },
 
     async login ({ dispatch }, { id, password }) {
       const { token, needVerify } = await getAccessToken(id, password)
-      dispatch('loginWithToken', { token, needVerify })
+      await dispatch('loginWithToken', { token, needVerify })
     },
 
     async loginWithToken ({ commit }, { token, needVerify }) {
@@ -62,7 +62,11 @@ export default {
 
       const info = parseToken(token)
 
-      commit(types.LOGIN, { token, needVerify })
+      commit(types.LOGIN, {
+        token,
+        needVerify: needVerify || info['user_type'] === 'O'
+      })
+
       commit(types.UPDATE_INFO, {
         idx: info.idx,
         name: info.name,
