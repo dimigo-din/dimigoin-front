@@ -20,7 +20,7 @@ export default {
   },
 
   async created () {
-    this.autoLogin()
+    await this.autoLogin()
     await this.fetchServiceList()
     this.updateServiceCardHeight()
   },

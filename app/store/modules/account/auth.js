@@ -7,7 +7,7 @@ export default {
   state: {
     token: window.localStorage.getItem('token'),
     isLoggedIn: !!window.localStorage.getItem('token'),
-    needVerify: true
+    needVerify: false
   },
 
   mutations: {
