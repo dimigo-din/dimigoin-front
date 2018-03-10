@@ -62,7 +62,11 @@ export default {
 
       const info = parseToken(token)
 
-      commit(types.LOGIN, { token, needVerify })
+      commit(types.LOGIN, {
+        token,
+        needVerify: needVerify || info['user_type'] === 'O'
+      })
+
       commit(types.UPDATE_INFO, {
         idx: info.idx,
         name: info.name,

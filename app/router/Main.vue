@@ -11,6 +11,7 @@ export default {
 
   computed: {
     ...mapState('account', {
+      needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
@@ -20,7 +21,13 @@ export default {
   },
 
   async created () {
-    await this.autoLogin()
+    try {
+      await this.autoLogin()
+      if (this.needVerify) this.$router.push({ name: 'register/step/3' })
+    } catch (err) {
+      console.error(err)
+    }
+
     await this.fetchServiceList()
     this.updateServiceCardHeight()
   },
