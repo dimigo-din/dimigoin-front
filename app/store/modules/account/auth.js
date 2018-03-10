@@ -7,7 +7,7 @@ export default {
   state: {
     token: window.localStorage.getItem('token'),
     isLoggedIn: !!window.localStorage.getItem('token'),
-    needVerify: false
+    needVerify: true
   },
 
   mutations: {
@@ -44,12 +44,12 @@ export default {
     },
 
     async autoLogin ({ dispatch, state }) {
-      if (state.isLoggedIn) dispatch('loginWithToken', state)
+      if (state.isLoggedIn) await dispatch('loginWithToken', state)
     },
 
     async login ({ dispatch }, { id, password }) {
       const { token, needVerify } = await getAccessToken(id, password)
-      dispatch('loginWithToken', { token, needVerify })
+      await dispatch('loginWithToken', { token, needVerify })
     },
 
     async loginWithToken ({ commit }, { token, needVerify }) {
