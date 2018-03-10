@@ -7,7 +7,7 @@ import ContentWrapper from '../../partial/ContentWrapper.vue'
 export default {
   name: 'RequestAfterschool',
   components: { DimiCard, DimiDropdown, DimiCheckbox, ContentWrapper },
-  methods: { onChecked (val) { console.log('checked:', val) } }
+  data: () => ({ checked: true })
 }
 </script>
 
@@ -16,9 +16,12 @@ export default {
     <h1 slot="header">
       <span class="icon-ball"/>2018년 상반기 방과 후 활동 신청
     </h1>
-    <dimi-card class="components" slot="main">
+    <dimi-card
+      slot="main"
+      class="components">
+
       <dimi-dropdown :items="['테스트', '이것도 테스트', '물론 이것도 테스트임']"/>
-      <dimi-checkbox @checked="onChecked">안녕</dimi-checkbox>
+      <dimi-checkbox v-model="checked">{{ checked ? '됨' : '안됨' }}</dimi-checkbox>
     </dimi-card>
   </content-wrapper>
 </template>

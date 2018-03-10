@@ -111,6 +111,7 @@ export default {
   position: relative;
   padding-top: 5px;
   padding-bottom: 5px;
+  white-space: nowrap;
 
   &__view {
     display: flex;
