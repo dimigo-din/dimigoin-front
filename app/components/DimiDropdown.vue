@@ -67,7 +67,7 @@ export default {
 
     select (index) {
       this.active = false
-      this.selection = index
+      this.$emit('select', this.selection = index)
     }
   }
 }
