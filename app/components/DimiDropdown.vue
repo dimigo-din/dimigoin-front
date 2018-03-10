@@ -149,6 +149,10 @@ export default {
     text-align: center;
   }
 
+  &__item:hover {
+    background-color: $gray-lighten;
+  }
+
   &__item-divider {
     margin: 0;
     position: relative !important;
