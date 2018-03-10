@@ -1,12 +1,12 @@
 <script>
-import DimiMeal from '../components/DimiMeal.vue'
+import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Main',
 
-  components: { DimiMeal, DimiCard },
+  components: { MealGroup, DimiCard },
   data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
@@ -123,7 +123,7 @@ export default {
           <dimi-card
             class="info-section__content"
             shadow>
-            <dimi-meal @postFetch="updateMealCardHeight"/>
+            <meal-group @postFetch="updateMealCardHeight"/>
           </dimi-card>
         </section>
       </div>

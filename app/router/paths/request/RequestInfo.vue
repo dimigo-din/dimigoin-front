@@ -3,9 +3,36 @@ import DimiCard from '../../../components/DimiCard.vue'
 import DimiBadge from '../../../components/DimiBadge.vue'
 import ContentWrapper from '../../partial/ContentWrapper.vue'
 
+import { circle } from '../../../src/api'
+import * as handleCircle from '../../../src/util/handle-circle-status'
+
 export default {
   name: 'RequestInfo',
-  components: { DimiCard, DimiBadge, ContentWrapper }
+
+  components: { DimiCard, DimiBadge, ContentWrapper },
+
+  data () {
+    return {
+      circles: []
+    }
+  },
+
+  computed: {
+    circleGroup () {
+      const filter = status => this.circles.filter(v => v.status === status).map(v => v.name)
+
+      return {
+        wait: filter(handleCircle.WAIT),
+        accept: filter(handleCircle.ACCEPT),
+        fail: filter(handleCircle.FAIL),
+        final: filter(handleCircle.FINAL)
+      }
+    }
+  },
+
+  async created () {
+    this.circles = await circle.getCircles()
+  }
 }
 </script>
 
@@ -19,9 +46,12 @@ export default {
       slot="main"
       class="r-info">
       <dimi-badge
-        color="orange"
+        :color="circles.length > 0 ? 'aloes' : 'orange'"
         class="r-info__badge">
-        <span class="icon-cross r-info__badge-icon"/>미신청
+        <template v-if="circles.length > 0"><span class="icon-ok r-info__badge-icon"/> 신청</template>
+        <template v-else>
+          <span class="icon-cross r-info__badge-icon"/> 미신청
+        </template>
       </dimi-badge>
 
       <span class="r-info__title">
@@ -30,20 +60,18 @@ export default {
 
       <table class="r-info__list">
         <tbody>
-        <!--
-          <tr>
+          <tr v-if="circleGroup.wait.length > 0">
             <td class="r-info__list-key">대기 중</td>
-            <td class="r-info__list-value">JNJ Communication</td>
+            <td class="r-info__list-value">{{ circleGroup.wait.join(', ') }}</td>
           </tr>
-          <tr>
+          <tr v-if="circleGroup.accept.length > 0">
             <td class="r-info__list-key">합격</td>
-            <td class="r-info__list-value">COIN</td>
+            <td class="r-info__list-value">{{ circleGroup.accept.join(', ') }}</td>
           </tr>
-          <tr>
+          <tr v-if="circleGroup.fail.length > 0">
             <td class="r-info__list-key">불합격</td>
-            <td class="r-info__list-value">New Turn</td>
+            <td class="r-info__list-value">{{ circleGroup.fail.join(', ') }}</td>
           </tr>
-        -->
         </tbody>
       </table>
     </dimi-card>

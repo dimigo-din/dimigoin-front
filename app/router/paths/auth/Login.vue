@@ -3,14 +3,14 @@ import { mapActions, mapState } from 'vuex'
 
 import DimiButton from '../../../components/DimiButton.vue'
 import DimiCard from '../../../components/DimiCard.vue'
-import DimiMeal from '../../../components/DimiMeal.vue'
+import MealGroup from '../../../components/MealGroup.vue'
 import DimiInput from '../../../components/DimiInput.vue'
 import DimiDivider from '../../../components/DimiDivider.vue'
 
 export default {
   name: 'Login',
 
-  components: { DimiButton, DimiCard, DimiMeal, DimiInput, DimiDivider },
+  components: { DimiButton, DimiCard, MealGroup, DimiInput, DimiDivider },
 
   data () {
     return {
@@ -98,7 +98,7 @@ export default {
       <div class="section">
         <h2 class="section__title">오늘의 급식</h2>
         <div class="section__content">
-          <dimi-meal/>
+          <meal-group/>
         </div>
       </div>
     </dimi-card>
