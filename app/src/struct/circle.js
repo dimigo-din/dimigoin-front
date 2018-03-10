@@ -10,7 +10,8 @@ const _Circle = struct({
   applyEndDate: 'string',
   chairIdx: 'string',
   chairSerial: 'string',
-  chairName: 'string'
+  chairName: 'string',
+  status: 'string | null'
 })
 
 const _CircleApplicant = struct({
@@ -33,7 +34,8 @@ export const Circle = (applicant) => {
     applyEndDate: applicant['apply_end_date'],
     chairIdx: applicant['chair_idx'],
     chairSerial: applicant['chair_serial'],
-    chairName: applicant['chair_name']
+    chairName: applicant['chair_name'],
+    status: applicant['status']
   })
 }
 

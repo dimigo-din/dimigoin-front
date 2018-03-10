@@ -2,7 +2,7 @@
 import ContentWrapper from '../../partial/ContentWrapper.vue'
 import CircleCard from '../../../components/CircleCard.vue'
 
-import * as circle from '../../../src/api/circle'
+import { circle } from '../../../src/api'
 
 export default {
   name: 'RequestCircle',
@@ -24,16 +24,7 @@ export default {
 
   async created () {
     this.pending = true
-    const circles = await circle.getCircles()
-    const applyedCircles = await circle.getAppliedCircles()
-    this.circles = circles.map(circle => {
-      applyedCircles.forEach(v => {
-        if (v.circleIdx === circle.idx) {
-          circle.status = v.status
-        }
-      })
-      return circle
-    })
+    this.circles = await circle.getCircles()
     this.pending = false
   }
 }
