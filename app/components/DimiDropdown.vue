@@ -35,9 +35,7 @@ export default {
 
   methods: {
     updateWidth () {
-      if (!this.$refs.list) return
-      if (!this.$refs.items) return
-
+      if (!this.$refs.list || !this.$refs.items) return
       const { root, items, list } = this.$refs
 
       list.$el.style.display = 'block'
@@ -50,10 +48,9 @@ export default {
 
         return offsetWidth
       }))
-      list.$el.style.display = ''
 
-      if (!width) return
-      root.style.width = list.$el.style.width = width
+      list.$el.style.display = ''
+      root.style.width = list.$el.style.width = (width + 1) + 'px'
     },
 
     open () {
