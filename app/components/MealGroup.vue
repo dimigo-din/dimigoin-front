@@ -3,7 +3,7 @@ import DimiMealItem from './DimiMealItem.vue'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'DimiMeal',
+  name: 'MealGroup',
 
   components: { DimiMealItem },
 
