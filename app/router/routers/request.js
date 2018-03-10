@@ -24,7 +24,7 @@ export default [{
       path: 'afterschool',
       name: 'request/afterschool',
       component: RequestAfterschool,
-      meta: { title: '신청 > 방과 후 활동 신청', draft: true }
+      meta: { title: '신청 > 방과 후 활동 신청' }
     },
     {
       path: 'counsel',

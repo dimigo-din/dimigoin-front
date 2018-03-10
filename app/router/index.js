@@ -29,14 +29,17 @@ const router = new VueRouter({
   ]
 })
 
-const authRequired = path =>
-  !store.state.account.auth.isLoggedIn && !/login|register/.test(path)
+const isLoggedIn = () => store.state.account.auth.isLoggedIn
+const needVerify = () => store.state.account.auth.needVerify
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.title) document.title = to.meta.title
-  if (authRequired(to.path)) return void next({ name: 'login' })
-  if (to.meta.draft) return void next({ name: 'request/draft' })
+  if (!/login|register/.test(to.path)) {
+    if (!isLoggedIn()) return next({ name: 'login' })
+    if (needVerify()) return next({ name: 'register/step/3' })
+  }
 
+  if (to.meta.draft) return next({ name: 'request/draft' })
+  if (to.meta.title) document.title = to.meta.title
   next()
 })
 

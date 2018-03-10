@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 .circle {
-  &__section:not(:last-child) {
+  &__section {
     padding-bottom: 16px;
   }
 
