@@ -35,30 +35,29 @@ export default {
 
 <style lang="scss">
 .checkbox {
-  width: 1em;
+  background-color: $gray-light;
+  border-radius: 50%;
   height: 1em;
   padding: 0.1em;
-
-  border-radius: 50%;
-  background-color: $gray-light;
-  transition: background-color .2s ease;
+  transition: background-color 0.2s ease;
+  width: 1em;
 
   &--checked {
     background-color: $red;
   }
 
   &__wrapper {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: left;
   }
 
   &__icon {
-    display: inline-block;
-    vertical-align: middle;
 
     color: $white;
+    display: inline-block;
     font-size: 50%;
+    vertical-align: middle;
   }
 
   &__content {

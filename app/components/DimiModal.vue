@@ -36,36 +36,32 @@ export default {
 
 <style lang="scss">
   .modal {
-    margin: 5vh auto;
-    position: relative;
-    box-sizing: border-box;
-
-    padding: 24px;
-    max-width: 700px;
-
-    border-radius: 6px;
-    border: solid 1px $gray-lighten;
-
     background-color: $white;
-    box-shadow: 0px 16px 36px -12px rgba(0,0,0,.5);
+    border: solid 1px $gray-lighten;
+    border-radius: 6px;
+    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    margin: 5vh auto;
+    max-width: 700px;
+    padding: 24px;
+    position: relative;
 
     &__overlay {
-      z-index: 999;
-      position: fixed;
-      top: 0; left: 0;
+      background: rgba(#151313, 0.7);
       box-sizing: border-box;
-
-      width: 100%;
       height: 100%;
+      left: 0;
       min-height: 100vh;
       overflow-y: auto;
-
-      background: rgba(#151313, .7);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
     }
 
     .icon-cross {
-      opacity: 0.3;
       float: right;
+      opacity: 0.3;
     }
   }
 </style>

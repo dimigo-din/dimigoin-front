@@ -22,8 +22,8 @@ export default {
 <style lang="scss" scoped>
 .mng-circle {
   &__title {
-    font-size: 24px;
     color: $gray-dark;
+    font-size: 24px;
   }
 }
 </style>

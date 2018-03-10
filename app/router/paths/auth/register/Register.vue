@@ -55,11 +55,11 @@ export default {
     @extend %h-text-xl;
 
     @include font-extra-bold;
+    cursor: pointer;
     margin-top: 5rem;
 
     user-select: none;
     word-spacing: 0.325em;
-    cursor: pointer;
   }
 
   &__subtitle {

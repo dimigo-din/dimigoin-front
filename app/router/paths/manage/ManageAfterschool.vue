@@ -130,18 +130,18 @@ export default {
   }
 
   &__title {
-    padding: 24px;
     font-size: 24px;
+    padding: 24px;
   }
 
   &__toolbar {
-    display: flex;
-    padding: 0 24px;
-    margin-bottom: 24px;
+    @include font-bold;
 
     color: $gray-light;
-    @include font-bold;
+    display: flex;
     font-size: 16px;
+    margin-bottom: 24px;
+    padding: 0 24px;
   }
 
   &__tool:not(:first-child) {
@@ -149,8 +149,8 @@ export default {
   }
 
   &__delete {
-    display: flex;
     align-items: center;
+    display: flex;
   }
 
   &__sort {
@@ -162,9 +162,9 @@ export default {
   }
 
   &__list {
-    width: 100%;
     @include font-bold;
     color: $gray !important;
+    width: 100%;
   }
 
   &__row:not(:last-child) {
@@ -179,16 +179,18 @@ export default {
     padding: 12px;
     white-space: nowrap;
   }
+
   &__cell:first-child {
     padding-left: 24px;
   }
+
   &__cell:last-child {
     padding-right: 24px;
   }
 
   &__cell-name {
-    width: 99%;
     white-space: normal;
+    width: 99%;
   }
 
   &__cell-button {

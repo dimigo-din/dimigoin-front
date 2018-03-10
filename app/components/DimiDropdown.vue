@@ -108,14 +108,14 @@ export default {
 
 <style lang="scss">
 .dropdown {
-  position: relative;
-  padding-top: 5px;
   padding-bottom: 5px;
+  padding-top: 5px;
+  position: relative;
   white-space: nowrap;
 
   &__view {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
   }
 
@@ -124,18 +124,18 @@ export default {
   }
 
   &__view-icon {
-    margin-left: 0.5em;
     font-size: 50%;
+    margin-left: 0.5em;
   }
 
   &__list {
+    box-shadow: 0 2px 8px 0 rgba(21, 19, 19, 0.2);
     display: none;
-    position: absolute;
-    z-index: 1;
+    margin-top: 0.5em;
 
     padding: 0;
-    margin-top: 0.5em;
-    box-shadow: 0px 2px 8px 0 rgba(21, 19, 19, 0.2);
+    position: absolute;
+    z-index: 1;
   }
 
   &--active &__list {

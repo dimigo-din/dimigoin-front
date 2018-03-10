@@ -113,8 +113,8 @@ export default {
 
   @include until($tablet) {
     display: block;
-    padding: 12px;
     height: unset;
+    padding: 12px;
   }
 }
 
@@ -123,15 +123,15 @@ export default {
   justify-content: center;
   width: 100%;
 
-  .divider--horizontal { display: none; }
-
   @include until($tablet) {
-    width: unset;
     display: block;
+    width: unset;
 
     .divider--vertical { display: none; }
     .divider--horizontal { display: block; }
   }
+
+  .divider--horizontal { display: none; }
 
   &__input {
     margin-bottom: 1rem;
@@ -140,6 +140,7 @@ export default {
   .section:first-child {
     order: 2;
   }
+
   .section:last-child {
     order: 1;
   }

@@ -72,9 +72,9 @@ export default {
   }
 
   &__title {
-    margin-top: 24px;
-    margin-bottom: 24px;
     font-size: 20px;
+    margin-bottom: 24px;
+    margin-top: 24px;
   }
 
   &__circles {
