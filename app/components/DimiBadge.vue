@@ -6,7 +6,7 @@ export default {
     color: {
       type: String,
       default: 'aloes',
-      validator: c => ['aloes', 'orange', 'gray'].includes(c)
+      validator: c => ['cyan', 'aloes', 'orange', 'gray'].includes(c)
     }
   },
 
@@ -43,6 +43,11 @@ export default {
   &--gray {
     background-color: $gray-lighter;
     color: $gray-dark;
+  }
+
+  &--cyan {
+    background-color: $cyan;
+    color: $white;
   }
 }
 </style>

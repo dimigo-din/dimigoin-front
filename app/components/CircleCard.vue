@@ -6,6 +6,7 @@ import DimiButton from './DimiButton.vue'
 
 import lineClamp from 'line-clamp'
 import * as handleStatus from '../src/util/handle-circle-status'
+import * as circle from '../src/api/circle'
 
 export default {
   name: 'CircleCard',
@@ -40,10 +41,22 @@ export default {
       return this.circle.status ? '신청 취소' : '신청하기'
     },
 
+    applyable () {
+      return !handleStatus.hasStatus(this.circle.status)
+    },
+
+    cancelable () {
+      return this.circle.status === handleStatus.WAIT
+    },
+
+    finish () {
+      return Date.now() > new Date(this.circle.applyEndDate).getTime()
+    },
+
     deadline () {
       const now = Date.now()
-      return now > new Date(this.circle.applyStartDate).getTime() &&
-        now < new Date(this.circle.applyEndDate).getDate()
+      return !this.finish &&
+        now > new Date(this.circle.applyStartDate).getDate()
     }
   },
 
@@ -65,12 +78,23 @@ export default {
         .forEach(description => lineClamp(description, 4))
     },
 
-    toggleSubmit () {
+    async toggleSubmit () {
       if (!this.deadline) {
         return this.$swal('이런!', '신청 기간이 아닙니다.', 'error')
       }
-
-      // TODO
+      this.pending = true
+      try {
+        if (this.applyable) {
+          await circle.applyCircle(this.circle.idx)
+          this.$set(this.circle, 'status', handleStatus.WAIT)
+        } else if (this.cancelable) {
+          await circle.cancelCircle(this.circle.idx)
+          this.$set(this.circle, 'status', null)
+        }
+      } catch ({ message }) {
+        this.$swal('이런!', message, 'error')
+      }
+      this.pending = false
     }
   }
 }
@@ -79,6 +103,7 @@ export default {
 <template>
   <div>
     <dimi-card
+      v-ripple="'rgba(0, 0, 0, 0.05)'"
       class="circle-card"
       @click.native="opened = true">
 
@@ -142,7 +167,13 @@ export default {
       <div class="circle-card__modal-description">{{ circle.description }}</div>
 
       <dimi-button
-        :class="`circle-card__submit-btn`"
+        v-if="!finish"
+        :gray="!(applyable && deadline)"
+        :class="{
+          'circle-card__submit-btn': true,
+          'circle-card__submit-btn--post': hasBadge
+        }"
+        :loading="pending"
         @click="toggleSubmit">
         {{ buttonText }}
       </dimi-button>
@@ -154,6 +185,8 @@ export default {
 
 <style lang="scss">
 .circle-card {
+  cursor: pointer;
+
   &__info {
     display: flex;
   }
@@ -187,6 +220,7 @@ export default {
 
   &__badge {
     max-width: 40px;
+    margin-top: 36px;
     margin-left: auto;
   }
 
@@ -239,13 +273,13 @@ export default {
     margin-top: 32px;
   }
 
-  &__submit-btn, &__post-submit-btn {
+  &__submit-btn {
     float: right;
     margin-top: 20px;
     @include font-bold;
   }
 
-  &__post-submit-btn {
+  &__submit-btn--post {
     color: $black !important;
     background-color: $gray-lighter !important;
   }

@@ -106,7 +106,7 @@ export default {
   }
 
   &--cursor-disable {
-    cursor: default;
+    cursor: not-allowed;
   }
 
   &--large {

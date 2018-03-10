@@ -1,7 +1,7 @@
-const ACCEPT = 'accept'
-const FAIL = 'fail'
-const FINAL = 'final'
-const WAIT = 'wait'
+export const ACCEPT = 'accept'
+export const FAIL = 'fail'
+export const FINAL = 'final'
+export const WAIT = 'wait'
 
 export function getColorByStatus (status) {
   switch (status) {
@@ -10,7 +10,7 @@ export function getColorByStatus (status) {
     case FAIL:
       return 'orange'
     case FINAL:
-      return 'aloes'
+      return 'cyan'
     case WAIT:
       return 'gray'
   }
@@ -23,7 +23,7 @@ export function getMessageByStatus (status) {
     case FAIL:
       return '불합격'
     case FINAL:
-      return '최종 결정'
+      return '최종'
     case WAIT:
       return '대기'
   }

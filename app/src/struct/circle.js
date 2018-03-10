@@ -1,6 +1,7 @@
 import { struct } from 'superstruct'
 
 const _Circle = struct({
+  idx: 'number',
   name: 'string',
   description: 'string',
   category: 'string',
@@ -22,6 +23,7 @@ const _CircleApplicant = struct({
 
 export const Circle = (applicant) => {
   return _Circle({
+    idx: applicant['idx'],
     name: applicant['name'],
     description: applicant['description'],
     category: applicant['category'],

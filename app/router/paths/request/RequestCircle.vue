@@ -18,13 +18,24 @@ export default {
 
   computed: {
     appliedCircles () {
-      return []
+      return this.circles.filter(v => v.status)
     }
   },
 
   async created () {
     this.pending = true
-    this.circles = await circle.getCircles()
+    const circles = await circle.getCircles()
+    const applyedCircles = await circle.getAppliedCircles()
+    console.log(applyedCircles)
+    this.circles = circles.map(circle => {
+      applyedCircles.every(v => {
+        if (v.circleIdx === circle.idx) {
+          circle.status = v.status
+          return true
+        }
+      })
+      return circle
+    })
     this.pending = false
   }
 }
