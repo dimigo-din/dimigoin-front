@@ -26,12 +26,10 @@ export default {
     this.pending = true
     const circles = await circle.getCircles()
     const applyedCircles = await circle.getAppliedCircles()
-    console.log(applyedCircles)
     this.circles = circles.map(circle => {
-      applyedCircles.every(v => {
+      applyedCircles.forEach(v => {
         if (v.circleIdx === circle.idx) {
           circle.status = v.status
-          return true
         }
       })
       return circle
