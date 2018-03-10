@@ -238,6 +238,7 @@ export default {
 
   &__modal-name {
     @include font-bold;
+    word-break: break-all;
   }
 
   &__modal-logo {
