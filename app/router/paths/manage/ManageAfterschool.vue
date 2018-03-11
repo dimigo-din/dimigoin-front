@@ -184,6 +184,7 @@ export default {
               <div class="mng-afsc__field">
                 <dimi-dropdown
                   :items="days"
+                  :dropup="true"
                   v-model="form.day"
                   class="mng-afsc__input mng-afsc__input--day"/>
               </div>

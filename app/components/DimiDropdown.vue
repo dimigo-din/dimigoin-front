@@ -14,6 +14,11 @@ export default {
     value: {
       type: Number,
       default: 0
+    },
+
+    dropup: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -26,7 +31,8 @@ export default {
     classes () {
       return {
         'dropdown': true,
-        'dropdown--active': this.active
+        'dropdown--active': this.active,
+        'dropdown--dropup': this.dropup
       }
     }
   },
@@ -139,6 +145,10 @@ export default {
     padding: 0;
     position: absolute;
     z-index: 1;
+  }
+
+  &--dropup &__list {
+    bottom: 2.75em;
   }
 
   &--active &__list {
