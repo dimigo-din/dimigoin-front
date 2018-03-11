@@ -10,11 +10,14 @@ export default {
     items: {
       type: Array,
       default: () => []
+    },
+    value: {
+      type: Number,
+      default: 0
     }
   },
 
   data: () => ({
-    selection: 0,
     active: false,
     hovered: false
   }),
@@ -64,7 +67,7 @@ export default {
 
     select (index) {
       this.active = false
-      this.$emit('select', this.selection = index)
+      this.$emit('input', index)
     }
   }
 }
@@ -79,7 +82,7 @@ export default {
     @mouseout="closeDelayed(hovered = false)">
 
     <div class="dropdown__view">
-      {{ items[selection] }}
+      {{ items[value] }}
       <span class="dropdown__view-icon icon-arrow-down"/>
     </div>
 
@@ -89,7 +92,7 @@ export default {
 
       <template v-for="(item, index) in items">
         <p
-          v-show="index !== selection"
+          v-show="index !== value"
           ref="items"
           :key="`item-${index}`"
           class="dropdown__item"
