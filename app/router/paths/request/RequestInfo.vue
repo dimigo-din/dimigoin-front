@@ -81,9 +81,9 @@ export default {
 <style lang="scss" scoped>
   .r-info {
     &__badge {
+      display: inline-block;
       font-size: 14px;
       margin-right: 10px;
-      display: inline-block;
     }
 
     &__badge-icon {
@@ -101,13 +101,14 @@ export default {
       margin-top: 8px;
     }
 
-    &__list-key, &__list-value {
+    &__list-key,
+    &__list-value {
       padding-top: 16px;
     }
 
     &__list-key {
-      color: $black;
       @include font-bold;
+      color: $black;
       padding-right: 16px;
     }
 

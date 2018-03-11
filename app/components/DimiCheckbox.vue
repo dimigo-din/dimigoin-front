@@ -1,9 +1,8 @@
 <template>
   <div class="checkbox__wrapper">
     <span
-      class="checkbox"
-      :class="checked && 'checkbox--checked'"
-      @click="checked = !checked">
+      :class="classes"
+      @click="$emit('input', !value)">
 
       <span class="checkbox__icon icon-ok"/>
     </span>
@@ -16,11 +15,19 @@
 
 <script>
 export default {
-  data: () => ({ checked: false }),
+  props: {
+    value: {
+      type: Boolean,
+      default: () => false
+    }
+  },
 
-  watch: {
-    checked (val) {
-      this.$emit('checked', val)
+  computed: {
+    classes () {
+      return {
+        'checkbox': true,
+        'checkbox--checked': this.value
+      }
     }
   }
 }
@@ -28,37 +35,29 @@ export default {
 
 <style lang="scss">
 .checkbox {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 1em;
-  height: 1.1em;
-
-  padding: 0.1em;
-  padding-bottom: 0;
-
-  border-radius: 50%;
   background-color: $gray-light;
-  transition: background-color .2s ease;
+  border-radius: 50%;
+  height: 1em;
+  padding: 0.1em;
+  transition: background-color 0.2s ease;
+  width: 1em;
 
   &--checked {
     background-color: $red;
   }
 
   &__wrapper {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: left;
   }
 
   &__icon {
-    font-size: 50%;
-    color: $white;
-  }
 
-  &__icon::before {
-    margin-left: -0.1em !important;
+    color: $white;
+    display: inline-block;
+    font-size: 50%;
+    vertical-align: middle;
   }
 
   &__content {

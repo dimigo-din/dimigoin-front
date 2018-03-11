@@ -21,15 +21,15 @@ export default {
 
 <style lang="scss">
   .r-draft {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
     padding: 24px;
 
     &__thinking {
-      width: auto;
       height: 80vh;
       opacity: 0.02;
+      width: auto;
     }
   }
 </style>
