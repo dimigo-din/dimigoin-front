@@ -47,11 +47,11 @@ export default {
   }
 
   &__item {
-    font-size: 18px;
     color: $gray;
     cursor: pointer;
-    padding: 24px 0 12px 0;
     flex-basis: 160px;
+    font-size: 18px;
+    padding: 24px 0 12px;
     text-align: center;
   }
 
