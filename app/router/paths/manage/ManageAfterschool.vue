@@ -209,9 +209,9 @@ export default {
   }
 
   &__section {
-    margin-top: 36px;
     margin-bottom: 64px;
-    padding: 0 24px 24px 24px;
+    margin-top: 36px;
+    padding: 0 24px 24px;
   }
 
   &__title {
@@ -259,19 +259,15 @@ export default {
     border-bottom: 1px solid $gray-lighter;
   }
 
-  &__item-divider {
-    position: relative;
-  }
-
   &__cell {
     padding: 24px;
     white-space: nowrap;
   }
 
   &__cell--name {
+    line-height: 1.5;
     white-space: normal;
     width: 99%;
-    line-height: 1.5;
   }
 
   &__cell--button {
@@ -290,8 +286,8 @@ export default {
   }
 
   &__field {
-    display: flex;
     align-items: center;
+    display: flex;
   }
 
   &__field--full {
@@ -303,10 +299,10 @@ export default {
   }
 
   &__label {
-    width: 5em;
     max-width: 4em;
-    text-align: right;
     padding-right: 1em;
+    text-align: right;
+    width: 5em;
   }
 
   &__input {

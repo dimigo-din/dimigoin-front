@@ -74,10 +74,10 @@ export default {
   background-color: $gray-lighten;
   border: 0;
   border-radius: 20px;
+  box-sizing: border-box;
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
   padding: 0.75em 1.75em;
-  box-sizing: border-box;
   width: 100%;
 
   &::placeholder {

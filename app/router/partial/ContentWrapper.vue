@@ -13,8 +13,9 @@
 @import '../../scss/helpers/typography';
 
 .content {
-  padding: 2rem 0;
   min-height: calc(100vh - 8rem);
+  padding: 2rem 0;
+
   &__header {
     @extend %h-text-gray-dark;
     @include font-bold;

@@ -40,6 +40,7 @@ export default {
 <style lang="scss">
 .tab {
   width: 100%;
+
   &__list {
     display: flex;
     justify-content: center;
@@ -47,13 +48,16 @@ export default {
 
   &__item {
     font-size: 18px;
-    padding: 24px 65px 12px 65px;
+    color: $gray;
     cursor: pointer;
+    padding: 24px 0 12px 0;
+    flex-basis: 160px;
+    text-align: center;
   }
 
   &__item--active {
-    color: $red;
     border-bottom: solid 4px $red;
+    color: $red;
   }
 }
 </style>

@@ -34,9 +34,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  .mng-circle {
-    &__title {
 
-    }
-  }
 </style>

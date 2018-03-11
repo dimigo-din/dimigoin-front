@@ -83,9 +83,5 @@ export default {
     grid-row-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
-
-  &__circle {
-
-  }
 }
 </style>
