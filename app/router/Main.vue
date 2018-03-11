@@ -312,7 +312,7 @@ export default {
 
     margin-top: 1.2rem;
     text-align: center;
-    word-break: keep-all;
+    word-break: break-all;
 
     @include until($tablet) {
       font-size: 16px;
