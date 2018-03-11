@@ -271,6 +271,7 @@ export default {
   &__cell--name {
     white-space: normal;
     width: 99%;
+    line-height: 1.5;
   }
 
   &__cell--button {
