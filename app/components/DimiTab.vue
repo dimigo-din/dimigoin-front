@@ -60,8 +60,8 @@ export default {
 
 <style lang="scss">
 .tab {
-  width: 100%;
   padding-bottom: 4px;
+  width: 100%;
 
   &__list {
     display: flex;
@@ -84,12 +84,12 @@ export default {
   }
 
   &__bar {
-    position: absolute;
-    left: 0;
     background-color: $red;
     border-radius: 2px;
     color: $red;
     height: 4px;
+    left: 0;
+    position: absolute;
     transition: all 0.3s ease-in-out;
   }
 }
