@@ -13,13 +13,13 @@
 @import '../../scss/helpers/typography';
 
 .content {
-  margin-top: 2rem;
-
+  padding: 2rem 0;
+  min-height: calc(100vh - 8rem);
   &__header {
     @extend %h-text-gray-dark;
     @include font-bold;
     font-size: 28px;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
   }
 }
 </style>
