@@ -75,6 +75,7 @@ export default {
   border-radius: 20px;
   font-family: 'NanumSquareRound', sans-serif;
   padding: 0.75em 1.75em;
+  box-sizing: border-box;
   width: 100%;
 
   &::placeholder {
