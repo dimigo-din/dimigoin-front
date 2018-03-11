@@ -75,6 +75,7 @@ export default {
   border: 0;
   border-radius: 20px;
   font-family: 'NanumSquareRound', sans-serif;
+  font-size: inherit;
   padding: 0.75em 1.75em;
   box-sizing: border-box;
   width: 100%;

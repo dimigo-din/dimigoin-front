@@ -88,7 +88,8 @@ export default {
 
     <dimi-card
       ref="list"
-      class="dropdown__list">
+      class="dropdown__list"
+      shadow>
 
       <template v-for="(item, index) in items">
         <p
@@ -132,9 +133,8 @@ export default {
   }
 
   &__list {
-    box-shadow: 0 2px 8px 0 rgba(21, 19, 19, 0.2);
     display: none;
-    margin-top: 0.5em;
+    margin-top: 0.7em;
 
     padding: 0;
     position: absolute;
