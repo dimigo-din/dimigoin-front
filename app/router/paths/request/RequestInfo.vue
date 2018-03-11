@@ -27,6 +27,10 @@ export default {
         fail: filter(handleCircle.FAIL),
         final: filter(handleCircle.FINAL)
       }
+    },
+
+    applied () {
+      return [...Object.values(this.circleGroup)].some(a => a.length > 0)
     }
   },
 
@@ -46,9 +50,11 @@ export default {
       slot="main"
       class="r-info">
       <dimi-badge
-        :color="circles.length > 0 ? 'aloes' : 'orange'"
+        :color="applied ? 'aloes' : 'orange'"
         class="r-info__badge">
-        <template v-if="circles.length > 0"><span class="icon-ok r-info__badge-icon"/> 신청</template>
+        <template v-if="applied">
+          <span class="icon-ok r-info__badge-icon"/> 신청
+        </template>
         <template v-else>
           <span class="icon-cross r-info__badge-icon"/> 미신청
         </template>
