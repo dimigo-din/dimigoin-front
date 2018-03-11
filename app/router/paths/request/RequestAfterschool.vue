@@ -62,11 +62,12 @@ export default {
             <td class="req-afsc__cell req-afsc__cell--name">{{ item.name }}</td>
             <td class="req-afsc__cell">{{ item.manager }}</td>
             <td class="req-afsc__cell">{{ item.chairLeft + '명 남음' }}</td>
-            <td class="req-afsc__cell req-afsc__cell--button">
-              <template v-if="item.chairLeft !== 0">
+            <td
+              :disabled="item.chairLeft === 0"
+              class="req-afsc__cell req-afsc__cell--button">
+              <template v-if="item.chairLeft > 0">
                 <span class="icon-ok"/> 신청하기
-              </template>
-              <template v-else>
+              </template><template v-else>
                 <span class="icon-alert"/> 신청불가
               </template>
             </td>
@@ -108,6 +109,10 @@ export default {
 
   &__cell--button {
     color: $pink;
+  }
+
+  &__cell--button[disabled] {
+    color: $mustard;
   }
 }
 </style>
