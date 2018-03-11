@@ -66,6 +66,7 @@ export default {
 
 .input-wrapper {
   position: relative;
+  width: 100%;
 }
 
 .input {
