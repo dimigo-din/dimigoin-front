@@ -13,18 +13,18 @@ export default {
       list: [
         [
           {
-            name: '안녕',
-            manager: '스스팍',
+            name: '방과후 테스트 1',
+            manager: '테스트',
             chairLeft: 16
           },
           {
-            name: '고구마 99개 먹기',
-            manager: '호구마',
+            name: '방과후 테스트 2',
+            manager: '테스트',
             chairLeft: 10
           },
           {
-            name: '깔라만시 따먹으면서 팔굽혀펴기 42회',
-            manager: '고추밭',
+            name: '방과후 테스트 3',
+            manager: '테스트',
             chairLeft: 0
           }
         ]
