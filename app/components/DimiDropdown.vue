@@ -122,6 +122,8 @@ export default {
   padding-top: 5px;
   position: relative;
   white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
 
   &__view {
     align-items: center;
@@ -141,6 +143,8 @@ export default {
   &__list {
     display: none;
     margin-top: 0.7em;
+    cursor: pointer;
+    user-select: none;
 
     padding: 0;
     position: absolute;

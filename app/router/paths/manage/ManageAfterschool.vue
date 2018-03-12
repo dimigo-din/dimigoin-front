@@ -354,10 +354,15 @@ export default {
     margin-left: 2em;
   }
 
+  &__select-all {
+    user-select: none;
+  }
+
   &__delete {
     align-items: center;
     display: flex;
     cursor: pointer;
+    user-select: none;
   }
 
   &__sort {
