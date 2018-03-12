@@ -32,6 +32,7 @@ export default {
       currentGrade: 0,
       checks: [],
       selectAll: false,
+      filter: 0,
 
       form: {
         name: '',
@@ -55,8 +56,8 @@ export default {
       },
 
       afterschools: [
-        [{ name: 'asdf', day: 'mon' }, { name: '22', day: 'tus' }],
-        [{ name: 'jdf', day: 'fri' }],
+        [],
+        [],
         []
       ]
     }
@@ -67,9 +68,11 @@ export default {
       return days
     },
 
-    keyAsDaysByGradeAfterschools () {
-      return [...Array(7).keys()]
-        .map(i => this.afterschools[this.currentGrade].filter(({ days }) => days === this.days[i].code))
+    filteredList () {
+      if (this.filter === 0) return this.afterschools[this.currentGrade]
+
+      return this.afterschools[this.currentGrade].filter(v => v.day ===
+        this.days[this.filter - 1].code)
     },
 
     lengthByGrade () {
@@ -82,20 +85,25 @@ export default {
       this.checks = this.checks.map(() => val)
     },
 
-    currentGrade (val) {
-      this.checks = [...Array(this.afterschools[val].length)].map(() => false)
+    filteredList (val) {
+      this.checks = [...Array(val.length)].map(() => false)
       this.selectAll = false
     }
   },
 
   async created () {
-    for (const grade of [1, 2, 3]) {
-      this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
-    }
-    this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
+    await this.updateAll()
   },
 
   methods: {
+    async updateAll () {
+      for (const grade of [1, 2, 3]) {
+        this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
+      }
+      this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
+      this.afterschools = Object.assign({}, this.afterschools)
+    },
+
     async addAfterschool () {
       try {
         const startDate = this.form.startDate
@@ -121,7 +129,7 @@ export default {
           capacity: ''
         })
 
-        this.afterschools[this.currentGrade].push(result)
+        await this.updateAll()
 
         this.$swal('성공!', '추가되었습니다.', 'success')
       } catch (err) {
@@ -131,6 +139,13 @@ export default {
 
     getDayTextByCode (code) {
       return this.days.filter(v => v.code === code)[0].text
+    },
+
+    async deleteChecked () {
+      for (const key in this.checks) {
+        if (this.checks[key]) await afterschool.deleteAfterschool(this.filteredList[key].idx)
+      }
+      await this.updateAll()
     }
   }
 }
@@ -160,19 +175,22 @@ export default {
             모두 선택
           </dimi-checkbox>
 
-          <span class="mng-afsc__tool mng-afsc__delete">
+          <span
+            class="mng-afsc__tool mng-afsc__delete"
+            @click="deleteChecked">
             <span class="mng-afsc__delete-icon icon-delete"/> 선택 삭제
           </span>
 
           <dimi-dropdown
             :items="['필터 없음', ...days.map(v => v.text)]"
+            v-model="filter"
             class="mng-afsc__tool mng-afsc__sort"/>
         </nav>
 
         <table class="mng-afsc__list">
           <tbody>
             <tr
-              v-for="(item, index) in afterschools[currentGrade]"
+              v-for="(item, index) in filteredList"
               :key="index"
               class="mng-afsc__row">
 
@@ -339,6 +357,7 @@ export default {
   &__delete {
     align-items: center;
     display: flex;
+    cursor: pointer;
   }
 
   &__sort {
@@ -353,6 +372,9 @@ export default {
     @include font-bold;
     color: $gray !important;
     width: 100%;
+    display: block;
+    height: 600px;
+    overflow-y: auto;
   }
 
   &__row:not(:last-child) {
@@ -376,6 +398,7 @@ export default {
 
   &__cell--button {
     color: $pink;
+    cursor: not-allowed;
   }
 
   &__form {
