@@ -3,6 +3,9 @@ import ContentWrapper from '../../partial/ContentWrapper.vue'
 import DimiCard from '../../../components/DimiCard.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 
+import config from '../../../../config'
+const { days } = config
+
 export default {
   name: 'RequestAfterschool',
 
@@ -11,23 +14,13 @@ export default {
   data () {
     return {
       list: [
-        [
-          {
-            name: '안녕',
-            manager: '스스팍',
-            chairLeft: 16
-          },
-          {
-            name: '고구마 99개 먹기',
-            manager: '호구마',
-            chairLeft: 10
-          },
-          {
-            name: '깔라만시 따먹으면서 팔굽혀펴기 42회',
-            manager: '고추밭',
-            chairLeft: 0
-          }
-        ]
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
       ],
       currentDay: 0
     }
@@ -35,7 +28,17 @@ export default {
 
   computed: {
     days () {
-      return ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+      return days
+    }
+  },
+
+  async created () {
+    await this.refresh()
+  },
+
+  methods: {
+    async refresh () {
+
     }
   }
 }
@@ -45,12 +48,15 @@ export default {
   <content-wrapper class="req-afsc">
     <h1 slot="header">
       <span class="icon-ball"/>2018년 상반기 방과 후 활동 신청
+      <span
+        class="req-afsc__refresh"
+        @click="refresh">새로고침</span>
     </h1>
     <dimi-card
       slot="main"
       class="req-afsc__main">
       <dimi-tab
-        :tabs="days"
+        :tabs="days.map(v => v.text)"
         :tab-idx.sync="currentDay"/>
 
       <table class="req-afsc__list">
@@ -82,6 +88,15 @@ export default {
 .req-afsc {
   &__main {
     padding-top: 0;
+  }
+
+  &__refresh {
+    color: $red;
+    cursor: pointer;
+    font-size: 16px;
+    float: right;
+    margin-top: 1em;
+    margin-right: 0.5em;
   }
 
   &__row:not(:last-child) {

@@ -15,7 +15,7 @@ Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)
 Vue.use(swal)
 
-console.log(new Vue({
+console.debug(new Vue({
   store,
   router,
   el: '#app',

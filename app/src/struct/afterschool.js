@@ -2,22 +2,22 @@ import { struct } from 'superstruct'
 
 const _Afterschool = struct({
   idx: 'number',
-  name: 'number',
+  name: 'string',
   applyStartDate: 'string',
   applyEndDate: 'string',
   day: 'string',
-  gradeTarget: 'string',
-  max: 'number',
+  count: 'number',
+  capacity: 'number',
   teacherName: 'string'
 })
 
-export const Afterschool = afterschool => new _Afterschool({
+export const Afterschool = afterschool => _Afterschool({
   idx: afterschool['idx'],
   name: afterschool['name'],
-  applyStartDate: afterschool['apply_start_day'],
-  applyEndDate: afterschool['apply_end_day'],
+  applyStartDate: afterschool['apply_start_date'],
+  applyEndDate: afterschool['apply_end_date'],
   day: afterschool['day'],
-  gradeTarget: afterschool['grade_target'],
-  max: afterschool['max_of_count'],
+  count: afterschool['count'],
+  capacity: afterschool['max_of_count'],
   teacherName: afterschool['teacher_name']
 })

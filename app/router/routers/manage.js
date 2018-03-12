@@ -4,8 +4,9 @@ import ManageAfterschool from '../paths/manage/ManageAfterschool.vue'
 
 export default [{
   path: '/manage',
+  name: 'manage',
   component: Manage,
-  redirect: '/404', // TODO fix
+  redirect: { name: 'manage/afterschool' }, // TODO fix
   children: [
     {
       path: 'circle',

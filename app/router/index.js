@@ -2,10 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Main from './Main.vue'
+import Draft from './Draft.vue'
+import NotFound from './NotFound.vue'
 
 import * as routers from './routers'
-
-import NotFound from './NotFound.vue'
 
 import store from '../store'
 
@@ -18,6 +18,12 @@ const router = new VueRouter({
       name: 'main',
       component: Main,
       meta: { title: 'DIMIGOIN' }
+    },
+    {
+      path: '/draft',
+      name: 'draft',
+      component: Draft,
+      meta: { title: '준비 중입니다!' }
     },
     {
       path: '*',
@@ -38,7 +44,7 @@ router.beforeEach((to, from, next) => {
     if (needVerify()) return next({ name: 'register/step/3' })
   }
 
-  if (to.meta.draft) return next({ name: 'request/draft' })
+  if (to.meta.draft) return next({ name: 'draft' })
   if (to.meta.title) document.title = to.meta.title
   next()
 })

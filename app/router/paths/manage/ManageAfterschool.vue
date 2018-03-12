@@ -9,6 +9,10 @@ import DimiInput from '../../../components/DimiInput.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 import DimiButton from '../../../components/DimiButton.vue'
 
+import { afterschool } from '../../../src/api'
+import config from '../../../../config'
+const { days } = config
+
 export default {
   name: 'ManageAfterschool',
   components: {
@@ -23,67 +27,110 @@ export default {
     DimiTab
   },
 
-  data: () => ({
-    currentGrade: 0,
-    checks: [],
-    selectAll: false,
+  data () {
+    return {
+      currentGrade: 0,
+      checks: [],
+      selectAll: false,
 
-    form: {
-      name: '',
-      day: 0,
-      capacity: '',
-      manager: ''
-    },
+      form: {
+        name: '',
+        day: 0,
+        capacity: '',
+        teacher: '',
+        startDate: {
+          year: '',
+          month: '',
+          date: '',
+          hour: '',
+          minute: ''
+        },
+        endDate: {
+          year: '',
+          month: '',
+          date: '',
+          hour: '',
+          minute: ''
+        }
+      },
 
-    list: [
-      {
-        day: '월요일',
-        leader: '도로시',
-        name: '속성 에메랄드 시티 기행',
-        capacity: 20,
-        appliedCount: 8
-      }, {
-        day: '월요일',
-        leader: '토토',
-        name: '케인스 테리어 육성 학습',
-        capacity: 20,
-        appliedCount: 8
-      }, {
-        day: '화요일',
-        leader: '허수아비',
-        name: '톱밥 주머니와 인간의 뇌 사이 연관에 대한 형이상학적 대화',
-        capacity: 20,
-        appliedCount: 8
-      }, {
-        day: '금요일',
-        leader: '담당교사',
-        name: '자살반',
-        capacity: 20,
-        appliedCount: 8
-      }, {
-        day: '금요일',
-        leader: '태티푸',
-        name: '동쪽 먼치킨을 기르기 위한 101가지 방법',
-        capacity: 20,
-        appliedCount: 8
-      }
-    ]
-  }),
+      afterschools: [[{
+        name: 'asdf',
+        day: 'mon'
+      }, { name: '22', day: 'tus'}], [{ name: 'jdf', day: 'fri' }], []]
+    }
+  },
 
   computed: {
     days () {
-      return ['월요일', '화요일', '수요일', '목요일', '금요일', '토요1', '토요2']
+      return days
+    },
+
+    keyAsDaysByGradeAfterschools () {
+      return [...Array(7).keys()]
+        .map(i => this.afterschools[this.currentGrade].filter(({ days }) => days === this.days[i].code))
+    },
+
+    lengthByGrade () {
+      return this.afterschools[this.currentGrade].length
     }
   },
 
   watch: {
     selectAll (val) {
       this.checks = this.checks.map(() => val)
+    },
+
+    currentGrade (val) {
+      this.checks = [...Array(this.afterschools[val].length)].map(() => false)
+      this.selectAll = false
     }
   },
 
-  created () {
-    this.checks = [...Array(this.list.length)].map(() => false)
+  async created () {
+    for (const grade of [1, 2, 3]) {
+      this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
+    }
+    this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
+  },
+
+  methods: {
+    async addAfterschool () {
+      try {
+        const startDate = this.form.startDate
+        const endDate = this.form.endDate
+        const result = {
+          name: this.form.name,
+          day: days[this.form.day].code,
+          capacity: this.form.capacity,
+          teacherName: this.form.teacher,
+          applyStartDate:
+          `${startDate.year}-${startDate.month}-${startDate.date} ` +
+          `${startDate.hour}:${startDate.minute}`,
+          applyEndDate:
+          `${endDate.year}-${endDate.month}-${endDate.date} ` +
+          `${endDate.hour}:${endDate.minute}`
+        }
+
+        // await afterschool.createAfterschool(this.currentGrade + 1, result)
+
+        this.form = Object.assign(this.form, {
+          name: '',
+          teacher: '',
+          capacity: ''
+        })
+
+        this.afterschools[this.currentGrade].push(result)
+
+        this.$swal('성공!', '추가되었습니다.', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
+    getDayTextByCode (code) {
+      return this.days.filter(v => v.code === code)[0].text
+    }
   }
 }
 </script>
@@ -102,7 +149,7 @@ export default {
 
       <section class="mng-afsc__section">
         <h2 class="mng-afsc__title">
-          {{ currentGrade + 1 + '학년' }} 방과 후 활동 관리 ({{ list.length }}개)
+          {{ currentGrade + 1 + '학년' }} 방과 후 활동 관리 ({{ lengthByGrade }}개)
         </h2>
 
         <nav class="mng-afsc__toolbar">
@@ -117,14 +164,14 @@ export default {
           </span>
 
           <dimi-dropdown
-            :items="['필터 없음', ...days]"
+            :items="['필터 없음', ...days.map(v => v.text)]"
             class="mng-afsc__tool mng-afsc__sort"/>
         </nav>
 
         <table class="mng-afsc__list">
           <tbody>
             <tr
-              v-for="(item, index) in list"
+              v-for="(item, index) in afterschools[currentGrade]"
               :key="index"
               class="mng-afsc__row">
 
@@ -132,13 +179,13 @@ export default {
                 <dimi-checkbox
                   v-model="checks[index]"
                   class="mng-afsc__item-check">
-                  {{ item.day }}</dimi-checkbox>
+                  {{ getDayTextByCode(item.day) }}</dimi-checkbox>
               </td>
 
-              <td class="mng-afsc__cell">{{ item.leader }}</td>
+              <td class="mng-afsc__cell">{{ item.teacherName }}</td>
               <td class="mng-afsc__cell mng-afsc__cell--name">{{ item.name }}</td>
               <td class="mng-afsc__cell">총 {{ item.capacity }}명</td>
-              <td class="mng-afsc__cell">{{ item.appliedCount }}명 신청</td>
+              <td class="mng-afsc__cell">{{ item.count }}명 신청</td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
                 <span class="icon-long-arrow"/> 세부관리
               </td>
@@ -166,7 +213,7 @@ export default {
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">담당자</label>
               <dimi-input
-                v-model="form.manager"
+                v-model="form.teacher"
                 class="mng-afsc__input mng-afsc__input--manager"/>
             </div>
 
@@ -174,25 +221,73 @@ export default {
               <label class="mng-afsc__label">총원</label>
               <dimi-input
                 v-model="form.capacity"
-                class="mng-afsc__input mng-afsc__input--capacity"
-                type="number"/>
+                class="mng-afsc__input mng-afsc__input--capacity"/>
               <span class="msg-afsc__capacity-attr">명</span>
             </div>
 
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">요일</label>
-              <div class="mng-afsc__field">
-                <dimi-dropdown
-                  :items="days"
-                  v-model="form.day"
-                  class="mng-afsc__input mng-afsc__input--day"/>
-              </div>
+              <dimi-dropdown
+                :items="days.map(v => v.text)"
+                v-model="form.day"
+                class="mng-afsc__input mng-afsc__input--day"/>
             </div>
           </div>
 
           <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">신청 시작</label>
+              <dimi-input
+                v-model="form.startDate.year"
+                class="mng-afsc__input mng-afsc__input--year"/>
+              년
+              <dimi-input
+                v-model="form.startDate.month"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              월
+              <dimi-input
+                v-model="form.startDate.date"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              일
+              <dimi-input
+                v-model="form.startDate.hour"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              시
+              <dimi-input
+                v-model="form.startDate.minute"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              분
+            </div>
+          </div>
+          <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">신청 마감</label>
+              <dimi-input
+                v-model="form.endDate.year"
+                class="mng-afsc__input mng-afsc__input--year"/>
+              년
+              <dimi-input
+                v-model="form.endDate.month"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              월
+              <dimi-input
+                v-model="form.endDate.date"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              일
+              <dimi-input
+                v-model="form.endDate.hour"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              시
+              <dimi-input
+                v-model="form.endDate.minute"
+                class="mng-afsc__input mng-afsc__input--time"/>
+              분
+            </div>
+          </div>
+
+          <div class="mng-afsc__form-row mng-afsc__form-row--submit">
             <div class="mng-afsc__field mng-afsc__field--right">
-              <dimi-button>추가하기</dimi-button>
+              <dimi-button @click="addAfterschool">추가하기</dimi-button>
             </div>
           </div>
 
@@ -209,9 +304,13 @@ export default {
   }
 
   &__section {
-    margin-bottom: 64px;
+    margin-bottom: 24px;
     margin-top: 36px;
     padding: 0 24px 24px;
+  }
+
+  &__section:last-child {
+    padding-bottom: 0;
   }
 
   &__title {
@@ -229,7 +328,6 @@ export default {
     display: flex;
     font-size: 16px;
     margin-bottom: 12px;
-    padding-left: 24px;
   }
 
   &__tool:not(:first-child) {
@@ -260,7 +358,7 @@ export default {
   }
 
   &__cell {
-    padding: 24px;
+    padding: 24px 0;
     white-space: nowrap;
   }
 
@@ -282,7 +380,12 @@ export default {
 
   &__form-row {
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 24px;
+  }
+
+  &__form-row--submit {
+    margin-top: 24px;
+    margin-bottom: 0;
   }
 
   &__field {
@@ -314,7 +417,7 @@ export default {
   }
 
   &__input--capacity {
-    width: 7em;
+    width: 6em;
   }
 
   &__input--day {
@@ -322,6 +425,19 @@ export default {
     border: 0;
     border-radius: 20px;
     padding: 0.75em 1em;
+  }
+
+  &__input--year {
+    width: 6em;
+  }
+
+  &__input--time {
+    width: 4.75em;
+    margin-left: 1em;
+  }
+
+  &__input--time:nth-child(2) {
+    margin-left: 0;
   }
 }
 </style>
