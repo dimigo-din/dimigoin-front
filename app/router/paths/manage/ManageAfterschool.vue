@@ -89,9 +89,9 @@ export default {
   },
 
   async created () {
-    // for (const grade of [1, 2, 3]) {
-    //   this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
-    // }
+    for (const grade of [1, 2, 3]) {
+      this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
+    }
     this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
   },
 
@@ -113,7 +113,7 @@ export default {
           `${endDate.hour}:${endDate.minute}`
         }
 
-        // await afterschool.createAfterschool(this.currentGrade + 1, result)
+        await afterschool.createAfterschool(this.currentGrade + 1, result)
 
         this.form = Object.assign(this.form, {
           name: '',
