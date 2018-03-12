@@ -60,6 +60,8 @@ export async function deleteAfterschool (idx) {
     switch (res.status) {
       case 404:
         throw new Error('존재하지 않는 방과 후 신청입니다.')
+      default:
+        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
   }
 }
