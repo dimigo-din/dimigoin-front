@@ -13,6 +13,22 @@ function tempValidation (afterschool) {
   }
 }
 
+export async function getAfterschools () {
+  try {
+    const res = await axios.get(`/afterschools/apply/`)
+    return res.data['afterschools'].map(Afterschool)
+  } catch ({ message, response: res }) {
+    console.error(message)
+    if (!res) throw new Error('네트워크에 문제가 있습니다.')
+    switch (res.status) {
+      case 404:
+        return []
+      default:
+        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
+    }
+  }
+}
+
 export async function fetchAfterschool (grade) {
   try {
     const res = await axios.get(`/afterschools/${grade}`)

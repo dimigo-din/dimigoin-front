@@ -9,7 +9,7 @@ import { afterschool } from '../../../src/api'
 import config from '../../../../config'
 
 const { days, sitekey } = config
-const { applyAfterschool } = afterschool
+const { getAfterschools, applyAfterschool } = afterschool
 
 export default {
   name: 'RequestAfterschool',
@@ -17,34 +17,19 @@ export default {
 
   data () {
     return {
-      captchaResponse: null,
-
-      list: [
-        [
-          {
-            name: '방과후 테스트 1',
-            manager: '테스트',
-            chairLeft: 16
-          },
-          {
-            name: '방과후 테스트 2',
-            manager: '테스트',
-            chairLeft: 10
-          },
-          {
-            name: '방과후 테스트 3',
-            manager: '테스트',
-            chairLeft: 0
-          }
-        ]
-      ],
-      currentDay: 0
+      list: [],
+      currentDay: 0,
+      captchaResponse: null
     }
   },
 
   computed: {
     days () { return days },
-    sitekey () { return sitekey }
+    sitekey () { return sitekey },
+    currentList () {
+      return this.list.filter(item =>
+        item.day === days[this.currentDay].code)
+    }
   },
 
   async created () {
@@ -53,16 +38,15 @@ export default {
 
   methods: {
     async refresh () {
-
+      this.list = await getAfterschools()
     },
 
     verifyRecaptcha (response) {
       this.captchaResponse = response
     },
 
-    async toggleApply (index) {
+    async toggleApply (item) {
       try {
-        const item = this.list[this.currentDay][index]
         await applyAfterschool(item.idx, this.captchaResponse)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -107,17 +91,17 @@ export default {
       <table class="req-afsc__list">
         <tbody>
           <tr
-            v-for="(item, idx) in list[currentDay]"
+            v-for="(item, idx) in currentList"
             :key="`aftc-${currentDay}-${idx}`"
             class="req-afsc__row">
             <td class="req-afsc__cell req-afsc__cell--name">{{ item.name }}</td>
-            <td class="req-afsc__cell">{{ item.manager }}</td>
-            <td class="req-afsc__cell">{{ item.chairLeft + '명 남음' }}</td>
+            <td class="req-afsc__cell">{{ item.teacherName }}</td>
+            <td class="req-afsc__cell">{{ (item.capacity - item.count) + '명 남음' }}</td>
             <td
-              :disabled="item.chairLeft === 0"
+              :disabled="item.capacity === item.count"
               class="req-afsc__cell req-afsc__cell--button"
-              @click="toggleApply(idx)">
-              <template v-if="item.chairLeft > 0">
+              @click="toggleApply(item)">
+              <template v-if="item.capacity > item.count">
                 <span class="icon-ok"/> 신청하기
               </template><template v-else>
                 <span class="icon-alert"/> 신청불가
