@@ -4,31 +4,38 @@ import VueRecaptcha from 'vue-recaptcha'
 import ContentWrapper from '../../partial/ContentWrapper.vue'
 import DimiCard from '../../../components/DimiCard.vue'
 import DimiTab from '../../../components/DimiTab.vue'
+import DimiModal from '../../../components/DimiModal.vue'
 
 import { afterschool } from '../../../src/api'
 import config from '../../../../config'
 
 const { days, sitekey } = config
-const { getAfterschools, applyAfterschool } = afterschool
+const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
 
 export default {
   name: 'RequestAfterschool',
-  components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab },
+  components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab, DimiModal },
 
   data () {
     return {
       list: [],
       currentDay: 0,
-      captchaResponse: null
+      captchaOpen: false,
+      captchaResponse: null,
+      callbackAfterCaptcha: () => null
     }
   },
 
   computed: {
     days () { return days },
     sitekey () { return sitekey },
+
     currentList () {
-      return this.list.filter(item =>
-        item.day === days[this.currentDay].code)
+      return this.list.filter(item => item.day === days[this.currentDay].code)
+    },
+
+    applied () {
+      return this.currentList.some(item => item.status === 'apply')
     }
   },
 
@@ -43,13 +50,38 @@ export default {
 
     verifyRecaptcha (response) {
       this.captchaResponse = response
+      if (response) {
+        this.captchaOpen = false
+        this.callbackAfterCaptcha()
+        this.callbackAfterCaptcha = () => null
+      }
     },
 
     async toggleApply (item) {
       try {
-        await applyAfterschool(item.idx, this.captchaResponse)
+        if (item.status !== 'apply') await this.apply(item)
+        else await cancelAfterschool(item.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
+      }
+
+      await this.refresh()
+    },
+
+    async apply (item) {
+      if (this.captchaResponse === null) {
+        this.captchaOpen = true
+        this.callbackAfterCaptcha = () => this.toggleApply(item)
+        return
+      }
+
+      try {
+        await applyAfterschool(item.idx, this.captchaResponse)
+      } catch (e) {
+        throw e
+      } finally {
+        this.captchaResponse = null
+        this.$refs.recaptcha.reset()
       }
     }
   }
@@ -66,24 +98,9 @@ export default {
     </h1>
 
     <dimi-card
-      v-if="captchaResponse === null"
-      slot="main">
-
-      <p class="req-afsc__captcha">
-        방과후 활동 신청은 정정당당한 사람의 손으로만 할 수 있습니다.<br>
-        더럽고 비열한 매크로들은 <a href="https://www.google.com/recaptcha">reCAPTCHA&trade;</a>의 힘에 쓰러질 것입니다.
-      </p>
-
-      <vue-recaptcha
-        :sitekey="sitekey"
-        @verify="verifyRecaptcha"
-        @expired="verifyRecaptcha(null)"/>
-    </dimi-card>
-
-    <dimi-card
-      v-else
       slot="main"
       class="req-afsc__main">
+
       <dimi-tab
         :tabs="days.map(v => v.text)"
         :tab-idx.sync="currentDay"/>
@@ -98,18 +115,40 @@ export default {
             <td class="req-afsc__cell">{{ item.teacherName }}</td>
             <td class="req-afsc__cell">{{ (item.capacity - item.count) + '명 남음' }}</td>
             <td
-              :disabled="item.capacity === item.count"
-              class="req-afsc__cell req-afsc__cell--button"
+              :class="{
+                'req-afsc__cell': true,
+                'req-afsc__cell--button': true,
+                'req-afsc__cell--full': item.capacity === item.count,
+                'req-afsc__cell--applied': item.status === 'apply',
+
+              }"
               @click="toggleApply(item)">
-              <template v-if="item.capacity > item.count">
-                <span class="icon-ok"/> 신청하기
-              </template><template v-else>
-                <span class="icon-alert"/> 신청불가
+
+              <template v-if="applied">
+                <template v-if="item.status === 'apply'">
+                  <span class="icon-cross"/> 신청취소
+                </template>
+              </template>
+
+              <template v-else>
+                <template v-if="item.capacity > item.count">
+                  <span class="icon-ok"/> 신청하기
+                </template><template v-else>
+                  <span class="icon-alert"/> 신청불가
+                </template>
               </template>
             </td>
           </tr>
         </tbody>
       </table>
+
+      <dimi-modal :opened="captchaOpen">
+        <vue-recaptcha
+          ref="recaptcha"
+          :sitekey="sitekey"
+          @verify="verifyRecaptcha"
+          @expired="verifyRecaptcha(null)"/>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -164,8 +203,12 @@ export default {
     cursor: pointer;
   }
 
-  &__cell--button[disabled] {
+  &__cell--full {
     color: $mustard;
+  }
+
+  &__cell--applied {
+    color: $gray-light;
   }
 }
 </style>

@@ -8,7 +8,8 @@ const _Afterschool = struct({
   day: 'string',
   count: 'number',
   capacity: 'number',
-  teacherName: 'string'
+  teacherName: 'string',
+  status: 'string | null'
 })
 
 export const Afterschool = afterschool => _Afterschool({
@@ -19,5 +20,6 @@ export const Afterschool = afterschool => _Afterschool({
   day: afterschool['day'],
   count: afterschool['count'],
   capacity: afterschool['max_of_count'],
-  teacherName: afterschool['teacher_name']
+  teacherName: afterschool['teacher_name'],
+  status: afterschool['status']
 })
