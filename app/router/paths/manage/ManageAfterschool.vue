@@ -89,9 +89,9 @@ export default {
   },
 
   async created () {
-    for (const grade of [1, 2, 3]) {
-      this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
-    }
+    // for (const grade of [1, 2, 3]) {
+    //   this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
+    // }
     this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
   },
 
@@ -185,8 +185,8 @@ export default {
 
               <td class="mng-afsc__cell">{{ item.teacherName }}</td>
               <td class="mng-afsc__cell mng-afsc__cell--name">{{ item.name }}</td>
-              <td class="mng-afsc__cell">총 {{ item.capacity }}명</td>
-              <td class="mng-afsc__cell">{{ item.count }}명 신청</td>
+              <td class="mng-afsc__cell">총 {{ item.capacity || '?' }}명</td>
+              <td class="mng-afsc__cell">{{ item.count || '?' }}명 신청</td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
                 <span class="icon-long-arrow"/> 세부관리
               </td>
@@ -362,6 +362,10 @@ export default {
   &__cell {
     padding: 24px 0;
     white-space: nowrap;
+  }
+
+  &__cell:not(:last-child) {
+    padding-right: 24px;
   }
 
   &__cell--name {
