@@ -3,13 +3,11 @@ import { Afterschool } from '../struct/afterschool'
 
 function tempValidation (afterschool) {
   const keys = ['name', 'day', 'capacity', 'teacherName', 'applyStartDate', 'applyEndDate']
-
   for (const key of keys) {
     if (!afterschool[key]) throw new Error('모든 입력란을 채워주세요.')
   }
 
-  const validDate = new Date(afterschool.applyStartDate).getTime() + new Date(afterschool.applyStartDate).getTime()
-
+  const validDate = new Date(afterschool.applyStartDate).getTime() + new Date(afterschool.applyEndDate).getTime()
   if (isNaN(validDate)) {
     throw new Error('날짜를 모두 정확하게 채워주세요.')
   }
@@ -32,7 +30,6 @@ export async function fetchAfterschool (grade) {
 }
 
 export async function createAfterschool (grade, afterschool) {
-
   tempValidation(afterschool)
 
   try {
@@ -66,7 +63,6 @@ export async function deleteAfterschool (idx) {
     }
   }
 }
-
 
 export async function applyAfterschool (idx, captcha) {
   try {
