@@ -92,8 +92,9 @@ export default {
           await circle.cancelCircle(this.circle.idx)
           this.$set(this.circle, 'status', null)
         }
-      } catch ({ message }) {
-        this.$swal('이런!', message, 'error')
+      } catch (err) {
+        console.error(err)
+        this.$swal('이런!', err.message, 'error')
       }
       this.pending = false
     }
