@@ -53,7 +53,6 @@ $container-sizes: (
   lg: map-get($sizes, lg) - $gutter
 );
 
-
 // column helpers
 @mixin col-offset($column) {
   margin-left: 100% / 24 * $column;

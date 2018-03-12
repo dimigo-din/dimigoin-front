@@ -1,6 +1,7 @@
 <script>
 import './scss/theme.scss'
 import 'dimigoincon'
+import 'typeface-nanum-square-round'
 
 export default {
   name: 'App'

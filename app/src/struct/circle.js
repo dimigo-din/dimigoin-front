@@ -5,13 +5,13 @@ const _Circle = struct({
   name: 'string',
   description: 'string',
   category: 'string',
-  profileImg: 'string | null',
+  profileImg: 'string | null | undefined',
   applyStartDate: 'string',
   applyEndDate: 'string',
   chairIdx: 'string',
   chairSerial: 'string',
   chairName: 'string',
-  status: 'string | null'
+  status: 'string | null | undefined'
 })
 
 const _CircleApplicant = struct({

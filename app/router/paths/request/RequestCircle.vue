@@ -67,14 +67,14 @@ export default {
 
 <style lang="scss" scoped>
 .circle {
-  &__section:not(:last-child) {
+  &__section {
     padding-bottom: 16px;
   }
 
   &__title {
-    margin-top: 24px;
-    margin-bottom: 24px;
     font-size: 20px;
+    margin-bottom: 24px;
+    margin-top: 24px;
   }
 
   &__circles {
@@ -82,10 +82,6 @@ export default {
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
-  &__circle {
-
   }
 }
 </style>

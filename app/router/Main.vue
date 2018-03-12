@@ -11,6 +11,7 @@ export default {
 
   computed: {
     ...mapState('account', {
+      needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
@@ -20,7 +21,13 @@ export default {
   },
 
   async created () {
-    this.autoLogin()
+    try {
+      await this.autoLogin()
+      if (this.needVerify) this.$router.push({ name: 'register/step/3' })
+    } catch (err) {
+      console.error(err)
+    }
+
     await this.fetchServiceList()
     this.updateServiceCardHeight()
   },
@@ -195,12 +202,12 @@ export default {
 }
 
 .info {
-  min-height: 480px;
   display: flex;
+  min-height: 480px;
 
   @include until($tablet) {
-    width: 100%;
     display: block;
+    width: 100%;
   }
 
   .column {
@@ -210,7 +217,8 @@ export default {
     }
   }
 
-  &__profile, &__profile-card {
+  &__profile,
+  &__profile-card {
     display: flex;
     justify-content: space-between;
   }
@@ -222,11 +230,11 @@ export default {
 
   &__notification,
   &__meal {
+
+    flex: 1;
     @include until($tablet) {
       display: block;
     }
-
-    flex: 1;
   }
 
   &__meal {
@@ -238,20 +246,21 @@ export default {
   font-size: 20px;
 
   &__left {
-    display: flex;
     align-items: center;
+    display: flex;
   }
 
-  &__photo, &__default-photo {
-    width: 44px;
+  &__photo,
+  &__default-photo {
     height: 44px;
     margin-right: 15px;
+    width: 44px;
   }
 
   &__photo {
-    object-fit: cover;
-    border-radius: 50%;
     border: 1px solid $gray-lighter;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   &__default-photo::before {
@@ -298,24 +307,24 @@ export default {
   }
 
   &__title {
-    font-size: 24px;
-    word-break: keep-all;
-    text-align: center;
     @include font-extra-bold;
+    font-size: 24px;
+
+    margin-top: 1.2rem;
+    text-align: center;
+    word-break: break-all;
 
     @include until($tablet) {
       font-size: 16px;
     }
-
-    margin-top: 1.2rem;
   }
 
   &__description {
     color: $gray;
     font-size: 14px;
     margin-top: 0.85rem;
-    word-break: keep-all;
     text-align: center;
+    word-break: keep-all;
     @include until($tablet) {
       display: none;
     }

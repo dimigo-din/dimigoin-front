@@ -92,8 +92,9 @@ export default {
           await circle.cancelCircle(this.circle.idx)
           this.$set(this.circle, 'status', null)
         }
-      } catch ({ message }) {
-        this.$swal('이런!', message, 'error')
+      } catch (err) {
+        console.error(err)
+        this.$swal('이런!', err.message, 'error')
       }
       this.pending = false
     }
@@ -197,32 +198,31 @@ export default {
   }
 
   &__name {
-    margin-top: 12px;
     line-height: 16px;
+    margin-top: 12px;
   }
 
   &__category {
-    size: 14px;
-    margin-top: 6px;
     color: $gray-light;
+    margin-top: 6px;
+    size: 14px;
   }
 
   &__description {
+    -webkit-box-orient: vertical;
     color: $black;
+    display: -webkit-box;
     font-size: 14px;
+    height: 14 * 1.8 * 3; // 3 lines
+    -webkit-line-clamp: 3;
     line-height: 1.8;
     margin-top: 12px;
-    height: 14 * 1.8 * 3; // 3 lines
-
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
   }
 
   &__badge {
-    max-width: 40px;
-    margin-top: 36px;
     margin-left: auto;
+    margin-top: 36px;
+    max-width: 40px;
   }
 
   &__modal {
@@ -230,8 +230,8 @@ export default {
   }
 
   &__modal-header {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
 
     padding-top: 24px;
@@ -257,15 +257,15 @@ export default {
   }
 
   &__modal-info-key {
+    color: $gray-dark;
     font-size: 16px;
     line-height: 1.8;
-    color: $gray-dark;
   }
 
   &__modal-info-value {
+    color: $gray-light;
     font-size: 16px;
     line-height: 1.8;
-    color: $gray-light;
   }
 
   &__modal-description {
@@ -276,17 +276,18 @@ export default {
   }
 
   &__submit-btn {
+    @include font-bold;
     float: right;
     margin-top: 20px;
-    @include font-bold;
   }
 
   &__submit-btn--post {
-    color: $black !important;
     background-color: $gray-lighter !important;
+    color: $black !important;
   }
 
-  &__logo, &__modal-logo {
+  &__logo,
+  &__modal-logo {
     object-fit: contain;
   }
 }

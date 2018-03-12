@@ -24,10 +24,10 @@ export default {
 
 <style lang="scss">
 .badge {
+  border-radius: 10px;
   font-size: 14px;
   line-height: 0.86;
   padding: 0.3em 1.1em;
-  border-radius: 10px;
   text-align: center;
 
   &--aloes {

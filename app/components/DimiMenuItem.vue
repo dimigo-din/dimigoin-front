@@ -30,6 +30,12 @@ export default {
   padding: 0.6em 0 0.6em 3em;
   text-decoration: none;
 
+  @include from($desktop) {
+    @include until($widescreen) {
+      padding-left: 1.5em;
+    }
+  }
+
   &--active.menu-item {
     @extend %h-text-white;
     background-color: $red !important;
