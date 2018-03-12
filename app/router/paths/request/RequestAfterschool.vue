@@ -5,8 +5,11 @@ import ContentWrapper from '../../partial/ContentWrapper.vue'
 import DimiCard from '../../../components/DimiCard.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 
+import { afterschool } from '../../../src/api'
 import config from '../../../../config'
+
 const { days, sitekey } = config
+const { applyAfterschool } = afterschool
 
 export default {
   name: 'RequestAfterschool',
@@ -55,6 +58,15 @@ export default {
 
     verifyRecaptcha (response) {
       this.captchaResponse = response
+    },
+
+    async toggleApply (index) {
+      try {
+        const item = this.list[this.currentDay][index]
+        await applyAfterschool(item.idx, this.captchaResponse)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -103,7 +115,8 @@ export default {
             <td class="req-afsc__cell">{{ item.chairLeft + '명 남음' }}</td>
             <td
               :disabled="item.chairLeft === 0"
-              class="req-afsc__cell req-afsc__cell--button">
+              class="req-afsc__cell req-afsc__cell--button"
+              @click="toggleApply(idx)">
               <template v-if="item.chairLeft > 0">
                 <span class="icon-ok"/> 신청하기
               </template><template v-else>
@@ -164,6 +177,7 @@ export default {
 
   &__cell--button {
     color: $pink;
+    cursor: pointer;
   }
 
   &__cell--button[disabled] {
