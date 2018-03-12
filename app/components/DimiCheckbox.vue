@@ -41,6 +41,7 @@ export default {
   padding: 0.1em;
   transition: background-color 0.2s ease;
   width: 1em;
+  cursor: pointer;
 
   &--checked {
     background-color: $red;

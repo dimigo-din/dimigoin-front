@@ -76,7 +76,7 @@ export default {
     font-size: 18px;
     padding: 24px 0 12px;
     text-align: center;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.25s ease;
   }
 
   &__item--active {
