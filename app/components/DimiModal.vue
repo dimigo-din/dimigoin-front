@@ -1,20 +1,22 @@
 <template>
-  <div
-    v-if="opened"
-    :opened="opened"
-    class="modal__overlay"
-    @click.stop="close">
-
+  <transition name="fade">
     <div
-      class="modal"
-      @click.stop>
-      <span
-        class="icon-cross"
-        @click.stop="close"/>
+      v-show="opened"
+      class="modal__overlay"
+      @click.stop="close">
 
-      <slot/>
+      <div
+        class="modal"
+        @click.stop>
+
+        <span
+          class="icon-cross"
+          @click.stop="close"/>
+
+        <slot/>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -35,6 +37,18 @@ export default {
 </script>
 
 <style lang="scss">
+  .fade {
+    &-enter-active,
+    &-leave-active {
+      transition: opacity 0.25s ease-in-out;
+    }
+
+    &-enter,
+    &-leave-to {
+      opacity: 0;
+    }
+  }
+
   .modal {
     background-color: $white;
     border: solid 1px $gray-lighten;
@@ -62,6 +76,7 @@ export default {
     .icon-cross {
       float: right;
       opacity: 0.3;
+      cursor: pointer;
     }
   }
 </style>

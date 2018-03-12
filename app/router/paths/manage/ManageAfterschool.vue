@@ -54,10 +54,11 @@ export default {
         }
       },
 
-      afterschools: [[{
-        name: 'asdf',
-        day: 'mon'
-      }, { name: '22', day: 'tus'}], [{ name: 'jdf', day: 'fri' }], []]
+      afterschools: [
+        [{ name: 'asdf', day: 'mon' }, { name: '22', day: 'tus' }],
+        [{ name: 'jdf', day: 'fri' }],
+        []
+      ]
     }
   },
 
@@ -229,6 +230,7 @@ export default {
               <label class="mng-afsc__label">요일</label>
               <dimi-dropdown
                 :items="days.map(v => v.text)"
+                :dropup="true"
                 v-model="form.day"
                 class="mng-afsc__input mng-afsc__input--day"/>
             </div>

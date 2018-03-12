@@ -13,9 +13,25 @@ export default {
     }
   },
 
+  mounted () {
+    this.updateBarWidth()
+    window.addEventListener('resize', () => this.updateBarWidth())
+  },
+
   methods: {
     go (tabIdx) {
       this.$emit('update:tabIdx', tabIdx)
+      setTimeout(() => this.updateBarWidth(), 1)
+    },
+
+    updateBarWidth () {
+      if (!this.$refs.tab || !this.$refs.bar) return
+
+      const { tab, bar } = this.$refs
+      const { offsetWidth: width, offsetLeft: left } = tab[0]
+
+      bar.style.width = width + 'px'
+      bar.style.marginLeft = (left + width * this.tabIdx) + 'px'
     }
   }
 }
@@ -26,6 +42,7 @@ export default {
     <ul class="tab__list">
       <li
         v-for="(tab, idx) in tabs"
+        ref="tab"
         :key="`tab-${idx}`"
         :class="{
           'tab__item': true,
@@ -34,11 +51,16 @@ export default {
         @click="go(idx)"
       >{{ tab }}</li>
     </ul>
+
+    <div
+      ref="bar"
+      class="tab__bar"/>
   </nav>
 </template>
 
 <style lang="scss">
 .tab {
+  padding-bottom: 4px;
   width: 100%;
 
   &__list {
@@ -47,17 +69,28 @@ export default {
   }
 
   &__item {
-    font-size: 18px;
+    @include font-bold;
     color: $gray;
     cursor: pointer;
-    padding: 24px 0 12px 0;
     flex-basis: 160px;
+    font-size: 18px;
+    padding: 24px 0 12px;
     text-align: center;
+    transition: all 0.3s ease-in-out;
   }
 
   &__item--active {
-    border-bottom: solid 4px $red;
     color: $red;
+  }
+
+  &__bar {
+    background-color: $red;
+    border-radius: 2px;
+    color: $red;
+    height: 4px;
+    left: 0;
+    position: absolute;
+    transition: all 0.3s ease-in-out;
   }
 }
 </style>

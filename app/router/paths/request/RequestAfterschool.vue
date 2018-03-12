@@ -14,13 +14,23 @@ export default {
   data () {
     return {
       list: [
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
+        [
+          {
+            name: '방과후 테스트 1',
+            manager: '테스트',
+            chairLeft: 16
+          },
+          {
+            name: '방과후 테스트 2',
+            manager: '테스트',
+            chairLeft: 10
+          },
+          {
+            name: '방과후 테스트 3',
+            manager: '테스트',
+            chairLeft: 0
+          }
+        ]
       ],
       currentDay: 0
     }

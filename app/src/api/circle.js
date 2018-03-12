@@ -54,7 +54,7 @@ export async function applyCircle (circleIdx) {
 export async function cancelCircle (circleIdx) {
   try {
     await axios.delete(`/circles/apply/${circleIdx}`)
-  } catch ({ message, reponse: res }) {
+  } catch ({ message, response: res }) {
     switch (res.status) {
       case 403:
         throw new Error('동아리 신청 기간이 아닙니다.')
