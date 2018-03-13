@@ -9,7 +9,7 @@ const _Afterschool = struct({
   count: 'number',
   capacity: 'number',
   teacherName: 'string',
-  status: 'string | null'
+  status: 'string | null | undefined'
 })
 
 export const Afterschool = afterschool => _Afterschool({
