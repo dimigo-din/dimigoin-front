@@ -15,7 +15,8 @@ export default {
       name: ({ informations }) => informations.name,
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
-      klass: ({ informations }) => informations.klass
+      klass: ({ informations }) => informations.klass,
+      userType: ({ informations }) => informations.userType
     }),
     ...mapState('service', ['serviceList'])
   },
@@ -100,12 +101,15 @@ export default {
                 class="profile-info__default-photo icon-profile"/>
 
               <span class="profile-info">
-                <span class="profile-info__serial">
-                  {{ `${grade}학년 ${klass}반` }}
-                </span>
-                <span class="profile-info__name">
-                  {{ name }}
-                </span>
+                <template v-if="userType === 'T'">
+                  <span class="profile-info__name">{{ name }}</span>
+                  <span class="profile-info__serial">{{ 선생님 }}</span>
+                </template>
+                <template v-else>
+                  <span class="profile-info__serial">{{ `${grade}학년 ${klass}반` }}</span>
+                  <span class="profile-info__name">{{ name }}</span>
+                </template>
+
               </span>
             </div>
 
