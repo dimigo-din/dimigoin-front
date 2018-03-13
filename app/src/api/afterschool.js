@@ -31,7 +31,7 @@ export async function getAfterschools () {
 
 export async function fetchAfterschool (grade) {
   try {
-    const res = await axios.get(`/afterschools/${grade}`)
+    const res = await axios.get(`/afterschools/grade/${grade}`)
     return res.data['afterschools'].map(Afterschool)
   } catch ({ message, response: res }) {
     console.error(message)
@@ -49,7 +49,7 @@ export async function createAfterschool (grade, afterschool) {
   tempValidation(afterschool)
 
   try {
-    await axios.post(`/afterschools/${grade}`, {
+    await axios.post(`/afterschools/grade/${grade}`, {
       'name': afterschool['name'],
       'day': afterschool['day'],
       'max_of_count': afterschool['capacity'],
