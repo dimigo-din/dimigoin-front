@@ -69,10 +69,7 @@ export default {
     :href="href"
     @click="click"
   >
-    <dimi-loader
-      v-if="loading"
-    />
-    <slot v-else/>
+    <slot/>
   </a>
 </template>
 
