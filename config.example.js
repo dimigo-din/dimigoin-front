@@ -1,7 +1,7 @@
 export default {
   apiUrl: 'https://dimigo.in',
   dimigoApiUrl: 'https://api.dimigo.hs.kr',
-  days:  [
+  days: [
     { text: '월요일', code: 'mon' },
     { text: '화요일', code: 'tus' },
     { text: '수요일', code: 'wed' },
