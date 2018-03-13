@@ -92,7 +92,7 @@ export async function applyAfterschool (idx, captcha) {
       case 401:
         throw new Error('잘못된 학년에 신청했습니다.')
       case 403:
-        throw new Error('신청 기간이 아니거니 마감되었습니다.')
+        throw new Error('신청 기간이 아니거나 마감되었습니다.')
       case 404:
         throw new Error('존재하지 않는 과목입니다.')
       case 406:
