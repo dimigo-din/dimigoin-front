@@ -1,13 +1,14 @@
 <script>
 import ContentWrapper from '../../partial/ContentWrapper.vue'
 import CircleCard from '../../../components/CircleCard.vue'
+import DimiLoader from '../../../components/DimiLoader.vue'
 
 import { circle } from '../../../src/api'
 
 export default {
   name: 'RequestCircle',
 
-  components: { ContentWrapper, CircleCard },
+  components: { ContentWrapper, CircleCard, DimiLoader },
 
   data () {
     return {
@@ -38,35 +39,51 @@ export default {
     <div
       slot="main"
       class="circle">
-      <section
-        v-show="appliedCircles.length > 0"
-        class="circle__section">
 
-        <h2 class="circle__title">신청한 동아리</h2>
-        <div class="circle__circles">
-          <circle-card
-            v-for="(circle, index) in appliedCircles"
-            :key="`applied-circle-${index}`"
-            :circle="circle"
-          />
-        </div>
-      </section>
-      <section class="circle__section">
-        <h2 class="circle__title">전체 동아리</h2>
-        <div class="circle__circles">
-          <circle-card
-            v-for="(circle, index) in circles"
-            :key="`circle-${index}`"
-            :circle="circle"
-          />
-        </div>
-      </section>
+      <div
+        v-if="pending"
+        class="circle__loader-wrapper">
+        <dimi-loader/>
+      </div>
+
+      <template v-else>
+        <section
+          v-show="appliedCircles.length > 0"
+          class="circle__section">
+
+          <h2 class="circle__title">신청한 동아리</h2>
+          <div class="circle__circles">
+            <circle-card
+              v-for="(circle, index) in appliedCircles"
+              :key="`applied-circle-${index}`"
+              :circle="circle"
+            />
+          </div>
+        </section>
+        <section class="circle__section">
+          <h2 class="circle__title">전체 동아리</h2>
+          <div class="circle__circles">
+            <circle-card
+              v-for="(circle, index) in circles"
+              :key="`circle-${index}`"
+              :circle="circle"
+            />
+          </div>
+        </section>
+      </template>
     </div>
   </content-wrapper>
 </template>
 
 <style lang="scss" scoped>
 .circle {
+  &__loader-wrapper {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &__section {
     padding-bottom: 16px;
   }
