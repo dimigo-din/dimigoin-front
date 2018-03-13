@@ -74,9 +74,9 @@ export default {
     }
 
     .icon-cross {
+      cursor: pointer;
       float: right;
       opacity: 0.3;
-      cursor: pointer;
     }
   }
 </style>

@@ -169,10 +169,10 @@ export default {
   &__refresh {
     color: $red;
     cursor: pointer;
-    font-size: 16px;
     float: right;
-    margin-top: 1em;
+    font-size: 16px;
     margin-right: 0.5em;
+    margin-top: 1em;
   }
 
   &__row:not(:last-child) {
