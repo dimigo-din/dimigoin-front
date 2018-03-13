@@ -124,7 +124,10 @@ export default {
           <dimi-card
             class="info__notice info-section__content"
             shadow>
-            새로운 디미고인에 오신 것을 환영합니다!
+            <ul>
+              <li>새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
+            </ul>
           </dimi-card>
         </section>
       </div>
@@ -219,6 +222,13 @@ export default {
       display: block;
       min-height: unset !important;
     }
+  }
+
+  &__notice {
+    display: block;
+    line-height: 2;
+    font-size: 18px;
+    color: $gray-dark;
   }
 
   &__profile,
