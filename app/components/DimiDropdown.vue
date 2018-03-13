@@ -118,12 +118,12 @@ export default {
 
 <style lang="scss">
 .dropdown {
+  cursor: pointer;
   padding-bottom: 5px;
   padding-top: 5px;
   position: relative;
-  white-space: nowrap;
-  cursor: pointer;
   user-select: none;
+  white-space: nowrap;
 
   &__view {
     align-items: center;
@@ -141,13 +141,13 @@ export default {
   }
 
   &__list {
+    cursor: pointer;
     display: none;
     margin-top: 0.7em;
-    cursor: pointer;
-    user-select: none;
 
     padding: 0;
     position: absolute;
+    user-select: none;
     z-index: 1;
   }
 
