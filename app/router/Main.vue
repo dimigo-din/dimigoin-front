@@ -15,7 +15,8 @@ export default {
       name: ({ informations }) => informations.name,
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
-      klass: ({ informations }) => informations.klass
+      klass: ({ informations }) => informations.klass,
+      userType: ({ informations }) => informations.userType
     }),
     ...mapState('service', ['serviceList'])
   },
@@ -100,12 +101,15 @@ export default {
                 class="profile-info__default-photo icon-profile"/>
 
               <span class="profile-info">
-                <span class="profile-info__serial">
-                  {{ `${grade}학년 ${klass}반` }}
-                </span>
-                <span class="profile-info__name">
-                  {{ name }}
-                </span>
+                <template v-if="userType === 'T'">
+                  <span class="profile-info__name">{{ name }}</span>
+                  <span class="profile-info__serial">{{ 선생님 }}</span>
+                </template>
+                <template v-else>
+                  <span class="profile-info__serial">{{ `${grade}학년 ${klass}반` }}</span>
+                  <span class="profile-info__name">{{ name }}</span>
+                </template>
+
               </span>
             </div>
 
@@ -120,7 +124,10 @@ export default {
           <dimi-card
             class="info__notice info-section__content"
             shadow>
-            새로운 디미고인에 오신 것을 환영합니다!
+            <ul>
+              <li>새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
+            </ul>
           </dimi-card>
         </section>
       </div>
@@ -215,6 +222,13 @@ export default {
       display: block;
       min-height: unset !important;
     }
+  }
+
+  &__notice {
+    display: block;
+    line-height: 2;
+    font-size: 18px;
+    color: $gray-dark;
   }
 
   &__profile,

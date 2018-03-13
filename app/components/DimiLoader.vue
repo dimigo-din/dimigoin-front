@@ -41,7 +41,6 @@ export default {
 
 .loader::before,
 .loader::after {
-  background-color: #333;
   border-radius: 50%;
   content: '';
   height: 80%;
@@ -49,6 +48,14 @@ export default {
   position: absolute;
   top: 5%;
   width: 80%;
+}
+
+.loader::before {
+  background-color: $red;
+}
+
+.loader::after {
+  background-color: lighten($red, 20%);
 }
 
 .loader::before {

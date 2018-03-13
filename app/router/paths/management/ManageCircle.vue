@@ -136,9 +136,6 @@ export default {
           </tr>
         </tbody>
       </table>
-      <dimi-button
-        class="mng-circle__finish-btn"
-        @click="finish">최종 마감</dimi-button>
     </dimi-card>
   </content-wrapper>
 </template>
