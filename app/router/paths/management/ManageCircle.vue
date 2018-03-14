@@ -103,7 +103,7 @@ export default {
     <dimi-card
       slot="main"
       class="mng-circle__card">
-      <h2 class="mng-circle__title">COIN 신청자 관리</h2>
+      <h2 class="mng-circle__title">동아리 신청자 관리</h2>
 
       <table class="mng-circle__table">
         <tbody>
