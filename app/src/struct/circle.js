@@ -17,7 +17,7 @@ const _Circle = struct({
 const _CircleApplicant = struct({
   idx: 'string',
   name: 'string',
-  serial: 'string',
+  serial: 'string | null',
   circleIdx: 'string',
   userIdx: 'string',
   status: 'string'
