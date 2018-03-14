@@ -151,10 +151,18 @@ export default {
               </template>
             </td>
           </tr>
+          <!-- <tr
+            v-if="currentList.length === 0"
+            class="req-afsc__row">
+            <td class="req-afsc__cell req-afsc__cell--placeholder">(없음)</td>
+          </tr> -->
         </tbody>
       </table>
 
-      <dimi-modal :opened="captchaOpen">
+      <dimi-modal
+        :opened="captchaOpen"
+        @close="captchaOpen = false">
+
         <vue-recaptcha
           ref="recaptcha"
           :sitekey="sitekey"
@@ -215,6 +223,12 @@ export default {
     white-space: normal;
     width: 99%;
   }
+
+  // &__cell--placeholder {
+  //   color: $gray;
+  //   font-size: 25px;
+  //   text-align: center;
+  // }
 
   &__cell--button {
     color: $pink;
