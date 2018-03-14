@@ -1,8 +1,8 @@
 {
   "name": "dimigoin-front",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "dimigoin front",
-  "main": "index.js",
+  "main": "./app/app.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --content-base public/",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
@@ -11,9 +11,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@https://github.com/a1p4ca/dimigoin-front.git"
+    "url": "git@https://git.dimigo.in/dimigoin/dimigoin-front.git"
   },
-  "author": "a1p4ca",
+  "author": "dimigoin",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
