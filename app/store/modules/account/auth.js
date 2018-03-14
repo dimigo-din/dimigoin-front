@@ -76,7 +76,8 @@ export default {
         serial: info.serial,
         grade: info.grade,
         klass: info.klass,
-        number: info.number
+        number: info.number,
+        ssoToken: info['sso_token']
       })
     },
 

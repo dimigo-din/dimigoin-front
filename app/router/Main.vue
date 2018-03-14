@@ -16,7 +16,8 @@ export default {
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
       klass: ({ informations }) => informations.klass,
-      userType: ({ informations }) => informations.userType
+      userType: ({ informations }) => informations.userType,
+      ssoToken: ({ informations }) => informations.ssoToken
     }),
     ...mapState('service', ['serviceList'])
   },
@@ -59,6 +60,10 @@ export default {
         40 + // card paddings
         32 + // section bottom margin
         24 // title bottom margin
+    },
+
+    openSetting () {
+      window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
     },
 
     async logout () {
@@ -113,10 +118,16 @@ export default {
               </span>
             </div>
 
-            <a
-              class="icon-logout logout-btn"
-              title="로그아웃"
-              @click="logout"/>
+            <nav>
+              <a
+                class="icon-setting profile-info__btn"
+                title="설정"
+                @click="openSetting"/>
+              <a
+                class="icon-logout profile-info__btn"
+                title="로그아웃"
+                @click="logout"/>
+            </nav>
           </dimi-card>
         </section>
         <section class="info__notification info-section">
@@ -290,6 +301,15 @@ export default {
   &__name {
     color: $black;
   }
+
+  &__btn {
+    cursor: pointer;
+    font-size: 23px;
+  }
+
+  &__btn:not(:last-child) {
+    margin-right: 0.25em;
+  }
 }
 
 .service__cards {
@@ -343,10 +363,5 @@ export default {
       display: none;
     }
   }
-}
-
-.logout-btn {
-  cursor: pointer;
-  font-size: 23px;
 }
 </style>
