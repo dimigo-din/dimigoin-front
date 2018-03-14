@@ -1,4 +1,5 @@
 <script>
+import pkg from '../../package.json'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
@@ -10,6 +11,8 @@ export default {
   data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
+    pkg: () => pkg,
+
     ...mapState('account', {
       needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,
@@ -136,7 +139,7 @@ export default {
             class="info__notice info-section__content"
             shadow>
             <ul>
-              <li>새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li :title="`v${pkg.version}`">새로운 디미고인에 오신 것을 환영합니다!</li>
               <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
             </ul>
           </dimi-card>
