@@ -5,6 +5,7 @@ import ContentWrapper from '../../partial/ContentWrapper.vue'
 import DimiCard from '../../../components/DimiCard.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 import DimiModal from '../../../components/DimiModal.vue'
+import DimiLoader from '../../../components/DimiLoader.vue'
 
 import { afterschool } from '../../../src/api'
 import config from '../../../../config'
@@ -14,11 +15,12 @@ const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
 
 export default {
   name: 'RequestAfterschool',
-  components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab, DimiModal },
+  components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab, DimiModal, DimiLoader },
 
   data () {
     return {
       list: [],
+      pending: false,
       currentDay: 0,
       captchaOpen: false,
       captchaResponse: null,
@@ -45,7 +47,9 @@ export default {
 
   methods: {
     async refresh () {
+      this.pending = true
       this.list = await getAfterschools()
+      this.pending = false
     },
 
     verifyRecaptcha (response) {
@@ -105,7 +109,15 @@ export default {
         :tabs="days.map(v => v.text)"
         :tab-idx.sync="currentDay"/>
 
-      <table class="req-afsc__list">
+      <div
+        v-if="pending"
+        class="req-afsc__loader-wrapper">
+        <dimi-loader/>
+      </div>
+
+      <table
+        v-else
+        class="req-afsc__list">
         <tbody>
           <tr
             v-for="(item, idx) in currentList"
@@ -139,10 +151,18 @@ export default {
               </template>
             </td>
           </tr>
+          <!-- <tr
+            v-if="currentList.length === 0"
+            class="req-afsc__row">
+            <td class="req-afsc__cell req-afsc__cell--placeholder">(없음)</td>
+          </tr> -->
         </tbody>
       </table>
 
-      <dimi-modal :opened="captchaOpen">
+      <dimi-modal
+        :opened="captchaOpen"
+        @close="captchaOpen = false">
+
         <vue-recaptcha
           ref="recaptcha"
           :sitekey="sitekey"
@@ -155,6 +175,12 @@ export default {
 
 <style lang="scss" scoped>
 .req-afsc {
+  &__loader-wrapper {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   &__captcha {
     color: $gray-dark;
     font-size: 16px;
@@ -169,10 +195,10 @@ export default {
   &__refresh {
     color: $red;
     cursor: pointer;
-    font-size: 16px;
     float: right;
-    margin-top: 1em;
+    font-size: 16px;
     margin-right: 0.5em;
+    margin-top: 1em;
   }
 
   &__row:not(:last-child) {
@@ -197,6 +223,12 @@ export default {
     white-space: normal;
     width: 99%;
   }
+
+  // &__cell--placeholder {
+  //   color: $gray;
+  //   font-size: 25px;
+  //   text-align: center;
+  // }
 
   &__cell--button {
     color: $pink;

@@ -43,7 +43,7 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-list"/>나의 신청 현황 (테스트)
+      <span class="icon-list"/>나의 신청 현황
     </h1>
 
     <dimi-card

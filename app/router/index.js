@@ -31,7 +31,8 @@ const router = new VueRouter({
     },
     ...routers.auth,
     ...routers.request,
-    ...routers.manage
+    ...routers.management,
+    ...routers.teacher
   ]
 })
 

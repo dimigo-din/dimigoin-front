@@ -10,3 +10,7 @@ export default {
   }
 }
 </script>
+
+<template>
+  <div class="draft"/>
+</template>

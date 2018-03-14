@@ -37,11 +37,11 @@ export default {
 .checkbox {
   background-color: $gray-light;
   border-radius: 50%;
+  cursor: pointer;
   height: 1em;
   padding: 0.1em;
   transition: background-color 0.2s ease;
   width: 1em;
-  cursor: pointer;
 
   &--checked {
     background-color: $red;

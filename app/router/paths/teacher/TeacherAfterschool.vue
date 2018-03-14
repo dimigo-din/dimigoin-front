@@ -8,14 +8,13 @@ import DimiDivider from '../../../components/DimiDivider.vue'
 import DimiInput from '../../../components/DimiInput.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 import DimiButton from '../../../components/DimiButton.vue'
-import DimiLoader from '../../../components/DimiLoader.vue'
 
 import { afterschool } from '../../../src/api'
 import config from '../../../../config'
 const { days } = config
 
 export default {
-  name: 'ManageAfterschool',
+  name: 'TeacherAfterschool',
   components: {
     DimiButton,
     ContentWrapper,
@@ -25,8 +24,7 @@ export default {
     DimiCheckbox,
     DimiDropdown,
     DimiInput,
-    DimiTab,
-    DimiLoader
+    DimiTab
   },
 
   data () {
@@ -362,8 +360,8 @@ export default {
 
   &__delete {
     align-items: center;
-    cursor: pointer;
     display: flex;
+    cursor: pointer;
     user-select: none;
   }
 
@@ -378,10 +376,10 @@ export default {
   &__list {
     @include font-bold;
     color: $gray !important;
+    width: 100%;
     display: block;
     height: 600px;
     overflow-y: auto;
-    width: 100%;
   }
 
   &__row:not(:last-child) {
@@ -420,8 +418,8 @@ export default {
   }
 
   &__form-row--submit {
-    margin-bottom: 0;
     margin-top: 24px;
+    margin-bottom: 0;
   }
 
   &__field {
@@ -468,8 +466,8 @@ export default {
   }
 
   &__input--time {
-    margin-left: 1em;
     width: 4.75em;
+    margin-left: 1em;
   }
 
   &__input--time:nth-child(2) {

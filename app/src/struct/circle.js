@@ -16,10 +16,11 @@ const _Circle = struct({
 
 const _CircleApplicant = struct({
   idx: 'string',
+  name: 'string',
+  serial: 'string | null',
   circleIdx: 'string',
   userIdx: 'string',
-  status: 'string',
-  time: 'string'
+  status: 'string'
 })
 
 export const Circle = (applicant) => {
@@ -42,9 +43,10 @@ export const Circle = (applicant) => {
 export const CircleApplicant = (applicant) => {
   return _CircleApplicant({
     idx: applicant['idx'],
+    name: applicant['name'],
+    serial: applicant['serial'],
     circleIdx: applicant['circle_idx'],
     userIdx: applicant['user_idx'],
-    status: applicant['status'],
-    time: applicant['apply_time']
+    status: applicant['status']
   })
 }
