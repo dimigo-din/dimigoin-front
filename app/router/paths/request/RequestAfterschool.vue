@@ -1,4 +1,5 @@
 <script>
+import monent from 'moment'
 import VueRecaptcha from 'vue-recaptcha'
 
 import ContentWrapper from '../../partial/ContentWrapper.vue'
@@ -16,6 +17,14 @@ const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
 export default {
   name: 'RequestAfterschool',
   components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab, DimiModal, DimiLoader },
+
+  filters: {
+    dateRange (item) {
+      monent.locale('ko')
+      const [a, b] = [monent(item.applyStartDate), monent(item.applyEndDate)]
+      return `${a.fromNow()}에 시작 (${a.format('llll')})\n${b.fromNow()}에 마감 (${b.format('llll')})`
+    }
+  },
 
   data () {
     return {
@@ -125,15 +134,19 @@ export default {
             class="req-afsc__row">
             <td class="req-afsc__cell req-afsc__cell--name">{{ item.name }}</td>
             <td class="req-afsc__cell">{{ item.teacherName }}</td>
-            <td class="req-afsc__cell">{{ (item.capacity - item.count) + '명 남음' }}</td>
+            <td
+              :title="`${item.count}/${item.capacity}`"
+              class="req-afsc__cell">
+              {{ (item.capacity - item.count) + '명 남음' }}
+            </td>
             <td
               :class="{
                 'req-afsc__cell': true,
                 'req-afsc__cell--button': true,
                 'req-afsc__cell--full': item.capacity === item.count,
-                'req-afsc__cell--applied': item.status === 'apply',
-
+                'req-afsc__cell--applied': item.status === 'apply'
               }"
+              :title="item | dateRange"
               @click="toggleApply(item)">
 
               <template v-if="applied">
