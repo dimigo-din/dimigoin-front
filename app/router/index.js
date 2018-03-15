@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Main from './Main.vue'
+import Meal from './Meal.vue'
 import Draft from './Draft.vue'
 import NotFound from './NotFound.vue'
 
@@ -24,6 +25,12 @@ const router = new VueRouter({
       name: 'draft',
       component: Draft,
       meta: { title: '준비 중입니다!' }
+    },
+    {
+      path: '/meal',
+      name: 'meal',
+      component: Meal,
+      meta: { title: '디미밥' }
     },
     {
       path: '*',

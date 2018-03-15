@@ -7,7 +7,7 @@ export default {
       type: Array,
       required: true
     },
-    tabIdx: {
+    value: {
       type: Number,
       default: 0
     }
@@ -19,8 +19,8 @@ export default {
   },
 
   methods: {
-    go (tabIdx) {
-      this.$emit('update:tabIdx', tabIdx)
+    go (value) {
+      this.$emit('input', value)
       setTimeout(() => this.updateBarWidth(), 1)
     },
 
@@ -31,7 +31,7 @@ export default {
       const { offsetWidth: width, offsetLeft: left } = tab[0]
 
       bar.style.width = width + 'px'
-      bar.style.marginLeft = (left + width * this.tabIdx) + 'px'
+      bar.style.marginLeft = (left + width * this.value) + 'px'
     }
   }
 }
@@ -46,7 +46,7 @@ export default {
         :key="`tab-${idx}`"
         :class="{
           'tab__item': true,
-          'tab__item--active': idx === tabIdx
+          'tab__item--active': idx === value
         }"
         @click="go(idx)"
       >{{ tab }}</li>

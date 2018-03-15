@@ -115,8 +115,8 @@ export default {
       class="req-afsc__main">
 
       <dimi-tab
-        :tabs="days.map(v => v.text)"
-        :tab-idx.sync="currentDay"/>
+        v-model="currentDay"
+        :tabs="days.map(v => v.text)"/>
 
       <div
         v-if="pending"
