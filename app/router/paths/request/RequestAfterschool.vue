@@ -189,11 +189,12 @@ export default {
 <style lang="scss" scoped>
 .req-afsc {
   &__loader-wrapper {
-    height: 80vh;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    height: 80vh;
+    justify-content: center;
   }
+
   &__captcha {
     color: $gray-dark;
     font-size: 16px;
