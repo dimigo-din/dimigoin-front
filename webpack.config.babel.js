@@ -124,7 +124,9 @@ const webpackConfig = {
     port: 8888,
     host: '0.0.0.0',
     historyApiFallback: true
-  }
+  },
+
+  node: { fs: 'empty' }
 }
 
 if (production) {

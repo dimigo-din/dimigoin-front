@@ -3,7 +3,7 @@
 
 ## Usage
 ```bash
-cp ./config.example.js ./config.js
+cp example.env .env
 yarn && yarn lint:js && yarn lint:css && yarn build
 ```
 
