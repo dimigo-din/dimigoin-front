@@ -56,14 +56,14 @@ const webpackConfig = {
       title: 'DIMIGOIN',
       template: 'app/app.html',
       filename: 'index.html',
-      minify: production ? {
+      minify: production && {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
         html5: true,
         minifyCSS: true,
         removeComments: true,
         removeEmptyAttributes: true
-      } : false,
+      },
       hash: production
     })
   ],
