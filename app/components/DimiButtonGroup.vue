@@ -52,7 +52,7 @@ export default {
         items: this.items,
         prevent: false,
         done: function () {
-          this.prevent ? null : this.vm.$emit('input', index)
+          if (!this.prevent) this.vm.$emit('input', index)
         }
       }
       this.$emit('click', event)

@@ -97,6 +97,34 @@ export default {
         this.$swal('이런!', err.message, 'error')
       }
       this.pending = false
+    },
+
+    async setFinal () {
+      const { value: answer } = await this.$swal({
+        title: '경고',
+        text: `정말 본 동아리의 가입을 확정하실건가요?`,
+        type: 'warning',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+        showCancelButton: true,
+        showCloseButton: true
+      })
+
+      if (!answer) return
+      try {
+        const circles = await circle.getAppliedCircle()
+        console.log(circles)
+        const thisCircle = circles.find(v => Number(v.circleIdx) === Number(this.circle.idx)) || {}
+        await circle.setFinal(thisCircle.idx)
+        this.circle.status = handleStatus.FINAL
+      } catch (err) {
+        console.error(err)
+        this.$swal({
+          title: '에러!',
+          text: err.message,
+          type: 'error'
+        })
+      }
     }
   }
 }
@@ -108,6 +136,13 @@ export default {
       v-ripple="'rgba(0, 0, 0, 0.05)'"
       class="circle-card"
       @click.native="opened = true">
+
+      <dimi-badge
+        v-if="hasBadge"
+        :color="color"
+        class="circle-card__badge">
+        <slot>{{ badgeText }}</slot>
+      </dimi-badge>
 
       <div class="circle-card__info">
         <img
@@ -125,12 +160,15 @@ export default {
 
       <div class="circle-card__description">{{ circle.description }}</div>
 
-      <dimi-badge
-        v-if="hasBadge"
-        :color="color"
-        class="circle-card__badge">
-        <slot>{{ badgeText }}</slot>
-      </dimi-badge>
+      <div
+        v-if="circle.status === 'accept'"
+        class="circle-card__final-wrapper">
+        <div
+          class="circle-card__final"
+          @click.stop="setFinal">
+          <span class="icon-ok"/> 가입하기
+        </div>
+      </div>
     </dimi-card>
 
     <dimi-modal
@@ -208,8 +246,9 @@ export default {
     size: 14px;
   }
 
+  /* stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix */
   &__description {
-    -webkit-box-orient: vertical;
+    box-orient: vertical;
     color: $black;
     display: -webkit-box;
     font-size: 14px;
@@ -220,9 +259,20 @@ export default {
   }
 
   &__badge {
-    margin-left: auto;
-    margin-top: 36px;
+    margin: 0 auto 25px auto;
     max-width: 40px;
+  }
+
+  &__final-wrapper {
+    display: flex;
+    margin-top: 30px;
+  }
+
+  &__final {
+    margin-left: auto;
+    color: $orange;
+    cursor: pointer;
+    padding: 0.3rem;
   }
 
   &__modal {
@@ -233,7 +283,6 @@ export default {
     align-items: center;
     display: flex;
     justify-content: center;
-
     padding-top: 24px;
   }
 

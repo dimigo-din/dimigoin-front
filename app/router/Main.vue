@@ -1,4 +1,5 @@
 <script>
+import pkg from '../../package.json'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
@@ -10,13 +11,17 @@ export default {
   data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
+    pkg: () => pkg,
+    ie: () => /MSIE |Trident\//.test(window.navigator.userAgent),
+
     ...mapState('account', {
       needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,
       photoUrl: ({ informations }) => informations.photoUrl,
       grade: ({ informations }) => informations.grade,
       klass: ({ informations }) => informations.klass,
-      userType: ({ informations }) => informations.userType
+      userType: ({ informations }) => informations.userType,
+      ssoToken: ({ informations }) => informations.ssoToken
     }),
     ...mapState('service', ['serviceList'])
   },
@@ -59,6 +64,10 @@ export default {
         40 + // card paddings
         32 + // section bottom margin
         24 // title bottom margin
+    },
+
+    openSetting () {
+      window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
     },
 
     async logout () {
@@ -113,10 +122,16 @@ export default {
               </span>
             </div>
 
-            <a
-              class="icon-logout logout-btn"
-              title="로그아웃"
-              @click="logout"/>
+            <nav>
+              <a
+                class="icon-setting profile-info__btn"
+                title="설정"
+                @click="openSetting"/>
+              <a
+                class="icon-logout profile-info__btn"
+                title="로그아웃"
+                @click="logout"/>
+            </nav>
           </dimi-card>
         </section>
         <section class="info__notification info-section">
@@ -125,7 +140,7 @@ export default {
             class="info__notice info-section__content"
             shadow>
             <ul>
-              <li>새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li :title="`v${pkg.version}`">새로운 디미고인에 오신 것을 환영합니다!</li>
               <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
             </ul>
           </dimi-card>
@@ -225,10 +240,10 @@ export default {
   }
 
   &__notice {
-    display: block;
-    line-height: 2;
-    font-size: 18px;
     color: $gray-dark;
+    display: block;
+    font-size: 18px;
+    line-height: 2;
   }
 
   &__profile,
@@ -290,6 +305,15 @@ export default {
   &__name {
     color: $black;
   }
+
+  &__btn {
+    cursor: pointer;
+    font-size: 23px;
+  }
+
+  &__btn:not(:last-child) {
+    margin-right: 0.25em;
+  }
 }
 
 .service__cards {
@@ -343,10 +367,5 @@ export default {
       display: none;
     }
   }
-}
-
-.logout-btn {
-  cursor: pointer;
-  font-size: 23px;
 }
 </style>

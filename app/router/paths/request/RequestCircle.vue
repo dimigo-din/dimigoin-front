@@ -78,10 +78,10 @@ export default {
 <style lang="scss" scoped>
 .circle {
   &__loader-wrapper {
-    height: 80vh;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    height: 80vh;
+    justify-content: center;
   }
 
   &__section {
