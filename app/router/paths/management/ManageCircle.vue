@@ -15,7 +15,8 @@ export default {
   components: { DimiButton, ContentWrapper, DimiCard, DimiButtonGroup },
 
   data: () => ({
-    list: []
+    list: [],
+    pending: false
   }),
 
   computed: {
@@ -25,10 +26,12 @@ export default {
   },
 
   async created () {
+    this.pending = true
     this.list = (await circle.getCircleApplicant()).map(v => ({
       ...v,
       status: this.status.indexOf(v.status)
     }))
+    this.pending = false
   },
 
   methods: {
