@@ -10,12 +10,12 @@ export default {
 
 <style lang="scss">
 @keyframes spinning {
-  0%   { transform: rotate(20deg); }
+  0% { transform: rotate(20deg); }
   100% { transform: rotate(380deg); }
 }
 
 @keyframes scaling {
-  0%   { transform: scale(0.3); }
+  0% { transform: scale(0.3); }
   100% { transform: scale(0.7); }
 }
 

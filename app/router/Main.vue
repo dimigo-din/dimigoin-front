@@ -240,10 +240,10 @@ export default {
   }
 
   &__notice {
-    display: block;
-    line-height: 2;
-    font-size: 18px;
     color: $gray-dark;
+    display: block;
+    font-size: 18px;
+    line-height: 2;
   }
 
   &__profile,

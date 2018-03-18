@@ -208,6 +208,7 @@ export default {
     size: 14px;
   }
 
+  /* stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix */
   &__description {
     box-orient: vertical;
     color: $black;
@@ -233,7 +234,6 @@ export default {
     align-items: center;
     display: flex;
     justify-content: center;
-
     padding-top: 24px;
   }
 

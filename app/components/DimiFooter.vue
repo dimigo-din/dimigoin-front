@@ -29,15 +29,15 @@ export default {
   }
 
   &__copyright {
-
+    // TODO
   }
 
   &__mail {
-
+    // TODO
   }
 
   &__facebook {
-
+    // TODO
   }
 }
 </style>
