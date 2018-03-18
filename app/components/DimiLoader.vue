@@ -1,15 +1,6 @@
 <script>
 export default {
-  name: 'DimiLoader',
-
-  props: {
-    size: {
-      type: Number,
-      default: 32
-    }
-  },
-
-  computed: {}
+  name: 'DimiLoader'
 }
 </script>
 
@@ -71,7 +62,4 @@ export default {
   transform: scale(0);
   transform-origin: 90% 50%;
 }
-
-
-
 </style>

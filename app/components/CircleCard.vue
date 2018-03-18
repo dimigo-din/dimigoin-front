@@ -209,7 +209,7 @@ export default {
   }
 
   &__description {
-    -webkit-box-orient: vertical;
+    box-orient: vertical;
     color: $black;
     display: -webkit-box;
     font-size: 14px;
