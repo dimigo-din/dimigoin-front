@@ -27,10 +27,12 @@ export default {
 
   async created () {
     this.pending = true
-    this.list = (await circle.getCircleApplicant()).map(v => ({
-      ...v,
-      status: this.status.indexOf(v.status)
-    }))
+    this.list = (await circle.getCircleApplicant())
+      .sort((a, b) => Number(a.serial) - Number(b.serial))
+      .map(v => ({
+        ...v,
+        status: this.status.indexOf(v.status)
+      }))
     this.pending = false
   },
 

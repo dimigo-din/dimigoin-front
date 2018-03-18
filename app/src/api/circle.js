@@ -35,6 +35,26 @@ export async function getCircleApplicant () {
   }
 }
 
+export async function getAppliedCircle () {
+  try {
+    const res = await axios.get('/circles/apply/user')
+
+    return res.data['circle_apply'].map(v => ({
+      idx: v['idx'],
+      circleIdx: v['circle_idx'],
+      userIdx: v['user_idx'],
+      status: v['status']
+    }))
+  } catch (err) {
+    switch (err.status) {
+      case 403:
+        throw new Error('신청 기간이 아닙니다.')
+      case 404:
+        return []
+    }
+  }
+}
+
 export async function applyCircle (circleIdx) {
   try {
     await axios.put(`/circles/apply/${circleIdx}`)
