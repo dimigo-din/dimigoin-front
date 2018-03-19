@@ -1,5 +1,6 @@
 <script>
 import moment from 'moment'
+import { meals } from '../src/util'
 import { getMeal } from '../src/api'
 
 import DefaultNavbar from './partial/DefaultNavbar.vue'
@@ -12,22 +13,22 @@ export default {
   name: 'Meal',
   components: { DefaultNavbar, ContentWrapper, DimiTab, DimiCard },
 
+  filters: {
+    pretty (val) {
+      return (val || '').replace(/ ?\/ ?/g, ' | ').trim() || 'X'
+    }
+  },
+
   data: () => ({
-    list: [],
-    currentDay: moment().day()
+    currentDay: moment().day(),
+    list: [...Array(7)].map(_ => ({}))
   }),
 
   computed: {
+    meals: () => meals,
     month: () => moment().month(),
     week: () => 1 + moment().week() - moment().date(1).week(),
     weeks: () => Array.from('일월화수목금토', x => `${x}요일`),
-    meals: () => [
-      { key: 'breakfast', name: '아침' },
-      { key: 'lunch', name: '점심' },
-      { key: 'dinner', name: '저녁' },
-      { key: 'snack', name: '간식' }
-    ],
-
     currentMeals () { return this.list[this.currentDay] }
   },
 
@@ -59,9 +60,11 @@ export default {
         <div
           v-for="(meal, index) in meals"
           :key="index"
+          :active="meal.isActive()"
           class="meal__timeline">
+
           <h3 class="meal__title">{{ meal.name }}</h3>
-          <p class="meal__content">{{ currentMeals[meal.key].replace(/ ?\/ ?/g, ' | ') }}</p>
+          <p class="meal__content">{{ currentMeals[meal.key] | pretty }}</p>
         </div>
       </dimi-card>
     </content-wrapper>
@@ -110,6 +113,22 @@ export default {
     position: absolute;
     top: 0;
     width: 4px;
+  }
+
+  &__timeline:first-of-type {
+    padding-top: 40px;
+  }
+
+  &__timeline[active] &__content {
+    color: $gray-dark;
+  }
+
+  &__timeline[active] &__title {
+    color: $red;
+  }
+
+  &__timeline[active] &__title::before {
+    background-color: $red;
   }
 }
 </style>
