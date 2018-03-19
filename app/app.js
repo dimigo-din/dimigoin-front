@@ -1,5 +1,4 @@
 import 'babel-polyfill'
-import dotenv from 'dotenv'
 
 import Vue from 'vue'
 import swal from 'vue-sweetalert2'
@@ -10,13 +9,13 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 
-dotenv.config()
 sync(store, router)
 
 Vue.use(swal)
 Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)
 
+console.debug(process.env)
 console.debug(new Vue({
   store,
   router,

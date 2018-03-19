@@ -2,6 +2,7 @@ import path from 'path'
 
 import webpack from 'webpack'
 import HtmlPlugin from 'html-webpack-plugin'
+import DotenvPlugin from 'webpack-dotenv-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const production = process.env.NODE_ENV === 'production'
@@ -48,6 +49,10 @@ const webpackConfig = {
     filename: 'bundle.js'
   },
   plugins: [
+    new DotenvPlugin({
+      path: './.env',
+      sample: './example.env'
+    }),
     new ExtractTextPlugin({
       filename: 'bundle.css',
       disable: !production
