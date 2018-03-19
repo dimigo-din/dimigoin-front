@@ -8,10 +8,8 @@ import DimiTab from '../../../components/DimiTab.vue'
 import DimiModal from '../../../components/DimiModal.vue'
 import DimiLoader from '../../../components/DimiLoader.vue'
 
+import { days } from '../../../src/util'
 import { afterschool } from '../../../src/api'
-import config from '../../../../config'
-
-const { days, sitekey } = config
 const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
 
 export default {
@@ -39,7 +37,7 @@ export default {
 
   computed: {
     days () { return days },
-    sitekey () { return sitekey },
+    sitekey () { return process.env.RECAPTCHA_SITE_KEY },
 
     currentList () {
       return this.list.filter(item => item.day === days[this.currentDay].code)
@@ -115,8 +113,8 @@ export default {
       class="req-afsc__main">
 
       <dimi-tab
-        :tabs="days.map(v => v.text)"
-        :tab-idx.sync="currentDay"/>
+        v-model="currentDay"
+        :tabs="days.map(v => v.text)"/>
 
       <div
         v-if="pending"

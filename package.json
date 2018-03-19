@@ -1,6 +1,6 @@
 {
   "name": "dimigoin-front",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "dimigoin front",
   "main": "./app/app.js",
   "scripts": {
@@ -32,7 +32,8 @@
     "vue-router": "^3.0.1",
     "vue-sweetalert2": "^1.2.4",
     "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "vuex-router-sync": "^5.0.0",
+    "webpack-dotenv-plugin": "^2.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -9,9 +9,8 @@ import DimiInput from '../../../components/DimiInput.vue'
 import DimiTab from '../../../components/DimiTab.vue'
 import DimiButton from '../../../components/DimiButton.vue'
 
+import { days } from '../../../src/util'
 import { afterschool } from '../../../src/api'
-import config from '../../../../config'
-const { days } = config
 
 export default {
   name: 'TeacherAfterschool',
@@ -159,8 +158,8 @@ export default {
       class="mng-afsc__main">
 
       <dimi-tab
+        v-model="currentGrade"
         :tabs="['1학년', '2학년', '3학년']"
-        :tab-idx.sync="currentGrade"
       />
 
       <section class="mng-afsc__section">
