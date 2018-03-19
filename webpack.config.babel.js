@@ -2,6 +2,7 @@ import path from 'path'
 
 import webpack from 'webpack'
 import HtmlPlugin from 'html-webpack-plugin'
+import DotenvPlugin from 'webpack-dotenv-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const production = process.env.NODE_ENV === 'production'
@@ -48,6 +49,10 @@ const webpackConfig = {
     filename: 'bundle.js'
   },
   plugins: [
+    new DotenvPlugin({
+      path: './.env',
+      sample: './example.env'
+    }),
     new ExtractTextPlugin({
       filename: 'bundle.css',
       disable: !production
@@ -56,14 +61,14 @@ const webpackConfig = {
       title: 'DIMIGOIN',
       template: 'app/app.html',
       filename: 'index.html',
-      minify: production ? {
+      minify: production && {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
         html5: true,
         minifyCSS: true,
         removeComments: true,
         removeEmptyAttributes: true
-      } : false,
+      },
       hash: production
     })
   ],
@@ -124,7 +129,9 @@ const webpackConfig = {
     port: 8888,
     host: '0.0.0.0',
     historyApiFallback: true
-  }
+  },
+
+  node: { fs: 'empty' }
 }
 
 if (production) {

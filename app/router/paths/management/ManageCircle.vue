@@ -15,7 +15,8 @@ export default {
   components: { DimiButton, ContentWrapper, DimiCard, DimiButtonGroup },
 
   data: () => ({
-    list: []
+    list: [],
+    pending: false
   }),
 
   computed: {
@@ -25,32 +26,25 @@ export default {
   },
 
   async created () {
-    this.list = (await circle.getCircleApplicant()).map(v => ({
-      ...v,
-      status: this.status.indexOf(v.status)
-    }))
+    this.pending = true
+    this.list = (await circle.getCircleApplicant())
+      .sort((a, b) => Number(a.serial) - Number(b.serial))
+      .map(v => ({
+        ...v,
+        status: this.status.indexOf(v.status)
+      }))
+    this.pending = false
   },
 
   methods: {
-    async finish () {
-      const { value: result } = await this.$swal({
-        title: '경고',
-        text: '마감하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
-        warning: 'warning',
-        confirmButtonText: '확인',
-        cancelButtonText: '취소',
-        showCloseButton: true,
-        showCancelButton: true
-      })
-
-      if (result) {
-        // TODO 마감
-      }
-    },
-
     async updateStatus (event, applicant) {
-      if (event.items.length < 3) {
+      const setPrevent = () => {
         event.prevent = true
+      }
+
+      // 이미 합격/불합격/최종이 결정된 경우
+      if (event.items.length < 3) {
+        setPrevent()
         return
       }
 
@@ -64,25 +58,17 @@ export default {
         showCloseButton: true
       })
 
-      const setPrevent = () => {
-        event.prevent = true
+      const type = {
+        1: ['합격', handleCircle.ACCEPT],
+        2: ['불합격', handleCircle.FAIL]
       }
 
+      const answer = await ask(type[event.value][0])
+      const setStatus = () => circle.setApplierStatus(applicant.idx, type[event.value][1])
+
       try {
-        switch (event.value) {
-          case 1:
-            if (!((await ask('합격')).value)) setPrevent()
-            else {
-              await circle.setApplierStatus(applicant.idx, handleCircle.ACCEPT)
-            }
-            break
-          case 2:
-            if (!((await ask('불합격')).value)) setPrevent()
-            else {
-              await circle.setApplierStatus(applicant.idx, handleCircle.FAIL)
-            }
-            break
-        }
+        if (!answer.value) setPrevent()
+        else await setStatus()
       } catch (err) {
         this.$swal({
           title: '에러!',

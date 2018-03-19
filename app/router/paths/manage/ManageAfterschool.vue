@@ -10,9 +10,8 @@ import DimiTab from '../../../components/DimiTab.vue'
 import DimiButton from '../../../components/DimiButton.vue'
 import DimiLoader from '../../../components/DimiLoader.vue'
 
+import { days } from '../../../src/util'
 import { afterschool } from '../../../src/api'
-import config from '../../../../config'
-const { days } = config
 
 export default {
   name: 'ManageAfterschool',

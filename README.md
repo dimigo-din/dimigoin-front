@@ -3,8 +3,8 @@
 
 ## Usage
 ```bash
-cp ./config.example.js ./config.js
-yarn && yarn lint:js && yarn lint:css && yarn build
+cp example.env .env
+yarn install && yarn make
 ```
 
 ## License
