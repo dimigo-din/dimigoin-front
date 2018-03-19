@@ -4,7 +4,7 @@
 ## Usage
 ```bash
 cp example.env .env
-yarn && yarn lint:js && yarn lint:css && yarn build
+yarn install && yarn make
 ```
 
 ## License
