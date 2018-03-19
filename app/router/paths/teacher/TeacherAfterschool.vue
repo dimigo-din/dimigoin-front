@@ -158,8 +158,8 @@ export default {
       class="mng-afsc__main">
 
       <dimi-tab
+        v-model="currentGrade"
         :tabs="['1학년', '2학년', '3학년']"
-        :tab-idx.sync="currentGrade"
       />
 
       <section class="mng-afsc__section">

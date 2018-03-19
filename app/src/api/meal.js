@@ -1,9 +1,12 @@
 import axios from './axios'
 
 export async function getTodayMeal () {
+  return getMeal(new Date())
+}
+
+export async function getMeal (date) {
   try {
-    const today = new Date()
-    const res = await axios.get(`/dimibobes/${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`)
+    const res = await axios.get(`/dimibobes/${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     return res.data
   } catch ({ message, response: res }) {
     console.error(message)
