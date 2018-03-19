@@ -151,7 +151,9 @@ export default {
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
             class="info-section__content"
-            shadow>
+            shadow
+            hover
+            @click.native="$router.push({name: 'meal'})">
             <meal-group @postFetch="updateMealCardHeight"/>
           </dimi-card>
         </section>

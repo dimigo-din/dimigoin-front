@@ -15,7 +15,8 @@ export default {
 
   filters: {
     pretty (val) {
-      return (val || '').replace(/ ?\/ ?/g, ' | ').trim() || 'X'
+      const str = (val || '').replace(/ ?\/ ?/g, ' | ')
+      return (!str || str === 'X') ? '급식 정보가 없습니다.' : str
     }
   },
 
@@ -104,7 +105,7 @@ export default {
     line-height: 1.8;
   }
 
-  &__timeline:not(:last-child) &__content::before {
+  &__timeline:not(:last-of-type) &__content::before {
     background-color: $gray-lighten;
     border-radius: 2px;
     content: '';
@@ -113,6 +114,10 @@ export default {
     position: absolute;
     top: 0;
     width: 4px;
+  }
+
+  &__timeline:last-of-type &__content {
+    min-height: unset;
   }
 
   &__timeline:first-of-type {
