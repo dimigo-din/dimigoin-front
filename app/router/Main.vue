@@ -151,10 +151,11 @@ export default {
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
             class="info-section__content"
-            shadow
-            hover
-            @click.native="$router.push({name: 'meal'})">
+            shadow>
             <meal-group @postFetch="updateMealCardHeight"/>
+            <a
+              slot="button"
+              @click="$router.push({name: 'meal'})">주간 급식 보기</a>
           </dimi-card>
         </section>
       </div>

@@ -1,27 +1,24 @@
 <script>
+import DimiDivider from './DimiDivider.vue'
+
 export default {
   name: 'DimiCard',
+  components: { DimiDivider },
 
   props: {
-    shadow: {
-      type: Boolean,
-      default: false
-    },
-    hover: {
-      type: Boolean,
-      default: false
-    }
+    hover: { type: Boolean, default: false },
+    shadow: { type: Boolean, default: false }
   },
-
   computed: {
     computedClass () {
-      const classes = {
+      console.log(this.$slots)
+      return {
         'c-card': true,
         'c-card--shadow': this.shadow,
         'c-card--hover': this.hover,
-        'c-card--border': !this.shadow
+        'c-card--border': !this.shadow,
+        'c-card--button': !!this.$slots.button
       }
-      return classes
     }
   }
 }
@@ -30,6 +27,12 @@ export default {
 <template>
   <div :class="computedClass">
     <slot/>
+    <div class="c-card__button">
+      <dimi-divider horizontal/>
+      <div class="c-card__slot">
+        <slot name="button"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,6 +58,32 @@ export default {
   &--hover:hover {
     box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
     z-index: 1;
+  }
+
+  &--button {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    display: none;
+  }
+
+  &--button &__button {
+    display: block;
+  }
+
+  &__slot {
+    align-items: stretch;
+    display: flex;
+    margin-top: 1.75rem;
+  }
+
+  &__slot > * {
+    @include font-bold;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
   }
 }
 </style>

@@ -27,22 +27,23 @@ export default {
 
     <div class="ienope__col">
       <p class="ienope__message">
-        디미고인은 인터넷 익스플로러를 지원하지 않습니다.<br>
-        인터넷 익스플로러를 끄고 다른 브라우저로 접속해 주세요.<br>
         <span class="ienope__firefox">
-          구글 크롬보다 30% 더 가볍고 2배 빠른 파이어폭스 퀀텀 쓰실?</span>
+          크롬보다 30% 더 가볍고 2배 빠른 파이어폭스 퀀텀 쓰실?<br>
+        </span>
+        디미고인은 인터넷 익스플로러를 지원하지 않습니다.<br>
+        인터넷 익스플로러를 끄고 다른 브라우저로 접속해 주세요.
       </p>
 
-      <a
-        v-for="b in browsers"
-        :key="b.href"
-        :href="b.href"
-        class="ienope__link">
+      <div class="ienope__links">
+        <a
+          v-for="b in browsers"
+          :key="b.href"
+          :href="b.href"
+          class="ienope__link">
 
-        <span class="icon-long-arrow"/>
-        {{ b.name }} 브라우저 다운로드
-      </a>
-
+          <span class="icon-long-arrow"/> {{ b.name }} 브라우저 다운로드
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +73,10 @@ export default {
     margin-bottom: 1.5rem;
   }
 
+  &__links {
+    padding-bottom: 32px;
+  }
+
   &__link {
     color: $pink;
     cursor: pointer;
@@ -82,9 +87,15 @@ export default {
   }
 
   &__firefox {
+    opacity: 0;
     font-size: 14px;
     line-height: 1.4;
     color: $gray-light;
+    transition: all 0.5s ease;
+  }
+
+  &__col:hover &__firefox {
+    opacity: 1;
     margin-top: 0.5rem;
   }
 }
