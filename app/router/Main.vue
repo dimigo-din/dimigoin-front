@@ -12,8 +12,6 @@ export default {
 
   computed: {
     pkg: () => pkg,
-    ie: () => /MSIE |Trident\//.test(window.navigator.userAgent),
-
     ...mapState('account', {
       needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,

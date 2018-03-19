@@ -52,9 +52,15 @@ const router = new VueRouter({
 
 const isLoggedIn = () => store.state.account.auth.isLoggedIn
 const needVerify = () => store.state.account.auth.needVerify
+const isIE = () => /MSIE |Trident\//.test(window.navigator.userAgent)
 
 router.beforeEach((to, from, next) => {
-  if (!/login|register|ienope/.test(to.path)) {
+  if (isIE()) {
+    if (to.name === 'ienope') return next()
+    else return next({ name: 'ienope' })
+  }
+
+  if (!/login|register/.test(to.path)) {
     if (!isLoggedIn()) return next({ name: 'login' })
     if (needVerify()) return next({ name: 'register/step/3' })
   }
