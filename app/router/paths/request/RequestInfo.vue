@@ -78,6 +78,10 @@ export default {
             <td class="r-info__list-key">불합격</td>
             <td class="r-info__list-value">{{ circleGroup.fail.join(', ') }}</td>
           </tr>
+          <tr v-if="circleGroup.final.length > 0">
+            <td class="r-info__list-key">최종 결정</td>
+            <td class="r-info__list-value">{{ circleGroup.final.join(', ') }}</td>
+          </tr>
         </tbody>
       </table>
     </dimi-card>
@@ -113,8 +117,7 @@ export default {
     }
 
     &__list-key {
-      @include font-bold;
-      color: $black;
+      color: $gray-dark;
       padding-right: 16px;
     }
 
