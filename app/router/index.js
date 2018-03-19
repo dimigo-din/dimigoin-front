@@ -5,6 +5,7 @@ import Main from './Main.vue'
 import Meal from './Meal.vue'
 import Draft from './Draft.vue'
 import NotFound from './NotFound.vue'
+import ExplorerFound from './ExplorerFound.vue'
 
 import * as routers from './routers'
 
@@ -33,6 +34,12 @@ const router = new VueRouter({
       meta: { title: '디미밥' }
     },
     {
+      path: '/ienope',
+      name: 'ienope',
+      component: ExplorerFound,
+      meta: { title: 'DIMIGOIN' }
+    },
+    {
       path: '*',
       component: NotFound
     },
@@ -45,8 +52,14 @@ const router = new VueRouter({
 
 const isLoggedIn = () => store.state.account.auth.isLoggedIn
 const needVerify = () => store.state.account.auth.needVerify
+const isIE = () => /MSIE /.test(window.navigator.userAgent)
 
 router.beforeEach((to, from, next) => {
+  if (isIE()) {
+    if (to.name === 'ienope') return next()
+    else return next({ name: 'ienope' })
+  }
+
   if (!/login|register/.test(to.path)) {
     if (!isLoggedIn()) return next({ name: 'login' })
     if (needVerify()) return next({ name: 'register/step/3' })
