@@ -27,6 +27,8 @@ export default {
   },
 
   async created () {
+    if (this.ie) return this.$router.push({ name: 'ienope' })
+
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
