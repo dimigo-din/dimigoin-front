@@ -13,6 +13,12 @@ export default {
     }
   },
 
+  watch: {
+    value () {
+      this.updateBarWidth()
+    }
+  },
+
   mounted () {
     this.updateBarWidth()
     window.addEventListener('resize', () => this.updateBarWidth())
@@ -21,7 +27,6 @@ export default {
   methods: {
     go (value) {
       this.$emit('input', value)
-      setTimeout(() => this.updateBarWidth(), 1)
     },
 
     updateBarWidth () {

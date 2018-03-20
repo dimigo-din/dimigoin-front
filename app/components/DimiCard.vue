@@ -11,7 +11,6 @@ export default {
   },
   computed: {
     computedClass () {
-      console.log(this.$slots)
       return {
         'c-card': true,
         'c-card--shadow': this.shadow,
@@ -27,11 +26,9 @@ export default {
 <template>
   <div :class="computedClass">
     <slot/>
-    <div class="c-card__button">
+    <div v-if="$slots.button">
       <dimi-divider horizontal/>
-      <div class="c-card__slot">
-        <slot name="button"/>
-      </div>
+      <div class="c-card__slot"><slot name="button"/></div>
     </div>
   </div>
 </template>
@@ -63,14 +60,6 @@ export default {
   &--button {
     display: flex;
     flex-direction: column;
-  }
-
-  &__button {
-    display: none;
-  }
-
-  &--button &__button {
-    display: block;
   }
 
   &__slot {

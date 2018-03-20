@@ -69,8 +69,8 @@ export default {
     color: $black;
     font-size: 16px;
     line-height: 1.8;
-    word-break: keep-all;
     margin-bottom: 1.5rem;
+    word-break: keep-all;
   }
 
   &__links {
@@ -81,22 +81,22 @@ export default {
     color: $pink;
     cursor: pointer;
     display: block;
-    text-decoration: none;
     font-size: 16px;
     margin-top: 1rem;
+    text-decoration: none;
   }
 
   &__firefox {
-    opacity: 0;
+    color: $gray-light;
     font-size: 14px;
     line-height: 1.4;
-    color: $gray-light;
+    opacity: 0;
     transition: all 0.5s ease;
   }
 
   &__col:hover &__firefox {
-    opacity: 1;
     margin-top: 0.5rem;
+    opacity: 1;
   }
 }
 </style>

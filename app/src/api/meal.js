@@ -1,4 +1,5 @@
 import axios from './axios'
+import moment from 'moment'
 
 export async function getTodayMeal () {
   return getMeal(new Date())
@@ -6,7 +7,7 @@ export async function getTodayMeal () {
 
 export async function getMeal (date) {
   try {
-    const res = await axios.get(`/dimibobes/${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+    const res = await axios.get(`/dimibobs/${moment(date).format('YYYY-MM-DD')}`)
     return res.data
   } catch ({ message, response: res }) {
     console.error(message)

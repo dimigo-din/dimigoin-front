@@ -113,7 +113,6 @@ export default {
       if (!answer) return
       try {
         const circles = await circle.getAppliedCircle()
-        console.log(circles)
         const thisCircle = circles.find(v => Number(v.circleIdx) === Number(this.circle.idx)) || {}
         await circle.setFinal(thisCircle.idx)
         this.circle.status = handleStatus.FINAL
@@ -248,7 +247,7 @@ export default {
 
   /* stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix */
   &__description {
-    box-orient: vertical;
+    -webkit-box-orient: vertical;
     color: $black;
     display: -webkit-box;
     font-size: 14px;
@@ -259,7 +258,7 @@ export default {
   }
 
   &__badge {
-    margin: 0 auto 25px auto;
+    margin: 0 auto 25px;
     max-width: 40px;
   }
 
@@ -269,9 +268,9 @@ export default {
   }
 
   &__final {
-    margin-left: auto;
     color: $orange;
     cursor: pointer;
+    margin-left: auto;
     padding: 0.3rem;
   }
 

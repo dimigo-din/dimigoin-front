@@ -9,16 +9,12 @@ import ContentWrapper from './partial/ContentWrapper.vue'
 import DimiTab from '../components/DimiTab.vue'
 import DimiCard from '../components/DimiCard.vue'
 
+const shortWeeks = [...'일월화수목금토']
+const longWeeks = shortWeeks.map(x => x + '요일')
+
 export default {
   name: 'Meal',
   components: { DefaultNavbar, ContentWrapper, DimiTab, DimiCard },
-
-  filters: {
-    pretty (val) {
-      const str = (val || '').replace(/ ?\/ ?/g, ' | ')
-      return (!str || str === 'X') ? '급식 정보가 없습니다.' : str
-    }
-  },
 
   data: () => ({
     currentDay: moment().day(),
@@ -27,9 +23,10 @@ export default {
 
   computed: {
     meals: () => meals,
+    weeks: () => longWeeks,
+    tinyWeeks: () => shortWeeks,
     month: () => moment().month(),
     week: () => 1 + moment().week() - moment().date(1).week(),
-    weeks: () => Array.from('일월화수목금토', x => `${x}요일`),
     currentMeals () { return this.list[this.currentDay] }
   },
 
@@ -56,7 +53,13 @@ export default {
 
         <dimi-tab
           v-model="currentDay"
-          :tabs="weeks"/>
+          :tabs="weeks"
+          class="meal__tabs"/>
+
+        <dimi-tab
+          v-model="currentDay"
+          :tabs="tinyWeeks"
+          class="meal__tabs--tiny"/>
 
         <div
           v-for="(meal, index) in meals"
@@ -65,7 +68,7 @@ export default {
           class="meal__timeline">
 
           <h3 class="meal__title">{{ meal.name }}</h3>
-          <p class="meal__content">{{ currentMeals[meal.key] | pretty }}</p>
+          <p class="meal__content">{{ currentMeals[meal.key] | prettyMeal }}</p>
         </div>
       </dimi-card>
     </content-wrapper>
@@ -76,6 +79,18 @@ export default {
 .meal {
   &__card {
     padding-top: 0 !important;
+  }
+
+  &__tabs--tiny {
+    @include from($tablet) {
+      display: none;
+    }
+  }
+
+  &__tabs {
+    @include until($tablet) {
+      display: none;
+    }
   }
 
   &__title {
@@ -96,13 +111,13 @@ export default {
 
   &__content {
     color: $gray-light;
-    min-height: 80px;
-    padding-left: 32px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    position: relative;
     font-size: 16px;
     line-height: 1.8;
+    min-height: 80px;
+    padding-bottom: 16px;
+    padding-left: 32px;
+    padding-top: 16px;
+    position: relative;
   }
 
   &__timeline:not(:last-of-type) &__content::before {
