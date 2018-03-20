@@ -1,13 +1,13 @@
 <script>
 import pkg from '../../package.json'
+import Brand from '../assets/brand.svg'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Main',
-
-  components: { MealGroup, DimiCard },
+  components: { Brand, MealGroup, DimiCard },
   data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
@@ -90,7 +90,7 @@ export default {
 <template>
   <div class="container container--naive">
     <h1 class="brand">
-      <span class="icon-dimigo"/>DIMIGOIN
+      <brand width="212px"/>
     </h1>
     <div class="info">
       <div class="column">
