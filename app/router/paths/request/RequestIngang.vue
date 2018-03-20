@@ -12,7 +12,7 @@ export default {
   components: { DimiButton, ContentWrapper, DimiCard, DimiLoader },
 
   data: () => ({
-    ingang: [],
+    ingang: {},
     applied: false,
     today: new Date(),
     pending: false
@@ -29,7 +29,33 @@ export default {
   },
 
   methods: {
-    
+    async cancel () {
+      try {
+        await ingang.cancelIngang(1)
+        this.applied = false
+      } catch (err) {
+        this.$swal({
+          type: 'error',
+          title: '에러!',
+          text: err.message
+        })
+        this.applied = true
+      }
+    },
+
+    async apply () {
+      try {
+        await ingang.applyIngang(1)
+        this.applied = true
+      } catch (err) {
+        this.$swal({
+          type: 'error',
+          title: '에러!',
+          text: err.message
+        })
+        this.applied = false
+      }
+    }
   }
 }
 </script>
@@ -60,6 +86,7 @@ export default {
         <dimi-button
           :gray="applied"
           :active="!applied"
+          @click="applied ? cancel : apply"
         >{{ applied ? '취소하기' : '신청하기' }}</dimi-button>
       </div>
     </dimi-card>

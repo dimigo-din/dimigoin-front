@@ -7,9 +7,21 @@ export default {
       type: Array,
       required: true
     },
+
+    smallTabs: {
+      type: Array,
+      default: () => []
+    },
+
     value: {
       type: Number,
       default: 0
+    }
+  },
+
+  watch: {
+    value () {
+      this.updateBarWidth()
     }
   },
 
@@ -21,7 +33,6 @@ export default {
   methods: {
     go (value) {
       this.$emit('input', value)
-      setTimeout(() => this.updateBarWidth(), 1)
     },
 
     updateBarWidth () {
@@ -44,12 +55,12 @@ export default {
         v-for="(tab, idx) in tabs"
         ref="tab"
         :key="`tab-${idx}`"
-        :class="{
-          'tab__item': true,
-          'tab__item--active': idx === value
-        }"
-        @click="go(idx)"
-      >{{ tab }}</li>
+        :class="['tab__item', idx === value && 'tab__item--active']"
+        @click="go(idx)">
+
+        <span class="tab__tab">{{ tab }}</span>
+        <span class="tab__tab--tiny">{{ smallTabs[idx] || tab }}</span>
+      </li>
     </ul>
 
     <div
@@ -91,6 +102,18 @@ export default {
     left: 0;
     position: absolute;
     transition: all 0.3s ease-in-out;
+  }
+
+  &__tab--tiny {
+    @include from($tablet) {
+      display: none;
+    }
+  }
+
+  &__tab {
+    @include until($tablet) {
+      display: none;
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 import axios from './axios'
-import Ingang from '../struct/ingang'
+import { Ingang } from '../struct/ingang'
 
 export async function applyIngang (ingangIdx) {
   try {
@@ -47,7 +47,26 @@ export async function getIngang () {
   try {
     const res = await axios.get('/ingangs/user/')
 
-    return res.data['ingangs'].map(Ingang)
+    return Ingang(res.data['ingang']) // TODO
+  } catch ({ message, response: res }) {
+    console.error(message)
+    if (!res) throw new Error('네트워크에 문제가 있습니다.')
+
+    switch (res.status) {
+      case 404:
+        throw new Error('오늘은 인강실을 신청할 수 없습니다.')
+      default:
+        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
+    }
+  }
+}
+
+/*
+export async function getIngangApplicantList () {
+  try {
+    const res = await axios.get('/ingangs/user/')
+
+    return res.data['ingangs'].map(IngangApplicant)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -60,3 +79,4 @@ export async function getIngang () {
     }
   }
 }
+*/

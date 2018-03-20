@@ -11,7 +11,6 @@ export default {
   },
   computed: {
     computedClass () {
-      console.log(this.$slots)
       return {
         'c-card': true,
         'c-card--shadow': this.shadow,
@@ -26,13 +25,25 @@ export default {
 
 <template>
   <div :class="computedClass">
-    <slot/>
-    <div class="c-card__button">
-      <dimi-divider horizontal/>
-      <div class="c-card__slot">
+    <template v-if="$slots.button">
+      <div class="c-card__content">
+        <slot/>
+      </div>
+
+      <dimi-divider
+        horizontal
+        class="c-card__divider"/>
+
+      <div
+        class="c-card__button"
+        @click="$emit('button')">
         <slot name="button"/>
       </div>
-    </div>
+    </template>
+
+    <template v-else>
+      <slot/>
+    </template>
   </div>
 </template>
 
@@ -63,25 +74,28 @@ export default {
   &--button {
     display: flex;
     flex-direction: column;
+    padding: 0;
+  }
+
+  &__content {
+    padding: 1.25rem;
+  }
+
+  &__divider {
+    margin: 0;
+    position: relative !important;
+    width: 100%;
   }
 
   &__button {
-    display: none;
-  }
-
-  &--button &__button {
-    display: block;
-  }
-
-  &__slot {
     align-items: stretch;
+    cursor: pointer;
     display: flex;
-    margin-top: 1.75rem;
+    padding: 1.25rem;
   }
 
-  &__slot > * {
+  &__button > span {
     @include font-bold;
-    cursor: pointer;
     flex: 1;
     text-align: center;
   }
