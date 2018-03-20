@@ -25,7 +25,7 @@ export default {
     meals: () => meals,
     weeks: () => longWeeks,
     tinyWeeks: () => shortWeeks,
-    month: () => moment().month(),
+    month: () => 1 + moment().month(),
     week: () => 1 + moment().week() - moment().date(1).week(),
     currentMeals () { return this.list[this.currentDay] }
   },
