@@ -137,7 +137,7 @@ export default {
         <div class="register__nav__end">
           <a
             class="register__nav__link register__nav__link--next"
-            @click="next">다음 단계<span class="icon-arrow-slim-right"/></a>
+            @click="next">다음 단계<span class="icon-arrow-right"/></a>
         </div>
       </div>
     </div>

@@ -207,7 +207,7 @@ export default {
               <td class="mng-afsc__cell">총 {{ item.capacity || '?' }}명</td>
               <td class="mng-afsc__cell">{{ item.count || '?' }}명 신청</td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
-                <span class="icon-long-arrow"/> 세부관리
+                <span class="icon-long-arrow-right"/> 세부관리
               </td>
             </tr>
           </tbody>

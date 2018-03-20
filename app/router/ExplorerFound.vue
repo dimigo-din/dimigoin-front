@@ -41,7 +41,7 @@ export default {
           :href="b.href"
           class="ienope__link">
 
-          <span class="icon-long-arrow"/> {{ b.name }} 브라우저 다운로드
+          <span class="icon-long-arrow-right"/> {{ b.name }} 브라우저 다운로드
         </a>
       </div>
     </div>

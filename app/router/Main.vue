@@ -362,7 +362,8 @@ export default {
   &__description {
     color: $gray;
     font-size: 14px;
-    margin-top: 0.85rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
     text-align: center;
     word-break: keep-all;
     @include until($tablet) {
