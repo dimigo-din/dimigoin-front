@@ -2057,9 +2057,9 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dimigoincon@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/dimigoincon/-/dimigoincon-1.0.4.tgz#9c1829fb2c1c5abf48ae1ffd0a2a9c03d749eaec"
+dimigoincon@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/dimigoincon/-/dimigoincon-2.3.0.tgz#fea3d47c3294491c72ec0fa5f45dfa99770e3233"
 
 dir-glob@^2.0.0:
   version "2.0.0"
