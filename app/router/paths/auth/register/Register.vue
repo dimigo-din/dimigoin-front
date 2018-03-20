@@ -1,9 +1,10 @@
 <script>
+import Brand from '../../../../assets/brand.svg'
 import DimiCard from '../../../../components/DimiCard.vue'
 
 export default {
   name: 'Register',
-  components: { DimiCard }
+  components: { Brand, DimiCard }
 }
 </script>
 
@@ -13,7 +14,7 @@ export default {
       class="register__title"
       @click="$router.push('/')">
 
-      <span class="icon-dimigo"/>DIMIGOIN
+      <brand height="36px"/>
       <span class="register__subtitle">회원가입</span>
     </h1>
     <div class="register__content">
@@ -53,11 +54,10 @@ export default {
 
   &__title {
     @extend %h-text-xl;
-
     @include font-extra-bold;
     cursor: pointer;
+    display: flex;
     margin-top: 5rem;
-
     user-select: none;
     word-spacing: 0.325em;
   }
@@ -65,6 +65,7 @@ export default {
   &__subtitle {
     @extend %h-text-xl;
     @include font-regular;
+    padding-left: 0.5em;
   }
 
   &__content {
