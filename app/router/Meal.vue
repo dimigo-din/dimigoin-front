@@ -54,12 +54,8 @@ export default {
         <dimi-tab
           v-model="currentDay"
           :tabs="weeks"
+          :small-tabs="tinyWeeks"
           class="meal__tabs"/>
-
-        <dimi-tab
-          v-model="currentDay"
-          :tabs="tinyWeeks"
-          class="meal__tabs--tiny"/>
 
         <div
           v-for="(meal, index) in meals"
@@ -79,18 +75,6 @@ export default {
 .meal {
   &__card {
     padding-top: 0 !important;
-  }
-
-  &__tabs--tiny {
-    @include from($tablet) {
-      display: none;
-    }
-  }
-
-  &__tabs {
-    @include until($tablet) {
-      display: none;
-    }
   }
 
   &__title {

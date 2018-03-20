@@ -150,12 +150,11 @@ export default {
         <section class="info__meal info-section">
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
+            shadow
             class="info-section__content"
-            shadow>
+            @button="$router.push({ name: 'meal' })">
+            <span slot="button">주간 급식 보기</span>
             <meal-group @postFetch="updateMealCardHeight"/>
-            <a
-              slot="button"
-              @click="$router.push({name: 'meal'})">주간 급식 보기</a>
           </dimi-card>
         </section>
       </div>
@@ -168,7 +167,7 @@ export default {
             <dimi-card
               v-for="(service, index) in serviceList"
               :key="`service-${index}`"
-              :class="{ 'service__card': true, 'service__card--disabled': !service.url }"
+              :class="['service__card', !service.url && 'service__card--disabled']"
               shadow
               hover
               @click.native="clickServiceCard(service)">

@@ -114,7 +114,8 @@ export default {
 
       <dimi-tab
         v-model="currentDay"
-        :tabs="days.map(v => v.text)"/>
+        :tabs="days.map(v => v.text)"
+        :small-tabs="days.map(v => v.smallText)"/>
 
       <div
         v-if="pending"
