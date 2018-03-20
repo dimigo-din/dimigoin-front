@@ -1,10 +1,10 @@
 <script>
+import Brand from '../../assets/brand.svg'
 import DimiNavbar from '../../components/DimiNavbar.vue'
 
 export default {
   name: 'DefaultNavbar',
-
-  components: { DimiNavbar },
+  components: { Brand, DimiNavbar },
 
   methods: {
     async logout () {
@@ -21,9 +21,8 @@ export default {
       <router-link
         slot="brand"
         :to="{ name: 'main' }"
-        class="brand"
-      >
-        <span class="icon-dimigo"/>DIMIGOIN
+        class="brand">
+        <brand height="32px"/>
       </router-link>
       <span slot="end">
         {{ $store.state.account.informations.name }}
@@ -40,8 +39,7 @@ export default {
 @import '../../scss/helpers/typography';
 
 .brand {
-  @extend %h-text-black;
-  text-decoration: none;
+  display: flex;
 }
 
 .logout-btn {
