@@ -1,18 +1,11 @@
 <script>
+import { meals } from '../src/util'
 import DimiMealItem from './DimiMealItem.vue'
 import { mapState } from 'vuex'
 
 export default {
   name: 'MealGroup',
-
   components: { DimiMealItem },
-
-  filters: {
-    beautifulMeal (value) {
-      if (!value) return 'X'
-      return value.split('/').join(' | ')
-    }
-  },
 
   data () {
     return {
@@ -21,7 +14,8 @@ export default {
   },
 
   computed: {
-    ...mapState('meal', ['breakfast', 'lunch', 'dinner', 'snack'])
+    meals: () => meals,
+    ...mapState(['meal'])
   },
 
   async mounted () {
@@ -35,14 +29,6 @@ export default {
       this.pending = false
       this.$emit('postFetch')
     }
-  },
-
-  methods: {
-    isBetween (from, to) {
-      const now = new Date()
-      const formatted = now.getHours() * 100 + now.getMinutes()
-      return formatted >= from && formatted <= to
-    }
   }
 }
 </script>
@@ -50,20 +36,11 @@ export default {
 <template>
   <div class="meal-list">
     <dimi-meal-item
-      :current="isBetween(0, 815)"
-      meal="아침">{{ breakfast | beautifulMeal }}</dimi-meal-item>
-
-    <dimi-meal-item
-      :current="isBetween(816, 1340)"
-      meal="점심">{{ lunch | beautifulMeal }}</dimi-meal-item>
-
-    <dimi-meal-item
-      :current="isBetween(1341, 1920)"
-      meal="저녁">{{ dinner | beautifulMeal }}</dimi-meal-item>
-
-    <dimi-meal-item
-      :current="isBetween(1921, 2140)"
-      meal="간식">{{ snack | beautifulMeal }}</dimi-meal-item>
+      v-for="(m, i) in meals"
+      :key="i"
+      :current="m.isActive()"
+      :meal="m.name">
+      {{ meal[m.key] | prettyMeal }}</dimi-meal-item>
   </div>
 </template>
 

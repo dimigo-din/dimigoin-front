@@ -12,8 +12,6 @@ export default {
 
   computed: {
     pkg: () => pkg,
-    ie: () => /MSIE |Trident\//.test(window.navigator.userAgent),
-
     ...mapState('account', {
       needVerify: ({ auth }) => auth.needVerify,
       name: ({ informations }) => informations.name,
@@ -27,6 +25,8 @@ export default {
   },
 
   async created () {
+    if (this.ie) return this.$router.push({ name: 'ienope' })
+
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
@@ -150,10 +150,10 @@ export default {
         <section class="info__meal info-section">
           <h2 class="info-section__title">오늘의 급식</h2>
           <dimi-card
-            class="info-section__content"
             shadow
-            hover
-            @click.native="$router.push({name: 'meal'})">
+            class="info-section__content"
+            @button="$router.push({ name: 'meal' })">
+            <span slot="button">주간 급식 보기</span>
             <meal-group @postFetch="updateMealCardHeight"/>
           </dimi-card>
         </section>
@@ -167,7 +167,7 @@ export default {
             <dimi-card
               v-for="(service, index) in serviceList"
               :key="`service-${index}`"
-              :class="{ 'service__card': true, 'service__card--disabled': !service.url }"
+              :class="['service__card', !service.url && 'service__card--disabled']"
               shadow
               hover
               @click.native="clickServiceCard(service)">

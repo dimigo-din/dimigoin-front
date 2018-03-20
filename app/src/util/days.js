@@ -1,9 +1,9 @@
 export default [
-  { text: '월요일', code: 'mon' },
-  { text: '화요일', code: 'tus' },
-  { text: '수요일', code: 'wed' },
-  { text: '목요일', code: 'thr' },
-  { text: '금요일', code: 'fri' },
-  { text: '토요 1', code: 'sat1' },
-  { text: '토요 2', code: 'sat2' }
+  { code: 'mon', text: '월요일', smallText: '월' },
+  { code: 'tus', text: '화요일', smallText: '화' },
+  { code: 'wed', text: '수요일', smallText: '수' },
+  { code: 'thr', text: '목요일', smallText: '목' },
+  { code: 'fri', text: '금요일', smallText: '금' },
+  { code: 'sat1', text: '토요 1', smallText: '토1' },
+  { code: 'sat2', text: '토요 2', smallText: '토2' }
 ]
