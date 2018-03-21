@@ -140,8 +140,9 @@ export default {
             class="info__notice info-section__content"
             shadow>
             <ul>
-              <li :title="`v${pkg.version}`">새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li>새로운 디미고인에 오신 것을 환영합니다! &ndash; v{{ pkg.version }}</li>
               <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
+              <li>프로필 설정 페이지에 문제가 있다면 다시 로그인하세요.</li>
             </ul>
           </dimi-card>
         </section>
