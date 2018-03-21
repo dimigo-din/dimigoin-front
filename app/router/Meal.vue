@@ -25,6 +25,7 @@ export default {
     meals: () => meals,
     weeks: () => longWeeks,
     tinyWeeks: () => shortWeeks,
+    today: () => moment().day(),
     month: () => 1 + moment().month(),
     week: () => 1 + moment().week() - moment().date(1).week(),
     currentMeals () { return this.list[this.currentDay] }
@@ -60,7 +61,7 @@ export default {
         <div
           v-for="(meal, index) in meals"
           :key="index"
-          :active="meal.isActive()"
+          :active="today === currentDay && meal.isActive()"
           class="meal__timeline">
 
           <h3 class="meal__title">{{ meal.name }}</h3>

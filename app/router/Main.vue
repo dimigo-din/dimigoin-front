@@ -8,7 +8,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Main',
   components: { Brand, MealGroup, DimiCard },
-  data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
+  data: () => ({ photoCDN: process.env.DIMIGO_API_URL + '/user_photo/' }),
 
   computed: {
     pkg: () => pkg,
@@ -39,31 +39,13 @@ export default {
   },
 
   async mounted () {
-    window.addEventListener('resize', () => {
-      this.updateMealCardHeight()
-      this.updateServiceCardHeight()
-    })
+    window.addEventListener('resize', () => this.updateServiceCardHeight())
   },
 
   methods: {
     updateServiceCardHeight () {
       const cards = document.querySelectorAll('.service__card')
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
-    },
-
-    updateMealCardHeight () {
-      const col = document.querySelector('.info .column:last-child')
-      const meals = [...document.getElementsByClassName('meal-item')]
-
-      if (!col || !meals.length) return
-      const m = meals.reduce((h, meal) => h + meal.offsetHeight, 0)
-      const t = col.querySelector('.info-section__title').offsetHeight
-
-      col.style.minHeight = t + m +
-        72 + // total margin between 4 meal items
-        40 + // card paddings
-        32 + // section bottom margin
-        24 // title bottom margin
     },
 
     openSetting () {
@@ -155,7 +137,7 @@ export default {
             class="info-section__content"
             @button="$router.push({ name: 'meal' })">
             <span slot="button">주간 급식 보기</span>
-            <meal-group @postFetch="updateMealCardHeight"/>
+            <meal-group/>
           </dimi-card>
         </section>
       </div>
