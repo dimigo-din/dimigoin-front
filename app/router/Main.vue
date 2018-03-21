@@ -1,13 +1,13 @@
 <script>
 import pkg from '../../package.json'
+import Brand from '../assets/brand.svg'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Main',
-
-  components: { MealGroup, DimiCard },
+  components: { Brand, MealGroup, DimiCard },
   data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
 
   computed: {
@@ -39,31 +39,13 @@ export default {
   },
 
   async mounted () {
-    window.addEventListener('resize', () => {
-      this.updateMealCardHeight()
-      this.updateServiceCardHeight()
-    })
+    window.addEventListener('resize', () => this.updateServiceCardHeight())
   },
 
   methods: {
     updateServiceCardHeight () {
       const cards = document.querySelectorAll('.service__card')
       cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
-    },
-
-    updateMealCardHeight () {
-      const col = document.querySelector('.info .column:last-child')
-      const meals = [...document.getElementsByClassName('meal-item')]
-
-      if (!col || !meals.length) return
-      const m = meals.reduce((h, meal) => h + meal.offsetHeight, 0)
-      const t = col.querySelector('.info-section__title').offsetHeight
-
-      col.style.minHeight = t + m +
-        72 + // total margin between 4 meal items
-        40 + // card paddings
-        32 + // section bottom margin
-        24 // title bottom margin
     },
 
     openSetting () {
@@ -90,7 +72,7 @@ export default {
 <template>
   <div class="container container--naive">
     <h1 class="brand">
-      <span class="icon-dimigo"/>DIMIGOIN
+      <brand width="212px"/>
     </h1>
     <div class="info">
       <div class="column">
@@ -140,8 +122,9 @@ export default {
             class="info__notice info-section__content"
             shadow>
             <ul>
-              <li :title="`v${pkg.version}`">새로운 디미고인에 오신 것을 환영합니다!</li>
+              <li>새로운 디미고인에 오신 것을 환영합니다! &ndash; v{{ pkg.version }}</li>
               <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
+              <li>프로필 설정 페이지에 문제가 있다면 다시 로그인하세요.</li>
             </ul>
           </dimi-card>
         </section>
@@ -154,7 +137,7 @@ export default {
             class="info-section__content"
             @button="$router.push({ name: 'meal' })">
             <span slot="button">주간 급식 보기</span>
-            <meal-group @postFetch="updateMealCardHeight"/>
+            <meal-group/>
           </dimi-card>
         </section>
       </div>
@@ -362,7 +345,8 @@ export default {
   &__description {
     color: $gray;
     font-size: 14px;
-    margin-top: 0.85rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
     text-align: center;
     word-break: keep-all;
     @include until($tablet) {
