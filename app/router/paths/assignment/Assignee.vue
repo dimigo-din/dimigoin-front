@@ -60,6 +60,11 @@ export default {
   methods: {
     toggle (i) {
       this.selection.splice(i, 1, !this.selection[i])
+    },
+
+    submit (ass) {
+      // TODO: Link API
+      this.$swal(ass.title, ass.description)
     }
   }
 }
@@ -104,6 +109,12 @@ export default {
                   :key="i + 'desc'"
                   class="assignee__assignment assignee__description">
                   {{ ass.description }}
+
+                  <span
+                    class="assignee__submit"
+                    @click="submit(ass)">
+                    <span class="icon-upload"/> 제출
+                  </span>
                 </div>
               </template>
             </dimi-card>
@@ -154,6 +165,20 @@ export default {
     color: $gray;
     font-size: 16px;
     line-height: 1.8;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &__submit {
+    @include font-bold;
+    display: flex;
+    justify-content: flex-end;
+    color: $red;
+    font-size: 18px;
+  }
+
+  &__submit .icon-upload {
+    margin-right: 0.25em;
   }
 }
 </style>
