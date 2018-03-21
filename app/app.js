@@ -20,7 +20,7 @@ Vue.directive('ripple', Ripple)
 
 Vue.use(VueAnalytics, {
   router,
-  id: process.env.GA_TRACKING_ID
+  id: process.env.GOOGLE_ANALYTICS_TRACKING_ID
 })
 
 console.debug(new Vue({
