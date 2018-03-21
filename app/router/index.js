@@ -39,14 +39,17 @@ const router = new VueRouter({
       component: ExplorerFound,
       meta: { title: 'DIMIGOIN' }
     },
-    {
-      path: '*',
-      component: NotFound
-    },
+
     ...routers.auth,
     ...routers.request,
     ...routers.management,
-    ...routers.teacher
+    ...routers.teacher,
+    ...routers.assignment,
+
+    {
+      path: '*',
+      component: NotFound
+    }
   ]
 })
 
