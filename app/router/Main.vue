@@ -8,7 +8,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Main',
   components: { Brand, MealGroup, DimiCard },
-  data: () => ({ photoCDN: 'https://api.dimigo.hs.kr/user_photo/' }),
+  data: () => ({ photoCDN: process.env.DIMIGO_API_URL + '/user_photo/' }),
 
   computed: {
     pkg: () => pkg,
