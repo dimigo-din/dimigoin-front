@@ -27,6 +27,7 @@
     "superstruct": "^0.5.1",
     "typeface-nanum-square-round": "^1.0.1",
     "vue": "^2.5.13",
+    "vue-analytics": "^5.9.1",
     "vue-recaptcha": "^1.1.0",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.0.1",
