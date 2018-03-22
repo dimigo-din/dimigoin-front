@@ -1,44 +1,60 @@
 <template>
-  <div class="service">
-    <div class="column">
-      <section class="info-section">
-        <h2 class="info-section__title">서비스</h2>
-        <div class="service__cards">
-          <dimi-card
-            v-for="(service, index) in serviceList"
-            :key="`service-${index}`"
-            :class="['service__card', !service.url && 'service__card--disabled']"
-            shadow
-            hover
-            @click.native="clickServiceCard(service)">
+  <div class="service__cards">
+    <dimi-card
+      v-for="(service, index) in serviceList"
+      ref="cards"
+      :key="`service-${index}`"
+      :class="['service__card', !service.url && 'service__card--disabled']"
+      shadow
+      hover
+      @click.native="clickServiceCard(service)">
 
-            <div class="service__card__icon">
-              <span :class="service.icon"/>
-            </div>
-            <h4 class="service__card__title">{{ service.title }}</h4>
-            <p class="service__card__description">{{ service.description }}</p>
-          </dimi-card>
-        </div>
-      </section>
-    </div>
+      <div class="service__card__icon">
+        <span :class="service.icon"/>
+      </div>
+      <h4 class="service__card__title">{{ service.title }}</h4>
+      <p class="service__card__description">{{ service.description }}</p>
+    </dimi-card>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+import DimiCard from '../../components/DimiCard.vue'
+
 export default {
   name: 'ServiceCards',
-  props: {
-    serviceList: {
-      type: Array,
-      required: true
-    }
+  components: { DimiCard },
+
+  computed: {
+    ...mapState('service', ['serviceList'])
+  },
+
+  async created () {
+    await this.fetchServiceList()
+    this.updateServiceCardHeight()
+  },
+
+  async mounted () {
+    window.addEventListener('resize', () => this.updateServiceCardHeight())
   },
 
   methods: {
+    ...mapActions('service', ['fetchServiceList']),
+
+    updateServiceCardHeight () {
+      const cards = this.$refs.cards || []
+      cards.forEach(({ $el: v }) => (v.style.height = window.getComputedStyle(v).width))
+    },
+
     clickServiceCard (service) {
       if (!service.url) return
-      if (service.url.startsWith('http')) return window.open(service.url, '_blank')
-      this.$router.push({ name: service.url })
+
+      if (service.url.startsWith('http')) {
+        window.open(service.url, '_blank')
+      } else {
+        this.$router.push({ name: service.url })
+      }
     }
   }
 }

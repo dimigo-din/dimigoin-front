@@ -21,8 +21,7 @@ export default {
       klass: ({ informations }) => informations.klass,
       userType: ({ informations }) => informations.userType,
       ssoToken: ({ informations }) => informations.ssoToken
-    }),
-    ...mapState('service', ['serviceList'])
+    })
   },
 
   async created () {
@@ -34,21 +33,9 @@ export default {
     } catch (err) {
       console.error(err)
     }
-
-    await this.fetchServiceList()
-    this.updateServiceCardHeight()
-  },
-
-  async mounted () {
-    window.addEventListener('resize', () => this.updateServiceCardHeight())
   },
 
   methods: {
-    updateServiceCardHeight () {
-      const cards = document.querySelectorAll('.service__card')
-      cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
-    },
-
     openSetting () {
       window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
     },
@@ -58,8 +45,7 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
-    ...mapActions('account', ['autoLogin']),
-    ...mapActions('service', ['fetchServiceList'])
+    ...mapActions('account', ['autoLogin'])
   }
 }
 </script>
@@ -137,7 +123,14 @@ export default {
         </section>
       </div>
     </div>
-    <service-cards/>
+    <div class="service">
+      <div class="column">
+        <section class="info-section">
+          <h2 class="info-section__title">서비스</h2>
+          <service-cards/>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 
