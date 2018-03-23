@@ -13,7 +13,6 @@
 @import '../../scss/helpers/typography';
 
 .content {
-  min-height: calc(100vh - 8rem);
   padding: 2rem 0;
 
   &__header {

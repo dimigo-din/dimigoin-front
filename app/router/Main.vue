@@ -3,12 +3,18 @@ import pkg from '../../package.json'
 import Brand from '../assets/brand.svg'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
+import ServiceCards from './partial/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
+import restaurance from 'restaurance'
 
 export default {
   name: 'Main',
-  components: { Brand, MealGroup, DimiCard },
-  data: () => ({ photoCDN: process.env.DIMIGO_API_URL + '/user_photo/' }),
+  components: { Brand, MealGroup, DimiCard, ServiceCards },
+
+  data: () => ({
+    photoCDN: process.env.DIMIGO_API_URL + '/user_photo/',
+    hos: (1 + new Date().getMonth()) === 4 && new Date().getDate() === 1
+  }),
 
   computed: {
     pkg: () => pkg,
@@ -20,8 +26,7 @@ export default {
       klass: ({ informations }) => informations.klass,
       userType: ({ informations }) => informations.userType,
       ssoToken: ({ informations }) => informations.ssoToken
-    }),
-    ...mapState('service', ['serviceList'])
+    })
   },
 
   async created () {
@@ -33,20 +38,10 @@ export default {
     } catch (err) {
       console.error(err)
     }
-
-    await this.fetchServiceList()
-    this.updateServiceCardHeight()
-  },
-
-  async mounted () {
-    window.addEventListener('resize', () => this.updateServiceCardHeight())
   },
 
   methods: {
-    updateServiceCardHeight () {
-      const cards = document.querySelectorAll('.service__card')
-      cards.forEach(v => (v.style.height = window.getComputedStyle(v).width))
-    },
+    ...mapActions('account', ['autoLogin']),
 
     openSetting () {
       window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
@@ -57,21 +52,22 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
-    clickServiceCard (service) {
-      if (!service.url) return
-      if (service.url.startsWith('http')) return window.open(service.url, '_blank')
-      this.$router.push({ name: service.url })
-    },
+    async hots () {
+      if (!this.hos) return
 
-    ...mapActions('account', ['autoLogin']),
-    ...mapActions('service', ['fetchServiceList'])
+      this.hos = false
+      const elems = [...document.querySelectorAll('*')]
+      await restaurance({}, elems.filter(e => e.children.length <= 1))
+    }
   }
 }
 </script>
 
 <template>
   <div class="container container--naive">
-    <h1 class="brand">
+    <h1
+      class="brand"
+      @click="hots">
       <brand width="212px"/>
     </h1>
     <div class="info">
@@ -146,22 +142,7 @@ export default {
       <div class="column">
         <section class="info-section">
           <h2 class="info-section__title">서비스</h2>
-          <div class="service__cards">
-            <dimi-card
-              v-for="(service, index) in serviceList"
-              :key="`service-${index}`"
-              :class="['service__card', !service.url && 'service__card--disabled']"
-              shadow
-              hover
-              @click.native="clickServiceCard(service)">
-
-              <div class="service__card__icon">
-                <span :class="service.icon"/>
-              </div>
-              <h4 class="service__card__title">{{ service.title }}</h4>
-              <p class="service__card__description">{{ service.description }}</p>
-            </dimi-card>
-          </div>
+          <service-cards/>
         </section>
       </div>
     </div>
@@ -298,60 +279,6 @@ export default {
 
   &__btn:not(:last-child) {
     margin-right: 0.25em;
-  }
-}
-
-.service__cards {
-  display: grid;
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  @include until($tablet) {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-}
-
-.service__card {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  &--disabled.service__card {
-    display: none;
-  }
-
-  &__icon {
-    font-size: 64px;
-    @include until($tablet) {
-      font-size: 42px;
-    }
-  }
-
-  &__title {
-    @include font-extra-bold;
-    font-size: 24px;
-
-    margin-top: 1.2rem;
-    text-align: center;
-    word-break: break-all;
-
-    @include until($tablet) {
-      font-size: 16px;
-    }
-  }
-
-  &__description {
-    color: $gray;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-top: 0.5rem;
-    text-align: center;
-    word-break: keep-all;
-    @include until($tablet) {
-      display: none;
-    }
   }
 }
 </style>
