@@ -190,7 +190,7 @@ export default {
   &__loader-wrapper {
     align-items: center;
     display: flex;
-    height: 80vh;
+    height: 40vh;
     justify-content: center;
   }
 
