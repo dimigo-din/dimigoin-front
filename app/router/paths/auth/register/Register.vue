@@ -10,7 +10,7 @@ export default {
       type: 'error',
       title: '앗... 아아...',
       text: '지금은 가입할 수 없습니다.',
-      onClose: () => this.$router.back()
+      onClose: () => this.$router.push('/')
     })
   }
 }
