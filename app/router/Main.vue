@@ -5,11 +5,16 @@ import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
 import ServiceCards from './partial/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
+import restaurance from 'restaurance'
 
 export default {
   name: 'Main',
   components: { Brand, MealGroup, DimiCard, ServiceCards },
-  data: () => ({ photoCDN: process.env.DIMIGO_API_URL + '/user_photo/' }),
+
+  data: () => ({
+    photoCDN: process.env.DIMIGO_API_URL + '/user_photo/',
+    hos: (1 + new Date().getMonth()) === 4 && new Date().getDate() === 1
+  }),
 
   computed: {
     pkg: () => pkg,
@@ -36,6 +41,8 @@ export default {
   },
 
   methods: {
+    ...mapActions('account', ['autoLogin']),
+
     openSetting () {
       window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
     },
@@ -45,14 +52,22 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
-    ...mapActions('account', ['autoLogin'])
+    async hots () {
+      if (!this.hos) return
+
+      this.hos = false
+      const elems = [...document.querySelectorAll('*')]
+      await restaurance({}, elems.filter(e => e.children.length <= 1))
+    }
   }
 }
 </script>
 
 <template>
   <div class="container container--naive">
-    <h1 class="brand">
+    <h1
+      class="brand"
+      @click="hots">
       <brand width="212px"/>
     </h1>
     <div class="info">
