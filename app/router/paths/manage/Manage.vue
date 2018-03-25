@@ -6,7 +6,6 @@ import DimiMenuItem from '../../../components/DimiMenuItem.vue'
 
 export default {
   name: 'ManageCircle',
-
   components: { ContentWrapper, DefaultNavbar, DimiMenu, DimiMenuItem }
 }
 </script>
