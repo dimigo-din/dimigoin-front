@@ -1,6 +1,6 @@
 {
   "name": "dimigoin-front",
-  "version": "1.4.11",
+  "version": "1.5.0",
   "description": "dimigoin front",
   "main": "./app/app.js",
   "scripts": {
@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "debounce": "^1.1.0",
     "dimigoincon": "^2.3.0",
     "line-clamp": "^0.0.7",
     "moment": "^2.21.0",

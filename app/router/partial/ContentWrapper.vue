@@ -18,7 +18,7 @@
   &__header {
     @extend %h-text-gray-dark;
     @include font-bold;
-    font-size: 28px;
+    font-size: 32px;
     padding-bottom: 1rem;
   }
 }

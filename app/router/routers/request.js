@@ -1,8 +1,8 @@
 import Request from '../paths/request/Request.vue'
 import RequestInfo from '../paths/request/RequestInfo.vue'
-import RequestDraft from '../paths/request/RequestDraft.vue'
 import RequestCircle from '../paths/request/RequestCircle.vue'
 import RequestAfterschool from '../paths/request/RequestAfterschool.vue'
+import RequestIngang from '../paths/request/RequestIngang.vue'
 
 export default [{
   path: '/request',
@@ -32,15 +32,10 @@ export default [{
       meta: { title: '신청 > 상담 신청', draft: true }
     },
     {
-      path: 'internet',
-      name: 'request/internet',
-      meta: { title: '신청 > 인강실 신청', draft: true }
-    },
-    {
-      path: 'draft',
-      name: 'request/draft',
-      component: RequestDraft,
-      meta: { title: '신청 > 준비 중' }
+      path: 'ingang',
+      name: 'request/ingang',
+      component: RequestIngang,
+      meta: { title: '신청 > 인강실 신청' }
     }
   ]
 }]

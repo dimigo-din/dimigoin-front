@@ -1,0 +1,186 @@
+<script>
+import ContentWrapper from '../../partial/ContentWrapper.vue'
+import DimiButton from '../../../components/DimiButton.vue'
+import DimiCard from '../../../components/DimiCard.vue'
+import DimiLoader from '../../../components/DimiLoader.vue'
+
+import { ingang } from '../../../src/api'
+import debounce from 'debounce'
+
+export default {
+  name: 'RequestIngang',
+
+  components: { DimiButton, ContentWrapper, DimiCard, DimiLoader },
+
+  data: () => ({
+    ingang: {},
+    today: new Date(),
+    pending: true
+  }),
+
+  computed: {
+
+  },
+
+  async created () {
+    this.pending = true
+    try {
+      this.ingang = await ingang.getIngang()
+    } catch (err) {
+      this.$swal('에러!', '인강실 신청 기간이 지났습니다.', 'error')
+      this.$router.back()
+    }
+    this.pending = false
+  },
+
+  methods: {
+    async cancel () {
+      try {
+        this.ingang.applied = false
+        this.ingang.count--
+        await ingang.cancelIngang(this.ingang.idx)
+      } catch (err) {
+        this.$swal({
+          type: 'error',
+          title: '에러!',
+          text: err.message
+        })
+        this.applied = true
+        this.ingang.count++
+      }
+    },
+
+    async apply () {
+      try {
+        this.ingang.applied = true
+        this.ingang.count++
+        await ingang.applyIngang(this.ingang.idx)
+      } catch (err) {
+        this.$swal({
+          type: 'error',
+          title: '에러!',
+          text: err.message
+        })
+        this.ingang.applied = false
+        this.ingang.count--
+      }
+    },
+
+    handleButton: debounce(function () {
+      if (this.ingang.applied) return this.cancel()
+      else return this.apply()
+    }, 500)
+  }
+}
+</script>
+
+<template>
+  <content-wrapper class="req-ingang">
+    <h1 slot="header">
+      <span class="icon-internet-class"/>{{ `${today.getMonth() + 1}월` }}
+      {{ `${today.getDate() + 1}일` }}
+      인강실 사용 신청
+    </h1>
+
+    <dimi-card
+      slot="main"
+      class="req-ingang__card">
+
+      <div
+        v-if="pending"
+        class="req-ingang__pending">
+        <dimi-loader/>
+      </div>
+
+      <template v-else>
+        <h2 class="req-ingang__title">야간타율학습 {{ ingang.time }}타임</h2>
+        <div class="req-ingang__content">
+          <div class="req-ingang__current">
+            <div
+              :class="[
+                'req-ingang__number',
+                'req-ingang__number--' + (ingang.applied ? 'aloes' : 'red')
+            ]">{{ ingang.count }}</div>
+            <div
+              :class="[
+                'req-ingang__text',
+                'req-ingang__text--' + (ingang.applied ? 'aloes' : 'red')
+            ]">현원</div>
+          </div>
+          <div class="req-ingang__max">
+            <div class="req-ingang__number">{{ ingang.max }}</div>
+            <div class="req-ingang__text">총원</div>
+          </div>
+        </div>
+        <div class="req-ingang__btn">
+          <dimi-button
+            :gray="ingang.applied"
+            @click="handleButton"
+          >{{ ingang.applied ? '취소하기' : '신청하기' }}</dimi-button>
+        </div>
+      </template>
+
+    </dimi-card>
+  </content-wrapper>
+</template>
+
+<style lang="scss">
+.req-ingang {
+  &__pending {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+  }
+
+  &__title {
+    @include font-bold;
+
+    color: $gray-dark;
+    font-size: 24px;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__content {
+    @include font-bold;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  &__current,
+  &__max {
+    margin: 4rem 0.75rem 4rem 0.75rem;
+  }
+
+  &__number {
+    font-size: 64px;
+    color: $gray;
+  }
+
+  &__number--aloes {
+    color: $aloes;
+  }
+
+  &__number--red {
+    color: $red;
+  }
+
+  &__text {
+    color: $gray;
+    text-align: center;
+  }
+
+  &__text--aloes {
+    color: $aloes
+  }
+
+  &__text--red {
+    color: $red;
+  }
+}
+</style>

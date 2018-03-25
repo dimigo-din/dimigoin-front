@@ -77,6 +77,8 @@ export default {
 @import '../scss/helpers/typography';
 
 .btn {
+  @include font-bold;
+
   align-items: center;
   appearance: none;
   background-color: $red;
@@ -95,7 +97,7 @@ export default {
 
   &--gray {
     background-color: $gray-lighten;
-    color: $gray;
+    color: $gray-dark;
   }
 
   &--text {
