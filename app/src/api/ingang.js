@@ -3,7 +3,7 @@ import { Ingang } from '../struct/ingang'
 
 export async function applyIngang (ingangIdx) {
   try {
-    await axios.put(`/ingang/apply/${ingangIdx}`)
+    await axios.put(`/ingangs/apply/${ingangIdx}`)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -25,7 +25,7 @@ export async function applyIngang (ingangIdx) {
 
 export async function cancelIngang (ingangIdx) {
   try {
-    await axios.delete(`/ingang/apply/${ingangIdx}`)
+    await axios.delete(`/ingangs/apply/${ingangIdx}`)
   } catch ({ message, reponse: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -47,7 +47,7 @@ export async function getIngang () {
   try {
     const res = await axios.get('/ingangs/user/')
 
-    return Ingang(res.data['ingang']) // TODO
+    return Ingang(res.data) // TODO
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')

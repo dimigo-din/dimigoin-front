@@ -5,6 +5,7 @@ import DimiCard from '../../../components/DimiCard.vue'
 import DimiLoader from '../../../components/DimiLoader.vue'
 
 import { ingang } from '../../../src/api'
+import debounce from 'debounce'
 
 export default {
   name: 'RequestIngang',
@@ -13,9 +14,8 @@ export default {
 
   data: () => ({
     ingang: {},
-    applied: false,
     today: new Date(),
-    pending: false
+    pending: true
   }),
 
   computed: {
@@ -24,15 +24,21 @@ export default {
 
   async created () {
     this.pending = true
-    this.ingang = await ingang.getIngang()
+    try {
+      this.ingang = await ingang.getIngang()
+    } catch (err) {
+      this.$swal('에러!', '인강실 신청 기간이 지났습니다.', 'error')
+      this.$router.back()
+    }
     this.pending = false
   },
 
   methods: {
     async cancel () {
       try {
-        await ingang.cancelIngang(1)
-        this.applied = false
+        this.ingang.applied = false
+        this.ingang.count--
+        await ingang.cancelIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
@@ -40,22 +46,30 @@ export default {
           text: err.message
         })
         this.applied = true
+        this.ingang.count++
       }
     },
 
     async apply () {
       try {
-        await ingang.applyIngang(1)
-        this.applied = true
+        this.ingang.applied = true
+        this.ingang.count++
+        await ingang.applyIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
           title: '에러!',
           text: err.message
         })
-        this.applied = false
+        this.ingang.applied = false
+        this.ingang.count--
       }
-    }
+    },
+
+    handleButton: debounce(function () {
+      if (this.ingang.applied) return this.cancel()
+      else return this.apply()
+    }, 500)
   }
 }
 </script>
@@ -71,30 +85,54 @@ export default {
     <dimi-card
       slot="main"
       class="req-ingang__card">
-      <h2 class="req-ingang__title">야간타율학습 1타임</h2>
-      <div class="req-ingang__content">
-        <div class="req-ingang__current">
-          <div class="req-ingang__number req-ingang__number--aloes">13</div>
-          <div class="req-ingang__text req-ingang__text--aloes">현원</div>
-        </div>
-        <div class="req-ingang__max">
-          <div class="req-ingang__number">30</div>
-          <div class="req-ingang__text">총원</div>
-        </div>
+
+      <div
+        v-if="pending"
+        class="req-ingang__pending">
+        <dimi-loader/>
       </div>
-      <div class="req-ingang__btn">
-        <dimi-button
-          :gray="applied"
-          :active="!applied"
-          @click="applied ? cancel : apply"
-        >{{ applied ? '취소하기' : '신청하기' }}</dimi-button>
-      </div>
+
+      <template v-else>
+        <h2 class="req-ingang__title">야간타율학습 {{ ingang.time }}타임</h2>
+        <div class="req-ingang__content">
+          <div class="req-ingang__current">
+            <div
+              :class="[
+                'req-ingang__number',
+                'req-ingang__number--' + (ingang.applied ? 'aloes' : 'red')
+            ]">{{ ingang.count }}</div>
+            <div
+              :class="[
+                'req-ingang__text',
+                'req-ingang__text--' + (ingang.applied ? 'aloes' : 'red')
+            ]">현원</div>
+          </div>
+          <div class="req-ingang__max">
+            <div class="req-ingang__number">{{ ingang.max }}</div>
+            <div class="req-ingang__text">총원</div>
+          </div>
+        </div>
+        <div class="req-ingang__btn">
+          <dimi-button
+            :gray="ingang.applied"
+            @click="handleButton"
+          >{{ ingang.applied ? '취소하기' : '신청하기' }}</dimi-button>
+        </div>
+      </template>
+
     </dimi-card>
   </content-wrapper>
 </template>
 
 <style lang="scss">
 .req-ingang {
+  &__pending {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+  }
+
   &__title {
     @include font-bold;
 
@@ -128,6 +166,10 @@ export default {
     color: $aloes;
   }
 
+  &__number--red {
+    color: $red;
+  }
+
   &__text {
     color: $gray;
     text-align: center;
@@ -135,6 +177,10 @@ export default {
 
   &__text--aloes {
     color: $aloes
+  }
+
+  &__text--red {
+    color: $red;
   }
 }
 </style>
