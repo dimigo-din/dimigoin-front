@@ -21,8 +21,8 @@ export default {
 <style lang="scss">
 .footer {
   align-items: center;
-  display: flex;
   background-color: $gray-lighter;
+  display: flex;
   min-height: 8rem;
 
   @include until($tablet) {
@@ -45,8 +45,8 @@ export default {
 
     @include until($tablet) {
       flex-direction: column;
-      padding-top: 24px;
       padding-bottom: 0;
+      padding-top: 24px;
     }
   }
 
