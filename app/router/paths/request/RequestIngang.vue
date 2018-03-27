@@ -52,6 +52,14 @@ export default {
 
     async apply () {
       try {
+        if (this.ingang.weekApplyCount >= 2) {
+          throw new Error('일주일 신청 가능 횟수(2회)를 초과했습니다.')
+        }
+
+        if (this.ingang.count === this.ingang.max) {
+          throw new Error('인원이 꽉 찼습니다.')
+        }
+
         this.ingang.applied = true
         this.ingang.count++
         await ingang.applyIngang(this.ingang.idx)
