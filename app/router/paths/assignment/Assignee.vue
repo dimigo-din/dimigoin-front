@@ -132,8 +132,8 @@ export default {
   }
 
   &__assignment {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: flex-start;
     padding: 24px;
   }
@@ -153,8 +153,8 @@ export default {
   }
 
   &__title {
-    flex: 1;
     color: $black !important;
+    flex: 1;
   }
 
   &__expand {
@@ -162,19 +162,19 @@ export default {
   }
 
   &__description {
+    align-items: stretch;
     color: $gray;
+    flex-direction: column;
     font-size: 16px;
     line-height: 1.8;
-    flex-direction: column;
-    align-items: stretch;
   }
 
   &__submit {
     @include font-bold;
-    display: flex;
-    justify-content: flex-end;
     color: $red;
+    display: flex;
     font-size: 18px;
+    justify-content: flex-end;
   }
 
   &__submit .icon-upload {
