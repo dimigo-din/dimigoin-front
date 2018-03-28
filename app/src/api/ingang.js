@@ -3,7 +3,7 @@ import { Ingang } from '../struct/ingang'
 
 export async function applyIngang (ingangIdx) {
   try {
-    await axios.put(`/ingangs/apply/${ingangIdx}`)
+    await axios.post(`/ingangs/apply/${ingangIdx}`)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -12,11 +12,11 @@ export async function applyIngang (ingangIdx) {
       case 401:
         throw new Error('존재하지 않는 학년 또는 반입니다.')
       case 403:
-        throw new Error('신청 기간이 아닙니다.')
+        throw new Error('신청 기간이 아니거나 일주일 신청 가능 횟수(2회)를 초과했습니다.')
       case 404:
-        throw new Error('신청이 조회되지 않았습니다.')
+        throw new Error('인강실 신청이 없습니다.')
       case 409:
-        throw new Error('이미 신청했습니다.')
+        throw new Error('이미 신청을 했거나 인원이 꽉 찼습니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
@@ -60,23 +60,3 @@ export async function getIngang () {
     }
   }
 }
-
-/*
-export async function getIngangApplicantList () {
-  try {
-    const res = await axios.get('/ingangs/user/')
-
-    return res.data['ingangs'].map(IngangApplicant)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-
-    switch (res.status) {
-      case 404:
-        return []
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-*/
