@@ -52,6 +52,14 @@ export default {
 
     async apply () {
       try {
+        if (this.ingang.weekApplyCount >= 2) {
+          throw new Error('일주일 신청 가능 횟수(2회)를 초과했습니다.')
+        }
+
+        if (this.ingang.count === this.ingang.max) {
+          throw new Error('인원이 꽉 찼습니다.')
+        }
+
         this.ingang.applied = true
         this.ingang.count++
         await ingang.applyIngang(this.ingang.idx)
@@ -127,10 +135,10 @@ export default {
 <style lang="scss">
 .req-ingang {
   &__pending {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     height: 30vh;
+    justify-content: center;
   }
 
   &__title {
@@ -154,12 +162,12 @@ export default {
 
   &__current,
   &__max {
-    margin: 4rem 0.75rem 4rem 0.75rem;
+    margin: 4rem 0.75rem;
   }
 
   &__number {
-    font-size: 64px;
     color: $gray;
+    font-size: 64px;
   }
 
   &__number--aloes {
@@ -176,7 +184,7 @@ export default {
   }
 
   &__text--aloes {
-    color: $aloes
+    color: $aloes;
   }
 
   &__text--red {

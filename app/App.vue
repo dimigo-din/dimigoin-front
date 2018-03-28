@@ -23,8 +23,8 @@ export default {
 <style lang="scss">
 .root {
   display: flex;
-  min-height: 100vh;
   flex-direction: column;
+  min-height: 100vh;
 
   &__router {
     flex: 1 0 auto;

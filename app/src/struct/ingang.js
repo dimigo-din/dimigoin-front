@@ -10,6 +10,7 @@ const _Ingang = struct({
   max: 'number',
   applyStartDate: 'string',
   applyEndDate: 'string',
+  weekApplyCount: 'number',
   applied: 'boolean'
 })
 
@@ -23,5 +24,6 @@ export const Ingang = ingang => _Ingang({
   max: ingang['max'],
   applyStartDate: ingang['apply_start_date'],
   applyEndDate: ingang['apply_end_date'],
+  weekApplyCount: ingang['week_apply_count'],
   applied: ingang['applied']
 })
