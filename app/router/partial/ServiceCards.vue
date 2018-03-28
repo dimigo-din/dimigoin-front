@@ -23,7 +23,6 @@ export default {
   methods: {
     updateServiceCardHeight () {
       const cards = this.$refs.cards || []
-      console.log(cards)
       cards.forEach(({ $el: v }) => (v.style.height = window.getComputedStyle(v).width))
     },
 
@@ -41,63 +40,76 @@ export default {
 </script>
 
 <template>
-  <div class="service-cards">
+  <div class="services">
     <div
       v-if="services.length === 0"
-      class="service-card__loader">
+      class="services__loader">
       <dimi-loader/>
     </div>
-    <dimi-card
-      v-for="(service, index) in services"
-      v-else
-      ref="cards"
-      :key="`service-${index}`"
-      :class="['service-card', !service.url && 'service-card--disabled']"
-      shadow
-      hover
-      @click.native="clickServiceCard(service)">
 
-      <div class="service-card__icon">
-        <span :class="service.icon"/>
-      </div>
-      <h4 class="service-card__title">{{ service.title }}</h4>
-      <p class="service-card__description">{{ service.description }}</p>
-    </dimi-card>
+    <div
+      v-else
+      class="services__cards">
+      <dimi-card
+        v-for="(service, index) in services"
+        ref="cards"
+        :key="`service-${index}`"
+        :class="['services__card', !service.url && 'services__card--disabled']"
+        shadow
+        hover
+        @click.native="clickServiceCard(service)">
+
+        <div class="services__card-icon">
+          <span :class="service.icon"/>
+        </div>
+        <h4 class="services__card-title">{{ service.title }}</h4>
+        <p class="services__card-description">{{ service.description }}</p>
+      </dimi-card>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import '../../scss/helpers/typography';
 
-.service-cards {
-  display: grid;
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  @include until($tablet) {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+.services {
+  &__cards {
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    @include until($tablet) {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
   }
-}
 
-.service-card {
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  &__loader {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
 
-  &--disabled {
+  &__card {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__card--disable {
     display: none !important;
   }
 
-  &__icon {
+  &__card-icon {
     font-size: 64px;
     @include until($tablet) {
       font-size: 42px;
     }
   }
 
-  &__title {
+  &__card-title {
     @include font-extra-bold;
     font-size: 24px;
 
@@ -110,7 +122,7 @@ export default {
     }
   }
 
-  &__description {
+  &__card-description {
     color: $gray;
     font-size: 14px;
     line-height: 1.5;
