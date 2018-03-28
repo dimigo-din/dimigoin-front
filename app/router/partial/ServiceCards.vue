@@ -1,38 +1,19 @@
-<template>
-  <div class="service__cards">
-    <dimi-card
-      v-for="(service, index) in serviceList"
-      ref="cards"
-      :key="`service-${index}`"
-      :class="['service__card', !service.url && 'service__card--disabled']"
-      shadow
-      hover
-      @click.native="clickServiceCard(service)">
-
-      <div class="service__card__icon">
-        <span :class="service.icon"/>
-      </div>
-      <h4 class="service__card__title">{{ service.title }}</h4>
-      <p class="service__card__description">{{ service.description }}</p>
-    </dimi-card>
-  </div>
-</template>
-
 <script>
-import { mapState, mapActions } from 'vuex'
+import { service } from '../../src/api'
 import DimiCard from '../../components/DimiCard.vue'
+import DimiLoader from '../../components/DimiLoader.vue'
 
 export default {
   name: 'ServiceCards',
-  components: { DimiCard },
+  components: { DimiCard, DimiLoader },
 
-  computed: {
-    ...mapState('service', ['serviceList'])
-  },
+  data: () => ({
+    services: []
+  }),
 
   async created () {
-    await this.fetchServiceList()
-    this.updateServiceCardHeight()
+    this.services = await service.getServiceList()
+    this.$nextTick(this.updateServiceCardHeight)
   },
 
   async mounted () {
@@ -40,10 +21,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('service', ['fetchServiceList']),
-
     updateServiceCardHeight () {
       const cards = this.$refs.cards || []
+      console.log(cards)
       cards.forEach(({ $el: v }) => (v.style.height = window.getComputedStyle(v).width))
     },
 
@@ -60,10 +40,36 @@ export default {
 }
 </script>
 
+<template>
+  <div class="service-cards">
+    <div
+      v-if="services.length === 0"
+      class="service-card__loader">
+      <dimi-loader/>
+    </div>
+    <dimi-card
+      v-for="(service, index) in services"
+      v-else
+      ref="cards"
+      :key="`service-${index}`"
+      :class="['service-card', !service.url && 'service-card--disabled']"
+      shadow
+      hover
+      @click.native="clickServiceCard(service)">
+
+      <div class="service-card__icon">
+        <span :class="service.icon"/>
+      </div>
+      <h4 class="service-card__title">{{ service.title }}</h4>
+      <p class="service-card__description">{{ service.description }}</p>
+    </dimi-card>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 @import '../../scss/helpers/typography';
 
-.service__cards {
+.service-cards {
   display: grid;
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
@@ -73,15 +79,15 @@ export default {
   }
 }
 
-.service__card {
+.service-card {
   align-items: center;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  &--disabled.service__card {
-    display: none;
+  &--disabled {
+    display: none !important;
   }
 
   &__icon {
