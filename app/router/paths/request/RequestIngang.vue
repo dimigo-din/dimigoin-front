@@ -135,10 +135,10 @@ export default {
 <style lang="scss">
 .req-ingang {
   &__pending {
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
     height: 30vh;
+    justify-content: center;
   }
 
   &__title {
@@ -162,12 +162,12 @@ export default {
 
   &__current,
   &__max {
-    margin: 4rem 0.75rem 4rem 0.75rem;
+    margin: 4rem 0.75rem;
   }
 
   &__number {
-    font-size: 64px;
     color: $gray;
+    font-size: 64px;
   }
 
   &__number--aloes {
@@ -184,7 +184,7 @@ export default {
   }
 
   &__text--aloes {
-    color: $aloes
+    color: $aloes;
   }
 
   &__text--red {
