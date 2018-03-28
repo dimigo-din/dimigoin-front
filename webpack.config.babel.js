@@ -4,7 +4,7 @@ import webpack from 'webpack'
 import HtmlPlugin from 'html-webpack-plugin'
 import DotenvPlugin from 'webpack-dotenv-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import StylelintPlugin from  'stylelint-webpack-plugin'
+import StylelintPlugin from 'stylelint-webpack-plugin'
 
 const production = process.env.NODE_ENV === 'production'
 
