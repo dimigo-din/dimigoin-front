@@ -26,7 +26,7 @@ export async function applyIngang (ingangIdx) {
 export async function cancelIngang (ingangIdx) {
   try {
     await axios.delete(`/ingangs/apply/${ingangIdx}`)
-  } catch ({ message, reponse: res }) {
+  } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
 
