@@ -38,8 +38,8 @@ export default {
       try {
         this.ingang.applied = false
         this.ingang.count--
-        await ingang.cancelIngang(this.ingang.idx)
         this.ingang.weekApplyCount--
+        await ingang.cancelIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
@@ -48,6 +48,7 @@ export default {
         })
         this.applied = true
         this.ingang.count++
+        this.ingang.weekApplyCount++
       }
     },
 
@@ -63,8 +64,8 @@ export default {
 
         this.ingang.applied = true
         this.ingang.count++
-        await ingang.applyIngang(this.ingang.idx)
         this.ingang.weekApplyCount++
+        await ingang.applyIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
@@ -73,6 +74,7 @@ export default {
         })
         this.ingang.applied = false
         this.ingang.count--
+        this.ingang.weekApplyCount--
       }
     },
 
