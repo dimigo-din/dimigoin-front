@@ -12,7 +12,7 @@ export async function applyIngang (ingangIdx) {
       case 401:
         throw new Error('존재하지 않는 학년 또는 반입니다.')
       case 403:
-        throw new Error('신청 기간이 아니거나 일주일 신청 가능 횟수(2회)를 초과했습니다.')
+        throw new Error('신청 기간이 아닙니다.')
       case 404:
         throw new Error('인강실 신청이 없습니다.')
       case 409:
