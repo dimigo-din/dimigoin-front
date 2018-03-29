@@ -39,6 +39,7 @@ export default {
         this.ingang.applied = false
         this.ingang.count--
         await ingang.cancelIngang(this.ingang.idx)
+        this.ingang.weekApplyCount--
       } catch (err) {
         this.$swal({
           type: 'error',
@@ -63,6 +64,7 @@ export default {
         this.ingang.applied = true
         this.ingang.count++
         await ingang.applyIngang(this.ingang.idx)
+        this.ingang.weekApplyCount++
       } catch (err) {
         this.$swal({
           type: 'error',
@@ -101,7 +103,10 @@ export default {
       </div>
 
       <template v-else>
-        <h2 class="req-ingang__title">야간타율학습 {{ ingang.time }}타임</h2>
+        <h2 class="req-ingang__title">
+          <span class="req-ingang__info">{{ `${ingang.grade}학년 ${ingang.klass}반` }}</span>
+          야간타율학습 {{ ingang.time }}타임
+        </h2>
         <div class="req-ingang__content">
           <div class="req-ingang__current">
             <div
@@ -120,7 +125,11 @@ export default {
             <div class="req-ingang__text">총원</div>
           </div>
         </div>
+
         <div class="req-ingang__btn">
+          <p class="req-ingang__limit">
+            남은 티켓 개수 (월요일에 초기화) : {{ 2 - ingang.weekApplyCount }}개
+          </p>
           <dimi-button
             :gray="ingang.applied"
             @click="handleButton"
@@ -148,7 +157,19 @@ export default {
     font-size: 24px;
   }
 
+  &__info {
+    color: $gray;
+  }
+
+  &__limit {
+    @include font-bold;
+    color: $orange;
+    font-size: 18px;
+    margin-right: 1em;
+  }
+
   &__btn {
+    align-items: center;
     display: flex;
     justify-content: flex-end;
   }
