@@ -21,7 +21,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "debounce": "^1.1.0",
-    "dimigoincon": "^2.3.0",
+    "dimigoincon": "^2.5.1",
     "line-clamp": "^0.0.7",
     "moment": "^2.21.0",
     "restaurance": "^1.0.3",
