@@ -45,7 +45,7 @@ export async function cancelIngang (ingangIdx) {
 
 export async function getIngang () {
   try {
-    const res = await axios.get('/ingangs/user/')
+    const res = await axios.get('/ingangs/student/')
 
     return Ingang(res.data) // TODO
   } catch ({ message, response: res }) {
