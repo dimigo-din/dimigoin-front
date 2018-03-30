@@ -42,7 +42,7 @@ export default {
         this.dummyIngang.count--
         this.dummyIngang.weekApplyCount--
 
-        // await ingang.cancelIngang(this.ingang.idx)
+        await ingang.cancelIngang(this.ingang.idx)
 
         this.ingang.applied = false
         this.ingang.count--
@@ -84,7 +84,7 @@ export default {
         this.dummyIngang.count++
         this.dummyIngang.weekApplyCount++
 
-        // await ingang.applyIngang(this.ingang.idx)
+        await ingang.applyIngang(this.ingang.idx)
 
         this.ingang.applied = true
         this.ingang.count++
