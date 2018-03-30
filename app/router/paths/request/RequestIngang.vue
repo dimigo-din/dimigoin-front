@@ -14,6 +14,7 @@ export default {
 
   data: () => ({
     ingang: {},
+    dummyIngang: {},
     today: new Date(),
     pending: true
   }),
@@ -26,6 +27,7 @@ export default {
     this.pending = true
     try {
       this.ingang = await ingang.getIngang()
+      this.dummyIngang = Object.assign({}, this.ingang)
     } catch (err) {
       this.$swal('에러!', '인강실 신청 기간이 지났습니다.', 'error')
       this.$router.back()
@@ -36,46 +38,67 @@ export default {
   methods: {
     async cancel () {
       try {
+        this.dummyIngang.applied = false
+        this.dummyIngang.count--
+        this.dummyIngang.weekApplyCount--
+
+        // await ingang.cancelIngang(this.ingang.idx)
+
         this.ingang.applied = false
         this.ingang.count--
         this.ingang.weekApplyCount--
-        await ingang.cancelIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
           title: '에러!',
           text: err.message
         })
-        this.applied = true
-        this.ingang.count++
-        this.ingang.weekApplyCount++
+
+        this.dummyIngang.applied = true
+        this.dummyIngang.count++
+        this.dummyIngang.weekApplyCount++
       }
     },
 
     async apply () {
       try {
+        if (this.ingang.weekApplyCount >= 2) {
+          this.$swal({
+            type: 'error',
+            title: '에러!',
+            text: '일주일 신청 가능 횟수(2회)를 초과했습니다.'
+          })
+          return
+        }
+
+        if (this.ingang.count >= this.ingang.max) {
+          this.$swal({
+            type: 'error',
+            title: '에러!',
+            text: '인원이 꽉 찼습니다.'
+          })
+          return
+        }
+
+        this.dummyIngang.applied = true
+        this.dummyIngang.count++
+        this.dummyIngang.weekApplyCount++
+
+        // await ingang.applyIngang(this.ingang.idx)
+
         this.ingang.applied = true
         this.ingang.count++
         this.ingang.weekApplyCount++
-
-        if (this.ingang.weekApplyCount >= 2) {
-          throw new Error('일주일 신청 가능 횟수(2회)를 초과했습니다.')
-        }
-
-        if (this.ingang.count === this.ingang.max) {
-          throw new Error('인원이 꽉 찼습니다.')
-        }
-
-        await ingang.applyIngang(this.ingang.idx)
       } catch (err) {
         this.$swal({
           type: 'error',
           title: '에러!',
           text: err.message
         })
-        this.ingang.applied = false
-        this.ingang.count--
-        this.ingang.weekApplyCount--
+
+        this.dummyIngang.applied = false
+        this.dummyIngang.count--
+        this.dummyIngang.weekApplyCount--
       }
     },
 
@@ -107,36 +130,36 @@ export default {
 
       <template v-else>
         <h2 class="req-ingang__title">
-          <span class="req-ingang__info">{{ `${ingang.grade}학년 ${ingang.klass}반` }}</span>
-          야간타율학습 {{ ingang.time }}타임
+          <span class="req-ingang__info">{{ `${dummyIngang.grade}학년 ${dummyIngang.klass}반` }}</span>
+          야간타율학습 {{ dummyIngang.time }}타임
         </h2>
         <div class="req-ingang__content">
           <div class="req-ingang__current">
             <div
               :class="[
                 'req-ingang__number',
-                'req-ingang__number--' + (ingang.applied ? 'aloes' : 'red')
-            ]">{{ ingang.count }}</div>
+                'req-ingang__number--' + (dummyIngang.applied ? 'aloes' : 'red')
+            ]">{{ dummyIngang.count }}</div>
             <div
               :class="[
                 'req-ingang__text',
-                'req-ingang__text--' + (ingang.applied ? 'aloes' : 'red')
+                'req-ingang__text--' + (dummyIngang.applied ? 'aloes' : 'red')
             ]">현원</div>
           </div>
           <div class="req-ingang__max">
-            <div class="req-ingang__number">{{ ingang.max }}</div>
+            <div class="req-ingang__number">{{ dummyIngang.max }}</div>
             <div class="req-ingang__text">총원</div>
           </div>
         </div>
 
         <div class="req-ingang__btn">
           <p class="req-ingang__limit">
-            남은 티켓 개수 (월요일에 초기화) : {{ 2 - ingang.weekApplyCount }}개
+            남은 티켓 개수 (월요일에 초기화) : {{ 2 - dummyIngang.weekApplyCount }}개
           </p>
           <dimi-button
-            :gray="ingang.applied"
+            :gray="dummyIngang.applied"
             @click="handleButton"
-          >{{ ingang.applied ? '취소하기' : '신청하기' }}</dimi-button>
+          >{{ dummyIngang.applied ? '취소하기' : '신청하기' }}</dimi-button>
         </div>
       </template>
 
