@@ -1,45 +1,62 @@
 <script>
 import AssignmentBase from './AssignmentBase.vue'
+import DimiModal from '../../../components/DimiModal.vue'
 
 export default {
   name: 'Assignor',
-  components: { AssignmentBase }
+  components: { AssignmentBase, DimiModal },
+  data: () => ({
+    modalOpen: false
+  })
 }
 </script>
 
 <template>
-  <assignment-base>
-    <template slot-scope="{ ass }">
-      <span class="assignor__item">
-        <span class="icon-ok"/> 마감하기
-      </span>
+  <div>
+    <assignment-base>
+      <template slot-scope="{ ass }">
+        <span class="assignor__item">
+          <span class="icon-ok"/> 마감하기
+        </span>
 
-      <span class="assignor__item">
-        <span class="icon-edit"/> 수정하기
-      </span>
-      <span class="assignor__item">
-        <span class="icon-cross"/> 취소하기
-      </span>
-    </template>
+        <span class="assignor__item">
+          <span class="icon-edit"/> 수정하기
+        </span>
+        <span class="assignor__item">
+          <span class="icon-cross"/> 취소하기
+        </span>
+      </template>
 
-    <span slot="header">
-      <span class="assignor__header">
-        <span class="icon-request-sm"/> 과제 제출 관리
+      <span slot="header">
+        <span class="assignor__header">
+          <span class="icon-request-sm"/> 과제 제출 관리
 
-        <span class="assignor__plus">
-          <span class="icon-plus"/> 추가하기
+          <span
+            class="assignor__plus"
+            @click="modalOpen = true"
+          >
+            <span class="icon-plus"/> 추가하기
+          </span>
         </span>
       </span>
-    </span>
 
-    <span
-      slot="opponent"
-      slot-scope="{ ass }"
+      <span
+        slot="opponent"
+        slot-scope="{ ass }"
+      >
+        {{ ass.target_grade }}학년
+        {{ ass.target_grade }}반 대상
+      </span>
+
+    </assignment-base>
+
+    <dimi-modal
+      :opened="modalOpen"
+      @close="modalOpen = false"
     >
-      {{ ass.target_grade }}학년
-      {{ ass.target_grade }}반 대상
-    </span>
-  </assignment-base>
+      <h3 class="assignor__title">과제 제출 추가</h3>
+    </dimi-modal>
+  </div>
 </template>
 
 <style lang="scss">
@@ -64,6 +81,13 @@ export default {
     font-size: 16px;
     position: absolute;
     right: 0;
+  }
+
+  &__title {
+    @include font-bold;
+
+    color: $gray-dark;
+    font-size: 24px;
   }
 }
 </style>
