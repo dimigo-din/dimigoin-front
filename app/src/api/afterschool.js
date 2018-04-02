@@ -15,7 +15,7 @@ function tempValidation (afterschool) {
 
 export async function getAfterschools () {
   try {
-    const res = await axios.get(`/afterschools/apply/`)
+    const res = await axios.get(`/afterschools/student/`)
     return res.data['afterschools'].map(Afterschool)
   } catch ({ message, response: res }) {
     console.error(message)

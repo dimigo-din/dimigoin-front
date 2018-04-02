@@ -1,6 +1,6 @@
 {
   "name": "dimigoin-front",
-  "version": "1.4.9",
+  "version": "1.5.9",
   "description": "dimigoin front",
   "main": "./app/app.js",
   "scripts": {
@@ -20,7 +20,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "dimigoincon": "^2.3.0",
+    "debounce": "^1.1.0",
+    "dimigoincon": "^2.5.1",
     "line-clamp": "^0.0.7",
     "moment": "^2.21.0",
     "restaurance": "^1.0.3",
@@ -47,6 +48,7 @@
     "css-loader": "^0.28.9",
     "eslint": "^4.17.0",
     "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
@@ -67,10 +69,11 @@
     "sass-loader": "^6.0.6",
     "sass-resources-loader": "^1.3.3",
     "style-loader": "^0.20.1",
-    "stylelint": "^9.1.1",
+    "stylelint": "^9.1.3",
     "stylelint-config-sass-guidelines": "^5.0.0",
     "stylelint-order": "^0.8.1",
     "stylelint-scss": "^2.4.0",
+    "stylelint-webpack-plugin": "^0.10.3",
     "vue-loader": "^13.7.0",
     "vue-svg-loader": "^0.5.0",
     "vue-template-compiler": "^2.5.13",

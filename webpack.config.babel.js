@@ -4,6 +4,7 @@ import webpack from 'webpack'
 import HtmlPlugin from 'html-webpack-plugin'
 import DotenvPlugin from 'webpack-dotenv-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import StylelintPlugin from 'stylelint-webpack-plugin'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -70,7 +71,11 @@ const webpackConfig = {
         removeEmptyAttributes: true
       },
       hash: production
-    })
+    }),
+    new StylelintPlugin({
+      files: ['**/*.scss', '**/*.vue']
+    }),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     rules: [
@@ -81,6 +86,12 @@ const webpackConfig = {
       {
         test: /\.css$/,
         loader: cssExtract
+      },
+      {
+        enforce: 'pre',
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        exclude: '/node_modules/'
       },
       {
         test: /\.js$/,
