@@ -23,7 +23,13 @@ export default {
     </template>
 
     <span slot="header">
-      <span class="icon-request-sm"/> 과제 제출 관리
+      <span class="assignor__header">
+        <span class="icon-request-sm"/> 과제 제출 관리
+
+        <span class="assignor__plus">
+          <span class="icon-plus"/> 추가하기
+        </span>
+      </span>
     </span>
 
     <span
@@ -45,6 +51,19 @@ export default {
   &__item:last-of-type {
     color: $gray;
     margin-right: 0;
+  }
+
+  &__header {
+    display: block;
+    position: relative;
+  }
+
+  &__plus {
+    bottom: 0;
+    color: $pink;
+    font-size: 16px;
+    position: absolute;
+    right: 0;
   }
 }
 </style>
