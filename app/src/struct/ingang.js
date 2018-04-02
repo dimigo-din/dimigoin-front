@@ -1,6 +1,6 @@
 import { struct } from 'superstruct'
 
-const _Ingang = struct({
+const _Ingang = struct.interface({
   idx: 'number',
   grade: 'number',
   klass: 'number',
@@ -16,7 +16,7 @@ const _Ingang = struct({
 
 export const Ingang = ingang => _Ingang({
   idx: ingang['idx'],
-  grade: ingang['grade'],
+  grade: ingang['target_grade'],
   klass: ingang['klass'],
   day: ingang['day'],
   time: ingang['time'],
