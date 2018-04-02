@@ -1,9 +1,15 @@
 import Assignee from '../paths/assignment/Assignee.vue'
+import Assignor from '../paths/assignment/Assignor.vue'
 
 export default [
   {
-    path: '/assignment',
-    name: 'assignment/assignee',
+    path: '/assign/ee',
+    name: 'assignee',
     component: Assignee
+  },
+  {
+    path: '/assign/or',
+    name: 'assignor',
+    component: Assignor
   }
 ]
