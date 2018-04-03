@@ -113,8 +113,9 @@ export default {
 <template>
   <content-wrapper class="req-ingang">
     <h1 slot="header">
-      <span class="icon-internet-class"/>{{ `${today.getMonth() + 1}월` }}
-      {{ `${today.getDate() + 1}일` }}
+      <span class="icon-internet-class"/>
+      {{ `${today.getMonth() + 1}월` }}
+      {{ `${today.getDate()}일` }}
       인강실 사용 신청
     </h1>
 
