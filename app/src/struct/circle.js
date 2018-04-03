@@ -1,6 +1,6 @@
 import { struct } from 'superstruct'
 
-const _Circle = struct({
+const _Circle = struct.interface({
   idx: 'number',
   name: 'string',
   description: 'string',
@@ -14,7 +14,7 @@ const _Circle = struct({
   status: 'string | null | undefined'
 })
 
-const _CircleApplicant = struct({
+const _CircleApplicant = struct.interface({
   idx: 'string',
   name: 'string',
   serial: 'string | null',
