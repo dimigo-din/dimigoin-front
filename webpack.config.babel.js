@@ -51,7 +51,7 @@ const webpackConfig = {
   },
   plugins: [
     new DotenvPlugin({
-      path: './.env',
+      path: production ? './.env' : 'dev.env',
       sample: './example.env'
     }),
     new ExtractTextPlugin({
