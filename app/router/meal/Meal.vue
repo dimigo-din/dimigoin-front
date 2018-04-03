@@ -1,13 +1,13 @@
 <script>
 import moment from 'moment'
-import { meals } from '../src/util'
-import { getMeal } from '../src/api'
+import { meals } from '../../src/util/index'
+import { getMeal } from '../../src/api/index'
 
-import DefaultNavbar from './partial/DefaultNavbar.vue'
-import ContentWrapper from './partial/ContentWrapper.vue'
+import DefaultNavbar from '../partial/DefaultNavbar.vue'
+import ContentWrapper from '../partial/ContentWrapper.vue'
 
-import DimiTab from '../components/DimiTab.vue'
-import DimiCard from '../components/DimiCard.vue'
+import DimiTab from '../../components/DimiTab.vue'
+import DimiCard from '../../components/DimiCard.vue'
 
 const shortWeeks = [...'일월화수목금토']
 const longWeeks = shortWeeks.map(x => x + '요일')

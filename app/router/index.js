@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Main from './Main.vue'
-import Meal from './Meal.vue'
+import Meal from './meal/Meal.vue'
 import Draft from './Draft.vue'
 import NotFound from './NotFound.vue'
 import ExplorerFound from './ExplorerFound.vue'
