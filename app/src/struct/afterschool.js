@@ -1,6 +1,6 @@
 import { struct } from 'superstruct'
 
-const _Afterschool = struct({
+const _Afterschool = struct.interface({
   idx: 'number',
   name: 'string',
   applyStartDate: 'string',
