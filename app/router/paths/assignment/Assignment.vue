@@ -1,5 +1,5 @@
 <script>
-import AssignmentBase from './AssignmentBase.vue'
+import AssignmentBase from '../../../components/AssignmentBase.vue'
 import DimiBadge from '../../../components/DimiBadge.vue'
 
 export default {

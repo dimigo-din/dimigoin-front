@@ -1,6 +1,6 @@
 <script>
-import AssignmentBase from './AssignmentBase.vue'
-import DimiModal from '../../../components/DimiModal.vue'
+import AssignmentBase from '../../../../components/AssignmentBase.vue'
+import DimiModal from '../../../../components/DimiModal.vue'
 
 export default {
   name: 'Assignor',

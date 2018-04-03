@@ -1,9 +1,9 @@
 <script>
 import moment from 'moment'
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DefaultNavbar from '../../partial/DefaultNavbar.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import dummyAssignments from './dummy'
+import ContentWrapper from '../router/partial/ContentWrapper.vue'
+import DefaultNavbar from '../router/partial/DefaultNavbar.vue'
+import DimiCard from './DimiCard.vue'
+import dummyAssignments from '../router/paths/assignment/dummy'
 
 export default {
   name: 'AssignmentBase',

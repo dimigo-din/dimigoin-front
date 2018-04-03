@@ -7,7 +7,7 @@ const struct = superstruct({
   }
 })
 
-const _Assignment = struct({
+const _Assignment = struct.interface({
   idx: 'number',
   title: 'string',
   description: 'string',
@@ -18,8 +18,8 @@ const _Assignment = struct({
     name: 'string',
     email: 'string'
   }),
-  reports: [struct({
-    author: struct({
+  reports: [struct.interface({
+    author: struct.interface({
       name: 'string',
       studentSerial: 'string'
     }),

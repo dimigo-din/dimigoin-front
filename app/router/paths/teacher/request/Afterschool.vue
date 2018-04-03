@@ -1,16 +1,16 @@
 <script>
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DefaultNavbar from '../../partial/DefaultNavbar.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import DimiCheckbox from '../../../components/DimiCheckbox.vue'
-import DimiDropdown from '../../../components/DimiDropdown.vue'
-import DimiDivider from '../../../components/DimiDivider.vue'
-import DimiInput from '../../../components/DimiInput.vue'
-import DimiTab from '../../../components/DimiTab.vue'
-import DimiButton from '../../../components/DimiButton.vue'
+import ContentWrapper from '../../../partial/ContentWrapper.vue'
+import DefaultNavbar from '../../../partial/DefaultNavbar.vue'
+import DimiCard from '../../../../components/DimiCard.vue'
+import DimiCheckbox from '../../../../components/DimiCheckbox.vue'
+import DimiDropdown from '../../../../components/DimiDropdown.vue'
+import DimiDivider from '../../../../components/DimiDivider.vue'
+import DimiInput from '../../../../components/DimiInput.vue'
+import DimiTab from '../../../../components/DimiTab.vue'
+import DimiButton from '../../../../components/DimiButton.vue'
 
-import { days } from '../../../src/util'
-import { afterschool } from '../../../src/api'
+import { days } from '../../../../src/util/index'
+import { afterschool } from '../../../../src/api/index'
 
 export default {
   name: 'TeacherAfterschool',
