@@ -13,7 +13,7 @@ import { days } from '../../../../src/util/index'
 import { afterschool } from '../../../../src/api/index'
 
 export default {
-  name: 'TeacherAfterschool',
+  name: 'Afterschool',
   components: {
     DimiButton,
     ContentWrapper,

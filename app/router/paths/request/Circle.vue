@@ -6,7 +6,7 @@ import DimiLoader from '../../../components/DimiLoader.vue'
 import { circle } from '../../../src/api'
 
 export default {
-  name: 'RequestCircle',
+  name: 'Circle',
 
   components: { ContentWrapper, CircleCard, DimiLoader },
 

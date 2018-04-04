@@ -3,11 +3,19 @@ import AssignmentBase from '../../../../components/AssignmentBase.vue'
 import DimiModal from '../../../../components/DimiModal.vue'
 
 export default {
-  name: 'Assignor',
+  name: 'Assignment',
+
   components: { AssignmentBase, DimiModal },
+
   data: () => ({
     modalOpen: false
-  })
+  }),
+
+  methods: {
+    close () { },
+    edit () { },
+    cancel () { }
+  }
 }
 </script>
 
@@ -15,14 +23,20 @@ export default {
   <div>
     <assignment-base>
       <template slot-scope="{ ass }">
-        <span class="assignor__item">
+        <span
+          class="assignor__item"
+          @click="close">
           <span class="icon-ok"/> 마감하기
         </span>
 
-        <span class="assignor__item">
+        <span
+          class="assignor__item"
+          @click="edit">
           <span class="icon-edit"/> 수정하기
         </span>
-        <span class="assignor__item">
+        <span
+          class="assignor__item"
+          @click="cancel">
           <span class="icon-cross"/> 취소하기
         </span>
       </template>
@@ -62,6 +76,7 @@ export default {
 <style lang="scss">
 .assignor {
   &__item {
+    cursor: pointer;
     margin-right: 24px;
   }
 

@@ -3,7 +3,6 @@ import moment from 'moment'
 import ContentWrapper from '../router/partial/ContentWrapper.vue'
 import DefaultNavbar from '../router/partial/DefaultNavbar.vue'
 import DimiCard from './DimiCard.vue'
-import dummyAssignments from '../router/paths/assignment/dummy'
 
 export default {
   name: 'AssignmentBase',
@@ -15,10 +14,19 @@ export default {
     }
   },
 
-  data: () => ({
-    selection: [],
-    assignments: dummyAssignments
-  }),
+  props: {
+    assignments: {
+      type: Array,
+      default: () => []
+    }
+  },
+
+  data () {
+    return {
+      selection: [],
+      asses: this.assignments
+    }
+  },
 
   methods: {
     toggle (i) {
@@ -38,11 +46,13 @@ export default {
             <h1 slot="header">
               <slot name="header" />
             </h1>
-            <dimi-card slot="main">
-              <template v-for="(ass, i) in assignments">
+            <dimi-card
+              slot="main">
+              <template v-for="(ass, i) in asses">
                 <div
                   :key="i"
-                  class="assignment__assignment">
+                  class="assignment__assignment"
+                  @click="toggle(i)">
 
                   <slot
                     :ass="ass"
@@ -59,9 +69,7 @@ export default {
 
                   <span class="assignment__item">{{ ass.deadline | deadline }}</span>
 
-                  <div
-                    class="assignment__item assignment__expand"
-                    @click="toggle(i)">
+                  <div class="assignment__item assignment__expand">
                     <span :class="`icon-arrow-${selection[i] ? 'up' : 'down'}`"/>
                   </div>
                 </div>
@@ -93,6 +101,7 @@ export default {
 
   &__assignment {
     align-items: center;
+    cursor: pointer;
     display: flex;
     justify-content: flex-start;
     padding: 24px;
@@ -123,6 +132,7 @@ export default {
   &__description {
     align-items: stretch;
     color: $gray;
+    cursor: default;
     flex-direction: column;
     font-size: 16px;
     line-height: 1.8;

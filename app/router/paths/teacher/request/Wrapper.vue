@@ -5,7 +5,7 @@ import DimiMenu from '../../../../components/DimiMenu.vue'
 import DimiMenuItem from '../../../../components/DimiMenuItem.vue'
 
 export default {
-  name: 'Teacher',
+  name: 'Wrapper',
 
   components: { ContentWrapper, DefaultNavbar, DimiMenu, DimiMenuItem },
 

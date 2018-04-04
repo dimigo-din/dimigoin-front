@@ -3,15 +3,21 @@ import AssignmentBase from '../../../components/AssignmentBase.vue'
 import DimiBadge from '../../../components/DimiBadge.vue'
 
 export default {
-  name: 'Assignee',
-  components: { AssignmentBase, DimiBadge }
+  name: 'Assignment',
+  components: { AssignmentBase, DimiBadge },
+
+  data: () => ({
+    assignments: require('./dummy').default
+  })
 }
 </script>
 
 <template>
-  <assignment-base>
+  <assignment-base :assignments="assignments">
     <template slot-scope="{ ass }">
-      <span @click="$swal(ass.title, ass.description)">
+      <span
+        class="assignee__upload"
+        @click="$swal(ass.title, ass.description)">
         <span class="icon-upload"/> 제출
       </span>
     </template>
@@ -42,6 +48,10 @@ export default {
 
 <style lang="scss">
   .assignee {
+    &__upload {
+      cursor: pointer;
+    }
+
     &__badge {
       margin-right: 16px;
     }
