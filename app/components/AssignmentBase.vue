@@ -23,8 +23,7 @@ export default {
 
   data () {
     return {
-      selection: [],
-      asses: this.assignments
+      selection: []
     }
   },
 
@@ -48,7 +47,7 @@ export default {
             </h1>
             <dimi-card
               slot="main">
-              <template v-for="(ass, i) in asses">
+              <template v-for="(ass, i) in assignments">
                 <div
                   :key="i"
                   class="assignment__assignment"
