@@ -1,7 +1,7 @@
 import axios from './axios'
 import moment from 'moment'
 
-export async function getTodayMeal () {
+export function getTodayMeal () {
   return getMeal(new Date())
 }
 
@@ -13,7 +13,7 @@ export async function getMeal (date) {
     console.error(message)
     switch (res.status) {
       case 404:
-        return { breakfast: 'X', lunch: 'X', dinner: 'X', snack: 'X' }
+        return {}
       default:
         throw new Error('알 수 없는 오류로 급식을 불러오지 못했습니다.')
     }
