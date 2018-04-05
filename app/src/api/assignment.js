@@ -106,14 +106,13 @@ export const assignee = {
    * @param file
    * @returns {Promise<void>}
    */
-  async submitAssignment (idx, file) {
+  async submitAssignment (idx, file, onUploadProgress) {
     const formData = new FormData()
     formData.append('file', file)
 
-    await magician(() => axios.post(`/assignments/${idx}/reports`, formData), {
+    await magician(() => axios.post(`/assignments/${idx}/reports`, formData, { onUploadProgress }), {
       400: new Error('파일을 찾을 수 없습니다. 다시 확인해주세요.'),
-      403: new Error('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지' +
-        ' 확인해주세요.'),
+      403: new Error('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지 확인해주세요.'),
       405: new Error('이미 과제를 제출했습니다.'),
       406: new Error('할당받은 과제가 아닙니다.'),
       412: new Error('제출 기한이 마감되었습니다.')

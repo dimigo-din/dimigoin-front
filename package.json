@@ -22,6 +22,7 @@
     "babel-polyfill": "^6.26.0",
     "debounce": "^1.1.0",
     "dimigoincon": "^2.5.1",
+    "file-dialog": "^0.0.7",
     "line-clamp": "^0.0.7",
     "moment": "^2.21.0",
     "restaurance": "^1.0.3",
