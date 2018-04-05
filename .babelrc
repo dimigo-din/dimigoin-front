@@ -1,5 +1,5 @@
 {
-  "compact": false,
+  "compact": true,
   "presets": [
     [
       "env",
@@ -9,6 +9,6 @@
         }
       }
     ],
-    "stage-3"
+    "stage-1"
   ]
 }
