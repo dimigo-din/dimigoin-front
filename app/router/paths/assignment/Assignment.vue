@@ -34,7 +34,7 @@ export default {
       <span
         class="assignee__upload"
         @click="uploadFile(ass.idx)">
-        <span class="icon-upload"/> {{ uploading ? percentage : '제출' }}
+        <span class="icon-upload"/> {{ uploading ? percentage + '%' : '제출' }}
       </span>
     </template>
 
