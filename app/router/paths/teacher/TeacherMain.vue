@@ -63,10 +63,10 @@ export default {
     padding-bottom: 7rem;
   }
 
-  &__card {
+  .main__card {
     cursor: pointer;
     margin: 0 1rem;
-    padding: 5rem;
+    padding: 4rem;
   }
 
   &__card-icon {
