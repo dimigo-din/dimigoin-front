@@ -10,7 +10,7 @@ import DimiTab from '../../../../components/DimiTab.vue'
 import DimiButton from '../../../../components/DimiButton.vue'
 
 import { days } from '../../../../src/util/index'
-import { afterschool } from '../../../../src/api/index'
+import { afterschool } from '../../../../src/api'
 
 export default {
   name: 'Afterschool',

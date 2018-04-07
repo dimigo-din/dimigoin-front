@@ -49,11 +49,12 @@ export async function createAfterschool (grade, afterschool) {
   tempValidation(afterschool)
 
   try {
-    await axios.post(`/afterschools/grade/${grade}`, {
+    await axios.post(`/afterschools/`, {
       'name': afterschool['name'],
       'day': afterschool['day'],
       'max_of_count': afterschool['capacity'],
       'teacher_name': afterschool['teacherName'],
+      'target_grade': grade,
       'apply_start_date': afterschool['applyStartDate'],
       'apply_end_date': afterschool['applyEndDate']
     })
@@ -61,6 +62,8 @@ export async function createAfterschool (grade, afterschool) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
+      case 403:
+        throw new Error('권한이 없습니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
