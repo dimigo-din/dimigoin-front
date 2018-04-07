@@ -4,6 +4,7 @@ import DimiBadge from '../../../components/DimiBadge.vue'
 
 import fileDialog from 'file-dialog'
 import { assignment } from '../../../src/api'
+import dummy from './dummy'
 
 const assignee = assignment.assignee
 
@@ -14,14 +15,23 @@ export default {
   data: () => ({
     percentage: 0,
     uploading: false,
-    assignments: require('./dummy').default
+    assignments: dummy
   }),
 
   methods: {
-    async uploadFile (idx) {
+    async uploadFile (ass) {
+      const files = await fileDialog()
       this.uploading = true
-      await assignee.submitAssignment(idx, await fileDialog(), () =>
-        (this.percentage = Math.floor((event.loaded * 100) / event.total)))
+      try {
+        await assignee.submitAssignment(ass.idx, files[0], () =>
+          (this.percentage = Math.floor((event.loaded * 100) / event.total)))
+      } catch (err) {
+        this.$swal({
+          type: 'error',
+          title: '에러!',
+          text: err.message
+        })
+      }
       this.uploading = false
     }
   }
@@ -33,7 +43,7 @@ export default {
     <template slot-scope="{ ass }">
       <span
         class="assignee__upload"
-        @click="uploadFile(ass.idx)">
+        @click="uploadFile(ass)">
         <span class="icon-upload"/> {{ uploading ? percentage + '%' : '제출' }}
       </span>
     </template>
