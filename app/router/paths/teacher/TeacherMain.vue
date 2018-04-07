@@ -1,11 +1,14 @@
 <script>
 import DimiCard from '../../../components/DimiCard.vue'
 
+import permission from '../../../mixins/permission'
+
 import services from './services'
 
 export default {
   name: 'TeacherMain',
   components: { DimiCard },
+  mixins: [permission('T')],
   data: () => ({ services }),
   mounted () {
     const cards = this.$refs.cards || []
@@ -20,23 +23,28 @@ export default {
 </script>
 
 <template>
-  <div :class="$style['main']">
-    <h1 :class="$style['main__title']">관리</h1>
-    <div :class="$style['main__cards']">
-      <dimi-card
-        v-for="(service, key) in services"
-        ref="cards"
-        :key="'service-' + key"
-        :class="$style['main__card']"
-        shadow
-        hover
-        @click.native="clickService(service)"
-      >
-        <span :class="[$style['main__card-icon'], service.icon]"/>
-        <h3 :class="$style['main__card-title']">{{ service.title }}</h3>
-        <p :class="$style['main__card-desc']">{{ service.description }}</p>
-      </dimi-card>
-    </div>
+  <div>
+    <not-found v-if="rejected"/>
+    <template v-else>
+      <div :class="$style['main']">
+        <h1 :class="$style['main__title']">관리</h1>
+        <div :class="$style['main__cards']">
+          <dimi-card
+            v-for="(service, key) in services"
+            ref="cards"
+            :key="'service-' + key"
+            :class="$style['main__card']"
+            shadow
+            hover
+            @click.native="clickService(service)"
+          >
+            <span :class="[$style['main__card-icon'], service.icon]"/>
+            <h3 :class="$style['main__card-title']">{{ service.title }}</h3>
+            <p :class="$style['main__card-desc']">{{ service.description }}</p>
+          </dimi-card>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -82,6 +90,7 @@ export default {
   }
 
   &__card-desc {
+    color: $gray;
     display: block;
     font-size: 18px;
   }
