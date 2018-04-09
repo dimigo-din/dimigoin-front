@@ -1,4 +1,23 @@
-import { struct } from 'superstruct'
+import { superstruct } from 'superstruct'
+import moment from 'moment'
+
+const struct = superstruct({
+  types: {
+    moment: moment.isMoment
+  }
+})
+
+const _Applier = struct.interface({
+  idx: 'number',
+  applyTime: 'moment',
+  user: struct.interface({
+    idx: 'number',
+    name: 'string',
+    grade: 'number',
+    klass: 'number',
+    serial: 'string'
+  })
+})
 
 const _Ingang = struct.interface({
   idx: 'number',
@@ -11,7 +30,8 @@ const _Ingang = struct.interface({
   applyStartDate: 'string',
   applyEndDate: 'string',
   weekApplyCount: 'number',
-  applied: 'boolean'
+  applied: 'boolean? | null',
+  appliers: struct.union([_Applier], 'undefined', 'null')
 })
 
 export const Ingang = ingang => _Ingang({
@@ -22,8 +42,9 @@ export const Ingang = ingang => _Ingang({
   time: ingang['time'],
   count: ingang['count'],
   max: ingang['max'],
-  applyStartDate: ingang['apply_start_date'],
-  applyEndDate: ingang['apply_end_date'],
-  weekApplyCount: ingang['week_apply_count'],
-  applied: ingang['applied']
+  applyStartDate: ingang['request_start_date'],
+  applyEndDate: ingang['request_end_date'],
+  weekApplyCount: ingang['week_request_count'],
+  applied: ingang['applied'],
+  appliers: ingang['ingang_request']
 })
