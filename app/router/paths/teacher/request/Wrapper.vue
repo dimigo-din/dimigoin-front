@@ -25,7 +25,7 @@ export default {
               <dimi-menu-item :to="{ name: 'teacher/request' }">신청 현황</dimi-menu-item>
               <dimi-menu-item :to="{ name: 'teacher/request/afterschool' }">방과 후 활동 관리</dimi-menu-item>
               <dimi-menu-item :to="{ name: 'draft' }">상담 관리</dimi-menu-item>
-              <dimi-menu-item :to="{ name: 'draft' }">인강실 사용 관리</dimi-menu-item>
+              <dimi-menu-item :to="{ name: 'teacher/request/ingang' }">인강실 사용 관리</dimi-menu-item>
             </dimi-menu>
           </div>
           <main class="main col-xs">
