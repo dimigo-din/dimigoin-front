@@ -43,13 +43,13 @@ export default {
 
       <span slot="header">
         <span class="assignor__header">
-          <span class="icon-request-sm"/> 과제 제출 관리
+          <span class="icon-submission"/>과제 제출 관리
 
           <span
             class="assignor__plus"
             @click="modalOpen = true"
           >
-            <span class="icon-plus"/> 추가하기
+            <span class="icon-plus"/>추가하기
           </span>
         </span>
       </span>
@@ -93,6 +93,7 @@ export default {
   &__plus {
     bottom: 0;
     color: $pink;
+    cursor: pointer;
     font-size: 16px;
     position: absolute;
     right: 0;
