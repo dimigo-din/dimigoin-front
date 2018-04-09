@@ -68,12 +68,6 @@ export const admin = {
       403: () => new Error('권한이 없습니다.'),
       404: () => new Error('인강 신청이 없습니다.')
     })
-    return Ingang(data)
-  },
-
-  async getExcelLink (grade) {
-    await magician(() => axios.get(`/ingangs/excel/${grade}`), {
-
-    })
+    return data['ingang'].map(Ingang)
   }
 }

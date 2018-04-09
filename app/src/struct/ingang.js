@@ -25,7 +25,7 @@ const _Ingang = struct.interface({
   klass: 'number',
   day: 'string',
   time: 'string',
-  count: 'number',
+  count: 'number? | null',
   max: 'number',
   applyStartDate: 'string',
   applyEndDate: 'string',
@@ -37,7 +37,7 @@ const _Ingang = struct.interface({
 export const Ingang = ingang => _Ingang({
   idx: ingang['idx'],
   grade: ingang['target_grade'],
-  klass: ingang['klass'],
+  klass: ingang['class'],
   day: ingang['day'],
   time: ingang['time'],
   count: ingang['count'],
