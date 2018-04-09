@@ -45,6 +45,6 @@ export const Ingang = ingang => _Ingang({
   applyStartDate: ingang['request_start_date'],
   applyEndDate: ingang['request_end_date'],
   weekApplyCount: ingang['week_request_count'],
-  applied: ingang['applied'],
+  applied: ingang['request'],
   appliers: ingang['ingang_request']
 })
