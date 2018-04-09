@@ -6,6 +6,6 @@ export default type => ({
   data: () => ({ rejected: false }),
   created () {
     if (process.env.NODE_ENV !== 'production') return
-    if (types.indexOf(this.$store.state.account.userType) < types.indexOf(type)) this.rejected = true
+    if (types.indexOf(this.$store.state.account.informations.userType) < types.indexOf(type)) this.rejected = true
   }
 })
