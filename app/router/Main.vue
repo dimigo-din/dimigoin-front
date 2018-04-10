@@ -3,7 +3,7 @@ import pkg from '../../package.json'
 import Brand from '../assets/brand.svg'
 import MealGroup from '../components/MealGroup.vue'
 import DimiCard from '../components/DimiCard.vue'
-import ServiceCards from './partial/ServiceCards.vue'
+import ServiceCards from '../components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
 import restaurance from 'restaurance'
 

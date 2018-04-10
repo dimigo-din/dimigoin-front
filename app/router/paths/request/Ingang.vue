@@ -8,7 +8,7 @@ import { ingang } from '../../../src/api'
 import debounce from 'debounce'
 
 export default {
-  name: 'RequestIngang',
+  name: 'Ingang',
 
   components: { DimiButton, ContentWrapper, DimiCard, DimiLoader },
 

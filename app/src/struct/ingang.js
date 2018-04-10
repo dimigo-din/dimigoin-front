@@ -1,29 +1,18 @@
-import { struct } from 'superstruct'
-
-const _Ingang = struct.interface({
-  idx: 'number',
-  grade: 'number',
-  klass: 'number',
-  day: 'string',
-  time: 'string',
-  count: 'number',
-  max: 'number',
-  applyStartDate: 'string',
-  applyEndDate: 'string',
-  weekApplyCount: 'number',
-  applied: 'boolean'
-})
-
-export const Ingang = ingang => _Ingang({
+export const Ingang = ingang => ({
   idx: ingang['idx'],
   grade: ingang['target_grade'],
-  klass: ingang['klass'],
+  klass: ingang['class'],
   day: ingang['day'],
   time: ingang['time'],
   count: ingang['count'],
   max: ingang['max'],
-  applyStartDate: ingang['apply_start_date'],
-  applyEndDate: ingang['apply_end_date'],
-  weekApplyCount: ingang['week_apply_count'],
-  applied: ingang['applied']
+  applyStartDate: ingang['request_start_date'],
+  applyEndDate: ingang['request_end_date'],
+  weekApplyCount: ingang['week_request_count'],
+  applied: ingang['request'],
+  appliers: (ingang['ingang_request'] || []).map(v => ({
+    idx: v['idx'],
+    time: v['request_time'],
+    user: v['user']
+  }))
 })

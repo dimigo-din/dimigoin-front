@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Main from './Main.vue'
-import Meal from './Meal.vue'
+import Meal from './meal/Meal.vue'
 import Draft from './Draft.vue'
 import NotFound from './NotFound.vue'
 import ExplorerFound from './ExplorerFound.vue'
@@ -39,15 +39,25 @@ const router = new VueRouter({
       component: ExplorerFound,
       meta: { title: 'DIMIGOIN' }
     },
-    {
-      path: '*',
-      component: NotFound
-    },
+
     ...routers.auth,
     ...routers.request,
     ...routers.management,
-    ...routers.teacher
-  ]
+    ...routers.teacher,
+    ...routers.assignment,
+
+    {
+      path: '*',
+      component: NotFound
+    }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 const isLoggedIn = () => store.state.account.auth.isLoggedIn

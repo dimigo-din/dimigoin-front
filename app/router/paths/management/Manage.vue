@@ -3,7 +3,7 @@ import ContentWrapper from '../../partial/ContentWrapper.vue'
 import DefaultNavbar from '../../partial/DefaultNavbar.vue'
 
 export default {
-  name: 'Manage',
+  name: 'Wrapper',
 
   components: { ContentWrapper, DefaultNavbar }
 }
