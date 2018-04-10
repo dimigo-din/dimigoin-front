@@ -12,15 +12,16 @@ export default {
   components: { ContentWrapper, DimiButton, DimiCard, DimiLoader, DimiTab },
 
   data: () => ({
-    ingangs: [{}, {}],
+    ingangs: [[], []],
     currentTab: 0,
     pending: true
   }),
 
   computed: {
     filteredStudents () {
-      return (this.ingangs[this.currentTab].appliers || [])
-        .reduce((pv, cv) => {}, [])
+      return this.ingangs[this.currentTab]
+        .flatMap(clazz => clazz.appliers.map(v => ({ ...v.user, time: clazz.time })))
+        .sort((a, b) => (a.time - b.time || +a.serial - +b.serial))
     }
   },
 
@@ -31,6 +32,7 @@ export default {
         await ingang.admin.getIngang(2)
       ]
     } catch (err) {
+      console.warn(err)
       this.$swal({
         type: 'error',
         title: '에러!',
@@ -64,9 +66,9 @@ export default {
             v-for="(student, key) in filteredStudents"
             :key="key"
             :class="$style['ingang__row']">
-            <td :class="$style['ingang__cell']">{{ student.time }}</td>
-            <td :class="$style['ingang__cell']">{{ student.serial }}</td>
-            <td :class="$style['ingang__cell']">{{ student.name }}</td>
+            <td :class="[$style['ingang__cell'], $style['ingang__cell--serial']]">{{ student.serial }}</td>
+            <td :class="[$style['ingang__cell'], $style['ingang__cell--name']]">{{ student.name }}</td>
+            <td :class="[$style['ingang__cell'], $style['ingang__cell--time']]">{{ student.time }}타임</td>
           </tr>
         </tbody>
       </table>
@@ -100,7 +102,30 @@ export default {
     max-height: 600px;
     min-height: 300px;
     overflow-y: auto;
+    padding: 0 3rem;
     width: 100%;
+  }
+
+  &__row {
+    padding: 0 1.5rem;
+  }
+
+  &__row:not(:last-child) {
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  &__cell {
+    padding: 24px 0;
+    white-space: nowrap;
+  }
+
+  &__cell:not(:last-child) {
+    padding-right: 24px;
+  }
+
+  &__cell--name {
+    color: $black;
+    width: 99%;
   }
 
   &__download {
