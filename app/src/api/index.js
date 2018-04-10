@@ -1,12 +1,8 @@
-import * as service from './service'
-import * as circle from './circle'
-import * as afterschool from './afterschool'
-import * as ingang from './ingang'
-
 export { register, getAccessToken, verifyStudent } from './auth'
 export { getMeal, getTodayMeal } from './meal'
-export { service }
+export * as service from './service'
 export { default as axios } from './axios'
-export { circle }
-export { afterschool }
-export { ingang }
+export * as circle from './circle'
+export * as afterschool from './afterschool'
+export * as ingang from './ingang'
+export * as assignment from './assignment'

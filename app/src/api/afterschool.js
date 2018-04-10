@@ -49,18 +49,21 @@ export async function createAfterschool (grade, afterschool) {
   tempValidation(afterschool)
 
   try {
-    await axios.post(`/afterschools/grade/${grade}`, {
+    await axios.post(`/afterschools/`, {
       'name': afterschool['name'],
       'day': afterschool['day'],
       'max_of_count': afterschool['capacity'],
       'teacher_name': afterschool['teacherName'],
-      'apply_start_date': afterschool['applyStartDate'],
-      'apply_end_date': afterschool['applyEndDate']
+      'target_grade': grade,
+      'request_start_date': afterschool['applyStartDate'],
+      'request_end_date': afterschool['applyEndDate']
     })
   } catch ({message, response: res}) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
+      case 403:
+        throw new Error('권한이 없습니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
@@ -84,7 +87,7 @@ export async function deleteAfterschool (idx) {
 
 export async function applyAfterschool (idx, captcha) {
   try {
-    await axios.post(`/afterschools/apply/${idx}`, { 'g-recaptcha-response': captcha })
+    await axios.post(`/afterschools/request/${idx}`, { 'g-recaptcha-response': captcha })
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -107,7 +110,7 @@ export async function applyAfterschool (idx, captcha) {
 
 export async function cancelAfterschool (idx) {
   try {
-    await axios.delete(`/afterschools/apply/${idx}`)
+    await axios.delete(`/afterschools/request/${idx}`)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')

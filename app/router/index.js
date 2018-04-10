@@ -39,15 +39,25 @@ const router = new VueRouter({
       component: ExplorerFound,
       meta: { title: 'DIMIGOIN' }
     },
-    {
-      path: '*',
-      component: NotFound
-    },
+
     ...routers.auth,
     ...routers.request,
     ...routers.management,
-    ...routers.teacher
-  ]
+    ...routers.teacher,
+    ...routers.assignment,
+
+    {
+      path: '*',
+      component: NotFound
+    }
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 const isLoggedIn = () => store.state.account.auth.isLoggedIn

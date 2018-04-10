@@ -4,7 +4,7 @@ import DimiMenu from '../../../components/DimiMenu.vue'
 import DimiMenuItem from '../../../components/DimiMenuItem.vue'
 
 export default {
-  name: 'Request',
+  name: 'Wrapper',
   components: { DefaultNavbar, DimiMenu, DimiMenuItem }
 }
 </script>
