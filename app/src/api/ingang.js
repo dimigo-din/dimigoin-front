@@ -20,8 +20,8 @@ export async function cancelIngang (ingangIdx) {
 }
 
 export async function getIngang () {
-  return Ingang(magician(() => axios.get('/ingangs/student/'), {
-    404: new Error('오늘은 인강실을 신청할 수 없습니다.')
+  return Ingang(await magician(() => axios.get('/ingangs/student/'), {
+    404: () => new Error('오늘은 인강실을 신청할 수 없습니다.')
   }))
 }
 
