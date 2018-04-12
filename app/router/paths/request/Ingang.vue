@@ -29,7 +29,11 @@ export default {
       this.ingang = await ingang.getIngang()
       this.dummyIngang = Object.assign({}, this.ingang)
     } catch (err) {
-      this.$swal('에러!', '인강실 신청 기간이 지났습니다.', 'error')
+      await this.$swal({
+        type: 'error',
+        title: '에러!',
+        text: err.message
+      })
       this.$router.back()
     }
     this.pending = false
@@ -114,8 +118,8 @@ export default {
   <content-wrapper class="req-ingang">
     <h1 slot="header">
       <span class="icon-internet-class"/>
-      {{ `${today.getMonth() + 1}월` }}
-      {{ `${today.getDate()}일` }}
+      {{ today.getMonth() + 1 }}월
+      {{ today.getDate() }}일
       인강실 사용 신청
     </h1>
 
