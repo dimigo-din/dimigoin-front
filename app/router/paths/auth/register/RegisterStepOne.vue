@@ -1,15 +1,9 @@
 <script>
-import DimiButtonRadio from '../../../../components/DimiButtonRadio.vue'
-import DimiCard from '../../../../components/DimiCard.vue'
-import DimiInput from '../../../../components/DimiInput.vue'
-
 import awesomeMixin from './mixins/preserve-state'
 import validator from './mixins/validator'
 
 export default {
   name: 'RegisterStepOne',
-
-  components: { DimiCard, DimiButtonRadio, DimiInput },
 
   mixins: [ awesomeMixin, validator ],
 

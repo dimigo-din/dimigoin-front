@@ -13,13 +13,13 @@ export default {
   <div class="not-found">
     <div class="not-found__col">
       <img
-        src="../assets/rose-in-glass.png"
+        src="@/assets/rose-in-glass.png"
         class="not-found__illust">
     </div>
 
     <div class="not-found__col">
       <img
-        src="../assets/404.png"
+        src="@/assets/404.png"
         class="not-found__404">
       <p class="not-found__message">
         페이지를 찾을 수 없습니다.

@@ -74,8 +74,6 @@ export default {
 </template>
 
 <style lang='scss'>
-@import '../scss/helpers/typography';
-
 .btn {
   @include font-bold;
 
@@ -109,11 +107,11 @@ export default {
   }
 
   &--large {
-    @extend %h-text-l;
+    font-size: 24px;
   }
 
   &--small {
-    @extend %h-text-s;
+    font-size: 12px;
   }
 }
 

@@ -19,14 +19,12 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../scss/helpers/typography';
-
 .menu-item {
-  @extend %h-text-r;
-  @extend %h-text-gray-light;
   @include font-bold;
   border-radius: 0 4em 4em 0;
+  color: $gray-light;
   display: block;
+  font-size: 16px;
   padding: 0.6em 0 0.6em 3em;
   text-decoration: none;
 
@@ -37,8 +35,8 @@ export default {
   }
 
   &--active.menu-item {
-    @extend %h-text-white;
     background-color: $red !important;
+    color: $white;
   }
 }
 </style>

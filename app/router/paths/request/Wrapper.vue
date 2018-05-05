@@ -1,11 +1,9 @@
 <script>
-import DefaultNavbar from '../../partial/DefaultNavbar.vue'
-import DimiMenu from '../../../components/DimiMenu.vue'
-import DimiMenuItem from '../../../components/DimiMenuItem.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 
 export default {
   name: 'Wrapper',
-  components: { DefaultNavbar, DimiMenu, DimiMenuItem }
+  components: { DefaultNavbar }
 }
 </script>
 

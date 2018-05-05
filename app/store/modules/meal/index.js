@@ -1,4 +1,4 @@
-import { getTodayMeal } from '../../../src/api'
+import { getTodayMeal } from '@/src/api'
 
 const MEAL_REQUEST = 'MEAL:MEAL_REQUEST'
 const MEAL_SUCCESS = 'MEAL:MEAL_SUCCESS'

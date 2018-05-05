@@ -1,16 +1,10 @@
 <script>
-import DimiCard from './DimiCard.vue'
-import DimiBadge from './DimiBadge.vue'
-import DimiModal from './DimiModal.vue'
-import DimiButton from './DimiButton.vue'
-
 import lineClamp from 'line-clamp'
-import * as handleStatus from '../src/util/handle-circle-status'
-import * as circle from '../src/api/circle'
+import * as handleStatus from '@/src/util/handle-circle-status'
+import * as circle from '@/src/api/circle'
 
 export default {
   name: 'CircleCard',
-  components: { DimiCard, DimiBadge, DimiModal, DimiButton },
 
   props: {
     circle: {

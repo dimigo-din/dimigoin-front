@@ -1,11 +1,8 @@
 <script>
-import { service } from '../src/api/index'
-import DimiCard from './DimiCard.vue'
-import DimiLoader from './DimiLoader.vue'
+import { service } from '@/src/api'
 
 export default {
   name: 'ServiceCards',
-  components: { DimiCard, DimiLoader },
 
   data: () => ({
     services: []
@@ -70,8 +67,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/helpers/typography';
-
 .services {
   &__cards {
     display: grid;

@@ -1,15 +1,13 @@
 <script>
-import DimiCard from '../../../components/DimiCard.vue'
-import DimiBadge from '../../../components/DimiBadge.vue'
-import ContentWrapper from '../../partial/ContentWrapper.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
-import { circle } from '../../../src/api'
-import * as handleCircle from '../../../src/util/handle-circle-status'
+import { circle } from '@/src/api'
+import * as handleCircle from '@/src/util/handle-circle-status'
 
 export default {
   name: 'RequestInfo',
 
-  components: { DimiCard, DimiBadge, ContentWrapper },
+  components: { ContentWrapper },
 
   data () {
     return {

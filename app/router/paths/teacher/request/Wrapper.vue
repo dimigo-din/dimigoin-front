@@ -1,14 +1,12 @@
 <script>
-import ContentWrapper from '../../../partial/ContentWrapper.vue'
-import DefaultNavbar from '../../../partial/DefaultNavbar.vue'
-import DimiMenu from '../../../../components/DimiMenu.vue'
-import DimiMenuItem from '../../../../components/DimiMenuItem.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 
-import permission from '../../../../mixins/permission'
+import permission from '@/mixins/permission'
 
 export default {
   name: 'Wrapper',
-  components: { ContentWrapper, DefaultNavbar, DimiMenu, DimiMenuItem },
+  components: { ContentWrapper, DefaultNavbar },
   mixins: [permission('T')]
 }
 </script>

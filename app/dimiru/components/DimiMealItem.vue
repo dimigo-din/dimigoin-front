@@ -39,11 +39,9 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import '../scss/helpers/typography';
-
+<style lang="scss">
 .meal-item {
-  @extend %h-text-gray;
+  color: $gray;
   min-height: 4.275em;
   word-break: keep-all;
 
@@ -56,24 +54,24 @@ export default {
   }
 
   &__title {
-    @extend %h-text-r;
     @include font-bold;
+    font-size: 16px;
     margin-bottom: 0.5em;
   }
 
   &__content {
-    @extend %h-text-xs;
+    font-size: 14px;
     line-height: 1.6;
   }
 }
 
 .meal-item--current {
   .meal-item__title {
-    @extend %h-text-red;
+    color: $red;
   }
 
   .meal-item__content {
-    @extend %h-text-black;
+    color: $black;
   }
 }
 

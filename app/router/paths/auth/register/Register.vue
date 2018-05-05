@@ -1,10 +1,9 @@
 <script>
-import Brand from '../../../../assets/brand.svg'
-import DimiCard from '../../../../components/DimiCard.vue'
+import Brand from '@/assets/brand.svg'
 
 export default {
   name: 'Register',
-  components: { Brand, DimiCard },
+  components: { Brand },
   created () {
     this.$swal({
       type: 'error',
@@ -41,19 +40,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../../../../scss/helpers/typography';
-
 @include from($widescreen) {
   .container--custom {
     width: 55rem;
   }
 }
-
 </style>
 
 <style lang="scss">
-@import '../../../../scss/helpers/typography';
-
 .register {
   align-items: center;
   display: flex;
@@ -61,18 +55,18 @@ export default {
   height: 100vh;
 
   &__title {
-    @extend %h-text-xl;
     @include font-extra-bold;
     cursor: pointer;
     display: flex;
+    font-size: 36px;
     margin-top: 5rem;
     user-select: none;
     word-spacing: 0.325em;
   }
 
   &__subtitle {
-    @extend %h-text-xl;
     @include font-regular;
+    font-size: 36px;
     padding-left: 0.5em;
   }
 
@@ -105,8 +99,8 @@ export default {
 }
 
 .form__label {
-  @extend %h-text-gray-dark;
   @include font-regular;
+  color: $gray-dark;
   font-size: 14px;
   padding: 0.5em 0;
   text-align: start;
@@ -183,9 +177,9 @@ export default {
   }
 
   &__title {
-    @extend %h-text-l;
-    @extend %h-text-black;
     @include font-bold;
+    color: $black;
+    font-size: 24px;
     margin-top: 2rem;
     user-select: none;
   }

@@ -1,18 +1,15 @@
 <script>
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import DimiButtonGroup from '../../../components/DimiButtonGroup.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
-import { circle } from '../../../src/api'
-import * as handleCircle from '../../../src/util/handle-circle-status'
-import DimiButton from '../../../components/DimiButton.vue'
+import { circle } from '@/src/api'
+import * as handleCircle from '@/src/util/handle-circle-status'
 
 const status = [handleCircle.WAIT, handleCircle.ACCEPT, handleCircle.FAIL, handleCircle.FINAL]
 
 export default {
   name: 'ManageCircle',
 
-  components: { DimiButton, ContentWrapper, DimiCard, DimiButtonGroup },
+  components: { ContentWrapper },
 
   data: () => ({
     list: [],

@@ -1,16 +1,13 @@
 <script>
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DimiButton from '../../../components/DimiButton.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import DimiLoader from '../../../components/DimiLoader.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
-import { ingang } from '../../../src/api'
+import { ingang } from '@/src/api'
 import debounce from 'debounce'
 
 export default {
   name: 'Ingang',
 
-  components: { DimiButton, ContentWrapper, DimiCard, DimiLoader },
+  components: { ContentWrapper },
 
   data: () => ({
     ingang: {},

@@ -1,12 +1,6 @@
 <script>
-import DimiButton from '../../../../components/DimiButton.vue'
-import DimiCard from '../../../../components/DimiCard.vue'
-import DimiInput from '../../../../components/DimiInput.vue'
-
 export default {
   name: 'RegisterStepThree',
-
-  components: { DimiButton, DimiCard, DimiInput },
 
   data () {
     return {

@@ -9,7 +9,7 @@ import ExplorerFound from './ExplorerFound.vue'
 
 import * as routers from './routers'
 
-import store from '../store'
+import store from '@/store'
 
 Vue.use(VueRouter)
 

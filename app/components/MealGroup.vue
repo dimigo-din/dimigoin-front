@@ -1,11 +1,9 @@
 <script>
-import { meals } from '../src/util'
-import DimiMealItem from './DimiMealItem.vue'
+import { meals } from '@/src/util'
 import { mapState } from 'vuex'
 
 export default {
   name: 'MealGroup',
-  components: { DimiMealItem },
 
   data () {
     return {

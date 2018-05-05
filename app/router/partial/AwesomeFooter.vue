@@ -1,9 +1,6 @@
 <script>
-import DimiFooter from '../../components/DimiFooter.vue'
-
 export default {
-  name: 'AwesomeFooter',
-  components: { DimiFooter }
+  name: 'AwesomeFooter'
 }
 </script>
 

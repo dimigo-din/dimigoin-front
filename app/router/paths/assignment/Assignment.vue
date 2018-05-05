@@ -1,16 +1,15 @@
 <script>
-import AssignmentBase from '../../../components/AssignmentBase.vue'
-import DimiBadge from '../../../components/DimiBadge.vue'
+import AssignmentBase from '@/components/AssignmentBase.vue'
 
 import fileDialog from 'file-dialog'
-import { assignment } from '../../../src/api'
+import { assignment } from '@/src/api'
 import dummy from './dummy'
 
 const assignee = assignment.assignee
 
 export default {
   name: 'Assignment',
-  components: { AssignmentBase, DimiBadge },
+  components: { AssignmentBase },
 
   data: () => ({
     percentage: 0,

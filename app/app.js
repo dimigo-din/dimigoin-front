@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 
 import Vue from 'vue'
+import DimiRu from './dimiru'
 import swal from 'vue-sweetalert2'
 import Ripple from 'vue-ripple-directive'
 import { sync } from 'vuex-router-sync'
@@ -12,6 +13,7 @@ import router from './router'
 
 sync(store, router)
 
+Vue.use(DimiRu)
 Vue.use(swal)
 Vue.use(VueAnalytics, {
   router,

@@ -1,14 +1,13 @@
 <script>
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import CircleCard from '../../../components/CircleCard.vue'
-import DimiLoader from '../../../components/DimiLoader.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import CircleCard from '@/components/CircleCard.vue'
 
-import { circle } from '../../../src/api'
+import { circle } from '@/src/api'
 
 export default {
   name: 'Circle',
 
-  components: { ContentWrapper, CircleCard, DimiLoader },
+  components: { ContentWrapper, CircleCard },
 
   data () {
     return {
