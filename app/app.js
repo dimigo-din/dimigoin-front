@@ -23,9 +23,10 @@ Vue.use(VueAnalytics, {
   id: process.env.GOOGLE_ANALYTICS_TRACKING_ID
 })
 
-console.debug(new Vue({
+const $vm = new Vue({
   store,
   router,
-  el: '#app',
   render: h => h(App)
-}))
+})
+
+$vm.$mount('#app')
