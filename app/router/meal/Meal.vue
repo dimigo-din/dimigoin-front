@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
-import { meals } from '@/src/util/index'
-import { getMeal } from '@/src/api/index'
+import { meals } from '@/src/util'
+import { meal } from '@/src/api'
 
 import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
@@ -30,7 +30,7 @@ export default {
 
   async created () {
     const meals = this.weeks.map((v, i) =>
-      getMeal(moment().day(i).toDate()))
+      meal.getMeal(moment().day(i)))
 
     this.list = await Promise.all(meals)
   }
