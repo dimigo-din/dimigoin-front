@@ -89,7 +89,7 @@ export default {
               <span class="profile-info">
                 <template v-if="userType === 'T'">
                   <span class="profile-info__name">{{ name }}</span>
-                  <span class="profile-info__serial">{{ 선생님 }}</span>
+                  <span class="profile-info__serial"> 선생님</span>
                 </template>
                 <template v-else>
                   <span class="profile-info__serial">{{ `${grade}학년 ${klass}반` }}</span>
