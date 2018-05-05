@@ -131,7 +131,12 @@ const webpackConfig = {
     ]
   },
   performance: { hints: false },
-  resolve: { alias: { vue$: 'vue/dist/vue.esm.js' } },
+  resolve: {
+    alias: {
+      vue$: 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, 'app')
+    }
+  },
 
   devtool: '#inline-source-map',
   devServer: {

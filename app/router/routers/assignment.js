@@ -1,4 +1,4 @@
-import Assignment from '../paths/assignment/Assignment.vue'
+import Assignment from '@/router/paths/assignment/Assignment.vue'
 
 export default [
   {

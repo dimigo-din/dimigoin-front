@@ -1,5 +1,5 @@
 import axios from './axios'
-import { Circle, CircleApplicant } from '../struct/circle'
+import { Circle, CircleApplicant } from '@/src/struct/circle'
 
 export async function getCircles () {
   try {

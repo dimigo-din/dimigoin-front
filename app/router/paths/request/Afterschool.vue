@@ -2,19 +2,15 @@
 import monent from 'moment'
 import VueRecaptcha from 'vue-recaptcha'
 
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import DimiTab from '../../../components/DimiTab.vue'
-import DimiModal from '../../../components/DimiModal.vue'
-import DimiLoader from '../../../components/DimiLoader.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
-import { days } from '../../../src/util'
-import { afterschool } from '../../../src/api'
+import { days } from '@/src/util'
+import { afterschool } from '@/src/api'
 const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
 
 export default {
   name: 'RequestAfterschool',
-  components: { VueRecaptcha, ContentWrapper, DimiCard, DimiTab, DimiModal, DimiLoader },
+  components: { VueRecaptcha, ContentWrapper },
 
   filters: {
     dateRange (item) {

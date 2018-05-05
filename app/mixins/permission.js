@@ -1,4 +1,4 @@
-import NotFound from '../router/NotFound.vue'
+import NotFound from '@/router/NotFound.vue'
 const types = ['O', 'P', 'S', 'D', 'T']
 
 export default type => ({

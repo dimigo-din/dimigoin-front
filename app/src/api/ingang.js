@@ -1,6 +1,6 @@
 import axios from './axios'
 import magician from './magician'
-import { Ingang } from '../struct/ingang'
+import { Ingang } from '@/src/struct/ingang'
 
 export async function applyIngang (ingangIdx) {
   await magician(() => axios.post(`/ingangs/request/${ingangIdx}`), {

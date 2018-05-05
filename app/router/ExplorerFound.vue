@@ -21,7 +21,7 @@ export default {
   <div class="ienope">
     <div class="ienope__col">
       <img
-        src="../assets/ienope.png"
+        src="@/assets/ienope.png"
         class="ienope__illust">
     </div>
 

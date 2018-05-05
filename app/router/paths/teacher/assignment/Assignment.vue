@@ -1,11 +1,10 @@
 <script>
-import AssignmentBase from '../../../../components/AssignmentBase.vue'
-import DimiModal from '../../../../components/DimiModal.vue'
+import AssignmentBase from '@/components/AssignmentBase.vue'
 
 export default {
   name: 'Assignment',
 
-  components: { AssignmentBase, DimiModal },
+  components: { AssignmentBase },
 
   data: () => ({
     modalOpen: false

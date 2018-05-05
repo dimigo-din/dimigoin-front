@@ -1,13 +1,13 @@
-import Wrapper from '../paths/teacher/request/Wrapper.vue'
-import TeacherMain from '../paths/teacher/TeacherMain.vue'
+import Wrapper from '@/router/paths/teacher/request/Wrapper.vue'
+import TeacherMain from '@/router/paths/teacher/TeacherMain.vue'
 
-import Information from '../paths/teacher/request/Information.vue'
-import Afterschool from '../paths/teacher/request/Afterschool.vue'
-import Ingang from '../paths/teacher/request/Ingang.vue'
+import Information from '@/router/paths/teacher/request/Information.vue'
+import Afterschool from '@/router/paths/teacher/request/Afterschool.vue'
+import Ingang from '@/router/paths/teacher/request/Ingang.vue'
 
-import Assignment from '../paths/teacher/assignment/Assignment.vue'
+import Assignment from '@/router/paths/teacher/assignment/Assignment.vue'
 
-import { withPrefix } from '../../src/util'
+import { withPrefix } from '@/src/util'
 
 export default [
   {

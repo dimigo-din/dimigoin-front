@@ -1,6 +1,6 @@
-import { register, getAccessToken, verifyStudent } from '../../../src/api'
-import { setAuthorizationToken, parseToken } from '../../../src/util'
-import axios from '../../../src/api/axios'
+import { register, getAccessToken, verifyStudent } from '@/src/api'
+import { setAuthorizationToken, parseToken } from '@/src/util'
+import axios from '@/src/api/axios'
 import * as types from './mutation-types'
 
 export default {

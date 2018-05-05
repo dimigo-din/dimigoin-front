@@ -1,6 +1,6 @@
 <script>
-import ContentWrapper from '../../partial/ContentWrapper.vue'
-import DefaultNavbar from '../../partial/DefaultNavbar.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 
 export default {
   name: 'Wrapper',

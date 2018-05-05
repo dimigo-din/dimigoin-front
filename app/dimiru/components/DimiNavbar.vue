@@ -19,8 +19,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../scss/helpers/typography';
-
 .navbar {
   align-items: center;
   background-color: $white;
@@ -34,8 +32,8 @@ export default {
   }
 
   &__brand {
-    @extend %h-text-l;
     @include font-extra-bold;
+    font-size: 24px;
     justify-self: flex-start;
   }
 
@@ -48,14 +46,6 @@ export default {
     @include until($tablet) {
       display: none;
     }
-  }
-
-  &__start {
-    // TODO
-  }
-
-  &__end {
-    // TODO
   }
 }
 </style>

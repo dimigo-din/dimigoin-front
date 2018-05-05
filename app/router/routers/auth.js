@@ -1,14 +1,14 @@
-import Register from '../paths/auth/register/Register.vue'
-import RegisterStepOne from '../paths/auth/register/RegisterStepOne.vue'
-import RegisterStepTwo from '../paths/auth/register/RegisterStepTwo.vue'
-import RegisterStepThree from '../paths/auth/register/RegisterStepThree.vue'
-import RegisterSideOne from '../paths/auth/register/RegisterSideOne.vue'
-import RegisterSideTwo from '../paths/auth/register/RegisterSideTwo.vue'
-import RegisterSideThree from '../paths/auth/register/RegisterSideThree.vue'
+import Register from '@/router/paths/auth/register/Register.vue'
+import RegisterStepOne from '@/router/paths/auth/register/RegisterStepOne.vue'
+import RegisterStepTwo from '@/router/paths/auth/register/RegisterStepTwo.vue'
+import RegisterStepThree from '@/router/paths/auth/register/RegisterStepThree.vue'
+import RegisterSideOne from '@/router/paths/auth/register/RegisterSideOne.vue'
+import RegisterSideTwo from '@/router/paths/auth/register/RegisterSideTwo.vue'
+import RegisterSideThree from '@/router/paths/auth/register/RegisterSideThree.vue'
 
-import Login from '../paths/auth/Login.vue'
+import Login from '@/router/paths/auth/Login.vue'
 
-import { withPrefix } from '../../src/util'
+import { withPrefix } from '@/src/util'
 
 export default withPrefix('/auth', [
   {

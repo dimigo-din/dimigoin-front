@@ -1,10 +1,9 @@
 <script>
-import Brand from '../../assets/brand.svg'
-import DimiNavbar from '../../components/DimiNavbar.vue'
+import Brand from '@/assets/brand.svg'
 
 export default {
   name: 'DefaultNavbar',
-  components: { Brand, DimiNavbar },
+  components: { Brand },
 
   methods: {
     async logout () {
@@ -36,8 +35,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../../scss/helpers/typography';
-
 .brand {
   display: flex;
 }

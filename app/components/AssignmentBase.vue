@@ -1,12 +1,11 @@
 <script>
 import moment from 'moment'
-import ContentWrapper from '../router/partial/ContentWrapper.vue'
-import DefaultNavbar from '../router/partial/DefaultNavbar.vue'
-import DimiCard from './DimiCard.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 
 export default {
   name: 'AssignmentBase',
-  components: { ContentWrapper, DefaultNavbar, DimiCard },
+  components: { ContentWrapper, DefaultNavbar },
 
   filters: {
     deadline (val) {

@@ -1,8 +1,8 @@
-import Wrapper from '../paths/request/Wrapper.vue'
-import Information from '../paths/request/Information.vue'
-import Circle from '../paths/request/Circle.vue'
-import RequestAfterschool from '../paths/request/Afterschool.vue'
-import Ingang from '../paths/request/Ingang.vue'
+import Wrapper from '@/router/paths/request/Wrapper.vue'
+import Information from '@/router/paths/request/Information.vue'
+import Circle from '@/router/paths/request/Circle.vue'
+import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
+import Ingang from '@/router/paths/request/Ingang.vue'
 
 export default [{
   path: '/request',

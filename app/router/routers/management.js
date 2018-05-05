@@ -1,5 +1,5 @@
-import Manage from '../paths/management/Manage.vue'
-import ManageCircle from '../paths/management/ManageCircle.vue'
+import Manage from '@/router/paths/management/Manage.vue'
+import ManageCircle from '@/router/paths/management/ManageCircle.vue'
 
 export default [
   {
