@@ -31,8 +31,8 @@ const _Assignment = struct.interface({
   targetGrade: 'number',
   targetClass: 'number',
   assignor: _Assignor,
-  reports: struct.union([[_Report], 'undefined', 'null']),
-  report: struct.union([_Report, 'undefined', 'null'])
+  reports: [_Report],
+  report: struct.union(['undefined', 'null', _Report])
 })
 
 const convertReport = v => (v && {
@@ -48,7 +48,7 @@ export const Assignment = assignment => _Assignment({
   idx: assignment['idx'],
   title: assignment['title'],
   deadline: moment(assignment['deadline']),
-  description: assignment['deadline'],
+  description: assignment['description'],
   targetGrade: assignment['target_grade'],
   targetClass: assignment['target_class'],
   assignor: assignment['assignor'],
