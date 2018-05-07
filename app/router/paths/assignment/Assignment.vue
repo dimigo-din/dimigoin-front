@@ -1,5 +1,6 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
+import throwable from '@/mixins/throwable'
 
 import fileDialog from 'file-dialog'
 import { assignment } from '@/src/api'
@@ -10,28 +11,26 @@ const assignee = assignment.assignee
 export default {
   name: 'Assignment',
   components: { AssignmentBase },
+  mixins: [throwable],
 
   data: () => ({
-    percentage: 0,
-    uploading: false,
+    percentages: [],
+    uploads: [],
     assignments: dummy
   }),
 
   methods: {
     async uploadFile (ass) {
       const files = await fileDialog()
-      this.uploading = true
+      this.$set(this.uploads, ass.idx, true)
       try {
         await assignee.submitAssignment(ass.idx, files[0], () =>
-          (this.percentage = Math.floor((event.loaded * 100) / event.total)))
+          this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
       } catch (err) {
-        this.$swal({
-          type: 'error',
-          title: '에러!',
-          text: err.message
-        })
+        throw err
+      } finally {
+        this.uploads.splice(ass.idx, 1)
       }
-      this.uploading = false
     }
   }
 }
@@ -43,7 +42,10 @@ export default {
       <span
         class="assignee__upload"
         @click="uploadFile(ass)">
-        <span class="icon-upload"/> {{ uploading ? percentage + '%' : '제출' }}
+        <span class="icon-upload"/> {{
+          uploads[ass.idx] ? (percentages[ass.idx] || 0) + '%' :
+          ass.report ? '수정' : '제출'
+        }}
       </span>
     </template>
 
@@ -53,19 +55,18 @@ export default {
 
     <span
       slot="opponent"
-      slot-scope="{ ass }"
-    >{{ ass.assignor.name }}</span>
+      slot-scope="{ ass }">
+      {{ ass.assignor.name }}
+    </span>
 
     <span
       slot="badge"
-      slot-scope="{ ass }"
-    >
+      slot-scope="{ ass }">
       <dimi-badge
-        :color="ass.reports ? 'aloes' : 'orange'"
-        class="assignee__badge"
-      >
-        <span :class="ass.reports ? 'icon-ok' : 'icon-cross'"/>
-        {{ ass.reports ? '제출' : '미제출' }}
+        :color="ass.report ? 'aloes' : 'orange'"
+        class="assignee__badge">
+        <span :class="ass.report ? 'icon-ok' : 'icon-cross'"/>
+        {{ ass.report ? '제출' : '미제출' }}
       </dimi-badge>
     </span>
   </assignment-base>

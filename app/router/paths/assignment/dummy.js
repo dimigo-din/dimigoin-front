@@ -9,8 +9,7 @@ export default [
     'assignor': {
       'name': '진준기',
       'email': 'ruto1924@naver.com'
-    },
-    'reports': []
+    }
   },
   {
     'idx': 2,
@@ -23,15 +22,13 @@ export default [
       'name': '진준기',
       'email': 'ruto1924@naver.com'
     },
-    'reports': [
-      {
-        'author': {
-          'name': '진준기',
-          'student_serial': '3331'
-        },
-        'uploaded_date': '2018-03-21T20:54:36',
-        'file_name': null
-      }
-    ]
+    'report': {
+      'author': {
+        'name': '진준기',
+        'student_serial': '3331'
+      },
+      'uploaded_date': '2018-03-21T20:54:36',
+      'file_name': null
+    }
   }
 ]
