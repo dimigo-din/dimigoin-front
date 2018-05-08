@@ -79,9 +79,5 @@ export default {
     margin-left: 1em;
     width: 4.75em;
   }
-
-  &__input--time:nth-child(2) {
-    margin-left: 0;
-  }
 }
 </style>
