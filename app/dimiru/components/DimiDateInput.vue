@@ -1,16 +1,37 @@
 <script>
 export default {
-  data: () => ({
-    year: '',
-    month: '',
-    date: '',
-    hour: '',
-    minute: ''
-  }),
+  props: {
+    value: {
+      type: Date,
+      default: () => new Date()
+    }
+  },
 
-  computed: {
-    string () {
-      return `${this.year}-${this.month}-${this.date} ${this.hour}:${this.minute}`
+  data () {
+    return {
+      date: {
+        year: this.value.getFullYear(),
+        month: this.value.getMonth() + 1,
+        date: this.value.getDate(),
+        hours: this.value.getHours(),
+        minutes: this.value.getMinutes()
+      }
+    }
+  },
+
+  watch: {
+    date: {
+      handler (val) {
+        console.log('called')
+        this.$emit('input', new Date(
+          val.year,
+          val.month - 1,
+          val.date,
+          val.hours,
+          val.minutes
+        ))
+      },
+      deep: true
     }
   }
 }
@@ -19,23 +40,23 @@ export default {
 <template lang="html">
   <div class="date-input">
     <dimi-input
-      v-model="year"
+      v-model="date.year"
       class="date-input__input date-input__input--year"/>
     년
     <dimi-input
-      v-model="month"
+      v-model="date.month"
       class="date-input__input date-input__input--time"/>
     월
     <dimi-input
-      v-model="date"
+      v-model="date.date"
       class="date-input__input date-input__input--time"/>
     일
     <dimi-input
-      v-model="hour"
+      v-model="date.hours"
       class="date-input__input date-input__input--time"/>
     시
     <dimi-input
-      v-model="minute"
+      v-model="date.minutes"
       class="date-input__input date-input__input--time"/>
     분
   </div>
@@ -43,6 +64,9 @@ export default {
 
 <style lang="scss">
 .date-input {
+  align-items: center;
+  display: flex;
+
   &__input {
     font-size: 16px;
   }

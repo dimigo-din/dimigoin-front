@@ -7,13 +7,21 @@ export default {
   components: { AssignmentBase },
 
   data: () => ({
-    modalOpen: false
+    modalOpen: false,
+    form: {
+      name: '',
+      description: '',
+      date: new Date()
+    }
   }),
 
   methods: {
     close () { },
     edit () { },
-    cancel () { }
+    cancel () { },
+    submit () {
+
+    }
   }
 }
 </script>
@@ -68,6 +76,10 @@ export default {
       @close="modalOpen = false"
     >
       <h3 class="assignor__title">과제 제출 추가</h3>
+      <dimi-date-input v-model="form.date"/>
+      <div class="assignor__submit">
+        <dimi-button @click="submit">추가하기</dimi-button>
+      </div>
     </dimi-modal>
   </div>
 </template>
