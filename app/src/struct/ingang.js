@@ -9,7 +9,7 @@ export const Ingang = ingang => ({
   applyStartDate: ingang['apply_start_date'],
   applyEndDate: ingang['apply_end_date'],
   weekApplyCount: ingang['week_apply_count'],
-  applied: ingang['request'],
+  applied: ingang['applied'],
   appliers: (ingang['ingang_apply'] || []).map(v => ({
     idx: v['idx'],
     time: v['apply_time'],

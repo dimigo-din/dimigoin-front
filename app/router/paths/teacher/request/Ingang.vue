@@ -15,8 +15,8 @@ export default {
 
   computed: {
     filteredStudents () {
-      return this.ingangs[this.currentTab]
-        .flatMap(clazz => clazz.appliers.map(v => ({ ...v.user, time: clazz.time })))
+      const clazz = this.ingangs[this.currentTab]
+      return clazz.appliers.map(v => ({ ...v.user, time: clazz.time }))
         .sort((a, b) => (a.time - b.time || +a.serial - +b.serial))
     }
   },
