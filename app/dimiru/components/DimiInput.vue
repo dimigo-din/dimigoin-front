@@ -4,7 +4,7 @@ export default {
 
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: ''
     },
     errorMessage: {
@@ -65,8 +65,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../scss/helpers/typography';
-
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -92,8 +90,8 @@ export default {
   }
 
   &__error-message {
-    @extend %h-text-s;
     color: $red;
+    font-size: 12px;
     margin-top: 0.375em;
     padding-left: 1em;
     position: absolute;

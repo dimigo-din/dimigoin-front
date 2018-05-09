@@ -1,13 +1,10 @@
 <script>
-import DimiCard from '../../../components/DimiCard.vue'
-
-import permission from '../../../mixins/permission'
+import permission from '@/mixins/permission'
 
 import services from './services'
 
 export default {
   name: 'TeacherMain',
-  components: { DimiCard },
   mixins: [permission('T')],
   data: () => ({ services }),
   mounted () {

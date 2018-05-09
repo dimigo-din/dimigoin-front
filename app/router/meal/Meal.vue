@@ -1,20 +1,17 @@
 <script>
 import moment from 'moment'
-import { meals } from '../../src/util/index'
-import { getMeal } from '../../src/api/index'
+import { meals } from '@/src/util'
+import { meal } from '@/src/api'
 
-import DefaultNavbar from '../partial/DefaultNavbar.vue'
-import ContentWrapper from '../partial/ContentWrapper.vue'
-
-import DimiTab from '../../components/DimiTab.vue'
-import DimiCard from '../../components/DimiCard.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
 const shortWeeks = [...'일월화수목금토']
 const longWeeks = shortWeeks.map(x => x + '요일')
 
 export default {
   name: 'Meal',
-  components: { DefaultNavbar, ContentWrapper, DimiTab, DimiCard },
+  components: { DefaultNavbar, ContentWrapper },
 
   data: () => ({
     currentDay: moment().day(),
@@ -33,7 +30,7 @@ export default {
 
   async created () {
     const meals = this.weeks.map((v, i) =>
-      getMeal(moment().day(i).toDate()))
+      meal.getMeal(moment().day(i)))
 
     this.list = await Promise.all(meals)
   }

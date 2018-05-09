@@ -1,5 +1,5 @@
 <script>
-import Illust from '../../../../assets/register-side-2.svg'
+import Illust from '@/assets/register-side-2.svg'
 
 export default {
   name: 'RegisterSideThree',

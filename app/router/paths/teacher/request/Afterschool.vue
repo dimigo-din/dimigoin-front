@@ -1,30 +1,13 @@
 <script>
-import ContentWrapper from '../../../partial/ContentWrapper.vue'
-import DefaultNavbar from '../../../partial/DefaultNavbar.vue'
-import DimiCard from '../../../../components/DimiCard.vue'
-import DimiCheckbox from '../../../../components/DimiCheckbox.vue'
-import DimiDropdown from '../../../../components/DimiDropdown.vue'
-import DimiDivider from '../../../../components/DimiDivider.vue'
-import DimiInput from '../../../../components/DimiInput.vue'
-import DimiTab from '../../../../components/DimiTab.vue'
-import DimiButton from '../../../../components/DimiButton.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
 
-import { days } from '../../../../src/util/index'
-import { afterschool } from '../../../../src/api'
+import { days } from '@/src/util/index'
+import { afterschool } from '@/src/api'
 
 export default {
   name: 'Afterschool',
-  components: {
-    DimiButton,
-    ContentWrapper,
-    DefaultNavbar,
-    DimiCard,
-    DimiDivider,
-    DimiCheckbox,
-    DimiDropdown,
-    DimiInput,
-    DimiTab
-  },
+  components: { ContentWrapper, DefaultNavbar },
 
   data () {
     return {

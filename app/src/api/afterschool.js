@@ -1,5 +1,5 @@
 import axios from './axios'
-import { Afterschool } from '../struct/afterschool'
+import { Afterschool } from '@/src/struct/afterschool'
 
 function tempValidation (afterschool) {
   const keys = ['name', 'day', 'capacity', 'teacherName', 'applyStartDate', 'applyEndDate']

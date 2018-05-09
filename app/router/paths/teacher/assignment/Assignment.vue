@@ -1,20 +1,27 @@
 <script>
-import AssignmentBase from '../../../../components/AssignmentBase.vue'
-import DimiModal from '../../../../components/DimiModal.vue'
+import AssignmentBase from '@/components/AssignmentBase.vue'
 
 export default {
   name: 'Assignment',
 
-  components: { AssignmentBase, DimiModal },
+  components: { AssignmentBase },
 
   data: () => ({
-    modalOpen: false
+    modalOpen: false,
+    form: {
+      title: '',
+      description: '',
+      date: new Date()
+    }
   }),
 
   methods: {
     close () { },
     edit () { },
-    cancel () { }
+    cancel () { },
+    submit () {
+
+    }
   }
 }
 </script>
@@ -66,9 +73,29 @@ export default {
 
     <dimi-modal
       :opened="modalOpen"
-      @close="modalOpen = false"
-    >
+      @close="modalOpen = false">
       <h3 class="assignor__title">과제 제출 추가</h3>
+
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">과제명</label>
+        <dimi-input
+          v-model="form.title"
+          placeholder="과제의 제목을 입력하세요"/>
+      </div>
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">과제 설명</label>
+        <dimi-input
+          v-mode="form.description"
+          placeholder="과제에 대해 설명해주세요"/>
+      </div>
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">제출 마감일</label>
+        <dimi-date-input v-model="form.date"/>
+      </div>
+
+      <div class="assignor__submit">
+        <dimi-button @click="submit">추가하기</dimi-button>
+      </div>
     </dimi-modal>
   </div>
 </template>

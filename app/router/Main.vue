@@ -1,15 +1,14 @@
 <script>
-import pkg from '../../package.json'
-import Brand from '../assets/brand.svg'
-import MealGroup from '../components/MealGroup.vue'
-import DimiCard from '../components/DimiCard.vue'
-import ServiceCards from '../components/ServiceCards.vue'
+import pkg from '@/../package.json'
+import Brand from '@/assets/brand.svg'
+import MealGroup from '@/components/MealGroup.vue'
+import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
 import restaurance from 'restaurance'
 
 export default {
   name: 'Main',
-  components: { Brand, MealGroup, DimiCard, ServiceCards },
+  components: { Brand, MealGroup, ServiceCards },
 
   data: () => ({
     photoCDN: process.env.DIMIGO_API_URL + '/user_photo/',
@@ -90,7 +89,7 @@ export default {
               <span class="profile-info">
                 <template v-if="userType === 'T'">
                   <span class="profile-info__name">{{ name }}</span>
-                  <span class="profile-info__serial">{{ 선생님 }}</span>
+                  <span class="profile-info__serial"> 선생님</span>
                 </template>
                 <template v-else>
                   <span class="profile-info__serial">{{ `${grade}학년 ${klass}반` }}</span>
@@ -150,8 +149,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../scss/helpers/typography';
-
 .container {
   padding-top: 1rem;
 }
@@ -170,9 +167,9 @@ export default {
   margin-bottom: 2rem;
 
   &__title {
-    @extend %h-text-l;
-    @extend %h-text-gray-dark;
     @include font-bold;
+    color: $gray-dark;
+    font-size: 24px;
     margin: 1rem 0;
   }
 
@@ -183,8 +180,8 @@ export default {
 }
 
 .brand {
-  @extend %h-text-xl;
   @include font-extra-bold;
+  font-size: 36px;
   margin: 3rem 0;
   text-align: center;
 }

@@ -1,9 +1,9 @@
 import axios from './axios'
 import magician from './magician'
-import { Ingang } from '../struct/ingang'
+import { Ingang } from '@/src/struct/ingang'
 
 export async function applyIngang (ingangIdx) {
-  await magician(() => axios.post(`/ingangs/request/${ingangIdx}`), {
+  await magician(() => axios.post(`/ingangs/apply/${ingangIdx}`), {
     401: () => new Error('존재하지 않는 학년 또는 반입니다.'),
     403: () => new Error('신청 기간이 아닙니다.'),
     404: () => new Error('인강실 신청이 없습니다.'),
@@ -12,7 +12,7 @@ export async function applyIngang (ingangIdx) {
 }
 
 export async function cancelIngang (ingangIdx) {
-  await magician(() => axios.delete(`/ingangs/request/${ingangIdx}`), {
+  await magician(() => axios.delete(`/ingangs/apply/${ingangIdx}`), {
     401: () => new Error('존재하지 않는 학년 또는 반입니다.'),
     403: () => new Error('신청 기간이 아닙니다.'),
     404: () => new Error('신청이 조회되지 않았습니다.')
@@ -31,6 +31,6 @@ export const admin = {
       403: () => new Error('권한이 없습니다.'),
       404: () => new Error('인강 신청이 없습니다.')
     })
-    return data['ingang'].map(Ingang)
+    return Ingang(data)
   }
 }

@@ -1,5 +1,5 @@
 export { register, getAccessToken, verifyStudent } from './auth'
-export { getMeal, getTodayMeal } from './meal'
+export * as meal from './meal'
 export * as service from './service'
 export { default as axios } from './axios'
 export * as circle from './circle'

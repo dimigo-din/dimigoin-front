@@ -10,14 +10,12 @@
 </template>
 
 <style lang="scss" scoped>
-@import '../../scss/helpers/typography';
-
 .content {
   padding: 2rem 0;
 
   &__header {
-    @extend %h-text-gray-dark;
     @include font-bold;
+    color: $gray-dark;
     font-size: 32px;
     padding-bottom: 1rem;
   }

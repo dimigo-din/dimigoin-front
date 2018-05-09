@@ -1,4 +1,4 @@
-import { getNotifications } from '../../../src/api'
+import { getNotifications } from '@/src/api'
 
 import auth from './auth'
 import informations from './informations'

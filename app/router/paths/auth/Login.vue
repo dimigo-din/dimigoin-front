@@ -1,16 +1,12 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 
-import DimiButton from '../../../components/DimiButton.vue'
-import DimiCard from '../../../components/DimiCard.vue'
-import MealGroup from '../../../components/MealGroup.vue'
-import DimiInput from '../../../components/DimiInput.vue'
-import DimiDivider from '../../../components/DimiDivider.vue'
+import MealGroup from '@/components/MealGroup.vue'
 
 export default {
   name: 'Login',
 
-  components: { DimiButton, DimiCard, MealGroup, DimiInput, DimiDivider },
+  components: { MealGroup },
 
   data () {
     return {
@@ -104,8 +100,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '../../../scss/helpers/typography';
-
 .container {
   align-items: center;
   display: flex;
@@ -192,14 +186,14 @@ export default {
   }
 
   .c-login__register-description {
-    @extend %h-text-gray;
 
     align-self: center;
+    color: $gray;
     margin-top: 1rem;
   }
 
   .c-login__register-link {
-    @extend %h-text-orange;
+    color: $orange;
     text-decoration: none;
   }
 }

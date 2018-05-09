@@ -1,6 +1,6 @@
 import axios from './axios'
 import magician from './magician'
-import { Assignment } from '../struct/assignment'
+import { Assignment } from '@/src/struct/assignment'
 
 /**
  *  관리자 이상의 권한을 요구하는 요청입니다.

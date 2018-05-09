@@ -1,16 +1,11 @@
 <script>
 import { mapActions } from 'vuex'
 
-import DimiCard from '../../../../components/DimiCard.vue'
-import DimiInput from '../../../../components/DimiInput.vue'
-
 import awesomeMixin from './mixins/preserve-state'
 import validator from './mixins/validator'
 
 export default {
   name: 'RegisterStepTwo',
-
-  components: { DimiCard, DimiInput },
 
   mixins: [ awesomeMixin, validator ],
 

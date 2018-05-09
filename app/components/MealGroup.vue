@@ -1,34 +1,28 @@
 <script>
-import { meals } from '../src/util'
-import DimiMealItem from './DimiMealItem.vue'
-import { mapState } from 'vuex'
+import { meals } from '@/src/util'
+import { meal } from '@/src/api'
 
 export default {
   name: 'MealGroup',
-  components: { DimiMealItem },
 
   data () {
     return {
+      meal: {
+        breakfast: '',
+        lunch: '',
+        dinner: '',
+        snack: ''
+      },
       pending: false
     }
   },
 
   computed: {
-    meals: () => meals,
-    ...mapState(['meal'])
+    meals: () => meals
   },
 
-  async mounted () {
-    if (!this.$store.state.meal.isFetched) {
-      this.pending = true
-      try {
-        await this.$store.dispatch('meal/fetchMeal')
-      } catch (err) {
-        console.error(err)
-      }
-      this.pending = false
-      this.$emit('postFetch')
-    }
+  async created () {
+    this.meal = await meal.getTodayMeal()
   }
 }
 </script>

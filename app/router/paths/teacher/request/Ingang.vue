@@ -1,15 +1,11 @@
 <script>
-import ContentWrapper from '../../../partial/ContentWrapper.vue'
-import DimiButton from '../../../../components/DimiButton.vue'
-import DimiCard from '../../../../components/DimiCard.vue'
-import DimiLoader from '../../../../components/DimiLoader.vue'
-import DimiTab from '../../../../components/DimiTab.vue'
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 
-import { ingang } from '../../../../src/api'
+import { ingang } from '@/src/api'
 
 export default {
   name: 'Ingang',
-  components: { ContentWrapper, DimiButton, DimiCard, DimiLoader, DimiTab },
+  components: { ContentWrapper },
 
   data: () => ({
     ingangs: [[], []],
@@ -19,8 +15,8 @@ export default {
 
   computed: {
     filteredStudents () {
-      return this.ingangs[this.currentTab]
-        .flatMap(clazz => clazz.appliers.map(v => ({ ...v.user, time: clazz.time })))
+      const clazz = this.ingangs[this.currentTab]
+      return clazz.appliers.map(v => ({ ...v.user, time: clazz.time }))
         .sort((a, b) => (a.time - b.time || +a.serial - +b.serial))
     }
   },
