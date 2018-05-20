@@ -1,26 +1,115 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
+import throwable from '@/mixins/throwable'
+import { assignment } from '@/src/api'
 
 export default {
   name: 'Assignment',
-
   components: { AssignmentBase },
+  mixins: [throwable],
 
   data: () => ({
-    modalOpen: false,
+    pending: false,
+    assignments: [],
+    modals: {
+      create: false,
+      edit: false
+    },
     form: {
       title: '',
       description: '',
-      date: new Date()
+      deadline: new Date(),
+      targetGrade: null,
+      targetClass: null
     }
   }),
 
-  methods: {
-    close () { },
-    edit () { },
-    cancel () { },
-    submit () {
+  computed: {
+    modalState () {
+      return this.modals.create ? '추가' : '수정'
+    }
+  },
 
+  async created () {
+    await this.update()
+  },
+
+  methods: {
+    async edit (ass) {
+      await assignment.assignor.editAssignment(ass.idx, this.restructure(this.form))
+      await this.$swal('수정되었습니다', 'success')
+      this.closeModal()
+      await this.update()
+    },
+
+    async deleteAss (ass) {
+      if (await this.$swal({
+        type: 'warning',
+        text: '정말 삭제하시겠습니까?',
+        confirmButtonColor: '#d61315',
+        cancelButtonColor: '#ababab',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        showCancelButton: true
+      })) {
+        try {
+          await assignment.assignor.deleteAssignment(ass.idx)
+          this.assignments = await assignment.assignor.getAssignmentList()
+          this.$swal(
+            '삭제되었습니다',
+            'success'
+          )
+        } catch (err) {
+          this.$_throwable_handleError(err)
+        }
+        await this.update()
+      }
+    },
+
+    async create () {
+      await assignment.admin.createAssignment(this.restructure(this.form))
+      await this.$swal('추가되었습니다', 'success')
+      this.closeModal()
+      await this.update()
+    },
+
+    async update () {
+      this.pending = true
+      this.assignments = await assignment.assignor.getAssignmentList()
+      this.pending = false
+    },
+
+    openEditModal (ass) {
+      this.modals.edit = ass
+
+      this.form = ass
+      this.form.deadline = ass.deadline.toDate() // moment to date objecti
+    },
+
+    closeModal () {
+      this.modals = {
+        create: false,
+        edit: false
+      }
+
+      // for animation
+      setTimeout(() => {
+        this.form = {
+          title: '',
+          description: '',
+          date: new Date()
+        }
+      }, 500)
+    },
+
+    restructure (ass) {
+      return {
+        'title': ass.title,
+        'description': ass.description,
+        'target_grade': ass.targetGrade,
+        'target_class': ass.targetClass,
+        'deadline': ass.deadline.toISOString()
+      }
     }
   }
 }
@@ -28,23 +117,17 @@ export default {
 
 <template>
   <div>
-    <assignment-base>
+    <assignment-base :assignments="assignments">
       <template slot-scope="{ ass }">
         <span
           class="assignor__item"
-          @click="close">
-          <span class="icon-ok"/> 마감하기
-        </span>
-
-        <span
-          class="assignor__item"
-          @click="edit">
+          @click="openEditModal(ass)">
           <span class="icon-edit"/> 수정하기
         </span>
         <span
           class="assignor__item"
-          @click="cancel">
-          <span class="icon-cross"/> 취소하기
+          @click="deleteAss(ass)">
+          <span class="icon-cross"/> 삭제하기
         </span>
       </template>
 
@@ -54,9 +137,8 @@ export default {
 
           <span
             class="assignor__plus"
-            @click="modalOpen = true"
-          >
-            <span class="icon-plus"/>추가하기
+            @click="modals.create = true">
+            <span class="icon-plus"/>수정하기
           </span>
         </span>
       </span>
@@ -72,29 +154,82 @@ export default {
     </assignment-base>
 
     <dimi-modal
-      :opened="modalOpen"
-      @close="modalOpen = false">
+      :opened="modals.create"
+      @close="closeModal">
       <h3 class="assignor__title">과제 제출 추가</h3>
 
       <div class="assignor__form-field">
         <label class="assignor__form-label">과제명</label>
         <dimi-input
+          id="ass-title"
           v-model="form.title"
+          class="assignor__form-input"
           placeholder="과제의 제목을 입력하세요"/>
+        <label class="assignor__form-label assignor__form-label--target">학년</label>
+        <dimi-input
+          id="ass-target-grade"
+          v-model="form.targetGrade"
+          class="assignor__form-input assignor__form-input--target"/>
+        <label class="assignor__form-label assignor__form-label--target">반</label>
+        <dimi-input
+          id="ass-target-class"
+          v-model="form.targetClass"
+          class="assignor__form-input assignor__form-input--target"/>
       </div>
       <div class="assignor__form-field">
         <label class="assignor__form-label">과제 설명</label>
         <dimi-input
-          v-mode="form.description"
+          id="ass-desc"
+          v-model="form.description"
           placeholder="과제에 대해 설명해주세요"/>
       </div>
       <div class="assignor__form-field">
         <label class="assignor__form-label">제출 마감일</label>
-        <dimi-date-input v-model="form.date"/>
+        <dimi-date-input v-model="form.deadline"/>
       </div>
 
       <div class="assignor__submit">
-        <dimi-button @click="submit">추가하기</dimi-button>
+        <dimi-button @click="create">추가</dimi-button>
+      </div>
+    </dimi-modal>
+
+    <dimi-modal
+      :opened="modals.edit"
+      @close="closeModal">
+      <h3 class="assignor__title">과제 제출 수정</h3>
+
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">과제명</label>
+        <dimi-input
+          id="ass-title"
+          v-model="form.title"
+          class="assignor__form-input"
+          placeholder="과제의 제목을 입력하세요"/>
+        <label class="assignor__form-label assignor__form-label--target">학년</label>
+        <dimi-input
+          id="ass-target-grade"
+          v-model="form.targetGrade"
+          class="assignor__form-input assignor__form-input--target"/>
+        <label class="assignor__form-label assignor__form-label--target">반</label>
+        <dimi-input
+          id="ass-target-class"
+          v-model="form.targetClass"
+          class="assignor__form-input assignor__form-input--target"/>
+      </div>
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">과제 설명</label>
+        <dimi-input
+          id="ass-desc"
+          v-model="form.description"
+          placeholder="과제에 대해 설명해주세요"/>
+      </div>
+      <div class="assignor__form-field">
+        <label class="assignor__form-label">제출 마감일</label>
+        <dimi-date-input v-model="form.deadline"/>
+      </div>
+
+      <div class="assignor__submit">
+        <dimi-button @click="edit(modals.edit)">수정</dimi-button>
       </div>
     </dimi-modal>
   </div>
@@ -131,6 +266,31 @@ export default {
 
     color: $gray-dark;
     font-size: 24px;
+  }
+
+  &__form-field {
+    align-items: center;
+    display: flex;
+    margin: 1.5rem 0;
+  }
+
+  &__form-label {
+    min-width: 6em;
+  }
+
+  &__form-label--target {
+    margin-right: 1em;
+    min-width: 3em;
+    text-align: right;
+  }
+
+  &__form-input--target {
+    flex-basis: 150px;
+  }
+
+  &__submit {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
