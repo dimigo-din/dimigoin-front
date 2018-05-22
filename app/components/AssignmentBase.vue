@@ -28,7 +28,7 @@ export default {
 
   methods: {
     toggle (i) {
-      this.selection.splice(i, 1, !this.selection[i])
+      this.$set(this.selection, i, !this.selection[i])
     }
   }
 }
