@@ -9,7 +9,7 @@ export default {
   mixins: [throwable],
 
   data: () => ({
-    pending: false,
+    loading: false,
     assignments: [],
     modals: {
       create: false,
@@ -23,12 +23,6 @@ export default {
       targetClass: null
     }
   }),
-
-  computed: {
-    modalState () {
-      return this.modals.create ? '추가' : '수정'
-    }
-  },
 
   async created () {
     await this.update()
@@ -67,16 +61,20 @@ export default {
     },
 
     async create () {
-      await assignment.admin.createAssignment(this.restructure(this.form))
-      await this.$swal('추가되었습니다', 'success')
-      this.closeModal()
-      await this.update()
+      try {
+        await assignment.admin.createAssignment(this.restructure(this.form))
+        await this.$swal('추가되었습니다', 'success')
+        this.closeModal()
+        await this.update()
+      } catch (err) {
+        this.$_throwable_handleError(err)
+      }
     },
 
     async update () {
-      this.pending = true
+      this.loading = true
       this.assignments = await assignment.assignor.getAssignmentList()
-      this.pending = false
+      this.loading = false
     },
 
     openEditModal (ass) {
@@ -117,7 +115,9 @@ export default {
 
 <template>
   <div>
-    <assignment-base :assignments="assignments">
+    <assignment-base
+      :loading="loading"
+      :assignments="assignments">
       <template slot-scope="{ ass }">
         <span
           class="assignor__item"
@@ -145,8 +145,7 @@ export default {
 
       <span
         slot="opponent"
-        slot-scope="{ ass }"
-      >
+        slot-scope="{ ass }">
         {{ ass.target_grade }}학년
         {{ ass.target_grade }}반 대상
       </span>
