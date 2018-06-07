@@ -81,7 +81,8 @@ export default {
       this.modals.edit = ass
 
       this.form = ass
-      this.form.deadline = ass.deadline.toDate() // moment to date objecti
+      // moment to date
+      this.form.deadline = ass.deadline.toDate()
     },
 
     closeModal () {
@@ -90,23 +91,20 @@ export default {
         edit: false
       }
 
-      // for animation
-      setTimeout(() => {
-        this.form = {
-          title: '',
-          description: '',
-          date: new Date()
-        }
-      }, 500)
+      this.form = {
+        title: '',
+        description: '',
+        date: new Date()
+      }
     },
 
     restructure (ass) {
       return {
         'title': ass.title,
         'description': ass.description,
-        'target_grade': ass.targetGrade,
-        'target_class': ass.targetClass,
-        'deadline': ass.deadline.toISOString()
+        'target_grade': parseInt(ass.targetGrade),
+        'target_class': parseInt(ass.targetClass),
+        'deadline': ass.toISOString()
       }
     }
   }
