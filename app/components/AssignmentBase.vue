@@ -17,6 +17,10 @@ export default {
     assignments: {
       type: Array,
       default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -28,7 +32,7 @@ export default {
 
   methods: {
     toggle (i) {
-      this.selection.splice(i, 1, !this.selection[i])
+      this.$set(this.selection, i, !this.selection[i])
     }
   }
 }
@@ -37,7 +41,14 @@ export default {
 <template>
   <div>
     <default-navbar/>
-    <div class="container">
+    <div
+      v-if="loading"
+      class="assignment__loading">
+      <dimi-loader/>
+    </div>
+    <div
+      v-else
+      class="container">
       <div class="row">
         <main class="main col-xs">
           <content-wrapper class="assignment">
@@ -93,6 +104,11 @@ export default {
 
 <style lang="scss">
 .assignment {
+  &__loading {
+    display: flex;
+    justify-content: center;
+  }
+
   .c-card {
     padding: 0;
   }

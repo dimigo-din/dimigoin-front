@@ -24,12 +24,13 @@ export default {
       const files = await fileDialog()
       this.$set(this.uploads, ass.idx, true)
       try {
-        await assignee.submitAssignment(ass.idx, files[0], () =>
+        await assignee.submitAssignment(ass.idx, files[0], event =>
           this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
       } catch (err) {
-        throw err
+        this.$_throwable_handleError(err)
       } finally {
         this.uploads.splice(ass.idx, 1)
+        this.$set(this.percentages, ass.idx, 0)
       }
     }
   }
