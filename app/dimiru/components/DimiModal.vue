@@ -1,3 +1,20 @@
+<script>
+export default {
+  props: {
+    opened: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    close () {
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
 <template>
   <transition name="fade">
     <div
@@ -18,23 +35,6 @@
     </div>
   </transition>
 </template>
-
-<script>
-export default {
-  props: {
-    opened: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  methods: {
-    close () {
-      this.$emit('close')
-    }
-  }
-}
-</script>
 
 <style lang="scss">
   .fade {

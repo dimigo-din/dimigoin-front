@@ -22,7 +22,6 @@ export default {
   watch: {
     date: {
       handler (val) {
-        console.log('called')
         this.$emit('input', new Date(
           val.year,
           val.month - 1,
@@ -37,7 +36,7 @@ export default {
 }
 </script>
 
-<template lang="html">
+<template>
   <div class="date-input">
     <dimi-input
       v-model="date.year"
