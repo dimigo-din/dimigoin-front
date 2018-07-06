@@ -19,6 +19,9 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+@import '../scss/mixins';
+
 .navbar {
   align-items: center;
   background-color: $white;
@@ -32,8 +35,8 @@ export default {
   }
 
   &__brand {
-    @include font-extra-bold;
     font-size: 24px;
+    font-weight: $font-weight-extra-bold;
     justify-self: flex-start;
   }
 

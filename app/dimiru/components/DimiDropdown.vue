@@ -117,6 +117,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .dropdown {
   cursor: pointer;
   padding-bottom: 5px;

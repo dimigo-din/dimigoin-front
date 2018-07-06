@@ -170,6 +170,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .req-ingang {
   &__pending {
     align-items: center;
@@ -179,10 +181,9 @@ export default {
   }
 
   &__title {
-    @include font-bold;
-
     color: $gray-dark;
     font-size: 24px;
+    font-weight: $font-weight-bold;
   }
 
   &__info {
@@ -190,9 +191,9 @@ export default {
   }
 
   &__limit {
-    @include font-bold;
     color: $orange;
     font-size: 18px;
+    font-weight: $font-weight-bold;
     margin-right: 1em;
   }
 
@@ -203,9 +204,8 @@ export default {
   }
 
   &__content {
-    @include font-bold;
-
     display: flex;
+    font-weight: $font-weight-bold;
     justify-content: center;
   }
 

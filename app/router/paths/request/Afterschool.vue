@@ -182,6 +182,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+
 .req-afsc {
   &__loader-wrapper {
     align-items: center;
@@ -215,8 +217,8 @@ export default {
   }
 
   &__list {
-    @include font-bold;
     color: $gray !important;
+    font-weight: $font-weight-bold;
     width: 100%;
   }
 

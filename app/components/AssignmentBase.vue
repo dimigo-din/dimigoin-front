@@ -103,6 +103,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .assignment {
   &__loading {
     display: flex;
@@ -126,8 +128,8 @@ export default {
   }
 
   &__item {
-    @include font-bold;
     color: $gray;
+    font-weight: $font-weight-bold;
   }
 
   &__item:not(:last-child) {
@@ -153,10 +155,10 @@ export default {
   }
 
   &__nav {
-    @include font-bold;
     color: $red;
     display: flex;
     font-size: 18px;
+    font-weight: $font-weight-bold;
     justify-content: flex-end;
   }
 }

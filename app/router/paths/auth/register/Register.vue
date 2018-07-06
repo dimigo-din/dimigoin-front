@@ -40,6 +40,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+@import '~styles/mixins';
+
 @include from($widescreen) {
   .container--custom {
     width: 55rem;
@@ -48,6 +51,8 @@ export default {
 </style>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .register {
   align-items: center;
   display: flex;
@@ -55,18 +60,18 @@ export default {
   height: 100vh;
 
   &__title {
-    @include font-extra-bold;
     cursor: pointer;
     display: flex;
     font-size: 36px;
+    font-weight: $font-weight-extra-bold;
     margin-top: 5rem;
     user-select: none;
     word-spacing: 0.325em;
   }
 
   &__subtitle {
-    @include font-regular;
     font-size: 36px;
+    font-weight: $font-weight-regular;
     padding-left: 0.5em;
   }
 
@@ -99,9 +104,9 @@ export default {
 }
 
 .form__label {
-  @include font-regular;
   color: $gray-dark;
   font-size: 14px;
+  font-weight: $font-weight-regular;
   padding: 0.5em 0;
   text-align: start;
 }
@@ -114,11 +119,10 @@ export default {
   position: relative;
 
   &__item {
-    @include font-bold;
-
     display: block;
     flex: 1 0;
     font-size: 14px;
+    font-weight: $font-weight-regular;
     padding: 0.9em 0 !important;
   }
 
@@ -140,8 +144,8 @@ export default {
   }
 
   &__link {
-    @include font-bold;
     cursor: pointer;
+    font-weight: $font-weight-bold;
   }
 
   &__link--next {
@@ -177,9 +181,9 @@ export default {
   }
 
   &__title {
-    @include font-bold;
     color: $black;
     font-size: 24px;
+    font-weight: $font-weight-bold;
     margin-top: 2rem;
     user-select: none;
   }

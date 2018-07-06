@@ -49,10 +49,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+
 .ienope {
-  @include font-bold;
   align-items: center;
   display: flex;
+  font-weight: $font-weight-bold;
   height: 100vh;
   justify-content: center;
   user-select: none;

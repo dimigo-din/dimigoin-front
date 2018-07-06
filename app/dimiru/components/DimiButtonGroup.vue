@@ -62,10 +62,12 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .button-group {
-  @include font-bold;
   display: inline-block;
   font-size: 14px;
+  font-weight: $font-weight-bold;
   user-select: none;
 
   &__button {

@@ -31,14 +31,6 @@ const cssExtract = ExtractTextPlugin.extract({
 const scssExtract = ExtractTextPlugin.extract({
   use: cssLoaders.concat({
     loader: 'sass-loader'
-  }, {
-    loader: 'sass-resources-loader',
-    options: {
-      resources: [
-        './app/scss/_variables.scss',
-        './app/scss/_mixins.scss'
-      ]
-    }
   }),
   fallback: 'vue-style-loader'
 })
@@ -134,7 +126,8 @@ const webpackConfig = {
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
-      '@': path.resolve(__dirname, 'app')
+      '@': path.resolve(__dirname, 'app'),
+      'styles': path.resolve(__dirname, 'app/scss')
     }
   },
 

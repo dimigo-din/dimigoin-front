@@ -217,6 +217,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .circle-card {
   cursor: pointer;
 
@@ -280,7 +282,7 @@ export default {
   }
 
   &__modal-name {
-    @include font-bold;
+    font-weight: $font-weight-bold;
     word-break: break-all;
   }
 
@@ -318,8 +320,8 @@ export default {
   }
 
   &__submit-btn {
-    @include font-bold;
     float: right;
+    font-weight: $font-weight-bold;
     margin-top: 20px;
   }
 

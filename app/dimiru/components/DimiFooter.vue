@@ -19,6 +19,9 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+@import '../scss/mixins';
+
 .footer {
   align-items: center;
   background-color: $gray-lighter;

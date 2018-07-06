@@ -10,13 +10,15 @@
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+
 .content {
   padding: 2rem 0;
 
   &__header {
-    @include font-bold;
     color: $gray-dark;
     font-size: 32px;
+    font-weight: $font-weight-bold;
     padding-bottom: 1rem;
   }
 }

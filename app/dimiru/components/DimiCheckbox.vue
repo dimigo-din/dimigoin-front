@@ -34,6 +34,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .checkbox {
   background-color: $gray-light;
   border-radius: 50%;

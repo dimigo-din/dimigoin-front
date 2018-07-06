@@ -70,15 +70,17 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .meal {
   &__card {
     padding-top: 0 !important;
   }
 
   &__title {
-    @include font-bold;
     color: $gray;
     font-size: 24px;
+    font-weight: $font-weight-bold;
   }
 
   &__title::before {

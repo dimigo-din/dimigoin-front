@@ -46,6 +46,8 @@ export default {
 </template>
 
 <style lang="scss" module>
+@import '~styles/variables';
+
 .main {
   align-items: center;
   display: flex;
@@ -55,8 +57,8 @@ export default {
   text-align: center;
 
   &__title {
-    @include font-extra-bold;
     font-size: 64px;
+    font-weight: $font-weight-extra-bold;
   }
 
   &__cards {
@@ -81,8 +83,8 @@ export default {
   }
 
   &__card-title {
-    @include font-extra-bold;
     font-size: 28px;
+    font-weight: $font-weight-extra-bold;
     margin-bottom: 12px;
   }
 

@@ -67,6 +67,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+@import '~styles/mixins';
+
 .services {
   &__cards {
     display: grid;
@@ -105,8 +108,8 @@ export default {
   }
 
   &__card-title {
-    @include font-extra-bold;
     font-size: 24px;
+    font-weight: $font-weight-extra-bold;
 
     margin-top: 1.2rem;
     text-align: center;

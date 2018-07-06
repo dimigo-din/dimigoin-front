@@ -149,6 +149,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '../scss/variables';
+@import '../scss/mixins';
+
 .container {
   padding-top: 1rem;
 }
@@ -167,9 +170,9 @@ export default {
   margin-bottom: 2rem;
 
   &__title {
-    @include font-bold;
     color: $gray-dark;
     font-size: 24px;
+    font-weight: $font-weight-bold;
     margin: 1rem 0;
   }
 
@@ -180,8 +183,8 @@ export default {
 }
 
 .brand {
-  @include font-extra-bold;
   font-size: 36px;
+  font-weight: $font-weight-extra-bold;
   margin: 3rem 0;
   text-align: center;
 }

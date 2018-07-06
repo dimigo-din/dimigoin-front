@@ -39,6 +39,7 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
 
 .meal-list {
   color: $gray;

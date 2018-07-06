@@ -87,40 +87,42 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-  .r-info {
-    &__badge {
-      display: inline-block;
-      font-size: 14px;
-      margin-right: 10px;
-    }
+@import '~styles/variables';
 
-    &__badge-icon {
-      font-size: 9px;
-      margin-right: 4px;
-    }
-
-    &__title {
-      @include font-bold;
-      font-size: 16px;
-      line-height: 0.75;
-    }
-
-    &__list {
-      margin-top: 8px;
-    }
-
-    &__list-key,
-    &__list-value {
-      padding-top: 16px;
-    }
-
-    &__list-key {
-      color: $gray-dark;
-      padding-right: 16px;
-    }
-
-    &__list-value {
-      color: $gray;
-    }
+.r-info {
+  &__badge {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
   }
+
+  &__badge-icon {
+    font-size: 9px;
+    margin-right: 4px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    line-height: 0.75;
+  }
+
+  &__list {
+    margin-top: 8px;
+  }
+
+  &__list-key,
+  &__list-value {
+    padding-top: 16px;
+  }
+
+  &__list-key {
+    color: $gray-dark;
+    padding-right: 16px;
+  }
+
+  &__list-value {
+    color: $gray;
+  }
+}
 </style>

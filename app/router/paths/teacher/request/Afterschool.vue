@@ -300,6 +300,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+
 .mng-afsc {
   &__main {
     padding: 0;
@@ -316,19 +318,17 @@ export default {
   }
 
   &__title {
-    @include font-bold;
-
     color: $gray-dark;
     font-size: 24px;
+    font-weight: $font-weight-bold;
     margin-bottom: 48px;
   }
 
   &__toolbar {
-    @include font-bold;
-
     color: $gray-light;
     display: flex;
     font-size: 16px;
+    font-weight: $font-weight-bold;
     margin-bottom: 12px;
   }
 
@@ -356,9 +356,9 @@ export default {
   }
 
   &__list {
-    @include font-bold;
     color: $gray !important;
     display: block;
+    font-weight: $font-weight-bold;
     height: 600px;
     overflow-y: auto;
     width: 100%;

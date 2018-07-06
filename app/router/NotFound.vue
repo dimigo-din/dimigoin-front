@@ -34,6 +34,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+
 .not-found {
   align-items: center;
   display: flex;
@@ -63,12 +65,11 @@ export default {
   }
 
   &__back {
-    @include font-bold;
     color: $red;
     cursor: pointer;
     display: block;
-
     font-size: 16px;
+    font-weight: $font-weight-bold;
     margin-top: 1rem;
   }
 }

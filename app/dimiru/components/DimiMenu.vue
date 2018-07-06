@@ -13,6 +13,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .menu {
   margin-bottom: 2rem;
   margin-top: 2rem;

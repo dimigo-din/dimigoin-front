@@ -65,6 +65,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .input-wrapper {
   position: relative;
   width: 100%;

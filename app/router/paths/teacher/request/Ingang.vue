@@ -82,6 +82,8 @@ export default {
 </template>
 
 <style lang="scss" module>
+@import '~styles/variables';
+
 .ingang {
   padding: 0;
 
@@ -92,9 +94,9 @@ export default {
   }
 
   &__list {
-    @include font-bold;
     color: $gray;
     display: block;
+    font-weight: $font-weight-bold;
     max-height: 600px;
     min-height: 300px;
     overflow-y: auto;

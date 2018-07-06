@@ -233,6 +233,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .assignor {
   &__item {
     cursor: pointer;
@@ -259,10 +261,9 @@ export default {
   }
 
   &__title {
-    @include font-bold;
-
     color: $gray-dark;
     font-size: 24px;
+    font-weight: $font-weight-bold;
   }
 
   &__form-field {

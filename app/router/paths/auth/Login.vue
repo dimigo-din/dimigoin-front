@@ -100,6 +100,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+@import '~styles/mixins';
+
 .container {
   align-items: center;
   display: flex;
@@ -151,8 +154,8 @@ export default {
   }
 
   &__title {
-    @include font-extra-bold;
     font-size: 2.25em;
+    font-weight: $font-weight-extra-bold;
     position: relative;
   }
 
@@ -174,9 +177,8 @@ export default {
 
   // Specify parent element due to css priority rules.
   .c-login__submit-btn {
-    @include font-extra-bold;
-
     align-self: center;
+    font-weight: $font-weight-extra-bold;
     margin-top: 3rem;
     padding: 0.625em 2.75em;
 

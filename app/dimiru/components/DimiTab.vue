@@ -70,6 +70,9 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+@import '../scss/mixins';
+
 .tab {
   padding-bottom: 4px;
   width: 100%;
@@ -80,11 +83,11 @@ export default {
   }
 
   &__item {
-    @include font-bold;
     color: $gray;
     cursor: pointer;
     flex-basis: 160px;
     font-size: 18px;
+    font-weight: $font-weight-bold;
     padding: 24px 0 12px;
     text-align: center;
     transition: all 0.25s ease;
