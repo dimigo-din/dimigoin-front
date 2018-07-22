@@ -3,6 +3,7 @@ import Information from '@/router/paths/request/Information.vue'
 import Circle from '@/router/paths/request/Circle.vue'
 import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
 import Ingang from '@/router/paths/request/Ingang.vue'
+import Dets from '@/router/paths/request/Dets.vue'
 
 export default [{
   path: '/request',
@@ -36,6 +37,12 @@ export default [{
       name: 'request/ingang',
       component: Ingang,
       meta: { title: '신청 > 인강실 신청' }
+    },
+    {
+      path: 'dets',
+      name: 'request/dets',
+      component: Dets,
+      meta: { title: '신청 > Dets 신청' }
     }
   ]
 }]
