@@ -58,7 +58,7 @@ export async function createAfterschool (grade, afterschool) {
       'request_start_date': afterschool['applyStartDate'],
       'request_end_date': afterschool['applyEndDate']
     })
-  } catch ({message, response: res}) {
+  } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
