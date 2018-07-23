@@ -54,7 +54,7 @@ export default {
       class="dets-list__otfb"
       @click.native="opened = true">
       <span class="dets-list__black">{{ item.title }}</span>
-      <span class="dets-list__black07">{{ item.speakerIdx }}</span>
+      <span class="dets-list__black07">{{ item.speakerName }}</span>
     </div>
     <div
       :opened="opened"
@@ -73,9 +73,9 @@ export default {
       :class="{
         'dets-list': true,
         'dets-list__otfb': true,
-        'dets-list__button': true,
-        'dets-list__full': item.maxCount === item.count,
-        'dets-list__applied': item.status === 'request'
+        'dets-list__cell--button': true,
+        'dets-list__cell--full': item.maxCount === item.count,
+        'dets-list__cell--applied': item.status === 'request'
       }"
       :title="item | dateRange"
       @click="toggleApply(item)">

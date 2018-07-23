@@ -4,7 +4,6 @@ const _Dets = struct.interface({
   idx: 'number',
   title: 'string',
   description: 'string',
-  speaker: 'string',
   request_start_date: 'string',
   request_end_date: 'string',
   day: 'string',
@@ -13,6 +12,9 @@ const _Dets = struct.interface({
   maxCount: 'number',
   targetGrade: 'number',
   count: 'number',
+  speakerIdx: 'string',
+  speakerSerial: 'string',
+  speakerName: 'string',
   status: 'string | null | undefined'
 })
 
@@ -28,6 +30,9 @@ export const Dets = dets => _Dets({
   room: dets['room'],
   maxCount: dets['max_of_count'],
   targetGrade: dets['target_grade'],
-  count: dets['count'],
+  count: dets['all_request_count'],
+  speakerIdx: dets['speaker_idx'],
+  speakerSerial: dets['speaker_serial'],
+  speakerName: dets['speaker_name'],
   status: dets['status']
 })

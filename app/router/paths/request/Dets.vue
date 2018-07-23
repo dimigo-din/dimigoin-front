@@ -68,6 +68,7 @@ export default {
           class="dets__addlist">
 
         </section>
+
       </template>
 
     </dimicard>
