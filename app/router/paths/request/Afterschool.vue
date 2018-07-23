@@ -1,5 +1,5 @@
 <script>
-import monent from 'moment'
+import moment from 'moment'
 import VueRecaptcha from 'vue-recaptcha'
 
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
@@ -14,8 +14,8 @@ export default {
 
   filters: {
     dateRange (item) {
-      monent.locale('ko')
-      const [a, b] = [monent(item.applyStartDate), monent(item.applyEndDate)]
+      moment.locale('ko')
+      const [a, b] = [moment(item.applyStartDate), moment(item.applyEndDate)]
       return `${a.fromNow()}에 시작 (${a.format('llll')})\n${b.fromNow()}에 마감 (${b.format('llll')})`
     }
   },

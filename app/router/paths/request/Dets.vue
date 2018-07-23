@@ -1,23 +1,33 @@
 <script>
-  import { dets } from '@/src/util'
-  export default {
-    name: 'RequestDets'
-    data () {
-      list: [],
+import moment from 'moment'
+
+import ContentWrapper from '@/router/partial/ContentWrapper.vue'
+import Detslist from '@/components/Detslist.vue'
+
+import { utilDets } from '@/src/util'
+import { apiDets } from '@/src/api'
+const { getStudentDets } = afterschool
+
+export default {
+  name: 'RequestDets',
+  components: { ContentWrapper, Detslist },
+
+  data () {
+    return {
+      detslist: [],
+      addlist: [],
       pending: false,
       currentTab: 0
-    },
-    computed: {
-      dets () { return dets },
-
-      currentList() {
-        return this.list.filter(item => item.dets === dets[this.currentTab].code)
-      }
-    },
-    methods: {
-
     }
-  }
+  },
+
+  async created () {
+    this.pending = true
+    this.detslist = await getStudentDets()
+    this.addlist = await getSpeakerDets()
+    this.pending = false
+  },
+}
 </script>
 
 <template>
@@ -28,17 +38,37 @@
 
     <dimi-card
       slot="main"
-      class="req-dets__main">
+      class="dets__main">
 
       <dimi-tab
         v-model="currentTab"
-        :tabs="dets.map(v => v.text )"/>
+        :tabs="['강의 수강 신청', '강의 개설 신청']"
+      />
 
       <div
         v-if="pending"
-        class="req-dets__loader-wrapper">
+        class="dets__loader-wrapper">
         <dimi-loader/>
       </div>
+
+      <template v-else>
+
+        <section
+          v-if="currentTab === 0"
+          class="dets__list">
+          <dets-list
+            v-for="(item, index) in detslist"
+            :key="`dets-${idx}`"
+            class="dets__row"
+            />
+        </section>
+
+        <section
+          v-if="currentTab === 1"
+          class="dets__addlist">
+
+        </section>
+      </template>
 
     </dimicard>
   </content-warpper>
