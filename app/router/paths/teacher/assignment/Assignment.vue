@@ -136,7 +136,7 @@ export default {
           <span
             class="assignor__plus"
             @click="modals.create = true">
-            <span class="icon-plus"/>수정하기
+            <span class="icon-plus"/>추가하기
           </span>
         </span>
       </span>
