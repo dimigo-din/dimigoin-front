@@ -1,5 +1,5 @@
 import axios from './axios'
-import { Dets } from '@/src/struct/dets'
+import { Dets, StudentDets } from '@/src/struct/dets'
 
 function tempValidation (dets) {
   const keys = ['title', 'description', 'request_start_date', 'request_end_date', 'day', 'time', 'room', 'max_of_count', 'target_grade']
@@ -89,7 +89,7 @@ export async function getGradeDets (grade) {
 export async function cancelDets (idx) {
   try {
     await axios.delete(`/dets/request/${idx}`)
-  } catch ({ message, response: res }){
+  } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
@@ -161,7 +161,6 @@ export async function changeSpeakerDets (idx, dets) {
         throw new Error('존재하지 않는 Dets 입니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-
     }
   }
 }
@@ -183,12 +182,12 @@ export async function deleteSpeakerDets (idx) {
 
 export async function getStudentDets () {
   try {
-    const res = await axios.get(`/dets/student`)
+    const res = await axios.get(`/dets/student/`)
     return res.data['dets'].map(StudentDets)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
+  } catch (err) {
+    console.error(err)
+    if (!err.response) throw new Error('네트워크에 문제가 있습니다.')
+    switch (err.response.status) {
       case 404:
         return []
       default:
@@ -220,7 +219,6 @@ export async function changeDets (idx, grade, dets) {
         throw new Error('Dets를 수정하던 중 문제가 발생했습니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-
     }
   }
 }
