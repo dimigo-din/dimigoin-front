@@ -1,7 +1,7 @@
 export default [
   {
     title: '신청',
-    description: '방과 후, 인강실, 상담',
+    description: '방과 후, 인강실, Dets',
     icon: 'icon-request',
     to: 'teacher/request'
   },

@@ -1,33 +1,9 @@
 import axios from './axios'
 import { Dets, StudentDets } from '@/src/struct/dets'
 
-function tempValidation (dets) {
-  const keys = ['title', 'description', 'request_start_date', 'request_end_date', 'day', 'time', 'room', 'max_of_count', 'target_grade']
-  for (const key of keys) {
-    if (!dets[key]) throw new Error('모든 입력란을 채워주세요')
-  }
-
-  const validDate = new Date(dets.request_start_date).getTime() + new Date(dets.request_end_date).getTime() + new Date(dets.time).getTime()
-  if (isNaN(validDate)) {
-    throw new Error('날짜를 모두 정확하게 채워주세요.')
-  }
-}
-
 export async function createDets (dets) {
-  tempValidation(dets)
-
   try {
-    await axios.post(`/dets/`, {
-      'title': dets['title'],
-      'description': dets['description'],
-      'request_start_date': dets['request_start_date'],
-      'request_end_date': dets['request_end_date'],
-      'day': dets['day'],
-      'time': dets['time'],
-      'room': dets['room'],
-      'max_of_count': dets['max_of_count'],
-      'target_grade': dets['target_grade']
-    })
+    await axios.post(`/dets/`, dets)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -40,7 +16,7 @@ export async function createDets (dets) {
   }
 }
 
-export async function delaccept (idx) {
+export async function rejectDets (idx) {
   try {
     await axios.delete(`/dets/accept/${idx}`)
   } catch ({ message, response: res }) {
@@ -55,7 +31,7 @@ export async function delaccept (idx) {
   }
 }
 
-export async function postaccpet (idx) {
+export async function acceptDets (idx) {
   try {
     await axios.post(`/dets/accept/${idx}`)
   } catch ({ message, response: res }) {
@@ -140,19 +116,9 @@ export async function getSpeakerDets () {
   }
 }
 
-export async function changeSpeakerDets (idx, dets) {
+export async function deleteSpeakerDets (idx) {
   try {
-    await axios.put(`/dets/speaker/${idx}`, {
-      'title': dets['title'],
-      'description': dets['description'],
-      'request_start_date': dets['startDate'],
-      'request_end_date': dets['endDate'],
-      'day': dets['day'],
-      'time': dets['time'],
-      'room': dets['room'],
-      'max_of_count': dets['maxCount'],
-      'target_grade': dets['targetGrade']
-    })
+    await axios.delete(`/dets/speaker/${idx}`)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -165,9 +131,9 @@ export async function changeSpeakerDets (idx, dets) {
   }
 }
 
-export async function deleteSpeakerDets (idx) {
+export async function changeSpeakerDets (idx, dets) {
   try {
-    await axios.delete(`/dets/speaker/${idx}`)
+    await axios.put(`/dets/speaker/${idx}`, dets)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
@@ -196,27 +162,15 @@ export async function getStudentDets () {
   }
 }
 
-export async function changeDets (idx, grade, dets) {
+export async function getDets (idx) {
   try {
-    await axios.put(`/dets/${idx}`, {
-      'title': dets['title'],
-      'description': dets['description'],
-      'request_start_date': dets['request_start_date'],
-      'request_end_date': dets['request_end_date'],
-      'day': dets['day'],
-      'time': dets['time'],
-      'room': dets['room'],
-      'max_of_count': dets['max_of_count'],
-      'target_grade': grade
-    })
+    const res = await axios.get(`/dets/${idx}`)
+    return res.data['dets'].map(Dets)
   } catch ({ message, response: res }) {
-    console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
-      case 403:
-        throw new Error('권한이 없습니다.')
-      case 500:
-        throw new Error('Dets를 수정하던 중 문제가 발생했습니다.')
+      case 404:
+        return []
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }
@@ -238,15 +192,27 @@ export async function deleteDets (idx) {
   }
 }
 
-export async function getDets (idx) {
+export async function changeDets (idx, grade, dets) {
   try {
-    const res = await axios.get(`/dets/${idx}`)
-    return res.data['dets'].map(Dets)
+    await axios.put(`/dets/${idx}`, {
+      'title': dets['title'],
+      'description': dets['description'],
+      'request_start_date': dets['request_start_date'],
+      'request_end_date': dets['request_end_date'],
+      'day': dets['day'],
+      'time': dets['time'],
+      'room': dets['room'],
+      'max_of_count': dets['max_of_count'],
+      'target_grade': grade
+    })
   } catch ({ message, response: res }) {
+    console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
-      case 404:
-        return []
+      case 403:
+        throw new Error('권한이 없습니다.')
+      case 500:
+        throw new Error('Dets를 수정하던 중 문제가 발생했습니다.')
       default:
         throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
     }

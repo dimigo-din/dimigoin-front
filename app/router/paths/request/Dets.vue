@@ -1,24 +1,18 @@
 <script>
-import moment from 'moment'
-import throwable from '@/mixins/throwable'
-
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
-
 import { dets } from '@/src/api'
 import { days } from '@/src/util/index'
-const { getStudentDets, applyDets, cancelDets, createDets, getSpeakerDets, changeSpeakerDets, deleteSpeakerDets } = dets
 
 export default {
   name: 'RequestDets',
+
   components: { ContentWrapper },
+
   filters: {
-    dateRange (item) {
-      moment.locale('ko')
-      const [a, b] = [moment(item.request_start_date), moment(item.request_end_date)]
-      return `${a.fromNow()}에 시작 (${a.format('llll')})\n${b.fromNow()}에 마감 (${b.format('llll')})`
+    filterTime (time) {
+      return '야자 ' + time + '타임'
     }
   },
-  mixins: [throwable],
 
   data () {
     return {
@@ -29,98 +23,91 @@ export default {
       pending: false,
       currentTab: 0,
       modals: {
-        creat: false,
+        create: false,
         edit: false
       },
       form: {
         title: '',
         description: '',
-        startDate: new Date(),
-        endDate: new Date(),
         day: 0,
-        time: 0,
+        time: null,
         room: '',
-        maxCount: '',
-        targetGrade: ''
+        maxCount: null,
+        targetGrade: null
       }
     }
   },
 
   computed: {
     days () {
-      return days
-    },
-    color (item) {
-      if (item.detsStatus === 'accept') {
-        return 'aloes'
-      } else if (item.detsStatus === 'reject') {
-        return 'orange'
-      } else if (item.detsStatus === 'wait') {
-        return 'gray'
-      }
+      return days.filter(v => v.idx < 5)
     }
   },
 
   async created () {
-    this.pending = true
-    this.list.dets = await getStudentDets()
-    this.list.add = await getSpeakerDets()
-    this.pending = false
+    this.refresh()
   },
 
   methods: {
+    color (color) {
+      if (color === 'accept') {
+        return 'aloes'
+      } else if (color === 'reject') {
+        return 'orange'
+      } else if (color === 'wait') {
+        return 'gray'
+      }
+    },
+
     async refresh () {
       this.pending = true
-      this.list.dets = await getStudentDets()
-      this.list.add = await getSpeakerDets()
+      this.list.dets = await dets.getStudentDets()
+      this.list.add = await dets.getSpeakerDets()
       this.pending = false
     },
 
-    async edit (dets) {
+    async editDets (parameter) {
       try {
-        await changeSpeakerDets(dets.idx, this.form)
+        await dets.changeSpeakerDets(parameter.idx, this.restructure(this.form))
         await this.$swal('수정되었습니다', 'success')
         this.closeModal()
       } catch (err) {
-        this.$_throwable_handleError(err)
+        this.$swal('이런!', err.message, 'error')
       }
       await this.refresh()
     },
 
-    async toggleApply (item) {
+    async toggleApply (parameter) {
       try {
-        if (item.status !== 'request') await applyDets(item)
-        else await cancelDets(item.idx)
+        if (parameter.status !== 'request') await dets.applyDets(parameter)
+        else await dets.cancelDets(parameter.idx)
       } catch (err) {
-        this.$_throwable_handleError(err)
+        this.$swal('이런!', err.message, 'error')
       }
-
       await this.refresh()
     },
 
-    async create () {
+    async createDets () {
       try {
-        await createDets(this.form)
+        await dets.createDets(this.restructure(this.form))
         await this.$swal('추가되었습니다', 'success')
         this.closeModal()
         await this.refresh()
       } catch (err) {
-        this.$_throwable_handleError(err)
+        this.$swal('이런!', err.message, 'error')
       }
     },
 
-    openEditModal (dets) {
-      this.modals.edit = dets
+    openEditModal (parameter) {
+      this.modals.edit = parameter
       this.form = {
-        title: dets['title'],
-        description: dets['description'],
-        startDate: dets['request_start_date'],
-        endDate: dets['request_end_date'],
-        day: dets['day'],
-        time: dets['time'],
-        room: dets['room'],
-        maxCount: dets['maxCount'],
-        targetGrade: dets['targetGrade']
+        title: parameter['title'],
+        description: parameter['description'],
+        day: days.filter(v => v.code === parameter['day'])[0].idx,
+        time: parameter['time'],
+        room: parameter['room'],
+        maxCount: parameter['maxCount'],
+        targetGrade: parameter['targetGrade']
       }
     },
 
@@ -132,16 +119,15 @@ export default {
       this.form = {
         title: '',
         description: '',
-        startDate: new Date(),
-        endDate: new Date(),
         day: 0,
-        time: 0,
+        time: null,
         room: '',
-        maxCount: '',
-        targetGrade: ''
+        maxCount: null,
+        targetGrade: null
       }
     },
-    async deleteDets (dets) {
+
+    async deleteDets (parameter) {
       if (await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
@@ -152,12 +138,30 @@ export default {
         showCancelButton: true
       })) {
         try {
-          await deleteSpeakerDets(dets.idx)
+          await dets.deleteSpeakerDets(parameter.idx)
           this.$swal('삭제되었습니다', 'success')
         } catch (err) {
-          this.$_throwable_handleError(err)
+          this.$swal('이런!', err.message, 'error')
         }
         await this.refresh()
+      }
+    },
+
+    getDayTextByCode (code) {
+      return this.days.filter(v => v.code === code)[0].text
+    },
+
+    restructure (parameter) {
+      return {
+        'title': parameter.title,
+        'description': parameter.description,
+        'request_start_date': '2018-08-06T19:50:00.000',
+        'request_end_date': '2019-01-31T23:00:00.000',
+        'day': days[parameter.day].code,
+        'time': parseInt(parameter.time),
+        'room': parameter.room,
+        'max_of_count': parseInt(parameter.maxCount),
+        'target_grade': parseInt(parameter.targetGrade)
       }
     }
   }
@@ -170,11 +174,12 @@ export default {
       <span class="icon-dets-lg"/>Dets 신청
       <span
         v-if="currentTab === 1"
-        class="dets__add"
-        @click="modal.add = true">
+        class="dets__create"
+        @click="modals.create = true">
         <span class="icon-plus"/>신청하기
       </span>
     </h1>
+
     <dimi-card
       slot="main"
       class="dets__main">
@@ -182,233 +187,376 @@ export default {
         v-model="currentTab"
         :tabs="['강의 수강 신청', '강의 개설 신청']"
       />
+
       <div
         v-if="pending"
         class="dets__loader-wrapper">
         <dimi-loader/>
       </div>
+
       <template v-else>
         <section
-          v-if="currentTab === 0"
-          class="dets__list">
+          v-if="currentTab === 0">
           <div
-            v-for="(item, index) in list.dets"
-            :key="`detslist-${index}`"
-            class="dets-list">
+            v-for="(dets, index) in list.dets"
+            :key="`detslist-${index}`">
+
             <div
-              class="dets-list__otfb"
-              @click="item.open = !item.open">
-              <span class="dets-list__black">{{ item.title }}</span>
-              <span class="dets-list__black07">{{ item.speakerName }}</span>
-              <span class="icon-arrow-down"/>
+              class="dets__dets"
+              @click="dets.open = !dets.open">
+              <span class="dets__item dets__title">{{ dets.title }}</span>
+              <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
+              <div class="dets__item dets__expand">
+                <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
+              </div>
             </div>
+
             <div
-              v-if="item.open"
-              class="dets-list__black80">
-              <span class="dets-list__otfr">{{ item.description }}</span>
-              <div>
-                <span class="dets-list__otfb">강의실</span>
-                <span class="dets-list__otfr">{{ item.room }}</span>
-              </div>
-              <div>
-                <span class="dets-list__otfb">강의시각</span>
-                <span class="dets-list__otfr">{{ item.day }} {{ item.time }}</span>
-              </div>
+              v-if="dets.open"
+              class="dets__open">
+              <span class="dets__item dets__description">{{ dets.description }}</span>
               <div
-                :class="{
-                  'dets-list': true,
-                  'dets-list__otfb': true,
-                  'dets-list__cell--button': true,
-                  'dets-list__cell--full': item.maxCount === item.count,
-                  'dets-list__cell--applied': item.status === 'request'
-                }"
-                :title="item | dateRange"
-                @click="toggleApply(item)">
-                <template v-if="item.status === 'request'">
-                  <span class="icon-cross"/> 신청취소
-                </template>
-                <template v-else>
-                  <template v-if="item.maxCount > item.count">
-                    <span class="icon-ok"/> 신청하기
+                class="dets__down">
+
+                <div>
+                  <span class="dets__item">강의실</span>
+                  <span class="dets__item">{{ dets.room }}</span>
+                  <span class="dets__item">강의시각</span>
+                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                  <span class="dets__item">인원</span>
+                  <span class="dets__item">{{ dets.count }} / {{ dets.maxCount }} 명</span>
+                </div>
+
+                <div
+                  :class="{
+                    'dets__item': true,
+                    'dets__item--button': true,
+                    'dets__item--full': dets.maxCount === dets.count,
+                    'dets__item--applied': dets.status === 'request'
+                  }"
+                  :title="dets | dateRange"
+                  @click="toggleApply(dets)">
+                  <template v-if="dets.status === 'request'">
+                    <span class="icon-cross"/> 신청취소
                   </template>
                   <template v-else>
-                    <span class="icon-alert"/> 신청불가
+                    <template v-if="dets.maxCount > dets.count">
+                      <span class="icon-ok"/> 신청하기
+                    </template>
+                    <template v-else>
+                      <span class="icon-alert"/> 신청불가
+                    </template>
                   </template>
-                </template>
+                </div>
+
               </div>
             </div>
           </div>
         </section>
+
         <section
-          v-if="currentTab === 1"
-          class="dets__addlist">
+          v-if="currentTab === 1">
           <div
-            v-for="(item, index) in list.add"
-            :key="`detslist-${index}`"
-            class="dets-list">
+            v-for="(dets, index) in list.add"
+            :key="`detslist-${index}`">
+
             <div
-              class="dets-list__otfb"
-              @click="item.open = !item.open">
+              class="dets__dets"
+              @click="dets.open = !dets.open">
               <dimi-badge
-                :color="color"
+                :color="color(dets.detsStatus)"
                 class="dets__badge">
-                <template v-if="item.detsStatus === 'accept'">통과</template>
-                <template v-if="item.detsStatus === 'reject'">탈락</template>
-                <template v-if="item.detsStatus === 'wait'">보류</template>
+                <template v-if="dets.detsStatus === 'accept'">통과</template>
+                <template v-if="dets.detsStatus === 'reject'">탈락</template>
+                <template v-if="dets.detsStatus === 'wait'">보류</template>
               </dimi-badge>
-              <span class="dets-list__black">{{ item.title }}</span>
-              <span class="dets-list__black07">{{ item.speakerName }}</span>
+              <span class="dets__item dets__title">{{ dets.title }}</span>
+              <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
+              <div class="dets__item dets__expand">
+                <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
+              </div>
             </div>
+
             <div
-              v-if="item.open"
-              class="dets-list__black80">
-              <span class="dets-list__otfr">{{ item.description }}</span>
-              <div>
-                <span class="dets-list__otfb">강의실</span>
-                <span class="dets-list__otfr">{{ item.room }}</span>
-              </div>
-              <div>
-                <span class="dets-list__otfb">강의시각</span>
-                <span class="dets-list__otfr">{{ item.day }} {{ item.time }}</span>
-              </div>
-              <div class="dets__edit">
+              v-if="dets.open"
+              class="dets__open">
+              <span class="dets__item dets__description">{{ dets.description }}</span>
+              <div
+                class="dets__down">
+
+                <div>
+                  <span class="dets__item">강의실</span>
+                  <span class="dets__item">{{ dets.room }}</span>
+                  <span class="dets__item">강의시각</span>
+                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                  <span class="dets__item">인원</span>
+                  <span class="dets__item">{{ dets.maxCount }} 명</span>
+                </div>
+
                 <div
-                  class="dets__edit"
-                  @click="openEditModal(item)">
+                  class="dets__item--button"
+                  @click="openEditModal(dets)">
                   <span class="icon-edit"/> 수정하기
                 </div>
+
                 <div
-                  class="dets__cancel"
-                  @click="deleteDets(item)">
+                  class="dets__item--button dets__item--applied"
+                  @click="deleteDets(dets)">
                   <span class="icon-cross"/> 취소하기
                 </div>
+
               </div>
             </div>
           </div>
         </section>
       </template>
+
+      <dimi-modal
+        :opened="modals.create"
+        class="modal__modal"
+        @close="closeModal">
+        <h3 class="modal__title">강의 개설 신청</h3>
+
+        <div class="modal__field">
+          <label class="modal__label">강의명</label>
+          <dimi-input
+            id="dets-title"
+            v-model="form.title"
+            placeholder="강의의 제목을 기입하세요"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">설명</label>
+          <dimi-input
+            id="dets-description"
+            v-model="form.description"
+            placeholder="강의의 주제을 기입하세요"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label modal__wday">요일</label>
+          <dimi-dropdown
+            :items="days.map(v => v.text)"
+            v-model="form.day"
+            class="modal__day"/>
+          <label class="modal__label">강의실</label>
+          <dimi-input
+            id="dets-room"
+            v-model="form.room"
+            placeholder="디지털컨텐츠실"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">총인원</label>
+          <dimi-input
+            id="dets-max"
+            v-model="form.maxCount"
+            class="modal__leftInput"
+            placeholder="15"/>
+          <label class="modal__label">대상 학년</label>
+          <dimi-input
+            id="dets-grade"
+            v-model="form.targetGrade"
+            class="modal__leftInput"
+            placeholder="1"/>
+          <label class="modal__label">야자시간</label>
+          <dimi-input
+            id="dets-time"
+            v-model="form.time"
+            placeholder="2"/>
+        </div>
+
+        <div class="modal__field">
+          <div class="modal__button">
+            <dimi-button @click="createDets">신청하기</dimi-button>
+          </div>
+        </div>
+
+      </dimi-modal>
+
+      <dimi-modal
+        :opened="modals.edit"
+        class="modal__modal"
+        @close="closeModal">
+        <h3 class="modal__title">강의 개설 수정</h3>
+
+        <div class="modal__field">
+          <label class="modal__label">강의명</label>
+          <dimi-input
+            id="dets-title"
+            v-model="form.title"
+            placeholder="강의의 제목을 기입하세요"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">설명</label>
+          <dimi-input
+            id="dets-description"
+            v-model="form.description"
+            placeholder="강의의 주제을 기입하세요"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">요일</label>
+          <dimi-dropdown
+            :items="days.map(v => v.text)"
+            v-model="form.day"
+            class="modal__day"/>
+          <label class="modal__label">강의실</label>
+          <dimi-input
+            id="dets-room"
+            v-model="form.room"
+            placeholder="디지털컨텐츠실"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">총인원</label>
+          <dimi-input
+            id="dets-max"
+            v-model="form.maxCount"
+            class="modal__leftInput"
+            placeholder="15"/>
+          <label class="modal__label">대상 학년</label>
+          <dimi-input
+            id="dets-grade"
+            v-model="form.targetGrade"
+            class="modal__leftInput"
+            placeholder="1"/>
+          <label class="modal__label">야자시간</label>
+          <dimi-input
+            id="dets-time"
+            v-model="form.time"
+            placeholder="2"/>
+        </div>
+
+        <div class="modal__field">
+          <div class="modal__button">
+            <dimi-button @click="editDets(modals.edit)">수정하기</dimi-button>
+          </div>
+        </div>
+
+      </dimi-modal>
     </dimi-card>
-    <dimi-modal
-      :opened="modals.creat"
-      class="dets__modal"
-      @close="closeModal">
-      <h3 class="dets__title">강의 개설 신청</h3>
-      <div class="dets__form-field">
-        <label class="dets__form-label">강의명</label>
-        <dimi-input
-          id="dets-title"
-          v-model="form.title"
-          class="dets__form-input"
-          placeholder="강의의 제목을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">설명</label>
-        <dimi-input
-          id="dets-description"
-          v-model="form.description"
-          class="dets__form-input"
-          placeholder="강의의 주제을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">요일</label>
-        <dimi-dropdown
-          :items="days.map(v => v.text)"
-          :dropup="true"
-          v-model="form.day"
-          class="dets__days"/>
-        <label class="dets__form-label">강의실</label>
-        <dimi-input
-          id="dets-room"
-          v-model="form.room"
-          class="dets__form-input"
-          placeholder="희망하는 강의실을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">총인원</label>
-        <dimi-input
-          id="dets-max"
-          v-model="form.maxCount"
-          class="dets__form-input"
-          placeholder="희망하는 총 인원을 기입하세요"/>
-        <label class="dets__form-label">대상 학년</label>
-        <dimi-input
-          id="dets-grade"
-          v-model="form.targetGrade"
-          class="dets__form-input"
-          placeholder="강의의 대상 학년을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">시작일</label>
-        <dimi-date-input v-model="form.startDate"/>
-        <label class="dets__form-label">종료일</label>
-        <dimi-date-input v-model="form.endDate"/>
-      </div>
-      <div class="dets__submit">
-        <dimi-button @click="create">신청하기</dimi-button>
-      </div>
-    </dimi-modal>
-    <dimi-modal
-      :opened="modals.edit"
-      class="dets__modal"
-      @close="closeModal">
-      <h3 class="dets__title">강의 개설 수정</h3>
-      <div class="dets__form-field">
-        <label class="dets__form-label">강의명</label>
-        <dimi-input
-          id="dets-title"
-          v-model="form.title"
-          class="dets__form-input"
-          placeholder="강의의 제목을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">설명</label>
-        <dimi-input
-          id="dets-description"
-          v-model="form.description"
-          class="dets__form-input"
-          placeholder="강의의 주제을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">요일</label>
-        <dimi-dropdown
-          :items="days.map(v => v.text)"
-          :dropup="true"
-          v-model="form.day"
-          class="dets__days"/>
-        <label class="dets__form-label">강의실</label>
-        <dimi-input
-          id="dets-room"
-          v-model="form.room"
-          class="dets__form-input"
-          placeholder="희망하는 강의실을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">총인원</label>
-        <dimi-input
-          id="dets-max"
-          v-model="form.maxCount"
-          class="dets__form-input"
-          placeholder="희망하는 총 인원을 기입하세요"/>
-        <label class="dets__form-label">대상 학년</label>
-        <dimi-input
-          id="dets-grade"
-          v-model="form.targetGrade"
-          class="dets__form-input"
-          placeholder="강의의 대상 학년을 기입하세요"/>
-      </div>
-      <div class="dets__form-field">
-        <label class="dets__form-label">시작일</label>
-        <dimi-date-input v-model="form.startDate"/>
-        <label class="dets__form-label">종료일</label>
-        <dimi-date-input v-model="form.endDate"/>
-      </div>
-      <div class="dets__submit">
-        <dimi-button @click="edit(modals.edit)">수정하기</dimi-button>
-      </div>
-    </dimi-modal>
   </content-wrapper>
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
 
+.dets {
+  &__loader-wrapper {
+    align-items: center;
+    display: flex;
+    height: 35vh;
+    justify-content: center;
+  }
+
+  &__badge {
+    display: inline-block;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+
+  &__main {
+    padding-top: 0;
+  }
+
+  &__create {
+    color: $red;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    margin-right: 0.5em;
+    margin-top: 1em;
+  }
+
+  &__dets {
+    align-items: center;
+    border-top: 1px solid $gray-lighter;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    padding: 24px;
+  }
+
+  &__item {
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    margin-right: 16px;
+  }
+
+  &__title {
+    color: $black !important;
+    flex: 1;
+  }
+
+  &__expand {
+    margin-left: 16px;
+  }
+
+  &__open {
+    align-items: stretch;
+    border-top: 1px solid $gray-lighter;
+    cursor: default;
+    justify-content: flex-start;
+    padding: 24px;
+  }
+
+  &__down {
+    display: flex;
+    padding-top: 24px;
+  }
+
+  &__description {
+    flex-direction: column;
+    line-height: 1.8;
+  }
+
+  &__item--button {
+    color: $pink;
+    cursor: pointer;
+  }
+
+  &__item--full {
+    color: $mustard;
+  }
+
+  &__item--applied {
+    color: $gray-light;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__field {
+    align-items: center;
+    display: flex;
+    margin: 1.5rem 0;
+  }
+
+  &__label {
+    min-width: 6em;
+  }
+
+  &__leftInput {
+    padding-right: 10px;
+  }
+
+  &__day {
+    padding-left: 60px;
+    padding-right: 70px;
+  }
+
+  &__button {
+    padding-top: 20px;
+    position: absolute;
+    right: 25px;
+  }
+}
 </style>
