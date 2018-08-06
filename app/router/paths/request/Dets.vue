@@ -217,8 +217,8 @@ export default {
               <span class="dets__item dets__description">{{ dets.description }}</span>
               <div
                 class="dets__down">
-
-                <div>
+                <div
+                  class="dets__detail">
                   <span class="dets__item">강의실</span>
                   <span class="dets__item">{{ dets.room }}</span>
                   <span class="dets__item">강의시각</span>
@@ -226,7 +226,6 @@ export default {
                   <span class="dets__item">인원</span>
                   <span class="dets__item">{{ dets.count }} / {{ dets.maxCount }} 명</span>
                 </div>
-
                 <div
                   :class="{
                     'dets__item': true,
@@ -284,7 +283,8 @@ export default {
               <div
                 class="dets__down">
 
-                <div>
+                <div
+                  class="dets__detail">
                   <span class="dets__item">강의실</span>
                   <span class="dets__item">{{ dets.room }}</span>
                   <span class="dets__item">강의시각</span>
@@ -300,7 +300,7 @@ export default {
                 </div>
 
                 <div
-                  class="dets__item--button dets__item--applied"
+                  class="dets__item--button dets__item--cancel"
                   @click="deleteDets(dets)">
                   <span class="icon-cross"/> 취소하기
                 </div>
@@ -513,6 +513,10 @@ export default {
     line-height: 1.8;
   }
 
+  &__detail {
+    flex: 1;
+  }
+
   &__item--button {
     color: $pink;
     cursor: pointer;
@@ -524,6 +528,11 @@ export default {
 
   &__item--applied {
     color: $gray-light;
+  }
+
+  &__item--cancel {
+    color: $gray-light;
+    padding-left: 10px;
   }
 }
 

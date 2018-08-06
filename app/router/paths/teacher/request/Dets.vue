@@ -137,13 +137,13 @@ export default {
               <span class="dets__item dets__description">{{ dets.description }}</span>
               <div
                 class="dets__down">
-
-                <span class="dets__item">강의실</span>
-                <span class="dets__item">{{ dets.room }}</span>
-
-                <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
-
+                <div
+                  class="dets__detail">
+                  <span class="dets__item">강의실</span>
+                  <span class="dets__item">{{ dets.room }}</span>
+                  <span class="dets__item">강의시각</span>
+                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                </div>
                 <div
                   class="dets__item--button"
                   @click="accept(dets)">
@@ -192,13 +192,13 @@ export default {
               <span class="dets__item dets__description">{{ dets.description }}</span>
               <div
                 class="dets__down">
-
-                <span class="dets__item">강의실</span>
-                <span class="dets__item">{{ dets.room }}</span>
-
-                <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
-
+                <div
+                  class="dets__detail">
+                  <span class="dets__item">강의실</span>
+                  <span class="dets__item">{{ dets.room }}</span>
+                  <span class="dets__item">강의시각</span>
+                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                </div>
                 <div
                   class="dets__item--button"
                   @click="accept(dets)">
@@ -247,13 +247,13 @@ export default {
               <span class="dets__item dets__description">{{ dets.description }}</span>
               <div
                 class="dets__down">
-
-                <span class="dets__item">강의실</span>
-                <span class="dets__item">{{ dets.room }}</span>
-
-                <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
-
+                <div
+                  class="dets__detail">
+                  <span class="dets__item">강의실</span>
+                  <span class="dets__item">{{ dets.room }}</span>
+                  <span class="dets__item">강의시각</span>
+                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                </div>
                 <div
                   class="dets__item--button"
                   @click="accept(dets)">
@@ -348,6 +348,10 @@ export default {
     line-height: 1.8;
   }
 
+  &__detail {
+    flex: 1;
+  }
+
   &__item--button {
     color: $pink;
     cursor: pointer;
@@ -355,6 +359,7 @@ export default {
 
   &__item--reject {
     color: $gray-light;
+    padding-left: 10px;
   }
 }
 </style>
