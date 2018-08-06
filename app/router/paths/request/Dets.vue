@@ -233,7 +233,6 @@ export default {
                     'dets__item--full': dets.maxCount === dets.count,
                     'dets__item--applied': dets.status === 'request'
                   }"
-                  :title="dets | dateRange"
                   @click="toggleApply(dets)">
                   <template v-if="dets.status === 'request'">
                     <span class="icon-cross"/> 신청취소

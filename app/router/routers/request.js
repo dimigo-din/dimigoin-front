@@ -4,6 +4,7 @@ import Circle from '@/router/paths/request/Circle.vue'
 import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
 import Ingang from '@/router/paths/request/Ingang.vue'
 import Dets from '@/router/paths/request/Dets.vue'
+import Counsel from '@/router/paths/request/Counsel.vue'
 
 export default [{
   path: '/request',
@@ -30,7 +31,8 @@ export default [{
     {
       path: 'counsel',
       name: 'request/counsel',
-      meta: { title: '신청 > 상담 신청', draft: true }
+      component: Counsel,
+      meta: { title: '신청 > 상담 신청' }
     },
     {
       path: 'ingang',
