@@ -88,6 +88,11 @@ export default {
 
     <h1 slot="header">
       <span class="icon-dets-lg"/>Dets 신청 관리
+      <span
+        onclick="location.href='https://api.dimigo.in/dets/excel'"
+        class="dets__create">
+        <span class="icon-long-arrow-down"/>엑셀 다운로드
+      </span>
     </h1>
 
     <dimi-card
@@ -298,6 +303,14 @@ export default {
 
   &__create {
     color: $red;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    margin-right: 0.5em;
+    margin-top: 1em;
+  }
+
+  &__create {
     cursor: pointer;
     float: right;
     font-size: 16px;
