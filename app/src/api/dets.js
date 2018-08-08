@@ -16,36 +16,6 @@ export async function createDets (dets) {
   }
 }
 
-export async function rejectDets (idx) {
-  try {
-    await axios.delete(`/dets/accept/${idx}`)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 500:
-        throw new Error('Data를 거부하다가 터짐')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-
-export async function acceptDets (idx) {
-  try {
-    await axios.post(`/dets/accept/${idx}`)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 500:
-        throw new Error('Data를 거부하다가 터짐')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-
 export async function getGradeDets (grade) {
   try {
     const res = await axios.get(`/dets/grade/${grade}`)
@@ -100,52 +70,6 @@ export async function applyDets (idx) {
   }
 }
 
-export async function getSpeakerDets () {
-  try {
-    const res = await axios.get(`/dets/speaker`)
-    return res.data['dets'].map(Dets)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 404:
-        return []
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-
-export async function deleteSpeakerDets (idx) {
-  try {
-    await axios.delete(`/dets/speaker/${idx}`)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 404:
-        throw new Error('존재하지 않는 Dets 입니다.')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-
-export async function changeSpeakerDets (idx, dets) {
-  try {
-    await axios.put(`/dets/speaker/${idx}`, dets)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 404:
-        throw new Error('존재하지 않는 Dets 입니다.')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
-}
-
 export async function getStudentDets () {
   try {
     const res = await axios.get(`/dets/student/`)
@@ -192,19 +116,9 @@ export async function deleteDets (idx) {
   }
 }
 
-export async function changeDets (idx, grade, dets) {
+export async function changeDets (idx, dets) {
   try {
-    await axios.put(`/dets/${idx}`, {
-      'title': dets['title'],
-      'description': dets['description'],
-      'request_start_date': dets['request_start_date'],
-      'request_end_date': dets['request_end_date'],
-      'day': dets['day'],
-      'time': dets['time'],
-      'room': dets['room'],
-      'max_of_count': dets['max_of_count'],
-      'target_grade': grade
-    })
+    await axios.put(`/dets/${idx}`, dets)
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')

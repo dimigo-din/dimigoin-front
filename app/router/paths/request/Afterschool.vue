@@ -66,7 +66,7 @@ export default {
 
     async toggleApply (item) {
       try {
-        if (item.status !== 'apply') await this.apply(item)
+        if (item.status === null) await this.apply(item)
         else await cancelAfterschool(item.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -98,7 +98,7 @@ export default {
 <template>
   <content-wrapper class="req-afsc">
     <h1 slot="header">
-      <span class="icon-ball"/>2018년 상반기 방과 후 활동 신청
+      <span class="icon-ball"/>2018년 하반기 방과 후 활동 신청
       <span
         class="req-afsc__refresh"
         @click="refresh">새로고침</span>
@@ -139,13 +139,13 @@ export default {
                 'req-afsc__cell': true,
                 'req-afsc__cell--button': true,
                 'req-afsc__cell--full': item.capacity === item.count,
-                'req-afsc__cell--applied': item.status === 'apply'
+                'req-afsc__cell--applied': item.status === 'request'
               }"
               :title="item | dateRange"
               @click="toggleApply(item)">
 
               <template v-if="applied">
-                <template v-if="item.status === 'apply'">
+                <template v-if="item.status === 'request'">
                   <span class="icon-cross"/> 신청취소
                 </template>
               </template>
