@@ -40,7 +40,7 @@ export default {
 
     async toggleApply (parameter) {
       try {
-        if (parameter.status !== 'request') await dets.applyDets(parameter)
+        if (parameter.status !== 'request') await dets.applyDets(parameter.idx)
         else await dets.cancelDets(parameter.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')

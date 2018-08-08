@@ -69,7 +69,7 @@ export default {
   methods: {
     async updateAll () {
       for (const grade of [1, 2, 3]) {
-        this.afterschools[grade - 1] = (await afterschool.getGradeAfterschool(grade))
+        this.afterschools[grade - 1] = await afterschool.getGradeAfterschool(grade)
       }
       this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
       this.afterschools = Object.assign({}, this.afterschools)

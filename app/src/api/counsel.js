@@ -7,6 +7,11 @@ export async function getCounsel () {
   return counsel.map(Counsel)
 }
 
+export async function getAdiminCounsel () {
+  const { counsel } = await magician(() => axios.get(`/counsel/admin`), {})
+  return counsel.map(Counsel)
+}
+
 export async function addCounsel () {
   await magician(() => axios.get(`/counsel/cron`), {
     404: () => new Error('상담신청이 없습니다')

@@ -38,7 +38,7 @@ export default {
     },
 
     applied () {
-      return this.currentList.some(item => item.status === 'apply')
+      return this.currentList.some(item => item.status === 'request')
     }
   },
 

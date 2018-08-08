@@ -39,7 +39,7 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await counsel.getCounsel()
+      this.list = await counsel.getAdminCounsel()
       this.pending = false
     }
   }
