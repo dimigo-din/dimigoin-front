@@ -8,6 +8,23 @@ export default {
 
   components: { ContentWrapper },
 
+  filters: {
+    filterTime (time) {
+      const month = moment(time).format('MM')
+      const date = moment(time).format('DD')
+      const day = moment(time).format('dddd')
+      const hour = moment(time).format('hh')
+      const minute = moment(time).format('mm')
+      const sejong = day === 'Wendnesday' ? '수요일' : '금요일'
+      return sejong + ' ( ' + month + '월 ' + date + '일 ) ' + hour + '시 ' + minute + '분 ~ '
+    },
+    filterEndTime (time) {
+      const hour = moment(time).format('hh')
+      const minute = moment(time).format('mm')
+      return hour + '시 ' + minute + '분'
+    }
+  },
+
   data () {
     return {
       pending: false,
@@ -27,22 +44,16 @@ export default {
       this.pending = false
     },
 
-    async toggleApply (idx) {
+    async toggleApply (parameter) {
       try {
-        if (idx < 0) await counsel.applyCounsel(idx)
-        else await counsel.cancelCounsel(idx)
+        if (parameter.applied !== 'applied') await counsel.applyCounsel(parameter.idx)
+        else await counsel.cancelCounsel(parameter.idx)
+        this.$swal('성공하였습니다', 'success')
       } catch (err) {
-        this.$swal('이런', err.message, 'err')
+        this.$swal('이런', err.message, 'error')
       } finally {
         await this.refresh()
       }
-    },
-
-    async printTime (startDate, endDate) {
-      moment.local('ko')
-      const start = moment(startDate)
-      const end = moment(endDate)
-      return start.isoWeekDay + '(' + start.month + '월' + start.day + '일)' + start.hour + '시' + start.minute + '분 ~' + end.hour + '시' + end.hour + '분'
     }
   }
 }
@@ -91,42 +102,50 @@ export default {
               - 상담을 수업시간에 진행할 경우 보호자의 동의가 필요하며, 이에 필요한 보호자 동의서는 상담 신청서와 마찬가지로 이 페이지의 하단에서 받을 수 있습니다.<br>- 상담 신청과 상담 내용을 비롯한 상담 관련 정보는 모두 비밀엄수를 보장합니다.
             </div>
           </div>
+          <div
+            class="counsel__buttons">
+            <dimi-button
+              href="https://www.naver.com">보호자 동의서 다운로드</dimi-button>
+            <dimi-button
+              href="https://www.google.com">상담 신청서 다운로드</dimi-button>
+          </div>
         </section>
         <section
           v-if="currentTab === 1">
           <div class="counsel__field">
             <div class="counsel__item">
-              진로 상담은 대학 진학 ·고졸 취업과 같이 상담자의 진로를 주제로 교사 남승완께서 진행하는 상담입니다. 매주 수요일·금요일에 상담 신청자에 한에 본교무실(본관 1층)에서 진행됩니다.
+              진로 상담은 대학 진학 ·고졸 취업과 같이 상담자의 진로를 주제로 교사 남승완께서 진행하는 상담입니다. 매주 수요일·금요일에 상담 신청자에 한하여 본교무실(본관 1층)에서 진행됩니다.
             </div>
           </div>
           <div class="counsel__field">
             <div class="counsel__title">
               신청방법
             </div>
-            <div class="counsel__item">
-              아래의 항목에서 원하는 일시에 진행되는 상담을 신청하고, 상담하고 싶은 주제 혹은 내용에 대해 다음의 이메일 주소로 메일을보냅니다 :<br>nsw55@naver.com
+            <div class="counsel__item counsel_end">
+              아래의 항목에서 원하는 일시에 진행되는 상담을 신청하고, 상담하고 싶은 주제 혹은 내용에 대해 다음의 이메일 주소로 메일을 보냅니다 :<br>nsw55@naver.com
             </div>
           </div>
           <div
-            v-for="(counsel, index) in list"
-            :key="`counsel-${index}`">
-            <div class="list__list">
-              <span class="list__title">
-                {{ printTime(counsel.startDate, counsel.endDate) }}
-              </span>
-              <!--
+            class="list__top">
+            <div
+              v-for="(counsel, index) in list"
+              :key="`counsel-${index}`">
+              <div class="list__list">
+                <span class="list__title">
+                  {{ counsel.startDate | filterTime }}{{ counsel.endDate | filterEndTime }}
+                </span>
                 <div
                   :class="{
                     'list__button': true,
-                    'list__full': dets.maxCount === dets.count,
-                    'list__applied':
+                    'list__full': counsel.caniapplied === 'no',
+                    'list__applied': counsel.applied === 'applied'
                   }"
-                  @click="toggleApply(counsel.idx)">
-                  <template v-if="dets.status === 'request'">
+                  @click="toggleApply(counsel)">
+                  <template v-if="counsel.applied === 'applied'">
                     <span class="icon-cross"/> 신청취소
                   </template>
                   <template v-else>
-                    <template v-if="dets.maxCount > dets.count">
+                    <template v-if="counsel.caniapplied === 'yes'">
                       <span class="icon-ok"/> 신청하기
                     </template>
                     <template v-else>
@@ -134,7 +153,7 @@ export default {
                     </template>
                   </template>
                 </div>
-              -->
+              </div>
             </div>
           </div>
         </section>
@@ -162,6 +181,7 @@ export default {
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    line-height: 1.5em;
     padding: 16px 0;
   }
 
@@ -171,9 +191,17 @@ export default {
     font-weight: $font-weight-bold;
     padding-top: 16px;
   }
+
+  &__buttons {
+    text-align: right;
+  }
 }
 
 .list {
+  &__top {
+    padding-top: 32px;
+  }
+
   &__list {
     align-items: center;
     border-top: 1px solid $gray-lighter;

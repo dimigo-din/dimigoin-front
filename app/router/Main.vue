@@ -5,6 +5,7 @@ import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
 import restaurance from 'restaurance'
+import { notice } from '@/src/api'
 
 export default {
   name: 'Main',
@@ -12,7 +13,8 @@ export default {
 
   data: () => ({
     photoCDN: process.env.DIMIGO_API_URL + '/user_photo/',
-    hos: (1 + new Date().getMonth()) === 4 && new Date().getDate() === 1
+    hos: (1 + new Date().getMonth()) === 4 && new Date().getDate() === 1,
+    notice: ''
   }),
 
   computed: {
@@ -34,6 +36,7 @@ export default {
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
+      this.notice = (await notice.getLatestNotice())[0].desc
     } catch (err) {
       console.error(err)
     }
@@ -116,11 +119,8 @@ export default {
           <dimi-card
             class="info__notice info-section__content"
             shadow>
-            <ul>
-              <li>새로운 디미고인에 오신 것을 환영합니다! &ndash; v{{ pkg.version }}</li>
-              <li>디미고인은 인터넷 익스플로러(IE)를 지원하지 않습니다.</li>
-              <li>프로필 설정 페이지에 문제가 있다면 다시 로그인하세요.</li>
-            </ul>
+            <span
+              v-html="notice"/>
           </dimi-card>
         </section>
       </div>
