@@ -1,21 +1,19 @@
 <script>
 import moment from 'moment'
-import VueRecaptcha from 'vue-recaptcha'
+import { afterschool } from '@/src/api'
+import { days } from '@/src/util'
 
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
-
-import { days } from '@/src/util'
-import { afterschool } from '@/src/api'
-const { getAfterschools, applyAfterschool, cancelAfterschool } = afterschool
+import VueRecaptcha from 'vue-recaptcha'
 
 export default {
   name: 'RequestAfterschool',
-  components: { VueRecaptcha, ContentWrapper },
+  components: { ContentWrapper, VueRecaptcha },
 
   filters: {
     dateRange (item) {
       moment.locale('ko')
-      const [a, b] = [moment(item.applyStartDate), moment(item.applyEndDate)]
+      const [a, b] = [moment(item.startDate), moment(item.endDate)]
       return `${a.fromNow()}에 시작 (${a.format('llll')})\n${b.fromNow()}에 마감 (${b.format('llll')})`
     }
   },
@@ -51,7 +49,7 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await getAfterschools()
+      this.list = await afterschool.getStudentAfterschool()
       this.pending = false
     },
 
@@ -67,7 +65,7 @@ export default {
     async toggleApply (item) {
       try {
         if (item.status === null) await this.apply(item)
-        else await cancelAfterschool(item.idx)
+        else await afterschool.cancelAfterschool(item.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -83,7 +81,7 @@ export default {
       }
 
       try {
-        await applyAfterschool(item.idx, this.captchaResponse)
+        await afterschool.applyAfterschool(item.idx, this.captchaResponse)
       } catch (e) {
         throw e
       } finally {
@@ -130,15 +128,15 @@ export default {
             <td class="req-afsc__cell req-afsc__cell--name">{{ item.name }}</td>
             <td class="req-afsc__cell">{{ item.teacherName }}</td>
             <td
-              :title="`${item.count}/${item.capacity}`"
+              :title="`${item.count}/${item.maxCount}`"
               class="req-afsc__cell">
-              {{ (item.capacity - item.count) + '명 남음' }}
+              {{ (item.maxCount - item.count) + '명 남음' }}
             </td>
             <td
               :class="{
                 'req-afsc__cell': true,
                 'req-afsc__cell--button': true,
-                'req-afsc__cell--full': item.capacity === item.count,
+                'req-afsc__cell--full': item.maxCount === item.count,
                 'req-afsc__cell--applied': item.status === 'request'
               }"
               :title="item | dateRange"
@@ -151,7 +149,7 @@ export default {
               </template>
 
               <template v-else>
-                <template v-if="item.capacity > item.count">
+                <template v-if="item.maxCount > item.count">
                   <span class="icon-ok"/> 신청하기
                 </template><template v-else>
                   <span class="icon-alert"/> 신청불가

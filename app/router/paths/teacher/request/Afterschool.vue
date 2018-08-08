@@ -18,23 +18,12 @@ export default {
 
       form: {
         name: '',
+        startDate: new Date(),
+        endDate: new Date(),
         day: 0,
-        capacity: '',
-        teacher: '',
-        startDate: {
-          year: '',
-          month: '',
-          date: '',
-          hour: '',
-          minute: ''
-        },
-        endDate: {
-          year: '',
-          month: '',
-          date: '',
-          hour: '',
-          minute: ''
-        }
+        targetGrade: null,
+        maxCount: null,
+        teacherName: ''
       },
 
       afterschools: [
@@ -80,7 +69,7 @@ export default {
   methods: {
     async updateAll () {
       for (const grade of [1, 2, 3]) {
-        this.afterschools[grade - 1] = (await afterschool.fetchAfterschool(grade))
+        this.afterschools[grade - 1] = (await afterschool.getGradeAfterschool(grade))
       }
       this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
       this.afterschools = Object.assign({}, this.afterschools)
@@ -88,28 +77,17 @@ export default {
 
     async addAfterschool () {
       try {
-        const startDate = this.form.startDate
-        const endDate = this.form.endDate
-        const result = {
-          name: this.form.name,
-          day: days[this.form.day].code,
-          capacity: this.form.capacity,
-          teacherName: this.form.teacher,
-          applyStartDate:
-          `${startDate.year}-${startDate.month}-${startDate.date} ` +
-          `${startDate.hour}:${startDate.minute}`,
-          applyEndDate:
-          `${endDate.year}-${endDate.month}-${endDate.date} ` +
-          `${endDate.hour}:${endDate.minute}`
-        }
+        await afterschool.createAfterschool(this.restructure(this.form))
 
-        await afterschool.createAfterschool(this.currentGrade + 1, result)
-
-        this.form = Object.assign(this.form, {
+        this.form = {
           name: '',
-          teacher: '',
-          capacity: ''
-        })
+          startDate: new Date(),
+          endDate: new Date(),
+          day: 0,
+          targetGrade: null,
+          maxCount: null,
+          teacherName: ''
+        }
 
         await this.updateAll()
 
@@ -128,6 +106,18 @@ export default {
         if (this.checks[key]) await afterschool.deleteAfterschool(this.filteredList[key].idx)
       }
       await this.updateAll()
+    },
+
+    restructure (val) {
+      return {
+        'name': val['name'],
+        'request_start_date': val['startDate'].toISOString(),
+        'request_end_date': val['endDate'].toISOString(),
+        'day': days.filter(v => v.idx === val['day']).code,
+        'target_grade': this.currentGrade,
+        'max_of_count': parseInt(val['maxCount']),
+        'teacher_name': val['teacherName']
+      }
     }
   }
 }
@@ -185,7 +175,7 @@ export default {
 
               <td class="mng-afsc__cell">{{ item.teacherName }}</td>
               <td class="mng-afsc__cell mng-afsc__cell--name">{{ item.name }}</td>
-              <td class="mng-afsc__cell">총 {{ item.capacity || '?' }}명</td>
+              <td class="mng-afsc__cell">총 {{ item.maxCount || '?' }}명</td>
               <td class="mng-afsc__cell">{{ item.count || '?' }}명 신청</td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
                 <span class="icon-long-arrow-right"/> 세부관리
@@ -221,9 +211,9 @@ export default {
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">총원</label>
               <dimi-input
-                v-model="form.capacity"
-                class="mng-afsc__input mng-afsc__input--capacity"/>
-              <span class="msg-afsc__capacity-attr">명</span>
+                v-model="form.maxCount"
+                class="mng-afsc__input mng-afsc__input--maxCount"/>
+              <span class="msg-afsc__maxCount-attr">명</span>
             </div>
 
             <div class="mng-afsc__field">
@@ -239,51 +229,14 @@ export default {
           <div class="mng-afsc__form-row">
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">신청 시작</label>
-              <dimi-input
-                v-model="form.startDate.year"
-                class="mng-afsc__input mng-afsc__input--year"/>
-              년
-              <dimi-input
-                v-model="form.startDate.month"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              월
-              <dimi-input
-                v-model="form.startDate.date"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              일
-              <dimi-input
-                v-model="form.startDate.hour"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              시
-              <dimi-input
-                v-model="form.startDate.minute"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              분
+              <dimi-date-input v-model="form.startDate"/>
             </div>
           </div>
+
           <div class="mng-afsc__form-row">
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">신청 마감</label>
-              <dimi-input
-                v-model="form.endDate.year"
-                class="mng-afsc__input mng-afsc__input--year"/>
-              년
-              <dimi-input
-                v-model="form.endDate.month"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              월
-              <dimi-input
-                v-model="form.endDate.date"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              일
-              <dimi-input
-                v-model="form.endDate.hour"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              시
-              <dimi-input
-                v-model="form.endDate.minute"
-                class="mng-afsc__input mng-afsc__input--time"/>
-              분
+              <dimi-date-input v-model="form.endDate"/>
             </div>
           </div>
 
@@ -432,7 +385,7 @@ export default {
     width: 10em;
   }
 
-  &__input--capacity {
+  &__input--maxCount {
     width: 6em;
   }
 
@@ -441,19 +394,6 @@ export default {
     border: 0;
     border-radius: 20px;
     padding: 0.75em 1em;
-  }
-
-  &__input--year {
-    width: 6em;
-  }
-
-  &__input--time {
-    margin-left: 1em;
-    width: 4.75em;
-  }
-
-  &__input--time:nth-child(2) {
-    margin-left: 0;
   }
 }
 </style>
