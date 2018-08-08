@@ -7,7 +7,7 @@ export async function getCounsel () {
   return counsel.map(Counsel)
 }
 
-export async function getAdiminCounsel () {
+export async function getAdminCounsel () {
   const { counsel } = await magician(() => axios.get(`/counsel/admin`), {})
   return counsel.map(Counsel)
 }
