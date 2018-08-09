@@ -72,10 +72,10 @@ export default {
         <dimi-button
           v-show="currentTab === 0"
           :class="$style['ingang__download-btn']"
-          href="https://api.dimigo.in/ingangs/excel/1">1학년 엑셀 다운로드</dimi-button>
+          href="https://dev-api.dimigo.in/ingangs/excel/1">1학년 엑셀 다운로드</dimi-button>
         <dimi-button
           v-show="currentTab === 1"
-          href="https://api.dimigo.in/ingangs/excel/2">2학년 엑셀 다운로드</dimi-button>
+          href="https://dev-api.dimigo.in/ingangs/excel/2">2학년 엑셀 다운로드</dimi-button>
       </div>
     </dimi-card>
   </content-wrapper>

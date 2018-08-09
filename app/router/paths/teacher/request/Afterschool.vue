@@ -104,13 +104,18 @@ export default {
     restructure (val, grade) {
       return {
         'name': val['name'],
-        'request_start_date': val['startDate'].toISOString(),
-        'request_end_date': val['endDate'].toISOString(),
+        'request_start_date': this.timezone(val['startDate']).toISOString(),
+        'request_end_date': this.timezone(val['endDate']).toISOString(),
         'day': days[val['day']].code,
         'target_grade': grade + 1,
         'max_of_count': parseInt(val['maxCount']),
         'teacher_name': val['teacherName']
       }
+    },
+
+    timezone (val) {
+      var timezoneOffset = new Date().getTimezoneOffset() * 60000
+      return new Date(val - timezoneOffset)
     }
   }
 }

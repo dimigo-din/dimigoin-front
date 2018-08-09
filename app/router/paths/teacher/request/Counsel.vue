@@ -76,7 +76,7 @@ export default {
               {{ counsel.startDate | filterTime }}{{ counsel.endDate | filterEndTime }}
             </span>
             <div class="counsel__speaker">
-              <template v-if="counsel.caniapplied === 'no'">
+              <template v-if="counsel.request.user !== null ">
                 {{ counsel.request.user.serial }} {{ counsel.request.user.name }}
               </template>
               <template>신청자 없음</template>
