@@ -21,7 +21,6 @@ export default {
         startDate: new Date(),
         endDate: new Date(),
         day: 0,
-        targetGrade: null,
         maxCount: null,
         teacherName: ''
       },
@@ -77,17 +76,11 @@ export default {
 
     async addAfterschool () {
       try {
-        await afterschool.createAfterschool(this.restructure(this.form))
+        await afterschool.createAfterschool(this.restructure(this.form, this.currentGrade))
 
-        this.form = {
-          name: '',
-          startDate: new Date(),
-          endDate: new Date(),
-          day: 0,
-          targetGrade: null,
-          maxCount: null,
-          teacherName: ''
-        }
+        this.form.name = ''
+        this.form.maxCount = null
+        this.form.teacherName = ''
 
         await this.updateAll()
 
@@ -108,13 +101,13 @@ export default {
       await this.updateAll()
     },
 
-    restructure (val) {
+    restructure (val, grade) {
       return {
         'name': val['name'],
         'request_start_date': val['startDate'].toISOString(),
         'request_end_date': val['endDate'].toISOString(),
-        'day': days.filter(v => v.idx === val['day']).code,
-        'target_grade': this.currentGrade,
+        'day': days[val['day']].code,
+        'target_grade': grade + 1,
         'max_of_count': parseInt(val['maxCount']),
         'teacher_name': val['teacherName']
       }
@@ -204,7 +197,7 @@ export default {
             <div class="mng-afsc__field">
               <label class="mng-afsc__label">담당자</label>
               <dimi-input
-                v-model="form.teacher"
+                v-model="form.teacherName"
                 class="mng-afsc__input mng-afsc__input--manager"/>
             </div>
 

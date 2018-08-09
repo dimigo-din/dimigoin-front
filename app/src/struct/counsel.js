@@ -21,8 +21,9 @@ const _Counsel = struct.interface({
   startDate: 'string',
   endDate: 'string',
   date: 'string',
-  applied: 'string',
-  caniapplied: 'string | undefined',
+  applied: 'string | null',
+  caniapplied: 'string | null',
+  applicant: 'string | null',
   request: [_Request]
 })
 
@@ -47,5 +48,6 @@ export const Counsel = counsel => _Counsel({
   date: counsel['date'],
   applied: counsel['applied'],
   caniapplied: counsel['caniapplied'],
+  applicant: counsel['applicant'],
   request: (counsel['counsel_request'] || []).map(converRequest)
 })

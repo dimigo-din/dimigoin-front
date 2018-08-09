@@ -9,7 +9,7 @@ const _Afterschool = struct.interface({
   grade: 'number',
   maxCount: 'number',
   teacherName: 'string',
-  count: 'number',
+  count: 'number | undefined',
   status: 'string | null | undefined'
 })
 
@@ -22,6 +22,6 @@ export const Afterschool = afterschool => _Afterschool({
   grade: afterschool['target_grade'],
   maxCount: afterschool['max_of_count'],
   teacherName: afterschool['teacher_name'],
-  count: afterschool['my_request_count'],
+  count: afterschool['all_request_count'],
   status: afterschool['status']
 })

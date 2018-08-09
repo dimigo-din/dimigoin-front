@@ -33,7 +33,7 @@ export async function cancelAfterschool (idx) {
 export async function applyAfterschool (idx, captcha) {
   await magician(() => axios.post(`/afterschools/request/${idx}`, { 'g-recaptcha-response': captcha }), {
     401: () => new Error('잘못된 학년에 신청했습니다.'),
-    403: () => new Error('신청 기간이 아니거나 마감되었습니다.'),
+    403: () => new Error('신청 기간이 아닙니다.'),
     404: () => new Error('존재하지 않는 과목입니다.'),
     406: () => new Error('잘못된 요청입니다.'),
     409: () => new Error('이미 신청을 완료했습니다.')
