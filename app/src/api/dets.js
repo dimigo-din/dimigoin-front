@@ -108,6 +108,8 @@ export async function deleteDets (idx) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')
     switch (res.status) {
+      case 403:
+        throw new Error('권한이 없습니다')
       case 404:
         throw new Error('존재하지 않는 Dets 입니다.')
       default:

@@ -4,7 +4,6 @@ import TeacherMain from '@/router/paths/teacher/TeacherMain.vue'
 import Information from '@/router/paths/teacher/request/Information.vue'
 import Afterschool from '@/router/paths/teacher/request/Afterschool.vue'
 import Ingang from '@/router/paths/teacher/request/Ingang.vue'
-import Dets from '@/router/paths/teacher/request/Dets.vue'
 import Counsel from '@/router/paths/teacher/request/Counsel.vue'
 
 import Assignment from '@/router/paths/teacher/assignment/Assignment.vue'
@@ -46,12 +45,6 @@ export default [
           name: 'teacher/request/ingang',
           component: Ingang,
           meta: { title: '디미고인 > 인강실 관리' }
-        },
-        {
-          path: 'dets',
-          name: 'teacher/request/dets',
-          component: Dets,
-          meta: { title: '디미고인 > Dets 관리' }
         }
       ]
     },

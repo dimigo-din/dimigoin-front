@@ -6,7 +6,7 @@ const _User = struct.interface({
   grade: 'number',
   class: 'number',
   number: 'number',
-  serial: 'string'
+  serial: 'string | undefined | null'
 })
 
 const _Request = struct.interface({
@@ -27,7 +27,7 @@ const _Counsel = struct.interface({
   request: [_Request]
 })
 
-const converRequest = v => (v && {
+const convertRequest = v => (v && {
   idx: v['idx'],
   time: v['request_time'],
   user: {
@@ -49,5 +49,5 @@ export const Counsel = counsel => _Counsel({
   applied: counsel['applied'],
   caniapplied: counsel['caniapplied'],
   applicant: counsel['applicant'],
-  request: (counsel['counsel_request'] || []).map(converRequest)
+  request: (counsel['counsel_request'] || []).map(convertRequest)
 })
