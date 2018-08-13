@@ -85,7 +85,7 @@ export default {
           <div
             v-if="dets.open"
             class="dets__open">
-            <span class="dets__item dets__description">{{ dets.description }}</span>
+            <span class="dets__item dets__description"><span v-html="dets.description"/></span>
             <div
               class="dets__down">
               <div

@@ -12,11 +12,10 @@ export default {
     filterTime (time) {
       const month = moment(time).format('MM')
       const date = moment(time).format('DD')
-      const day = moment(time).format('dddd')
+      const day = moment(time).format('dddd') === 'Wednesday' ? '수요일' : '금요일'
       const hour = moment(time).format('hh')
       const minute = moment(time).format('mm')
-      const sejong = day === 'Wendnesday' ? '수요일' : '금요일'
-      return `${sejong} ( ${month}월 ${date}일 ) ${hour}시 ${minute}분 ~ `
+      return `${day} ( ${month}월 ${date}일 ) ${hour}시 ${minute}분 ~ `
     },
     filterEndTime (time) {
       const hour = moment(time).format('hh')

@@ -1,118 +1,46 @@
 <script>
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
-
 import { ingang } from '@/src/api'
-import debounce from 'debounce'
 
 export default {
   name: 'Ingang',
 
   components: { ContentWrapper },
 
-  data: () => ({
-    ingang: {},
-    dummyIngang: {},
-    today: new Date(),
-    pending: true
-  }),
-
-  computed: {
-
+  data () {
+    return {
+      pending: false,
+      ingang: {},
+      today: new Date()
+    }
   },
 
   async created () {
-    this.pending = true
-    try {
-      this.ingang = await ingang.getIngang()
-      this.dummyIngang = Object.assign({}, this.ingang)
-    } catch (err) {
-      await this.$swal({
-        type: 'error',
-        title: '에러!',
-        text: err.message
-      })
-      this.$router.back()
-    }
-    this.pending = false
+    this.refresh()
   },
 
   methods: {
-    async cancel () {
-      try {
-        this.dummyIngang.applied = false
-        this.dummyIngang.count--
-        this.dummyIngang.weekApplyCount--
-
-        await ingang.cancelIngang(this.ingang.idx)
-
-        this.ingang.applied = false
-        this.ingang.count--
-        this.ingang.weekApplyCount--
-      } catch (err) {
-        this.$swal({
-          type: 'error',
-          title: '에러!',
-          text: err.message
-        })
-
-        this.dummyIngang.applied = true
-        this.dummyIngang.count++
-        this.dummyIngang.weekApplyCount++
-      }
+    async refresh () {
+      this.pending = true
+      this.ingang = await ingang.getStudentIngang()
+      this.pending = false
     },
 
-    async apply () {
+    async toggleApply (parameter) {
       try {
-        if (this.ingang.weekApplyCount >= 2) {
-          this.$swal({
-            type: 'error',
-            title: '에러!',
-            text: '일주일 신청 가능 횟수(2회)를 초과했습니다.'
-          })
-          return
-        }
-
-        if (this.ingang.count >= this.ingang.max) {
-          this.$swal({
-            type: 'error',
-            title: '에러!',
-            text: '인원이 꽉 찼습니다.'
-          })
-          return
-        }
-
-        this.dummyIngang.applied = true
-        this.dummyIngang.count++
-        this.dummyIngang.weekApplyCount++
-
-        await ingang.applyIngang(this.ingang.idx)
-
-        this.ingang.applied = true
-        this.ingang.count++
-        this.ingang.weekApplyCount++
+        if (parameter.request === true) await ingang.applyIngang(parameter.idx)
+        else await ingang.cancelIngang(parameter.idx)
       } catch (err) {
-        this.$swal({
-          type: 'error',
-          title: '에러!',
-          text: err.message
-        })
-
-        this.dummyIngang.applied = false
-        this.dummyIngang.count--
-        this.dummyIngang.weekApplyCount--
+        this.$swal('이런!', err.message, 'error')
       }
-    },
-
-    handleButton: debounce(function () {
-      if (this.ingang.applied) return this.cancel()
-      else return this.apply()
-    }, 500)
+      await this.refresh()
+    }
   }
 }
 </script>
 
 <template>
-  <content-wrapper class="req-ingang">
+  <content-wrapper>
     <h1 slot="header">
       <span class="icon-internet-class"/>
       {{ today.getMonth() + 1 }}월
@@ -132,36 +60,36 @@ export default {
 
       <template v-else>
         <h2 class="req-ingang__title">
-          <span class="req-ingang__info">{{ `${dummyIngang.grade}학년 ${dummyIngang.klass}반` }}</span>
-          야간타율학습 {{ dummyIngang.time }}타임
+          <span class="req-ingang__info">{{ `${ingang.grade}학년 ${ingang.class}반` }}</span>
+          야간타율학습 {{ ingang.time }}타임
         </h2>
         <div class="req-ingang__content">
           <div class="req-ingang__current">
             <div
               :class="[
                 'req-ingang__number',
-                'req-ingang__number--' + (dummyIngang.applied ? 'aloes' : 'red')
-            ]">{{ dummyIngang.count }}</div>
+                'req-ingang__number--' + (ingang.request ? 'aloes' : 'red')
+            ]">{{ ingang.count }}</div>
             <div
               :class="[
                 'req-ingang__text',
-                'req-ingang__text--' + (dummyIngang.applied ? 'aloes' : 'red')
+                'req-ingang__text--' + (ingang.applied ? 'aloes' : 'red')
             ]">현원</div>
           </div>
           <div class="req-ingang__max">
-            <div class="req-ingang__number">{{ dummyIngang.max }}</div>
+            <div class="req-ingang__number">{{ ingang.max }}</div>
             <div class="req-ingang__text">총원</div>
           </div>
         </div>
 
         <div class="req-ingang__btn">
           <p class="req-ingang__limit">
-            남은 티켓 개수 (월요일에 초기화) : {{ 2 - dummyIngang.weekApplyCount }}개
+            남은 티켓 개수 (월요일에 초기화) : {{ 2 - ingang.weekCount }}개
           </p>
           <dimi-button
-            :gray="dummyIngang.applied"
-            @click="handleButton"
-          >{{ dummyIngang.applied ? '취소하기' : '신청하기' }}</dimi-button>
+            :gray="ingang.request"
+            @click="toggleApply(ingang)"
+          >{{ ingang.request ? '취소하기' : '신청하기' }}</dimi-button>
         </div>
       </template>
 
