@@ -3,7 +3,7 @@ import magician from './magician'
 import { StudentIngang, GradeIngang } from '@/src/struct/ingang'
 
 export async function applyIngang (idx) {
-  await magician(() => axios.post(`/ingangs/apply/${idx}`), {
+  await magician(() => axios.post(`/ingangs/request/${idx}`), {
     401: () => new Error('본인의 학년 또는 반이 아닙니다.'),
     403: () => new Error('일주일 2회 신청을 모두 했습니다.'),
     404: () => new Error('인강실 신청이 없습니다.'),
@@ -12,7 +12,7 @@ export async function applyIngang (idx) {
 }
 
 export async function cancelIngang (idx) {
-  await magician(() => axios.delete(`/ingangs/apply/${idx}`), {
+  await magician(() => axios.delete(`/ingangs/request/${idx}`), {
     401: () => new Error('존재하지 않는 학년 또는 반입니다.'),
     403: () => new Error('신청 기간이 아닙니다.'),
     404: () => new Error('신청이 조회되지 않았습니다.')

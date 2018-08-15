@@ -8,34 +8,25 @@ export default {
   components: { ContentWrapper },
 
   data: () => ({
-    ingangs: [[], []],
+    pending: false,
     currentTab: 0,
-    pending: true
+    ingangs: {
+      fresh: [],
+      sophomore: []
+    }
   }),
 
-  computed: {
-    filteredStudents () {
-      const clazz = this.ingangs[this.currentTab]
-      return clazz.appliers.map(v => ({ ...v.user, time: clazz.time }))
-        .sort((a, b) => (a.time - b.time || +a.serial - +b.serial))
-    }
+  async created () {
+    this.refresh()
   },
 
-  async created () {
-    try {
-      this.ingangs = [
-        await ingang.admin.getIngang(1),
-        await ingang.admin.getIngang(2)
-      ]
-    } catch (err) {
-      console.warn(err)
-      this.$swal({
-        type: 'error',
-        title: '에러!',
-        text: err.message
-      })
+  methods: {
+    async refresh () {
+      this.pending = true
+      this.ingangs.fresh = await ingang.getGradeIngang(1)
+      this.ingangs.sophomore = await ingang.getGradeIngang(2)
+      this.pending = false
     }
-    this.pending = false
   }
 }
 </script>
@@ -59,7 +50,7 @@ export default {
         :class="$style['ingang__list']">
         <tbody>
           <tr
-            v-for="(student, key) in filteredStudents"
+            v-for="(student, key) in ingangs.fresh"
             :key="key"
             :class="$style['ingang__row']">
             <td :class="[$style['ingang__cell'], $style['ingang__cell--serial']]">{{ student.serial }}</td>

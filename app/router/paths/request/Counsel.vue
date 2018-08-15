@@ -104,9 +104,9 @@ export default {
           <div
             class="counsel__buttons">
             <dimi-button
-              href="https://www.naver.com">보호자 동의서 다운로드</dimi-button>
+              href="https://goo.gl/DeQsbB">보호자 동의서 다운로드</dimi-button>
             <dimi-button
-              href="https://www.google.com">상담 신청서 다운로드</dimi-button>
+              href="https://goo.gl/DeQsbB">상담 신청서 다운로드</dimi-button>
           </div>
         </section>
         <section

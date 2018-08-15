@@ -28,8 +28,8 @@ export default {
 
     async toggleApply (parameter) {
       try {
-        if (parameter.request === true) await ingang.applyIngang(parameter.idx)
-        else await ingang.cancelIngang(parameter.idx)
+        if (parameter.request === true) await ingang.cancelIngang(parameter.idx)
+        else await ingang.applyIngang(parameter.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -61,7 +61,7 @@ export default {
       <template v-else>
         <h2 class="req-ingang__title">
           <span class="req-ingang__info">{{ `${ingang.grade}학년 ${ingang.class}반` }}</span>
-          야간타율학습 {{ ingang.time }}타임
+          야간자율학습 {{ ingang.time }}타임
         </h2>
         <div class="req-ingang__content">
           <div class="req-ingang__current">

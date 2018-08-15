@@ -1,5 +1,5 @@
 <script>
-import { service } from '@/src/api'
+import { service, permission } from '@/src/api'
 
 export default {
   name: 'ServiceCards',
@@ -9,6 +9,7 @@ export default {
   }),
 
   async created () {
+    this.checkPermission()
     this.services = await service.getServiceList()
     this.$nextTick(this.updateServiceCardHeight)
   },
@@ -30,6 +31,22 @@ export default {
         window.open(service.url, '_blank')
       } else {
         this.$router.push({ name: service.url })
+      }
+    },
+
+    async checkPermission () {
+      const permissions = await permission.getPermission()
+      for (var i = 0; i < permissions.length; i++) {
+        if (permissions[i].section === 'dets') {
+          this.services.push({
+            order: 99,
+            title: '관리',
+            description: 'Dets',
+            icon: 'icon-submission',
+            url: 'management'
+          })
+          return
+        }
       }
     }
   }

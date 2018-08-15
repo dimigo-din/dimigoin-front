@@ -93,7 +93,7 @@ export default {
                 <span class="dets__item">강의실</span>
                 <span class="dets__item">{{ dets.room }}</span>
                 <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                <span class="dets__item">{{ dets.date }}</span>
                 <span class="dets__item">인원</span>
                 <span class="dets__item">{{ dets.count }} / {{ dets.maxCount }} 명</span>
               </div>

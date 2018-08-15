@@ -8,12 +8,6 @@ export default {
   name: 'Dets',
   components: { ContentWrapper, DefaultNavbar },
 
-  filters: {
-    filterTime (time) {
-      return '야자 ' + time + '타임'
-    }
-  },
-
   data () {
     return {
       list: {
@@ -32,11 +26,11 @@ export default {
         description: '',
         speakerSerial: '',
         speakerName: '',
-        day: 0,
-        time: null,
+        date: '',
         room: '',
         maxCount: null,
-        targetGrade: null
+        targetGrade: null,
+        endDate: new Date()
       }
     }
   },
@@ -60,10 +54,6 @@ export default {
       this.pending = false
     },
 
-    getDayTextByCode (code) {
-      return this.days.filter(v => v.code === code)[0].text
-    },
-
     async editDets (parameter) {
       try {
         await dets.changeDets(parameter.idx, this.restructure(this.form))
@@ -77,6 +67,7 @@ export default {
 
     async createDets () {
       try {
+        console.dir(this.form.endDate)
         await dets.createDets(this.restructure(this.form))
         await this.$swal('추가되었습니다', 'success')
         this.closeModal()
@@ -93,11 +84,11 @@ export default {
         description: parameter['description'],
         speakerSerial: parameter['speakerSerial'],
         speakerName: parameter['speakerName'],
-        day: days.filter(v => v.code === parameter['day'])[0].idx,
-        time: parameter['time'],
+        date: parameter['date'],
         room: parameter['room'],
         maxCount: parameter['maxCount'],
-        targetGrade: parameter['targetGrade']
+        targetGrade: parameter['targetGrade'],
+        endDate: new Date(parameter['endDate'])
       }
     },
 
@@ -111,11 +102,11 @@ export default {
         description: '',
         speakerSerial: '',
         speakerName: '',
-        day: 0,
-        time: null,
+        date: '',
         room: '',
         maxCount: null,
-        targetGrade: null
+        targetGrade: null,
+        endDate: new Date()
       }
     },
 
@@ -123,12 +114,11 @@ export default {
       return {
         'title': parameter['title'],
         'description': parameter['description'],
-        'request_start_date': '2018-08-15T19:50:00.000',
-        'request_end_date': '2019-01-31T23:00:00.000',
+        'request_start_date': this.timezone(new Date()),
+        'request_end_date': this.timezone(parameter['endDate']).toISOString(),
         'speakerserial': parameter['speakerSerial'],
         'speakername': parameter['speakerName'],
-        'day': days.filter(v => v.idx === parameter['day'])[0].code,
-        'time': parseInt(parameter['time']),
+        'date': parameter['date'],
         'room': parameter['room'],
         'max_of_count': parseInt(parameter['maxCount']),
         'target_grade': parseInt(parameter['targetGrade'])
@@ -153,6 +143,11 @@ export default {
           this.$swal('이런!', err.message, 'error')
         }
       }
+    },
+
+    timezone (val) {
+      var timezoneOffset = new Date().getTimezoneOffset() * 60000
+      return new Date(val - timezoneOffset)
     }
   }
 }
@@ -220,7 +215,7 @@ export default {
                   <span class="dets__item">강의실</span>
                   <span class="dets__item">{{ dets.room }}</span>
                   <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                  <span class="dets__item">{{ dets.date }}</span>
                 </div>
                 <div
                   class="dets__item dets__item--edit"
@@ -266,7 +261,7 @@ export default {
                   <span class="dets__item">강의실</span>
                   <span class="dets__item">{{ dets.room }}</span>
                   <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                  <span class="dets__item">{{ dets.date }}</span>
                 </div>
                 <div
                   class="dets__item dets__item--edit"
@@ -312,7 +307,7 @@ export default {
                   <span class="dets__item">강의실</span>
                   <span class="dets__item">{{ dets.room }}</span>
                   <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ getDayTextByCode(dets.day) }} {{ dets.time | filterTime }}</span>
+                  <span class="dets__item">{{ dets.date }}</span>
                 </div>
                 <div
                   class="dets__item dets__item--edit"
@@ -353,11 +348,12 @@ export default {
         </div>
 
         <div class="modal__field">
-          <label class="modal__label modal__wday">요일</label>
-          <dimi-dropdown
-            :items="days.map(v => v.text)"
-            v-model="form.day"
-            class="modal__day"/>
+          <label class="modal__label">강의시간</label>
+          <dimi-input
+            id="dets-time"
+            v-model="form.date"
+            class="modal__leftInput"
+            placeholder="월요일 1타임"/>
           <label class="modal__label">강의실</label>
           <dimi-input
             id="dets-room"
@@ -376,13 +372,7 @@ export default {
           <dimi-input
             id="dets-grade"
             v-model="form.targetGrade"
-            class="modal__leftInput"
             placeholder="1"/>
-          <label class="modal__label">야자시간</label>
-          <dimi-input
-            id="dets-time"
-            v-model="form.time"
-            placeholder="2"/>
         </div>
 
         <div class="modal__field">
@@ -397,6 +387,11 @@ export default {
             id="dets-speaker-name"
             v-model="form.speakerName"
             placeholder="홍길동"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">신청 마감</label>
+          <dimi-date-input v-model="form.endDate"/>
         </div>
 
         <div class="modal__field">
@@ -429,11 +424,12 @@ export default {
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">요일</label>
-          <dimi-dropdown
-            :items="days.map(v => v.text)"
-            v-model="form.day"
-            class="modal__day"/>
+          <label class="modal__label">강의시간</label>
+          <dimi-input
+            id="dets-time"
+            v-model="form.date"
+            class="modal__leftInput"
+            placeholder="월요일 야자 1타임"/>
           <label class="modal__label">강의실</label>
           <dimi-input
             id="dets-room"
@@ -452,13 +448,7 @@ export default {
           <dimi-input
             id="dets-grade"
             v-model="form.targetGrade"
-            class="modal__leftInput"
             placeholder="1"/>
-          <label class="modal__label">야자시간</label>
-          <dimi-input
-            id="dets-time"
-            v-model="form.time"
-            placeholder="2"/>
         </div>
 
         <div class="modal__field">
@@ -473,6 +463,11 @@ export default {
             id="dets-speaker-name"
             v-model="form.speakerName"
             placeholder="홍길동"/>
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">신청 마감</label>
+          <dimi-date-input v-model="form.endDate"/>
         </div>
 
         <div class="modal__field">
@@ -596,11 +591,6 @@ export default {
 
   &__leftInput {
     padding-right: 10px;
-  }
-
-  &__day {
-    padding-left: 60px;
-    padding-right: 70px;
   }
 
   &__button {
