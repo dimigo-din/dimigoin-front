@@ -1,6 +1,7 @@
 import Manage from '@/router/paths/management/Manage.vue'
 import ManageCircle from '@/router/paths/management/ManageCircle.vue'
 import ManageDets from '@/router/paths/management/ManageDets.vue'
+import Ingang from '@/router/paths/management/ManageIngang.vue'
 
 export default [
   {
@@ -24,6 +25,12 @@ export default [
         meta: {
           title: '디미고인 > Dets 관리'
         }
+      },
+      {
+        path: 'ingang',
+        name: 'management/ingang',
+        component: Ingang,
+        meta: { title: '디미고인 > 인강실 관리' }
       }
     ]
   }

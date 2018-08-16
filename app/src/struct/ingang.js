@@ -57,7 +57,7 @@ const _GradeIngang = struct.interface({
 
 const convertRequest = v => (v && {
   idx: v['idx'],
-  time: v['request_time'],
+  reqTime: v['request_time'],
   user: {
     idx: v['user']['idx'],
     name: v['user']['name'],

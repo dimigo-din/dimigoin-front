@@ -84,7 +84,7 @@ export default {
 
         <div class="req-ingang__btn">
           <p class="req-ingang__limit">
-            남은 티켓 개수 (월요일에 초기화) : {{ 2 - ingang.weekCount }}개
+            남은 티켓 개수 (월요일에 초기화) : {{ ingang.weekCount }}개
           </p>
           <dimi-button
             :gray="ingang.request"

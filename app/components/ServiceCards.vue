@@ -37,11 +37,11 @@ export default {
     async checkPermission () {
       const permissions = await permission.getPermission()
       for (var i = 0; i < permissions.length; i++) {
-        if (permissions[i].section === 'dets') {
+        if (permissions[i].section === 'dets' || permissions[i].section === 'ingang') {
           this.services.push({
             order: 99,
             title: '관리',
-            description: 'Dets',
+            description: 'Dets, 인강실',
             icon: 'icon-submission',
             url: 'management'
           })
