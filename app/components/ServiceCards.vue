@@ -9,8 +9,8 @@ export default {
   }),
 
   async created () {
-    this.checkPermission()
     this.services = await service.getServiceList()
+    this.checkPermission()
     this.$nextTick(this.updateServiceCardHeight)
   },
 

@@ -9,7 +9,7 @@ const _StudentIngang = struct.interface({
   max: 'number',
   startDate: 'string',
   endDate: 'string',
-  request: 'boolean?',
+  request: 'boolean',
   count: 'number',
   weekCount: 'number'
 })
