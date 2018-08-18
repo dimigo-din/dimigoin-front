@@ -34,6 +34,10 @@ export default {
         this.$swal('이런!', err.message, 'error')
       }
       await this.refresh()
+    },
+
+    countTicket (ingang) {
+      return ingang[0].weekCount
     }
   }
 }
@@ -46,7 +50,7 @@ export default {
       인강실 사용 신청
       <span
         class="ingang__ticket">
-        남은 티켓 개수 : {{ ingangs[0].weekCount }} 개
+        남은 티켓 개수 : {{ countTicket(ingangs) }} 개
       </span>
     </h1>
 
@@ -67,37 +71,39 @@ export default {
           </span>
           야간자율학습
         </h2>
-        <div
-          v-for="(ing, idx) in ingangs"
-          :key="`${idx}`"
-          class="ingang__content">
-          <div class="ingang__time">
-            {{ ing.time }}타임
-          </div>
-          <div class="ingang__human">
-            <div class="ingang__current">
-              <div
-                :class="[
-                  'ingang__number',
-                  'ingang__number--' + (ing.request ? 'aloes' : 'red')
-              ]">{{ ing.count }}</div>
-              <div
-                :class="[
-                  'ingang__text',
-                  'ingang__text--' + (ing.request ? 'aloes' : 'red')
-              ]">현원</div>
+        <div class="ingang__list">
+          <div
+            v-for="(ing, idx) in ingangs"
+            :key="`${idx}`"
+            class="ingang__content">
+            <div class="ingang__time">
+              {{ ing.time }}타임
             </div>
-            <div class="ingang__max">
-              <div class="ingang__number">{{ ing.max }}</div>
-              <div class="ingang__text">총원</div>
+            <div class="ingang__human">
+              <div class="ingang__current">
+                <div
+                  :class="[
+                    'ingang__number',
+                    'ingang__number--' + (ing.request ? 'aloes' : 'red')
+                ]">{{ ing.count }}</div>
+                <div
+                  :class="[
+                    'ingang__text',
+                    'ingang__text--' + (ing.request ? 'aloes' : 'red')
+                ]">현원</div>
+              </div>
+              <div class="ingang__max">
+                <div class="ingang__number">{{ ing.max }}</div>
+                <div class="ingang__text">총원</div>
+              </div>
             </div>
-          </div>
-          <div class="ingang__btn">
-            <dimi-button
-              :gray="ing.request"
-              @click="toggleApply(ing)">
-              {{ ing.request ? '취소하기' : '신청하기' }}
-            </dimi-button>
+            <div class="ingang__btn">
+              <dimi-button
+                :gray="ing.request"
+                @click="toggleApply(ing)">
+                {{ ing.request ? '취소하기' : '신청하기' }}
+              </dimi-button>
+            </div>
           </div>
         </div>
       </template>
@@ -116,10 +122,18 @@ export default {
     justify-content: center;
   }
 
+  &__list {
+    display: table;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   &__title {
     color: $gray-dark;
     font-size: 24px;
     font-weight: $font-weight-bold;
+    margin-bottom: 16px;
   }
 
   &__info {
@@ -131,8 +145,10 @@ export default {
   }
 
   &__content {
-    vertical-align: middle;
-    width: 50%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
   }
 
   &__ticket {
@@ -151,6 +167,7 @@ export default {
   &__human {
     display: flex;
     font-weight: $font-weight-bold;
+    margin: 12px 0;
   }
 
   &__number {
