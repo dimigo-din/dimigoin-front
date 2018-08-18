@@ -125,8 +125,7 @@ export default {
   &__list {
     display: table;
     flex-direction: row;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
 
   &__title {
@@ -148,6 +147,7 @@ export default {
     align-items: center;
     display: flex;
     flex-direction: column;
+    float: left;
     margin: 0 20px;
   }
 
