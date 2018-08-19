@@ -11,8 +11,14 @@ export default {
     pending: false,
     currentTab: 0,
     ingangs: {
-      fresh: [],
-      sophomore: []
+      firstG: {
+        firstT: [],
+        secondT: []
+      },
+      secondG: {
+        firstT: [],
+        secondT: []
+      }
     }
   }),
 
@@ -23,8 +29,10 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs.fresh = await ingang.getGradeIngang(1)
-      this.ingangs.sophomore = await ingang.getGradeIngang(2)
+      this.ingangs.firstG.firstT = await ingang.getGradeTimeIngang(1, 1)
+      this.ingangs.firstG.secondT = await ingang.getGradeTimeIngang(1, 2)
+      this.ingangs.secondG.firstT = await ingang.getGradeTimeIngang(2, 1)
+      this.ingangs.secondG.secondT = await ingang.getGradeTimeIngang(2, 2)
       this.pending = false
     }
   }
@@ -58,20 +66,11 @@ export default {
         class="ingang__loader">
         <dimi-loader/>
       </div>
-      <table
+      <h2
         v-else
-        class="ingang__list">
-        <tbody>
-          <tr
-            v-for="(student, key) in ingangs.fresh"
-            :key="key"
-            class="ingang__row">
-            <td class="ingang__cell ingang__cell--serial">{{ student.serial }}</td>
-            <td class="ingang__cell ingang__cell--name">{{ student.name }}</td>
-            <td class="ingang__cell ingang__cell--time">{{ student.time }}타임</td>
-          </tr>
-        </tbody>
-      </table>
+        class="ingang__working">
+        인강실 관리페이지는 공사중입니다<br>엑셀 다운로드를 통해 인원점검 부탁드립니다
+      </h2>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -106,6 +105,14 @@ export default {
     font-size: 16px;
     margin-right: 0.5em;
     margin-top: 1em;
+  }
+
+  &__working {
+    color: $gray-dark;
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    margin: 1rem 0;
+    text-align: center;
   }
 
   &__row {

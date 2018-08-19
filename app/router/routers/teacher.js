@@ -24,7 +24,7 @@ export default [
           path: '',
           name: 'teacher/request',
           component: Information,
-          meta: { title: '디미고인 > 신청 현황' },
+          meta: { title: '디미고인 > 교사 페이지' },
           redirect: { name: 'teacher/request/afterschool' }
         },
         {

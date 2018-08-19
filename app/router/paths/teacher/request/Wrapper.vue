@@ -20,7 +20,7 @@ export default {
         <div class="row">
           <div class="col-xs-24 col-md-5">
             <dimi-menu>
-              <dimi-menu-item :to="{ name: 'teacher/request' }">신청 현황</dimi-menu-item>
+              <dimi-menu-item :to="{ name: 'teacher/request' }">교사 페이지</dimi-menu-item>
               <dimi-menu-item :to="{ name: 'teacher/request/afterschool' }">방과 후 활동 관리</dimi-menu-item>
               <dimi-menu-item :to="{ name: 'teacher/request/counsel' }">상담 관리</dimi-menu-item>
             </dimi-menu>

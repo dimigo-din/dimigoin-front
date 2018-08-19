@@ -58,3 +58,11 @@ export async function getGradeIngang (grade) {
   })
   return ingang.map(GradeIngang)
 }
+
+export async function getGradeTimeIngang (grade, time) {
+  const { ingang } = await magician(() => axios.get(`/ingangs/${grade}/${time}`), {
+    403: () => new Error('권한이 없습니다.'),
+    404: () => new Error('인강 신청이 없습니다.')
+  })
+  return ingang.map(GradeIngang)
+}
