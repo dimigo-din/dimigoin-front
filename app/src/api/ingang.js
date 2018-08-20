@@ -2,28 +2,6 @@ import axios from './axios'
 import magician from './magician'
 import { StudentIngang, GradeIngang } from '@/src/struct/ingang'
 
-function rightIngang (ingang) {
-  if (ingang[0].target_grade === 2) {
-    const klass = ingang[0].grade
-    const today = new Date().getDay()
-    if (today % 2) {
-      if (klass % 2) {
-        return ingang.slice(1, 2)
-      } else {
-        return ingang.slice(0, 1)
-      }
-    } else {
-      if (klass % 2) {
-        return ingang.slice(0, 1)
-      } else {
-        return ingang.slice(1, 2)
-      }
-    }
-  } else {
-    return ingang
-  }
-}
-
 export async function applyIngang (idx) {
   await magician(() => axios.post(`/ingangs/request/${idx}`), {
     401: () => new Error('본인의 학년 또는 반이 아닙니다.'),
@@ -47,8 +25,7 @@ export async function getStudentIngang () {
   const ingang = await magician(() => axios.get('/ingangs/student/'), {
     404: () => new Error('오늘은 인강실을 신청할 수 없습니다.')
   })
-  const result = rightIngang(ingang)
-  return result.map(StudentIngang)
+  return ingang.map(StudentIngang)
 }
 
 export async function getGradeIngang (grade) {

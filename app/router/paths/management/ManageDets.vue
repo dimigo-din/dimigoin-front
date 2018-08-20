@@ -67,7 +67,6 @@ export default {
 
     async createDets () {
       try {
-        console.dir(this.form.endDate)
         await dets.createDets(this.restructure(this.form))
         await this.$swal('추가되었습니다', 'success')
         this.closeModal()

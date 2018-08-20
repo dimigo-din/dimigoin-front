@@ -120,6 +120,7 @@ export default {
   }
 
   &__student {
+    color: $gray;
     display: block;
     margin: 16px;
   }
