@@ -10,16 +10,7 @@ export default {
   data: () => ({
     pending: false,
     currentTab: 0,
-    ingangs: {
-      firstG: {
-        firstT: [],
-        secondT: []
-      },
-      secondG: {
-        firstT: [],
-        secondT: []
-      }
-    }
+    ingangs: []
   }),
 
   async created () {
@@ -29,10 +20,10 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs.firstG.firstT = await ingang.getGradeTimeIngang(1, 1)
-      this.ingangs.firstG.secondT = await ingang.getGradeTimeIngang(1, 2)
-      this.ingangs.secondG.firstT = await ingang.getGradeTimeIngang(2, 1)
-      this.ingangs.secondG.secondT = await ingang.getGradeTimeIngang(2, 2)
+      this.ingangs[0] = await ingang.getGradeTimeIngang(1, 1)
+      this.ingangs[1] = await ingang.getGradeTimeIngang(1, 2)
+      this.ingangs[2] = await ingang.getGradeTimeIngang(2, 1)
+      this.ingangs[3] = await ingang.getGradeTimeIngang(2, 2)
       this.pending = false
     }
   }
@@ -41,7 +32,8 @@ export default {
 
 <template>
   <content-wrapper>
-    <h1 slot="header"><span class="icon-internet-class"/>인강실 신청 관리
+    <h1 slot="header">
+      <span class="icon-internet-class"/>인강실 신청 관리
       <span
         v-if="currentTab < 2"
         class="ingang__excel"
@@ -66,11 +58,22 @@ export default {
         class="ingang__loader">
         <dimi-loader/>
       </div>
-      <h2
+      <div
         v-else
-        class="ingang__working">
-        인강실 관리페이지는 공사중입니다<br>엑셀 다운로드를 통해 인원점검 부탁드립니다
-      </h2>
+        class="ingang__list">
+        <div
+          v-for="(klass, ckey) in ingangs[currentTab]"
+          :key="ckey">
+          <div class="ingang__cell ingang__klass">{{ klass.class }}반</div>
+          <div
+            v-for="(student, skey) in klass.request"
+            :key="skey"
+            class="ingang__cell ingang__student">
+            <div>{{ student.user.serial }}</div>
+            <div>{{ student.user.name }}</div>
+          </div>
+        </div>
+      </div>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -81,23 +84,6 @@ export default {
 .ingang {
   padding: 0;
 
-  &__loader {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-  }
-
-  &__list {
-    color: $gray;
-    display: block;
-    font-weight: $font-weight-bold;
-    max-height: 600px;
-    min-height: 300px;
-    overflow-y: auto;
-    padding: 0 3rem;
-    width: 100%;
-  }
-
   &__excel {
     color: $aloes;
     cursor: pointer;
@@ -107,40 +93,35 @@ export default {
     margin-top: 1em;
   }
 
-  &__working {
-    color: $gray-dark;
-    font-size: 32px;
-    font-weight: $font-weight-bold;
-    margin: 1rem 0;
-    text-align: center;
+  &__loader {
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 
-  &__row {
-    padding: 0 1.5rem;
-  }
-
-  &__row:not(:last-child) {
-    border-bottom: 1px solid $gray-lighter;
+  &__list {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+    width: 100%;
   }
 
   &__cell {
-    padding: 24px 0;
-    white-space: nowrap;
+    color: $gray-dark;
+    display: block;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+    padding: 0 0.125rem;
+    text-align: center;
   }
 
-  &__cell:not(:last-child) {
-    padding-right: 24px;
+  &__klass {
+    margin-top: 1rem;
   }
 
-  &__cell--name {
-    color: $black;
-    width: 99%;
-  }
-
-  &__download {
-    display: flex;
-    justify-content: flex-end;
-    padding: 24px;
+  &__student {
+    display: block;
+    margin: 16px;
   }
 }
 </style>
