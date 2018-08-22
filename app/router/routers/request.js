@@ -5,6 +5,7 @@ import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
 import Ingang from '@/router/paths/request/Ingang.vue'
 import Dets from '@/router/paths/request/Dets.vue'
 import Counsel from '@/router/paths/request/Counsel.vue'
+import Book from '@/router/paths/request/Book.vue'
 
 export default [{
   path: '/request',
@@ -45,6 +46,12 @@ export default [{
       name: 'request/dets',
       component: Dets,
       meta: { title: '신청 > Dets 신청' }
+    },
+    {
+      path: 'book',
+      name: 'request/book',
+      component: Book,
+      meta: { title: '신청 > 도서 신청' }
     }
   ]
 }]

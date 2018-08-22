@@ -11,16 +11,14 @@ export default {
   data () {
     return {
       list: {
-        fresh: [],
-        sophomore: [],
-        junior: []
+        0: [],
+        1: [],
+        2: []
       },
       pending: false,
       currentGrade: 0,
-      modals: {
-        create: false,
-        edit: false
-      },
+      modal: false,
+      create: true,
       form: {
         title: '',
         description: '',
@@ -48,9 +46,9 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list.fresh = await dets.getGradeDets(1)
-      this.list.sophomore = await dets.getGradeDets(2)
-      this.list.junior = await dets.getGradeDets(3)
+      this.list[0] = await dets.getGradeDets(1)
+      this.list[1] = await dets.getGradeDets(2)
+      this.list[2] = await dets.getGradeDets(3)
       this.pending = false
     },
 
@@ -77,7 +75,8 @@ export default {
     },
 
     openEditModal (parameter) {
-      this.modals.edit = parameter
+      this.modal = parameter
+      this.create = false
       this.form = {
         title: parameter['title'],
         description: parameter['description'],
@@ -92,10 +91,8 @@ export default {
     },
 
     closeModal () {
-      this.modals = {
-        create: false,
-        edit: false
-      }
+      this.modal = false
+      this.create = false
       this.form = {
         title: '',
         description: '',
@@ -160,7 +157,7 @@ export default {
       <span class="icon-dets-lg"/>Dets 신청 관리
       <span
         class="dets__create"
-        @click="modals.create = true">
+        @click="modal = true">
         <span class="icon-plus"/>추가하기
       </span>
       <span
@@ -175,8 +172,7 @@ export default {
       class="dets__main">
       <dimi-tab
         v-model="currentGrade"
-        :tabs="['1학년', '2학년', '3학년']"
-      />
+        :tabs="['1학년', '2학년', '3학년']"/>
 
       <div
         v-if="pending"
@@ -185,150 +181,55 @@ export default {
       </div>
 
       <template v-else>
+        <div
+          v-for="(dets, index) in list[currentGrade]"
+          :key="`${index}`">
 
-        <section
-          v-if="currentGrade === 0">
           <div
-            v-for="(dets, index) in list.fresh"
-            :key="`dets_${index}`">
-
-            <div
-              class="dets__dets"
-              @click="dets.open = !dets.open">
-
-              <span class="dets__item dets__title">{{ dets.title }}</span>
-              <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
-              <div class="dets__item dets__expand">
-                <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
-              </div>
-            </div>
-
-            <div
-              v-if="dets.open"
-              class="dets__open">
-              <span class="dets__item dets__description">{{ dets.description }}</span>
-              <div
-                class="dets__down">
-                <div
-                  class="dets__detail">
-                  <span class="dets__item">강의실</span>
-                  <span class="dets__item">{{ dets.room }}</span>
-                  <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ dets.date }}</span>
-                </div>
-                <div
-                  class="dets__item dets__item--edit"
-                  @click="openEditModal(dets)">
-                  <span class="icon-edit"/> 수정하기
-                </div>
-
-                <div
-                  class="dets__item dets__item--delete"
-                  @click="deleteDets(dets)">
-                  <span class="icon-cross"/> 삭제하기
-                </div>
-              </div>
+            class="dets__dets"
+            @click="dets.open = !dets.open">
+            <span class="dets__item dets__title">{{ dets.title }}</span>
+            <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
+            <div class="dets__item dets__expand">
+              <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
             </div>
           </div>
-        </section>
 
-        <section
-          v-if="currentGrade === 1">
           <div
-            v-for="(dets, index) in list.sophomore"
-            :key="`dets_${index}`">
-
+            v-if="dets.open"
+            class="dets__open">
+            <span class="dets__item dets__description">{{ dets.description }}</span>
             <div
-              class="dets__dets"
-              @click="dets.open = !dets.open">
-
-              <span class="dets__item dets__title">{{ dets.title }}</span>
-              <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
-              <div class="dets__item dets__expand">
-                <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
-              </div>
-            </div>
-
-            <div
-              v-if="dets.open"
-              class="dets__open">
-              <span class="dets__item dets__description">{{ dets.description }}</span>
+              class="dets__down">
               <div
-                class="dets__down">
-                <div
-                  class="dets__detail">
-                  <span class="dets__item">강의실</span>
-                  <span class="dets__item">{{ dets.room }}</span>
-                  <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ dets.date }}</span>
-                </div>
-                <div
-                  class="dets__item dets__item--edit"
-                  @click="openEditModal(dets)">
-                  <span class="icon-edit"/> 수정하기
-                </div>
-
-                <div
-                  class="dets__item dets__item--delete"
-                  @click="deleteDets(dets)">
-                  <span class="icon-cross"/> 삭제하기
-                </div>
+                class="dets__detail">
+                <span class="dets__item">강의실</span>
+                <span class="dets__item">{{ dets.room }}</span>
+                <span class="dets__item">강의시각</span>
+                <span class="dets__item">{{ dets.date }}</span>
               </div>
+
+              <div
+                class="dets__item dets__item--edit"
+                @click="openEditModal(dets)">
+                <span class="icon-edit"/> 수정하기
+              </div>
+              <div
+                class="dets__item dets__item--delete"
+                @click="deleteDets(dets)">
+                <span class="icon-cross"/> 삭제하기
+              </div>
+
             </div>
           </div>
-        </section>
-
-        <section
-          v-if="currentGrade === 2">
-          <div
-            v-for="(dets, index) in list.junior"
-            :key="`dets_${index}`">
-
-            <div
-              class="dets__dets"
-              @click="dets.open = !dets.open">
-
-              <span class="dets__item dets__title">{{ dets.title }}</span>
-              <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
-              <div class="dets__item dets__expand">
-                <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
-              </div>
-            </div>
-
-            <div
-              v-if="dets.open"
-              class="dets__open">
-              <span class="dets__item dets__description">{{ dets.description }}</span>
-              <div
-                class="dets__down">
-                <div
-                  class="dets__detail">
-                  <span class="dets__item">강의실</span>
-                  <span class="dets__item">{{ dets.room }}</span>
-                  <span class="dets__item">강의시각</span>
-                  <span class="dets__item">{{ dets.date }}</span>
-                </div>
-                <div
-                  class="dets__item dets__item--edit"
-                  @click="openEditModal(dets)">
-                  <span class="icon-edit"/> 수정하기
-                </div>
-
-                <div
-                  class="dets__item dets__item--delete"
-                  @click="deleteDets(dets)">
-                  <span class="icon-cross"/> 삭제하기
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        </div>
       </template>
+
       <dimi-modal
-        :opened="modals.create"
+        :opened="modal"
         class="modal__modal"
         @close="closeModal">
-        <h3 class="modal__title">Dets 추가</h3>
+        <h3 class="modal__title">{{ create ? 'Dets 추가' : 'Dets 수정' }}</h3>
 
         <div class="modal__field">
           <label class="modal__label">강의명</label>
@@ -395,87 +296,20 @@ export default {
 
         <div class="modal__field">
           <div class="modal__button">
-            <dimi-button @click="createDets">추가하기</dimi-button>
+            <template
+              v-if="create">
+              <dimi-button
+                click="createDets">추가하기</dimi-button>
+            </template>
+            <template
+              v-else>
+              <dimi-button
+                click="editDets(modal)">수정하기</dimi-button>
+            </template>
           </div>
         </div>
-
       </dimi-modal>
-      <dimi-modal
-        :opened="modals.edit"
-        class="modal__modal"
-        @close="closeModal">
-        <h3 class="modal__title">Dets 수정</h3>
 
-        <div class="modal__field">
-          <label class="modal__label">강의명</label>
-          <dimi-input
-            id="dets-title"
-            v-model="form.title"
-            placeholder="강의의 제목을 기입하세요"/>
-        </div>
-
-        <div class="modal__field">
-          <label class="modal__label">설명</label>
-          <dimi-input
-            id="dets-description"
-            v-model="form.description"
-            placeholder="강의의 주제을 기입하세요"/>
-        </div>
-
-        <div class="modal__field">
-          <label class="modal__label">강의시간</label>
-          <dimi-input
-            id="dets-time"
-            v-model="form.date"
-            class="modal__leftInput"
-            placeholder="월요일 야자 1타임"/>
-          <label class="modal__label">강의실</label>
-          <dimi-input
-            id="dets-room"
-            v-model="form.room"
-            placeholder="디지털컨텐츠실"/>
-        </div>
-
-        <div class="modal__field">
-          <label class="modal__label">총인원</label>
-          <dimi-input
-            id="dets-max"
-            v-model="form.maxCount"
-            class="modal__leftInput"
-            placeholder="15"/>
-          <label class="modal__label">대상 학년</label>
-          <dimi-input
-            id="dets-grade"
-            v-model="form.targetGrade"
-            placeholder="1"/>
-        </div>
-
-        <div class="modal__field">
-          <label class="modal__label">학생 학번</label>
-          <dimi-input
-            id="dets-speaker-serial"
-            v-model="form.speakerSerial"
-            class="modal__leftInput"
-            placeholder="1234"/>
-          <label class="modal__label">학생 이름</label>
-          <dimi-input
-            id="dets-speaker-name"
-            v-model="form.speakerName"
-            placeholder="홍길동"/>
-        </div>
-
-        <div class="modal__field">
-          <label class="modal__label">신청 마감</label>
-          <dimi-date-input v-model="form.endDate"/>
-        </div>
-
-        <div class="modal__field">
-          <div class="modal__button">
-            <dimi-button @click="editDets(modals.edit)">수정하기</dimi-button>
-          </div>
-        </div>
-
-      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>

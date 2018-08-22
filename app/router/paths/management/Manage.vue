@@ -20,6 +20,7 @@ export default {
             <dimi-menu-item :to="{ name: 'management/circle' }">동아리 신청 관리</dimi-menu-item>
             <dimi-menu-item :to="{ name: 'management/dets' }">Dets 관리</dimi-menu-item>
             <dimi-menu-item :to="{ name: 'management/ingang' }">인강실 사용 관리</dimi-menu-item>
+            <dimi-menu-item :to="{ name: 'management/book' }">도서 신청 관리</dimi-menu-item>
           </dimi-menu>
         </div>
         <main class="main col-xs">

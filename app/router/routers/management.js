@@ -2,6 +2,7 @@ import Manage from '@/router/paths/management/Manage.vue'
 import ManageCircle from '@/router/paths/management/ManageCircle.vue'
 import ManageDets from '@/router/paths/management/ManageDets.vue'
 import Ingang from '@/router/paths/management/ManageIngang.vue'
+import ManageBook from '@/router/paths/management/manageBook.vue'
 
 export default [
   {
@@ -23,14 +24,27 @@ export default [
         name: 'management/dets',
         component: ManageDets,
         meta: {
-          title: '디미고인 > Dets 관리'
+          title: '디미고인 > Dets 관리',
+          perm: 2
         }
       },
       {
         path: 'ingang',
         name: 'management/ingang',
         component: Ingang,
-        meta: { title: '디미고인 > 인강실 관리' }
+        meta: {
+          title: '디미고인 > 인강실 관리',
+          perm: 2
+        }
+      },
+      {
+        path: 'book',
+        name: 'management/book',
+        component: ManageBook,
+        meta: {
+          title: '디미고인 > Dets 관리',
+          perm: 2
+        }
       }
     ]
   }
