@@ -17,7 +17,7 @@ export default {
   data () {
     return {
       list: [],
-      notice: '',
+      notice: {},
       pending: false,
       modals: {
         book: false,

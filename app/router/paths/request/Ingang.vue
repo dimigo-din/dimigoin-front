@@ -1,4 +1,5 @@
 <script>
+import moment from 'moment'
 import ContentWrapper from '@/router/partial/ContentWrapper.vue'
 import { ingang } from '@/src/api'
 
@@ -7,11 +8,19 @@ export default {
 
   components: { ContentWrapper },
 
+  filters: {
+    filterDate (time) {
+      return moment(time).format('YYYY-MM-DD')
+    }
+  },
+
   data () {
     return {
       pending: false,
       ingangs: [],
-      today: new Date()
+      today: new Date(),
+      notice: {},
+      modal: false
     }
   },
 
@@ -23,6 +32,8 @@ export default {
     async refresh () {
       this.pending = true
       this.ingangs = await ingang.getStudentIngang()
+      this.notice = await ingang.getLatestNotice()
+      this.notice.desc = this.notice.desc.replace(/(?:\r\n|\r|\n)/g, '<br/>')
       this.pending = false
     },
 
@@ -51,6 +62,11 @@ export default {
       <span
         class="ingang__ticket">
         남은 티켓 개수 : {{ countTicket(ingangs) }} 개
+      </span>
+      <span
+        class="ingang__notice"
+        @click="modal = true">
+        <span class="icon-notice"/>인강실 공지
       </span>
     </h1>
 
@@ -95,6 +111,20 @@ export default {
           >{{ ing.request ? '취소하기' : '신청하기' }}
           </dimi-button>
         </div>
+        <dimi-modal
+          :opened="modal"
+          class="modal__modal"
+          @close="modal = false">
+          <h3 class="modal__title">
+            인강실 공지
+            <span class="modal__date">{{ notice.date | filterDate }}</span>
+          </h3>
+          <div class="modal__field">
+            <p
+              class="modal__notice"
+              v-html="notice.desc"/>
+          </div>
+        </dimi-modal>
       </dimi-card>
     </template>
   </content-wrapper>
@@ -135,6 +165,15 @@ export default {
     justify-content: flex-end;
   }
 
+  &__notice {
+    color: $orange;
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    margin-right: 0.5em;
+    margin-top: 1em;
+  }
+
   &__content {
     display: flex;
     font-weight: $font-weight-bold;
@@ -170,6 +209,45 @@ export default {
 
   &__text--red {
     color: $red;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__field {
+    align-items: center;
+    display: flex;
+    margin: 1.5rem 0;
+  }
+
+  &__label {
+    min-width: 6em;
+  }
+
+  &__leftInput {
+    padding-right: 10px;
+  }
+
+  &__button {
+    padding-top: 20px;
+    position: absolute;
+    right: 25px;
+  }
+
+  &__notice {
+    font-weight: $font-weight-regular;
+    line-height: 1.2rem;
+    word-break: normal;
+  }
+
+  &__date {
+    font-size: 14px;
+    font-weight: $font-weight-light;
   }
 }
 </style>

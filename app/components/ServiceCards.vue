@@ -37,7 +37,7 @@ export default {
     async checkPermission () {
       const permissions = await permission.getPermission()
       for (var i = 0; i < permissions.length; i++) {
-        if (permissions[i].section === 'dets' || permissions[i].section === 'ingang' || permissions[i].section === 'book') {
+        if (permissions[i].section === 'dets' || permissions[i].section === 'book') {
           this.services.push({
             order: 99,
             title: '관리',

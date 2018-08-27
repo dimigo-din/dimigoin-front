@@ -37,6 +37,18 @@ const _User = struct.interface({
   serial: 'string'
 })
 
+const _Notice = struct.interface({
+  idx: 'number',
+  desc: 'string',
+  date: 'string'
+})
+
+export const Notice = notice => _Notice({
+  idx: notice['idx'],
+  desc: notice['description'],
+  date: notice['date']
+})
+
 const _Request = struct.interface({
   idx: 'number',
   reqTime: 'string',

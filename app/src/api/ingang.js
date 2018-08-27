@@ -1,6 +1,6 @@
 import axios from './axios'
 import magician from './magician'
-import { StudentIngang, GradeIngang } from '@/src/struct/ingang'
+import { StudentIngang, GradeIngang, Notice } from '@/src/struct/ingang'
 
 function rightIngang (ingang) {
   if (ingang[0].target_grade === 2) {
@@ -65,4 +65,18 @@ export async function getGradeTimeIngang (grade, time) {
     404: () => new Error('인강 신청이 없습니다.')
   })
   return ingang.map(GradeIngang)
+}
+
+export async function addNotice (notice) {
+  await magician(() => axios.post(`/ingangs/notice`, notice), {})
+}
+
+export async function getNotices () {
+  const { notice } = await magician(() => axios.get(`/ingangs/notice`), {})
+  return notice.map(Notice)
+}
+
+export async function getLatestNotice () {
+  const notice = await magician(() => axios.get(`/ingangs/notice_latest`), {})
+  return Notice(notice)
 }

@@ -13,8 +13,7 @@ export default {
       pending: false,
       modal: false,
       form: {
-        desc: '',
-        date: ''
+        desc: ''
       }
     }
   },
