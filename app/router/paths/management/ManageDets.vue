@@ -299,12 +299,12 @@ export default {
             <template
               v-if="create">
               <dimi-button
-                click="createDets">추가하기</dimi-button>
+                @click="createDets">추가하기</dimi-button>
             </template>
             <template
               v-else>
               <dimi-button
-                click="editDets(modal)">수정하기</dimi-button>
+                @click="editDets(modal)">수정하기</dimi-button>
             </template>
           </div>
         </div>

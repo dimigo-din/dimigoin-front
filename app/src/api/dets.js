@@ -1,19 +1,11 @@
 import axios from './axios'
+import magician from './magician'
 import { Dets, StudentDets } from '@/src/struct/dets'
 
 export async function createDets (dets) {
-  try {
-    await axios.post(`/dets/`, dets)
-  } catch ({ message, response: res }) {
-    console.error(message)
-    if (!res) throw new Error('네트워크에 문제가 있습니다.')
-    switch (res.status) {
-      case 403:
-        throw new Error('권한이 없습니다')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
+  await magician(() => axios.post(`/dets/`, dets), {
+    403: () => new Error('권한이 없습니다.')
+  })
 }
 
 export async function getGradeDets (grade) {
