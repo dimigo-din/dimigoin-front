@@ -2273,8 +2273,8 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
-dimigoincon@^2.5.1:
-  version "2.5.1"
+dimigoincon@^2.5.3:
+  version "2.5.3"
   resolved "https://registry.yarnpkg.com/dimigoincon/-/dimigoincon-2.5.1.tgz#9ff7a51e247e2dca5bee998e896de4bf7715779c"
 
 dir-glob@^2.0.0:

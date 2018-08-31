@@ -47,8 +47,8 @@ const convertReport = v => (v && {
 export const Assignment = assignment => _Assignment({
   idx: assignment['idx'],
   title: assignment['title'],
-  deadline: moment(assignment['deadline']),
   description: assignment['description'],
+  deadline: moment(assignment['end_date']),
   targetGrade: assignment['target_grade'],
   targetClass: assignment['target_class'],
   assignor: assignment['assignor'],
