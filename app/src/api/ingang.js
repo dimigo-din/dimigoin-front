@@ -8,15 +8,15 @@ function rightIngang (ingang) {
     const today = new Date().getDay()
     if (today % 2) {
       if (klass % 2) {
-        return ingang.slice(1, 2)
-      } else {
         return ingang.slice(0, 1)
+      } else {
+        return ingang.slice(1, 2)
       }
     } else {
       if (klass % 2) {
-        return ingang.slice(0, 1)
-      } else {
         return ingang.slice(1, 2)
+      } else {
+        return ingang.slice(0, 1)
       }
     }
   } else {
