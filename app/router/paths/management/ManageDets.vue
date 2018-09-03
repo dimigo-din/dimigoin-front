@@ -92,7 +92,6 @@ export default {
 
     closeModal () {
       this.modal = false
-      this.create = false
       this.form = {
         title: '',
         description: '',
