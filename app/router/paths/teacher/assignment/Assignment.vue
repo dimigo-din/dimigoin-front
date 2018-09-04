@@ -104,7 +104,7 @@ export default {
         'description': ass.description,
         'target_grade': parseInt(ass.targetGrade),
         'target_class': parseInt(ass.targetClass),
-        'deadline': ass.toISOString()
+        'deadline': ass.deadline.toISOString()
       }
     }
   }

@@ -4,7 +4,6 @@ import throwable from '@/mixins/throwable'
 
 import fileDialog from 'file-dialog'
 import { assignment } from '@/src/api'
-import dummy from './dummy'
 
 const assignee = assignment.assignee
 
@@ -16,8 +15,12 @@ export default {
   data: () => ({
     percentages: [],
     uploads: [],
-    assignments: dummy
+    assignments: []
   }),
+
+  async created () {
+    this.assignments = await assignee.getAssignmentList()
+  },
 
   methods: {
     async uploadFile (ass) {
