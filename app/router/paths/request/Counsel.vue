@@ -47,7 +47,7 @@ export default {
       try {
         if (parameter.applied !== 'applied') await counsel.applyCounsel(parameter.idx)
         else await counsel.cancelCounsel(parameter.idx)
-        this.$swal('성공하였습니다', 'success')
+        this.$swal('성공하였습니다', '', 'success')
       } catch (err) {
         this.$swal('이런', err.message, 'error')
       } finally {

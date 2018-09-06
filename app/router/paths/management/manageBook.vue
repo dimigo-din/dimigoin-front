@@ -51,7 +51,7 @@ export default {
     async addNotice () {
       try {
         await book.addNotice(this.restructure(this.form))
-        await this.$swal('추가하였습니다', 'success')
+        await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
         await this.refresh()
       } catch (err) {
@@ -62,7 +62,7 @@ export default {
     async rejectBook (boook) {
       try {
         await book.rejectBook(boook.idx)
-        this.$swal('거절하였습니다', 'success')
+        this.$swal('거절하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -72,7 +72,7 @@ export default {
     async acceptBook (boook) {
       try {
         await book.acceptBook(boook.idx)
-        this.$swal('승인하였습니다', 'success')
+        this.$swal('승인하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')

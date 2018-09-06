@@ -27,8 +27,15 @@ export default {
       const files = await fileDialog()
       this.$set(this.uploads, ass.idx, true)
       try {
-        await assignee.submitAssignment(ass.idx, files[0], event =>
-          this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
+        if (ass.report) {
+          await assignee.editAssignment(ass.idx, files[0], event =>
+            this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
+        } else {
+          await assignee.submitAssignment(ass.idx, files[0], event =>
+            this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
+        }
+        this.assignments = await assignee.getAssignmentList()
+        await this.$swal('성공적으로 제출했습니다', '', 'success')
       } catch (err) {
         this.$_throwable_handleError(err)
       } finally {

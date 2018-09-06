@@ -76,7 +76,7 @@ export default {
                     />
                   </span>
 
-                  <span class="assignment__item">{{ ass.deadline | deadline }}</span>
+                  <span class="assignment__item">{{ ass.end_date | deadline }}</span>
 
                   <div class="assignment__item assignment__expand">
                     <span :class="`icon-arrow-${selection[i] ? 'up' : 'down'}`"/>

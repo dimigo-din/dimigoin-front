@@ -11,14 +11,16 @@ export default {
   data: () => ({
     loading: false,
     assignments: [],
+    now: new Date(),
     modals: {
       create: false,
-      edit: false
+      edit: false,
+      temp: {}
     },
     form: {
       title: '',
       description: '',
-      deadline: new Date(),
+      endDate: new Date(),
       targetGrade: null,
       targetClass: null
     }
@@ -31,7 +33,7 @@ export default {
   methods: {
     async edit (ass) {
       await assignment.assignor.editAssignment(ass.idx, this.restructure(this.form))
-      await this.$swal('수정되었습니다', 'success')
+      await this.$swal('수정되었습니다', '', 'success')
       this.closeModal()
       await this.update()
     },
@@ -63,7 +65,7 @@ export default {
     async create () {
       try {
         await assignment.admin.createAssignment(this.restructure(this.form))
-        await this.$swal('추가되었습니다', 'success')
+        await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.update()
       } catch (err) {
@@ -78,23 +80,30 @@ export default {
     },
 
     openEditModal (ass) {
-      this.modals.edit = ass
-
-      this.form = ass
-      // moment to date
-      this.form.deadline = ass.deadline.toDate()
+      this.modals.edit = true
+      this.modals.temp = ass
+      this.form = {
+        title: ass['title'],
+        description: ass['description'],
+        endDate: new Date(ass['end_date']),
+        targetGrade: ass['target_grade'],
+        targetClass: ass['target_class']
+      }
     },
 
     closeModal () {
       this.modals = {
         create: false,
-        edit: false
+        edit: false,
+        temp: {}
       }
 
       this.form = {
         title: '',
         description: '',
-        date: new Date()
+        endDate: new Date(),
+        targetGrade: null,
+        targetClass: null
       }
     },
 
@@ -104,7 +113,7 @@ export default {
         'description': ass.description,
         'target_grade': parseInt(ass.targetGrade),
         'target_class': parseInt(ass.targetClass),
-        'deadline': ass.deadline.toISOString()
+        'end_date': (ass.endDate).toISOString()
       }
     }
   }
@@ -182,7 +191,7 @@ export default {
       </div>
       <div class="assignor__form-field">
         <label class="assignor__form-label">제출 마감일</label>
-        <dimi-date-input v-model="form.deadline"/>
+        <dimi-date-input v-model="form.endDate"/>
       </div>
 
       <div class="assignor__submit">
@@ -222,11 +231,11 @@ export default {
       </div>
       <div class="assignor__form-field">
         <label class="assignor__form-label">제출 마감일</label>
-        <dimi-date-input v-model="form.deadline"/>
+        <dimi-date-input v-model="form.endDate"/>
       </div>
 
       <div class="assignor__submit">
-        <dimi-button @click="edit(modals.edit)">수정</dimi-button>
+        <dimi-button @click="edit(modals.temp)">수정</dimi-button>
       </div>
     </dimi-modal>
   </div>

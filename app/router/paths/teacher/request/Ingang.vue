@@ -41,7 +41,7 @@ export default {
     async addNotice () {
       try {
         await ingang.addNotice(this.restructure(this.form))
-        await this.$swal('추가하였습니다', 'success')
+        await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
         await this.refresh()
       } catch (err) {

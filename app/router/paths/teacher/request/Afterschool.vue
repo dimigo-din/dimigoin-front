@@ -84,7 +84,7 @@ export default {
 
         await this.updateAll()
 
-        this.$swal('성공!', '추가되었습니다.', 'success')
+        this.$swal('성공!', '추가되었습니다.', '', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

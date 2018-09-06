@@ -49,7 +49,7 @@ export default {
     async createBook () {
       try {
         await book.addBook(this.restructure(this.form))
-        await this.$swal('추가되었습니다', 'success')
+        await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
       } catch (err) {
@@ -95,7 +95,7 @@ export default {
     async editBook (boook) {
       try {
         await book.changeBook(boook.idx, this.restructure(this.form))
-        await this.$swal('수정되었습니다', 'success')
+        await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
       } catch (err) {
@@ -115,7 +115,7 @@ export default {
       })) {
         try {
           await book.deleteBook(boook.idx)
-          this.$swal('삭제되었습니다', 'success')
+          this.$swal('삭제되었습니다', '', 'success')
           await this.refresh()
         } catch (err) {
           this.$swal('이런!', err.message, 'error')
