@@ -38,6 +38,10 @@ export default {
       await this.update()
     },
 
+    async download (ass) {
+      assignment.assignor.getResult(ass.idx)
+    },
+
     async deleteAss (ass) {
       if (await this.$swal({
         type: 'warning',
@@ -132,9 +136,16 @@ export default {
           <span class="icon-edit"/> 수정하기
         </span>
         <span
-          class="assignor__item"
+          v-if="now.getTime() <= (new Date(ass.end_date)).getTime()"
+          class="assignor__item--del"
           @click="deleteAss(ass)">
           <span class="icon-cross"/> 삭제하기
+        </span>
+        <span
+          v-else
+          class="assignor__item--down"
+          @click="download(ass)">
+          <span class="icon-long-arrow-down"/> 다운로드
         </span>
       </template>
 
@@ -154,7 +165,7 @@ export default {
         slot="opponent"
         slot-scope="{ ass }">
         {{ ass.target_grade }}학년
-        {{ ass.target_grade }}반 대상
+        {{ ass.target_class }}반 대상
       </span>
 
     </assignment-base>
@@ -250,8 +261,15 @@ export default {
     margin-right: 24px;
   }
 
-  &__item:last-of-type {
+  &__item--del {
     color: $gray;
+    cursor: pointer;
+    margin-right: 0;
+  }
+
+  &__item--down {
+    color: $aloes;
+    cursor: pointer;
     margin-right: 0;
   }
 

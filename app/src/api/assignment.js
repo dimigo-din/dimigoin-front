@@ -214,6 +214,8 @@ export const assignor = {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
+    link.setAttribute('download', 'assignment.zip')
+    document.body.appendChild(link)
     link.click()
   }
 }
