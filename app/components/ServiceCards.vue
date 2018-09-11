@@ -111,6 +111,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: 0.2s;
+  }
+
+  &__card:hover {
+    transform: scale(1.05);
   }
 
   &__card--disable {
