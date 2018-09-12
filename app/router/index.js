@@ -45,6 +45,7 @@ const router = new VueRouter({
     ...routers.management,
     ...routers.teacher,
     ...routers.assignment,
+    ...routers.sns,
 
     {
       path: '*',
