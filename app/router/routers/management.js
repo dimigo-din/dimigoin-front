@@ -1,7 +1,7 @@
-import Manage from '@/router/paths/management/Manage.vue'
-import ManageCircle from '@/router/paths/management/ManageCircle.vue'
-import ManageDets from '@/router/paths/management/ManageDets.vue'
-import ManageBook from '@/router/paths/management/manageBook.vue'
+import Manage from '@/pages/paths/management/Manage.vue'
+import ManageCircle from '@/pages/paths/management/ManageCircle.vue'
+import ManageDets from '@/pages/paths/management/ManageDets.vue'
+import ManageBook from '@/pages/paths/management/manageBook.vue'
 
 import { withPrefix } from '@/src/util'
 

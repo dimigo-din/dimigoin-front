@@ -1,11 +1,11 @@
-import Wrapper from '@/router/paths/request/Wrapper.vue'
-import Information from '@/router/paths/request/Information.vue'
-import Circle from '@/router/paths/request/Circle.vue'
-import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
-import Ingang from '@/router/paths/request/Ingang.vue'
-import Dets from '@/router/paths/request/Dets.vue'
-import Counsel from '@/router/paths/request/Counsel.vue'
-import Book from '@/router/paths/request/Book.vue'
+import Wrapper from '@/pages/paths/request/Wrapper.vue'
+import Information from '@/pages/paths/request/Information.vue'
+import Circle from '@/pages/paths/request/Circle.vue'
+import RequestAfterschool from '@/pages/paths/request/Afterschool.vue'
+import Ingang from '@/pages/paths/request/Ingang.vue'
+import Dets from '@/pages/paths/request/Dets.vue'
+import Counsel from '@/pages/paths/request/Counsel.vue'
+import Book from '@/pages/paths/request/Book.vue'
 
 export default [{
   path: '/request',

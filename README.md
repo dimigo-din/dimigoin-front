@@ -3,8 +3,8 @@
 
 ## Usage
 ```bash
-cp example.env .env
-yarn install && yarn make
+cp example.env .env # You should edit .env file
+yarn && yarn build
 ```
 
 ## Variables

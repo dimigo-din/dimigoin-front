@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Main from './Main.vue'
-import Meal from './meal/Meal.vue'
-import Draft from './Draft.vue'
-import NotFound from './NotFound.vue'
-import ExplorerFound from './ExplorerFound.vue'
+import Main from '../pages/Main.vue'
+import Meal from '../pages/meal/Meal.vue'
+import Draft from '../pages/Draft.vue'
+import NotFound from '../pages/NotFound.vue'
+import ExplorerFound from '../pages/ExplorerFound.vue'
 
 import * as routers from './routers'
 

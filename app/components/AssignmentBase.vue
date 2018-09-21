@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
-import ContentWrapper from '@/router/partial/ContentWrapper.vue'
-import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
+import ContentWrapper from '@/components/ContentWrapper.vue'
+import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
 export default {
   name: 'AssignmentBase',
