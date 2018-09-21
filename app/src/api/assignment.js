@@ -1,6 +1,5 @@
 import axios from './axios'
 import magician from './magician'
-import { Assignment } from '@/src/struct/assignment'
 
 /**
  *  관리자 이상의 권한을 요구하는 요청입니다.
@@ -16,7 +15,7 @@ export const admin = {
       403: () => new Error('권한이 없습니다')
     })
 
-    return assignments.map(Assignment)
+    return assignments
   },
 
   /**
@@ -45,7 +44,7 @@ export const admin = {
       404: () => new Error('과제를 찾을 수 없습니다.')
     })
 
-    return Assignment(assignment)
+    return assignment
   },
 
   /**
@@ -88,7 +87,7 @@ export const assignee = {
   async getAssignmentList () {
     const { assignments } = await magician(() => axios.get('/assignments/assignee'))
 
-    return assignments.map(Assignment)
+    return assignments
   },
 
   /**
@@ -100,7 +99,7 @@ export const assignee = {
   async getAssignment (idx) {
     const assignment = await magician(() => axios.get(`/assignments/assignee/${idx}`))
 
-    return Assignment(assignment)
+    return assignment
   },
 
   /**
@@ -129,11 +128,11 @@ export const assignee = {
    * @param file
    * @returns {Promise<void>}
    */
-  async editAssignment (idx, file) {
+  async editAssignment (idx, file, onUploadProgress) {
     const formData = new FormData()
     formData.append('file', file)
 
-    await magician(() => axios.put(`/assignments/${idx}/reports`, formData), {
+    await magician(() => axios.put(`/assignments/${idx}/reports`, formData, { onUploadProgress }), {
       400: () => new Error('파일을 찾을 수 없습니다. 다시 확인해주세요.'),
       403: () => new Error('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지' +
         ' 확인해주세요.'),
@@ -156,7 +155,7 @@ export const assignor = {
   async getAssignmentList () {
     const { assignments } = await magician(() => axios.get('/assignments/assignor'))
 
-    return assignments.map(Assignment)
+    return assignments
   },
 
   /**
@@ -171,7 +170,7 @@ export const assignor = {
       404: () => new Error('과제를 찾을 수 없습니다.')
     })
 
-    return Assignment(assignment)
+    return assignment
   },
 
   /**
@@ -215,6 +214,8 @@ export const assignor = {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
+    link.setAttribute('download', 'assignment.zip')
+    document.body.appendChild(link)
     link.click()
   }
 }

@@ -1,8 +1,11 @@
-import Wrapper from '@/router/paths/request/Wrapper.vue'
-import Information from '@/router/paths/request/Information.vue'
-import Circle from '@/router/paths/request/Circle.vue'
-import RequestAfterschool from '@/router/paths/request/Afterschool.vue'
-import Ingang from '@/router/paths/request/Ingang.vue'
+import Wrapper from '@/pages/paths/request/Wrapper.vue'
+import Information from '@/pages/paths/request/Information.vue'
+import Circle from '@/pages/paths/request/Circle.vue'
+import RequestAfterschool from '@/pages/paths/request/Afterschool.vue'
+import Ingang from '@/pages/paths/request/Ingang.vue'
+import Dets from '@/pages/paths/request/Dets.vue'
+import Counsel from '@/pages/paths/request/Counsel.vue'
+import Book from '@/pages/paths/request/Book.vue'
 
 export default [{
   path: '/request',
@@ -29,13 +32,26 @@ export default [{
     {
       path: 'counsel',
       name: 'request/counsel',
-      meta: { title: '신청 > 상담 신청', draft: true }
+      component: Counsel,
+      meta: { title: '신청 > 상담 신청' }
     },
     {
       path: 'ingang',
       name: 'request/ingang',
       component: Ingang,
       meta: { title: '신청 > 인강실 신청' }
+    },
+    {
+      path: 'dets',
+      name: 'request/dets',
+      component: Dets,
+      meta: { title: '신청 > Dets 신청' }
+    },
+    {
+      path: 'book',
+      name: 'request/book',
+      component: Book,
+      meta: { title: '신청 > 도서 신청' }
     }
   ]
 }]

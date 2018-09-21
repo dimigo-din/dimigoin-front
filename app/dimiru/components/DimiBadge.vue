@@ -23,6 +23,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .badge {
   border-radius: 10px;
   font-size: 14px;

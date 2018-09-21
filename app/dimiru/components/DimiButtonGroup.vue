@@ -1,17 +1,3 @@
-<template>
-  <div :class="classes">
-    <div
-      v-for="(item, index) in items"
-      :key="`button-${index}`"
-      :active="index === value"
-      class="button-group__button"
-      @click="onClick(index)">
-
-      {{ item }}
-    </div>
-  </div>
-</template>
-
 <script>
 export default {
   props: {
@@ -61,11 +47,27 @@ export default {
 }
 </script>
 
+<template>
+  <div :class="classes">
+    <div
+      v-for="(item, index) in items"
+      :key="`button-${index}`"
+      :active="index === value"
+      class="button-group__button"
+      @click="onClick(index)">
+
+      {{ item }}
+    </div>
+  </div>
+</template>
+
 <style lang="scss">
+@import '../scss/vars';
+
 .button-group {
-  @include font-bold;
   display: inline-block;
   font-size: 14px;
+  font-weight: $font-weight-bold;
   user-select: none;
 
   &__button {

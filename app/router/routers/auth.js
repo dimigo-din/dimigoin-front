@@ -1,12 +1,12 @@
-import Register from '@/router/paths/auth/register/Register.vue'
-import RegisterStepOne from '@/router/paths/auth/register/RegisterStepOne.vue'
-import RegisterStepTwo from '@/router/paths/auth/register/RegisterStepTwo.vue'
-import RegisterStepThree from '@/router/paths/auth/register/RegisterStepThree.vue'
-import RegisterSideOne from '@/router/paths/auth/register/RegisterSideOne.vue'
-import RegisterSideTwo from '@/router/paths/auth/register/RegisterSideTwo.vue'
-import RegisterSideThree from '@/router/paths/auth/register/RegisterSideThree.vue'
+import Register from '@/pages/paths/auth/register/Register.vue'
+import RegisterStepOne from '@/pages/paths/auth/register/RegisterStepOne.vue'
+import RegisterStepTwo from '@/pages/paths/auth/register/RegisterStepTwo.vue'
+import RegisterStepThree from '@/pages/paths/auth/register/RegisterStepThree.vue'
+import RegisterSideOne from '@/pages/paths/auth/register/RegisterSideOne.vue'
+import RegisterSideTwo from '@/pages/paths/auth/register/RegisterSideTwo.vue'
+import RegisterSideThree from '@/pages/paths/auth/register/RegisterSideThree.vue'
 
-import Login from '@/router/paths/auth/Login.vue'
+import Login from '@/pages/paths/auth/Login.vue'
 
 import { withPrefix } from '@/src/util'
 

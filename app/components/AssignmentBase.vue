@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
-import ContentWrapper from '@/router/partial/ContentWrapper.vue'
-import DefaultNavbar from '@/router/partial/DefaultNavbar.vue'
+import ContentWrapper from '@/components/ContentWrapper.vue'
+import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
 export default {
   name: 'AssignmentBase',
@@ -76,7 +76,7 @@ export default {
                     />
                   </span>
 
-                  <span class="assignment__item">{{ ass.deadline | deadline }}</span>
+                  <span class="assignment__item">{{ ass.end_date | deadline }}</span>
 
                   <div class="assignment__item assignment__expand">
                     <span :class="`icon-arrow-${selection[i] ? 'up' : 'down'}`"/>
@@ -103,6 +103,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '~styles/variables';
+
 .assignment {
   &__loading {
     display: flex;
@@ -126,8 +128,8 @@ export default {
   }
 
   &__item {
-    @include font-bold;
     color: $gray;
+    font-weight: $font-weight-bold;
   }
 
   &__item:not(:last-child) {
@@ -153,10 +155,10 @@ export default {
   }
 
   &__nav {
-    @include font-bold;
     color: $red;
     display: flex;
     font-size: 18px;
+    font-weight: $font-weight-bold;
     justify-content: flex-end;
   }
 }

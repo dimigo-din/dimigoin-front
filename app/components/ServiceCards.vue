@@ -1,5 +1,5 @@
 <script>
-import { service } from '@/src/api'
+import { service, permission } from '@/src/api'
 
 export default {
   name: 'ServiceCards',
@@ -10,6 +10,7 @@ export default {
 
   async created () {
     this.services = await service.getServiceList()
+    this.checkPermission()
     this.$nextTick(this.updateServiceCardHeight)
   },
 
@@ -30,6 +31,22 @@ export default {
         window.open(service.url, '_blank')
       } else {
         this.$router.push({ name: service.url })
+      }
+    },
+
+    async checkPermission () {
+      const permissions = await permission.getPermission()
+      for (var i = 0; i < permissions.length; i++) {
+        if (permissions[i].section === 'dets' || permissions[i].section === 'book') {
+          this.services.push({
+            order: 99,
+            title: '관리',
+            description: 'Dets, 인강실',
+            icon: 'icon-submission',
+            url: 'management'
+          })
+          return
+        }
       }
     }
   }
@@ -67,6 +84,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import '~styles/variables';
+@import '~styles/mixins';
+
 .services {
   &__cards {
     display: grid;
@@ -91,6 +111,11 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: 0.2s;
+  }
+
+  &__card:hover {
+    transform: scale(1.05);
   }
 
   &__card--disable {
@@ -105,8 +130,8 @@ export default {
   }
 
   &__card-title {
-    @include font-extra-bold;
     font-size: 24px;
+    font-weight: $font-weight-extra-bold;
 
     margin-top: 1.2rem;
     text-align: center;

@@ -29,6 +29,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .divider {
   border: 0;
   position: absolute;

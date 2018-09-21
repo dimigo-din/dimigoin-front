@@ -74,9 +74,9 @@ export default {
 </template>
 
 <style lang='scss'>
-.btn {
-  @include font-bold;
+@import '../scss/vars';
 
+.btn {
   align-items: center;
   appearance: none;
   background-color: $red;
@@ -84,6 +84,7 @@ export default {
   color: $white;
   cursor: pointer;
   display: inline-flex;
+  font-weight: $font-weight-bold;
   justify-content: center;
   overflow: hidden;
   padding: 0.8em 2.7em;

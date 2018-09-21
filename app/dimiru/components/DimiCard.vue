@@ -48,6 +48,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .c-card {
   background-color: $white;
   border-radius: 6px;
@@ -95,8 +97,8 @@ export default {
   }
 
   &__button > span {
-    @include font-bold;
     flex: 1;
+    font-weight: $font-weight-bold;
     text-align: center;
   }
 }

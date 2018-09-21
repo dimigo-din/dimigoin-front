@@ -19,12 +19,15 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+@import '../scss/mixins';
+
 .menu-item {
-  @include font-bold;
   border-radius: 0 4em 4em 0;
   color: $gray-light;
   display: block;
   font-size: 16px;
+  font-weight: $font-weight-bold;
   padding: 0.6em 0 0.6em 3em;
   text-decoration: none;
 

@@ -1,3 +1,20 @@
+<script>
+export default {
+  props: {
+    opened: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  methods: {
+    close () {
+      this.$emit('close')
+    }
+  }
+}
+</script>
+
 <template>
   <transition name="fade">
     <div
@@ -19,64 +36,49 @@
   </transition>
 </template>
 
-<script>
-export default {
-  props: {
-    opened: {
-      type: Boolean,
-      default: false
-    }
-  },
+<style lang="scss">
+@import '../scss/vars';
 
-  methods: {
-    close () {
-      this.$emit('close')
-    }
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.25s ease-in-out;
+  }
+
+  &-enter,
+  &-leave-to {
+    opacity: 0;
   }
 }
-</script>
 
-<style lang="scss">
-  .fade {
-    &-enter-active,
-    &-leave-active {
-      transition: opacity 0.25s ease-in-out;
-    }
+.modal {
+  background-color: $white;
+  border: solid 1px $gray-lighten;
+  border-radius: 6px;
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  margin: 5vh auto;
+  max-width: 700px;
+  padding: 24px;
+  position: relative;
 
-    &-enter,
-    &-leave-to {
-      opacity: 0;
-    }
-  }
-
-  .modal {
-    background-color: $white;
-    border: solid 1px $gray-lighten;
-    border-radius: 6px;
-    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+  &__overlay {
+    background: rgba(#151313, 0.7);
     box-sizing: border-box;
-    margin: 5vh auto;
-    max-width: 700px;
-    padding: 24px;
-    position: relative;
-
-    &__overlay {
-      background: rgba(#151313, 0.7);
-      box-sizing: border-box;
-      height: 100%;
-      left: 0;
-      min-height: 100vh;
-      overflow-y: auto;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 999;
-    }
-
-    .icon-cross {
-      cursor: pointer;
-      float: right;
-      opacity: 0.3;
-    }
+    height: 100%;
+    left: 0;
+    min-height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
   }
+
+  .icon-cross {
+    cursor: pointer;
+    float: right;
+    opacity: 0.3;
+  }
+}
 </style>

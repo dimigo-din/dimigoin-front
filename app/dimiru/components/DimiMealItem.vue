@@ -40,6 +40,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 .meal-item {
   color: $gray;
   min-height: 4.275em;
@@ -54,8 +56,8 @@ export default {
   }
 
   &__title {
-    @include font-bold;
     font-size: 16px;
+    font-weight: $font-weight-bold;
     margin-bottom: 0.5em;
   }
 

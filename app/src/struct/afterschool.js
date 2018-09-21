@@ -3,23 +3,25 @@ import { struct } from 'superstruct'
 const _Afterschool = struct.interface({
   idx: 'number',
   name: 'string',
-  applyStartDate: 'string',
-  applyEndDate: 'string',
+  startDate: 'string',
+  endDate: 'string',
   day: 'string',
-  count: 'number',
-  capacity: 'number',
+  grade: 'number',
+  maxCount: 'number',
   teacherName: 'string',
+  count: 'number | undefined',
   status: 'string | null | undefined'
 })
 
 export const Afterschool = afterschool => _Afterschool({
   idx: afterschool['idx'],
   name: afterschool['name'],
-  applyStartDate: afterschool['request_start_date'],
-  applyEndDate: afterschool['request_end_date'],
+  startDate: afterschool['request_start_date'],
+  endDate: afterschool['request_end_date'],
   day: afterschool['day'],
-  count: afterschool['my_request_count'],
-  capacity: afterschool['max_of_count'],
+  grade: afterschool['target_grade'],
+  maxCount: afterschool['max_of_count'],
   teacherName: afterschool['teacher_name'],
+  count: afterschool['all_request_count'],
   status: afterschool['status']
 })

@@ -9,6 +9,8 @@ export default {
 </template>
 
 <style lang="scss">
+@import '../scss/vars';
+
 @keyframes spinning {
   0% { transform: rotate(20deg); }
   100% { transform: rotate(380deg); }

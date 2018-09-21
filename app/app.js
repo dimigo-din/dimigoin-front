@@ -7,6 +7,8 @@ import Ripple from 'vue-ripple-directive'
 import { sync } from 'vuex-router-sync'
 import VueAnalytics from 'vue-analytics'
 
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -36,3 +38,5 @@ const $vm = new Vue({
 })
 
 $vm.$mount('#app')
+
+OfflinePluginRuntime.install()

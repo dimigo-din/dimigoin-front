@@ -1,18 +1,3 @@
-<template>
-  <div class="checkbox__wrapper">
-    <span
-      :class="classes"
-      @click="$emit('input', !value)">
-
-      <span class="checkbox__icon icon-ok"/>
-    </span>
-
-    <span :class="$slots.default && 'checkbox__content'">
-      <slot/>
-    </span>
-  </div>
-</template>
-
 <script>
 export default {
   props: {
@@ -33,7 +18,24 @@ export default {
 }
 </script>
 
+<template>
+  <div class="checkbox__wrapper">
+    <span
+      :class="classes"
+      @click="$emit('input', !value)">
+
+      <span class="checkbox__icon icon-ok"/>
+    </span>
+
+    <span :class="$slots.default && 'checkbox__content'">
+      <slot/>
+    </span>
+  </div>
+</template>
+
 <style lang="scss">
+@import '../scss/vars';
+
 .checkbox {
   background-color: $gray-light;
   border-radius: 50%;

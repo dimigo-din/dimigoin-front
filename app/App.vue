@@ -3,7 +3,7 @@ import 'dimigoincon'
 import 'typeface-nanum-square-round'
 
 import './scss/theme.scss'
-import AwesomeFooter from './router/partial/AwesomeFooter.vue'
+import AwesomeFooter from './components/AwesomeFooter.vue'
 
 export default {
   name: 'App',
