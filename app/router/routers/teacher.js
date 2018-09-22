@@ -1,14 +1,14 @@
-import Wrapper from '@/pages/paths/teacher/request/Wrapper.vue'
-import TeacherMain from '@/pages/paths/teacher/TeacherMain.vue'
-
-import Information from '@/pages/paths/teacher/request/Information.vue'
-import Afterschool from '@/pages/paths/teacher/request/Afterschool.vue'
-import Counsel from '@/pages/paths/teacher/request/Counsel.vue'
-import Ingang from '@/pages/paths/teacher/request/Ingang.vue'
-
-import Assignment from '@/pages/paths/teacher/assignment/Assignment.vue'
-
 import { withPrefix } from '@/src/util'
+
+const TeacherMain = () => import(/* webpackChunkName: "teacher-main" */ '@/pages/paths/teacher/TeacherMain.vue')
+
+const Wrapper = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Wrapper.vue')
+const Information = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Information.vue')
+const Afterschool = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Afterschool.vue')
+const Counsel = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Counsel.vue')
+const Ingang = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Ingang.vue')
+
+const Assignment = () => import(/* webpackChunkName: "teacher-assignment" */ '@/pages/paths/teacher/assignment/Assignment.vue')
 
 export default [
   {

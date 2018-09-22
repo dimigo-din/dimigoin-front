@@ -1,11 +1,11 @@
-import Wrapper from '@/pages/paths/request/Wrapper.vue'
-import Information from '@/pages/paths/request/Information.vue'
-import Circle from '@/pages/paths/request/Circle.vue'
-import RequestAfterschool from '@/pages/paths/request/Afterschool.vue'
-import Ingang from '@/pages/paths/request/Ingang.vue'
-import Dets from '@/pages/paths/request/Dets.vue'
-import Counsel from '@/pages/paths/request/Counsel.vue'
-import Book from '@/pages/paths/request/Book.vue'
+const Wrapper = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Wrapper.vue')
+const Information = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Information.vue')
+const Circle = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Circle.vue')
+const RequestAfterschool = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Afterschool.vue')
+const Ingang = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Ingang.vue')
+const Dets = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Dets.vue')
+const Counsel = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Counsel.vue')
+const Book = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Book.vue')
 
 export default [{
   path: '/request',

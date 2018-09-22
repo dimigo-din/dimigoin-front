@@ -1,4 +1,4 @@
-import Assignment from '@/pages/paths/assignment/Assignment.vue'
+const Assignment = () => import(/* webpackChunkName: "service-assignment" */ '@/pages/paths/assignment/Assignment.vue')
 
 export default [
   {
