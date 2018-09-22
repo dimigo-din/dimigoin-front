@@ -1,9 +1,9 @@
-import Manage from '@/pages/paths/management/Manage.vue'
-import ManageCircle from '@/pages/paths/management/ManageCircle.vue'
-import ManageDets from '@/pages/paths/management/ManageDets.vue'
-import ManageBook from '@/pages/paths/management/manageBook.vue'
-
 import { withPrefix } from '@/src/util'
+
+const Manage = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/Manage.vue')
+const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')
+const ManageDets = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageDets.vue')
+const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/manageBook.vue')
 
 export default [
   ...withPrefix('/management', [
