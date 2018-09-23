@@ -2,11 +2,11 @@ const path = require('path')
 const FTPS = require('ftps')
 
 const ftps = new FTPS({
-  username: process.env.FTP_USERNAME,
-  password: process.env.FTP_PASSWORD,
-  host: process.env.FTP_HOST,
+  username: process.env.SFTP_USERNAME,
+  password: process.env.SFTP_PASSWORD,
+  host: process.env.SFTP_HOST,
   protocol: 'sftp',
-  cwd: process.env.FTP_CWD
+  cwd: process.env.SFTP_CWD
 })
 
 ftps
