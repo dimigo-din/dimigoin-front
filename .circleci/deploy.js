@@ -17,4 +17,7 @@ ftps
     parallel: true,
     upload: true
   })
-  .exec(console.log)
+  .exec((err, res) => {
+    if (err) throw err
+    console.log(res)
+  })

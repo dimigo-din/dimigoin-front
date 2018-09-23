@@ -6,7 +6,6 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: sudo apt-get install -y apt-utils
       - run: sudo apt-get install -y lftp
       - restore_cache:
           name: Restore Yarn Package Cache
@@ -21,6 +20,7 @@ jobs:
           paths:
             - ~/.cache/yarn
       - run: yarn build
+      - run: lftp
       - run: node .circleci/deploy.js
 
 workflows:
