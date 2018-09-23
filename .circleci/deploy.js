@@ -13,7 +13,7 @@ ftps
   .raw('rm -rf ./*')
   .mirror({
     remoteDir: '.',
-    localDir: '../dist/',
+    localDir: path.resolve(__dirname, '../dist'),
     parallel: true,
     upload: true
   })
