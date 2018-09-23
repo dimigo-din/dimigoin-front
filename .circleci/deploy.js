@@ -1,23 +1,13 @@
 const path = require('path')
-const FTPS = require('ftps')
+const sftp = require('node-sftp-deploy')
 
-const ftps = new FTPS({
-  username: process.env.SFTP_USERNAME,
-  password: process.env.SFTP_PASSWORD,
+sftp({
+  user: process.env.SFTP_USERNAME,
+  pass: process.env.SFTP_PASSWORD,
   host: process.env.SFTP_HOST,
-  protocol: 'sftp',
-  cwd: process.env.SFTP_CWD
+  port: 22,
+  remotePath: process.env.SFTP_ROOT,
+  sourcePath: path.resolve(__dirname, '../dist')
 })
-
-ftps
-  .raw('rm -rf ./*')
-  .mirror({
-    remoteDir: '.',
-    localDir: path.resolve(__dirname, '../dist'),
-    parallel: true,
-    upload: true
-  })
-  .exec((err, res) => {
-    if (err) throw err
-    console.log(res)
-  })
+  .then(() => console.log('deploy finish'))
+  .catch(err => { throw err })
