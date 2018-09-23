@@ -1,9 +1,5 @@
 version: 2
 
-dependencies:
-  pre:
-    - sudo apt-get install -y lftp
-
 jobs:
   build:
     docker:
@@ -30,8 +26,8 @@ workflows:
   version: 2
   deploy:
     jobs:
-    - build:
-      filters:
-        branches:
-          only:
-          - master
+      - build:
+          filters:
+            branches:
+              only:
+                - master
