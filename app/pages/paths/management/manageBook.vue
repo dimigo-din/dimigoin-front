@@ -92,6 +92,11 @@ export default {
         @click="modal = true">
         <span class="icon-edit"/>공지 추가하기
       </span>
+      <span
+        class="book__excel"
+        onclick="location.href='http://dev-api.dimigo.in/book_info/excel'">
+        <span class="icon-long-arrow-down"/>엑셀 다운로드
+      </span>
     </h1>
 
     <dimi-card
@@ -193,6 +198,15 @@ export default {
 
   &__notice {
     color: $red;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    margin-right: 0.5em;
+    margin-top: 1em;
+  }
+
+  &__excel {
+    color: $aloes;
     cursor: pointer;
     float: right;
     font-size: 16px;
