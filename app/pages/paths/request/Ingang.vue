@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { ingang } from '@/src/api/index'
+import { ingang } from '@/src/api'
 
 export default {
   name: 'Ingang',
@@ -31,24 +31,19 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs = await ingang.getStudentIngang()
-      this.notice = await ingang.getLatestNotice()
-      this.notice.desc = this.notice.desc.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+      this.ingangs = await ingang.apply.getStudentIngang()
+      this.notice = await ingang.notice.getLatestNotice()
       this.pending = false
     },
 
-    async toggleApply (parameter) {
+    async toggleApply (ing) {
       try {
-        if (parameter.request === true) await ingang.cancelIngang(parameter.idx)
-        else await ingang.applyIngang(parameter.idx)
+        if (ing.request) await ingang.apply.cancelIngang(ing.idx)
+        else await ingang.apply.applyIngang(ing.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
       await this.refresh()
-    },
-
-    countTicket (ingang) {
-      return ingang[0].weekCount
     }
   }
 }
@@ -61,7 +56,7 @@ export default {
       인강실 사용 신청
       <span
         class="ingang__ticket">
-        남은 티켓 개수 : {{ countTicket(ingangs) }} 개
+        남은 티켓 개수 : {{ ingangs[0].weekCount }} 개
       </span>
       <span
         class="ingang__notice"
@@ -77,15 +72,16 @@ export default {
     </div>
 
     <template v-else>
-
       <dimi-card
         v-for="(ing, idx) in ingangs"
         slot="main"
         :key="`${idx}`"
         class="ingang__card">
+
         <h2 class="ingang__title">
           {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ing.time }}타임
         </h2>
+
         <div class="ingang__content">
           <div class="ingang__current">
             <div
@@ -104,6 +100,7 @@ export default {
             <div class="ingang__text">총원</div>
           </div>
         </div>
+
         <div class="ingang__btn">
           <dimi-button
             :gray="ing.request"
@@ -111,6 +108,7 @@ export default {
           >{{ ing.request ? '취소하기' : '신청하기' }}
           </dimi-button>
         </div>
+
         <dimi-modal
           :opened="modal"
           class="modal__modal"
