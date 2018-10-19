@@ -10,11 +10,7 @@ export default {
   data: () => ({
     pending: false,
     currentTab: 0,
-    ingangs: [],
-    modal: false,
-    form: {
-      desc: ''
-    }
+    notice: ''
   }),
 
   async created () {
@@ -24,25 +20,21 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs[0] = await ingang.getGradeTimeIngang(1, 1)
-      this.ingangs[1] = await ingang.getGradeTimeIngang(1, 2)
-      this.ingangs[2] = await ingang.getGradeTimeIngang(2, 1)
-      this.ingangs[3] = await ingang.getGradeTimeIngang(2, 2)
+      this.notice = (await ingang.notice.getLatestNotice()).description
       this.pending = false
     },
 
     restructure (notice) {
       return {
-        'description': notice.desc,
+        'description': notice,
         'date': this.timezone(new Date()).toISOString()
       }
     },
 
     async addNotice () {
       try {
-        await ingang.addNotice(this.restructure(this.form))
+        await ingang.notice.postNotice(this.restructure(this.notice))
         await this.$swal('추가하였습니다', '', 'success')
-        this.closeModal()
         await this.refresh()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -52,13 +44,6 @@ export default {
     timezone (val) {
       var timezoneOffset = new Date().getTimezoneOffset() * 60000
       return new Date(val - timezoneOffset)
-    },
-
-    closeModal () {
-      this.modal = false
-      this.form = {
-        desc: ''
-      }
     }
   }
 }
@@ -68,70 +53,52 @@ export default {
   <content-wrapper>
     <h1 slot="header">
       <span class="icon-internet-class"/>인강실 신청 관리
-      <span
-        v-if="currentTab < 2"
-        class="ingang__excel"
-        onclick="location.href='http://dev-api.dimigo.in/ingangs/excel/1'">
-        <span class="icon-long-arrow-down"/>엑셀 다운로드
-      </span>
-      <span
-        v-if="currentTab > 1"
-        class="ingang__excel"
-        onclick="location.href='http://dev-api.dimigo.in/ingangs/excel/2'">
-        <span class="icon-long-arrow-down"/>엑셀 다운로드
-      </span>
-      <span
-        class="ingang__notice"
-        @click="modal = true">
-        <span class="icon-notice"/>공지 추가
-      </span>
     </h1>
     <dimi-card
       slot="main"
       class="ingang">
       <dimi-tab
         v-model="currentTab"
-        :tabs="['1학년 1타임', '1학년 2타임', '2학년 1타임', '2학년 2타임']"/>
+        :tabs="['엑셀', '블랙리스트', '공지']"/>
       <div
         v-if="pending"
         class="ingang__loader">
         <dimi-loader/>
       </div>
-      <div
-        v-else
-        class="ingang__list">
+      <template v-else>
         <div
-          v-for="(klass, ckey) in ingangs[currentTab]"
-          :key="ckey">
-          <div class="ingang__cell ingang__klass">{{ klass.class }}반</div>
-          <div
-            v-for="(student, skey) in klass.request"
-            :key="skey"
-            class="ingang__cell ingang__student">
-            <div>{{ student.user.serial }}</div>
-            <div>{{ student.user.name }}</div>
+          v-if="currentTab === 0"
+          class="excel">
+          <dimi-button
+            :loading="pending"
+            href="http://dev-api.dimigo.in/ingangs/excel/1"
+            class="excel__item">
+            1학년 엑셀 다운
+          </dimi-button>
+          <dimi-button
+            :loading="pending"
+            href="http://dev-api.dimigo.in/ingangs/excel/2"
+            class="excel__item">
+            2학년 엑셀 다운
+          </dimi-button>
+        </div>
+        <div
+          v-if="currentTab === 2">
+          <div class="notice">
+            <dimi-long-input
+              v-model="notice"
+              :height="300"
+              class="notice__input"/>
+          </div>
+          <div class="notice__button">
+            <dimi-button
+              class="notice__button"
+              @click="addNotice()">
+              공지 수정하기
+            </dimi-button>
           </div>
         </div>
-      </div>
-      <dimi-modal
-        :opened="modal"
-        class="modal__modal"
-        @close="closeModal">
-        <h3 class="modal__title">공지 추가하기</h3>
-
-        <div class="modal__field">
-          <dimi-long-input
-            v-model="form.desc"
-            :height="500"
-            class="modal__notice"/>
-        </div>
-
-        <div class="modal__field">
-          <div class="modal__button">
-            <dimi-button @click="addNotice">추가하기</dimi-button>
-          </div>
-        </div>
-      </dimi-modal>
+      </template>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -142,82 +109,37 @@ export default {
 .ingang {
   padding: 0;
 
-  &__excel {
-    color: $aloes;
-    cursor: pointer;
-    float: right;
-    font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
-  }
-
   &__loader {
     align-items: center;
     display: flex;
     justify-content: center;
   }
+}
 
-  &__list {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: space-around;
-    width: 100%;
-  }
+.excel {
+  display: flex;
+  justify-content: center;
+  margin: 16px;
 
-  &__notice {
-    color: $red;
-    cursor: pointer;
-    float: right;
-    font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
-  }
-
-  &__cell {
-    color: $gray-dark;
-    display: block;
-    font-size: 18px;
-    font-weight: $font-weight-bold;
-    padding: 0 0.125rem;
-    text-align: center;
-  }
-
-  &__klass {
-    margin-top: 1rem;
-  }
-
-  &__student {
-    color: $gray;
-    display: block;
+  &__item {
     margin: 16px;
   }
 }
 
-.modal {
-  &__title {
-    color: $gray-dark;
-    font-size: 24px;
-    font-weight: $font-weight-bold;
-  }
+.notice {
+  display: flex;
+  justify-content: center;
 
-  &__field {
-    align-items: center;
-    display: flex;
-    margin: 1.5rem 0;
-  }
-
-  &__label {
-    min-width: 6em;
+  &__input {
+    margin: 6px 0;
+    padding: 0 12px;
   }
 
   &__button {
-    padding-top: 20px;
-    position: absolute;
-    right: 25px;
-  }
-
-  &__notice {
-    min-height: 80%;
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    margin: 3px 8px 6px 0;
   }
 }
 </style>
