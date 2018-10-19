@@ -11,6 +11,10 @@ export default {
   filters: {
     filterDate (time) {
       return moment(time).format('YYYY-MM-DD')
+    },
+
+    filterBlackDate (time) {
+      return moment(time).format('MM월 DD까지 인강실을 사용할 수 없습니다.')
     }
   },
 
@@ -72,58 +76,70 @@ export default {
     </div>
 
     <template v-else>
-      <dimi-card
-        v-for="(ing, idx) in ingangs"
-        slot="main"
-        :key="`${idx}`"
-        class="ingang__card">
+      <template v-if="ingangs[0].black">
+        <dimi-card
+          slot="main"
+          class="ingang__card">
+          <h2 class="ingang__black ingang__black--title">
+            You Are Banned
+          </h2>
+          <div class="ingang__black ingang__black--comment">{{ ingangs[0].black | filterBlackDate }}</div>
+        </dimi-card>
+      </template>
+      <template v-else>
+        <dimi-card
+          v-for="(ing, idx) in ingangs"
+          slot="main"
+          :key="`${idx}`"
+          class="ingang__card">
 
-        <h2 class="ingang__title">
-          {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ing.time }}타임
-        </h2>
+          <h2 class="ingang__title">
+            {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ing.time }}타임
+          </h2>
 
-        <div class="ingang__content">
-          <div class="ingang__current">
-            <div
-              :class="[
-                'ingang__number',
-                'ingang__number--' + (ing.request ? 'aloes' : 'red')
-            ]">{{ ing.count }}</div>
-            <div
-              :class="[
-                'ingang__text',
-                'ingang__text--' + (ing.request ? 'aloes' : 'red')
-            ]">현원</div>
+          <div class="ingang__content">
+            <div class="ingang__current">
+              <div
+                :class="[
+                  'ingang__number',
+                  'ingang__number--' + (ing.request ? 'aloes' : 'red')
+              ]">{{ ing.count }}</div>
+              <div
+                :class="[
+                  'ingang__text',
+                  'ingang__text--' + (ing.request ? 'aloes' : 'red')
+              ]">현원</div>
+            </div>
+            <div class="ingang__max">
+              <div class="ingang__number">{{ ing.max }}</div>
+              <div class="ingang__text">총원</div>
+            </div>
           </div>
-          <div class="ingang__max">
-            <div class="ingang__number">{{ ing.max }}</div>
-            <div class="ingang__text">총원</div>
-          </div>
-        </div>
 
-        <div class="ingang__btn">
-          <dimi-button
-            :gray="ing.request"
-            @click="toggleApply(ing)"
-          >{{ ing.request ? '취소하기' : '신청하기' }}
-          </dimi-button>
-        </div>
-
-        <dimi-modal
-          :opened="modal"
-          class="modal__modal"
-          @close="modal = false">
-          <h3 class="modal__title">
-            인강실 공지
-            <span class="modal__date">{{ notice.date | filterDate }}</span>
-          </h3>
-          <div class="modal__field">
-            <p
-              class="modal__notice"
-              v-html="notice.desc"/>
+          <div class="ingang__btn">
+            <dimi-button
+              :gray="ing.request"
+              @click="toggleApply(ing)"
+            >{{ ing.request ? '취소하기' : '신청하기' }}
+            </dimi-button>
           </div>
-        </dimi-modal>
-      </dimi-card>
+
+          <dimi-modal
+            :opened="modal"
+            class="modal__modal"
+            @close="modal = false">
+            <h3 class="modal__title">
+              인강실 공지
+              <span class="modal__date">{{ notice.date | filterDate }}</span>
+            </h3>
+            <div class="modal__field">
+              <p
+                class="modal__notice"
+                v-html="notice.description"/>
+            </div>
+          </dimi-modal>
+        </dimi-card>
+      </template>
     </template>
   </content-wrapper>
 </template>
@@ -147,6 +163,24 @@ export default {
 
   &__card {
     margin-bottom: 12px;
+  }
+
+  &__black {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__black--title {
+    color: $red;
+    font-size: 64px;
+    font-weight: $font-weight-extra-bold;
+    padding-top: 4rem;
+  }
+
+  &__black--comment {
+    font-size: 22px;
+    font-weight: $font-weight-regular;
+    padding-bottom: 4rem;
   }
 
   &__ticket {

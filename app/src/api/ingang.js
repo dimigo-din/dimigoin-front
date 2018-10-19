@@ -2,6 +2,10 @@ import axios from './axios'
 import magician from './magician'
 import { StudentIngang, GradeIngang } from '@/src/struct/ingang'
 
+/**
+ * 2학년은 반, 요일에 따라 인강실을 쓸 수 있는 시간대가 다르다.
+ * rightIngang()은 사용 가능한 인강 시간만 return해준다.
+ */
 function rightIngang (ingang) {
   const grade = ingang[0].target_grade
   const klass = ingang[0].class
@@ -60,18 +64,19 @@ export const notice = {
   },
 
   async getNotices () {
-    var { notice } = await magician(() => axios.get(`/ingang_notice`), {})
+    let { notice } = await magician(() => axios.get(`/ingang_notice`), {})
     notice.description.replace(/(?:\r\n|\r|\n)/g, '<br/>')
     return notice
   },
 
   async getLatestNotice () {
-    var notice = await magician(() => axios.get(`/ingang_notice/latest`), {})
-    notice.description.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+    let notice = await magician(() => axios.get(`/ingang_notice/latest`), {})
+    notice.description.split('\n').join('<br />')
     return notice
   }
 }
 
+// Object about Ingang BlackList
 export const black = {
   async getGradeBlack (grade) {
     const { blacklist } = await magician(() => axios.get(`/ingang_black/grade/${grade}`), {})
