@@ -34,7 +34,7 @@ export default {
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
-      this.notice = (await notice.getLatestNotice())[0].desc
+      this.notice = await notice.getLatestNotice()
     } catch (err) {
       console.error(err)
     }
@@ -117,8 +117,7 @@ export default {
           <dimi-card
             class="info__notice info-section__content"
             shadow>
-            <span
-              v-html="notice"/>
+            <p class="info__notice--content">{{ notice }}</p>
           </dimi-card>
         </section>
       </div>
@@ -208,6 +207,13 @@ export default {
     display: block;
     font-size: 18px;
     line-height: 2;
+  }
+
+  &__notice--content {
+    font-family: inherit;
+    font-weight: $font-weight-regular;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   &__profile,

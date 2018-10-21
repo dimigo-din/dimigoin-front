@@ -133,9 +133,7 @@ export default {
               <span class="modal__date">{{ notice.date | filterDate }}</span>
             </h3>
             <div class="modal__field">
-              <p
-                class="modal__notice"
-                v-html="notice.description"/>
+              <p class="modal__notice">{{ notice.description }}</p>
             </div>
           </dimi-modal>
         </dimi-card>
@@ -272,9 +270,11 @@ export default {
   }
 
   &__notice {
+    font-family: inherit;
     font-weight: $font-weight-regular;
     line-height: 1.2rem;
-    word-break: normal;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   &__date {

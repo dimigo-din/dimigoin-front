@@ -15,5 +15,5 @@ export async function getAllNotice () {
 
 export async function getLatestNotice () {
   const { notice } = await magician(() => axios.get(`/notice/latest`), {})
-  return notice.map(Notice)
+  return notice[0].description
 }

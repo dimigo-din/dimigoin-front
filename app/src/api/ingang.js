@@ -65,13 +65,11 @@ export const notice = {
 
   async getNotices () {
     let { notice } = await magician(() => axios.get(`/ingang_notice`), {})
-    notice.description.replace(/(?:\r\n|\r|\n)/g, '<br/>')
     return notice
   },
 
   async getLatestNotice () {
-    let notice = await magician(() => axios.get(`/ingang_notice/latest`), {})
-    notice.description.split('\n').join('<br />')
+    const notice = await magician(() => axios.get('/ingang_notice/latest', {}))
     return notice
   }
 }

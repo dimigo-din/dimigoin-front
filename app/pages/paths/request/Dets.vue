@@ -85,7 +85,7 @@ export default {
           <div
             v-if="dets.open"
             class="dets__open">
-            <span class="dets__item dets__description"><span v-html="dets.description"/></span>
+            <span class="dets__item dets__description">{{ dets.description }}</span>
             <div
               class="dets__down">
               <div
@@ -180,7 +180,11 @@ export default {
 
   &__description {
     flex-direction: column;
+    font-family: inherit;
+    font-weight: $font-weight-regular;
     line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   &__detail {
