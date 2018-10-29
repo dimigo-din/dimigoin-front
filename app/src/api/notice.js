@@ -5,7 +5,7 @@ import magician from './magician'
  * 공지사항을 추가합니다.
  *
  * @param notice
- * @returns {Promise<void>} 
+ * @returns {Promise<void>}
  */
 export async function postNotice (notice) {
   await magician(() => axios.post(`/notice/`, notice), {})

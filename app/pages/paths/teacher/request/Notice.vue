@@ -1,7 +1,7 @@
 <script>
-import moment from 'moment'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { notice } from '@/src/api/index'
+
 export default {
   name: 'Notice',
   components: { ContentWrapper },
@@ -26,12 +26,18 @@ export default {
 
     async addNotice () {
       try {
-        await notice.postNotice(this.resturct(this.des))
+        await notice.postNotice(this.resturct(this.description))
         this.$swal('성공적으로 추가되었습니다', '', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
       this.refresh()
+    },
+
+    resturct (desc) {
+      return {
+        'description': desc
+      }
     }
   }
 }
@@ -94,4 +100,3 @@ export default {
   }
 }
 </style>
-
