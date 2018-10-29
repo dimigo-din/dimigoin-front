@@ -24,6 +24,7 @@ export default {
       ingangs: [],
       today: new Date(),
       notice: {},
+      ticket: '',
       modal: false
     }
   },
@@ -35,15 +36,16 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs = await ingang.apply.getStudentIngang()
+      this.ingangs = await ingang.request.getIngang()
       this.notice = await ingang.notice.getLatestNotice()
+      this.ticket = this.ingangs[0].week_request_count
       this.pending = false
     },
 
     async toggleApply (ing) {
       try {
-        if (ing.request) await ingang.apply.cancelIngang(ing.idx)
-        else await ingang.apply.applyIngang(ing.idx)
+        if (ing.request) await ingang.request.delIngang(ing.idx)
+        else await ingang.request.postIngang(ing.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -60,7 +62,7 @@ export default {
       인강실 사용 신청
       <span
         class="ingang__ticket">
-        남은 티켓 개수 : {{ ingangs[0].weekCount }} 개
+        남은 티켓 개수 : {{ ticket }} 개
       </span>
       <span
         class="ingang__notice"

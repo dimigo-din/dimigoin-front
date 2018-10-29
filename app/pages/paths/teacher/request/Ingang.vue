@@ -137,14 +137,6 @@ export default {
           </div>
         </div>
       </template>
-      <dimi-modal
-        :opened="modal.profile"
-        @close="closeModal">
-        <h3 class="modal__title">
-          {{ modal.profile.name }}
-          <span class="modal__date">{{ modal.profile.endDate | blackDate }}</span>
-        </h3>
-      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
