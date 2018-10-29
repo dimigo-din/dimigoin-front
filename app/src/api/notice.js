@@ -1,19 +1,32 @@
 import axios from './axios'
 import magician from './magician'
-import { Notice } from '@/src/struct/notice'
 
-export async function addNotice (notice) {
-  await magician(() => axios.post(`/notice/`, notice), {
-    default: () => new Error('공지를 추가하던 중 에러가 발생하였습니다')
-  })
+/**
+ * 공지사항을 추가합니다.
+ *
+ * @param notice
+ * @returns {Promise<void>} 
+ */
+export async function postNotice (notice) {
+  await magician(() => axios.post(`/notice/`, notice), {})
 }
 
+/**
+ * 모든 공지사항을 출력합니다.
+ *
+ * @returns {Promise<Array<notice>>}
+ */
 export async function getAllNotice () {
   const { notice } = await magician(() => axios.get(`/notice/`), {})
-  return notice.map(Notice)
+  return notice
 }
 
-export async function getLatestNotice () {
+/**
+ * 최근 공지사항을 출력합니다.
+ *
+ * @returns {Promise<Array<notice>>}
+ */
+export async function getNotice () {
   const { notice } = await magician(() => axios.get(`/notice/latest`), {})
   return notice[0].description
 }
