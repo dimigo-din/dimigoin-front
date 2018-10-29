@@ -1,16 +1,28 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
+import moment from 'moment'
 
 import { ingang } from '@/src/api/index'
+import dummy from './dummy'
 
 export default {
   name: 'Ingang',
   components: { ContentWrapper },
 
+  filters: {
+    blackDate (val) {
+      return moment(val).format('YY-MM-DD')
+    }
+  },
+
   data: () => ({
     pending: false,
     currentTab: 0,
-    notice: ''
+    notice: '',
+    blacklist: dummy,
+    modal: {
+      profile: {}
+    }
   }),
 
   async created () {
@@ -28,6 +40,18 @@ export default {
       return {
         'description': notice,
         'date': this.timezone(new Date()).toISOString()
+      }
+    },
+
+    openModal (black) {
+      this.modale = {
+        profile: black
+      }
+    },
+
+    closeModal () {
+      this.modal = {
+        profile: {}
       }
     },
 
@@ -83,6 +107,20 @@ export default {
           </dimi-button>
         </div>
         <div
+          v-if="currentTab === 1"
+          class="black__cards">
+          <dimi-card
+            v-for="(black, i) in blacklist"
+            :key="`${i}`"
+            class="black__card"
+            hover
+            @click="openModal(black)">
+            <div class="black__title">{{ black.serial }} {{ black.name }}</div>
+            <div class="blakc__date">{{ black.endDate | blackDate }}</div>
+            <!--<div class="black__count">{{ black.totalCount }}</div>-->
+          </dimi-card>
+        </div>
+        <div
           v-if="currentTab === 2">
           <div class="notice">
             <dimi-long-input
@@ -99,6 +137,14 @@ export default {
           </div>
         </div>
       </template>
+      <dimi-modal
+        :opened="modal.profile"
+        @close="closeModal">
+        <h3 class="modal__title">
+          {{ modal.profile.name }}
+          <span class="modal__date">{{ modal.profile.endDate | blackDate }}</span>
+        </h3>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -107,6 +153,7 @@ export default {
 @import '~styles/variables';
 
 .ingang {
+  border: 0;
   padding: 0;
 
   &__loader {
@@ -126,6 +173,35 @@ export default {
   }
 }
 
+.black {
+  &__cards {
+    background-color: #f7f7f7;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  &__card {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.2s;
+  }
+
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__date {
+    margin-top: 2px;
+  }
+}
+
 .notice {
   display: flex;
   justify-content: center;
@@ -140,6 +216,19 @@ export default {
     display: flex;
     justify-content: flex-end;
     margin: 3px 8px 6px 0;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__date {
+    font-size: 14px;
+    font-weight: $font-weight-light;
   }
 }
 </style>
