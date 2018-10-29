@@ -3,7 +3,7 @@ export default [
     'idx': 1,
     'user_idx': 6969,
     'serial': 2322,
-    'name': '박성민',
+    'name': '테스트',
     'endDate': '2019-01-02T06:50:44.342Z',
     'totalCount': 4
   },
@@ -59,7 +59,7 @@ export default [
     'idx': 8,
     'user_idx': 5555,
     'serial': 2222,
-    'name': '김대중',
+    'name': '이민주',
     'endDate': '2018-10-07T06:50:44.342Z',
     'totalCount': 3
   },
@@ -67,7 +67,7 @@ export default [
     'idx': 9,
     'user_idx': 4444,
     'serial': 2103,
-    'name': '문재인',
+    'name': '제제',
     'endDate': '2018-10-12T06:50:44.342Z',
     'totalCount': 2
   },
@@ -83,7 +83,7 @@ export default [
     'idx': 11,
     'user_idx': 2222,
     'serial': 2607,
-    'name': '기획자',
+    'name': '딥러닝',
     'endDate': '2018-10-20T06:50:44.342Z',
     'totalCount': 2
   },
@@ -91,7 +91,7 @@ export default [
     'idx': 12,
     'user_idx': 1111,
     'serial': 1328,
-    'name': '베놈',
+    'name': '비타민',
     'endDate': '2018-09-20T06:50:44.342Z',
     'totalCount': 3
   }

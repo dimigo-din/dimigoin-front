@@ -85,7 +85,9 @@ export default {
           <h2 class="ingang__black ingang__black--title">
             You Are Banned
           </h2>
-          <div class="ingang__black ingang__black--comment">{{ ingangs[0].black | filterBlackDate }}</div>
+          <div class="ingang__black ingang__black--comment">
+            {{ ingangs[0].black | filterBlackDate }}
+          </div>
         </dimi-card>
       </template>
       <template v-else>
