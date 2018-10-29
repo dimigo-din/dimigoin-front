@@ -91,7 +91,7 @@ export const request = {
    */
   async AdminGetIngang (idx) {
     const ingang = await magician(() => axios.get(`/ingangs/users/${idx}/requests/`), {
-      404: () => new Error('존재하지 않는 인강실 신청입니다.')
+      404: () => []
     })
     return ingang
   },
@@ -138,9 +138,9 @@ export const request = {
     const grade = ingang[0].target_grade
     const klass = ingang[0].class
     const today = new Date().getDay()
-    
+
     const time = 1 ^ ((today + klass) % 2)
-    return grade === 2 ? ingang[time] : ingang
+    return grade === 2 ? [ingang[time]] : ingang
   },
 
   /**
