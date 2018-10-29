@@ -135,7 +135,12 @@ export const request = {
     const ingang = await magician(() => axios.get(`/ingangs/me/requests`), {
       404: () => []
     })
-    return ingang
+    const grade = ingang[0].target_grade
+    const klass = ingang[0].class
+    const today = new Date().getDay()
+    
+    const time = 1 ^ ((today + klass) % 2)
+    return grade === 2 ? ingang[time] : ingang
   },
 
   /**
