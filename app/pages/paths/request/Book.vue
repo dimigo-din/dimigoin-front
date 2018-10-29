@@ -200,7 +200,6 @@ export default {
       </template>
       <dimi-modal
         :opened="modals.book"
-        class="modal__modal"
         @close="closeModal">
         <h3 class="modal__title">도서 신청</h3>
 
@@ -247,7 +246,6 @@ export default {
       </dimi-modal>
       <dimi-modal
         :opened="modals.notice"
-        class="modal__modal"
         @close="closeModal">
         <h3 class="modal__title">
           도서부 공지
