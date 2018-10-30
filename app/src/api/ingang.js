@@ -139,7 +139,7 @@ export const request = {
     const klass = ingang[0].class
     const today = new Date().getDay()
 
-    const time = 1 ^ ((today + klass) % 2)
+    const time = (today + klass) % 2
     return grade === 2 ? [ingang[time]] : ingang
   },
 
