@@ -7,6 +7,7 @@ const Information = () => import(/* webpackChunkName: "teacher-request" */ '@/pa
 const Afterschool = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Afterschool.vue')
 const Counsel = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Counsel.vue')
 const Ingang = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Ingang.vue')
+const Notice = () => import(/* webpackChunkName: "teacher-request" */ '@/pages/paths/teacher/request/Notice.vue')
 
 const Assignment = () => import(/* webpackChunkName: "teacher-assignment" */ '@/pages/paths/teacher/assignment/Assignment.vue')
 
@@ -45,6 +46,12 @@ export default [
           name: 'teacher/request/ingang',
           component: Ingang,
           meta: { title: '디미고인 > 인강실 관리' }
+        },
+        {
+          path: 'notice',
+          name: 'teacher/request/notice',
+          component: Notice,
+          meta: { title: '디미고인 > 공지사항 관리' }
         }
       ]
     },

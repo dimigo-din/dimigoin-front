@@ -34,7 +34,7 @@ export default {
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
-      this.notice = await notice.getLatestNotice()
+      this.notice = await notice.getNotice()
     } catch (err) {
       console.error(err)
     }
