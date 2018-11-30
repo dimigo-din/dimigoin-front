@@ -4,6 +4,7 @@ const Manage = () => import(/* webpackChunkName: "service-management" */ '@/page
 const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')
 const ManageDets = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageDets.vue')
 const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/manageBook.vue')
+const ManageFreshman = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageFreshman.vue')
 
 export default [
   ...withPrefix('/management', [
@@ -44,6 +45,15 @@ export default [
           component: ManageBook,
           meta: {
             title: '디미고인 > 도서신청 관리',
+            perm: 2
+          }
+        },
+        {
+          path: 'freshman',
+          name: 'management/freshman',
+          component: ManageFreshman,
+          meta: {
+            title: '디미고인 > 신입생 공지 관리',
             perm: 2
           }
         }
