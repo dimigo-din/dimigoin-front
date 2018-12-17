@@ -96,7 +96,7 @@ export default {
 <template>
   <content-wrapper class="req-afsc">
     <h1 slot="header">
-      <span class="icon-ball"/>2018년 하반기 방과 후 활동 신청
+      <span class="icon-ball"/>2018년 ⛷겨울방학☃ 방과 후 활동 신청
       <span
         class="req-afsc__refresh"
         @click="refresh">새로고침</span>

@@ -1,9 +1,8 @@
 export default [
-  { idx: 0, code: 'mon', text: '월요일', smallText: '월' },
-  { idx: 1, code: 'tus', text: '화요일', smallText: '화' },
-  { idx: 2, code: 'wed', text: '수요일', smallText: '수' },
-  { idx: 3, code: 'thr', text: '목요일', smallText: '목' },
-  { idx: 4, code: 'fri', text: '금요일', smallText: '금' },
-  { idx: 5, code: 'sat1', text: '토요 1', smallText: '토1' },
-  { idx: 6, code: 'sat2', text: '토요 2', smallText: '토2' }
+  { idx: 0, code: '1', text: '1교시', smallText: '1T' },
+  { idx: 1, code: '2', text: '2교시', smallText: '2T' },
+  { idx: 2, code: '3', text: '3교시', smallText: '3T' },
+  { idx: 3, code: '4', text: '4교시', smallText: '4T' },
+  { idx: 4, code: '5', text: '5교시', smallText: '5T' },
+  { idx: 5, code: '6', text: '6교시', smallText: '6T' }
 ]
