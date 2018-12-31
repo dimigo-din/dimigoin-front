@@ -7,7 +7,7 @@ export default {
 <template>
   <footer>
     <dimi-footer>
-      <span slot="copyright">© 2018 Team DIMIGOIN</span>
+      <span slot="copyright">© 2019 JNJ Communications</span>
       <a
         slot="mail"
         href="mailto:contact@dimigo.in">
