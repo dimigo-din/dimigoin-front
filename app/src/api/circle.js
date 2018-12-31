@@ -39,7 +39,7 @@ export async function getAppliedCircle () {
   try {
     const res = await axios.get('/circles/apply/user')
 
-    return res.data['circle_apply'].map(v => ({
+    return res.data['circle_request'].map(v => ({
       idx: v['idx'],
       circleIdx: v['circle_idx'],
       userIdx: v['user_idx'],

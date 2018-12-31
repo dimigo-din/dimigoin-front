@@ -59,7 +59,7 @@ export default {
       </dimi-badge>
 
       <span class="r-info__title">
-        <span class="icon-club"/> 2018년 동아리 가입 신청
+        <span class="icon-club"/> 2019년 동아리 가입 신청
       </span>
 
       <table class="r-info__list">
