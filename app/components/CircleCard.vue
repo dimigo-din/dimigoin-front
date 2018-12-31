@@ -15,7 +15,8 @@ export default {
 
   data: () => ({
     opened: false,
-    pending: false
+    pending: false,
+    imageurl: 'https://dev-api.dimigo.in/circles/image/'
   }),
 
   computed: {
@@ -139,7 +140,7 @@ export default {
 
       <div class="circle-card__info">
         <img
-          :src="circle.profileImg"
+          :src="imageurl + circle.idx"
           :title="circle.title"
           width="64"
           height="64"
@@ -171,7 +172,7 @@ export default {
 
       <div class="circle-card__modal-header">
         <img
-          :src="circle.profileImg"
+          :src="imageurl + circle.idx"
           :title="circle.title"
           width="80"
           height="80"
