@@ -44,6 +44,10 @@ export default {
       return this.circle.status === handleStatus.WAIT
     },
 
+    getIntroduce () {
+      return this.circle.introduce
+    },
+
     finish () {
       return Date.now() > (new Date(this.circle.applyEndDate).getTime() +
         24 * 60 * 60 * 1000)
@@ -81,7 +85,7 @@ export default {
       this.pending = true
       try {
         if (this.applyable) {
-          await circle.applyCircle(this.circle.idx)
+          await circle.applyCircle(this.circle.idx, this.introduce)
           this.$set(this.circle, 'status', handleStatus.WAIT)
         } else if (this.cancelable) {
           await circle.cancelCircle(this.circle.idx)
@@ -200,6 +204,14 @@ export default {
 
       <div class="circle-card__modal-description">{{ circle.description }}</div>
 
+      <div class="circle-card__modal-introduce-title">자기소개</div>
+      <div class="modal__field">
+        <dimi-long-input
+          v-model="introduce"
+          :height="500"
+          placeholder="1000자 이내로 작성해주시고, 창을 받으시면 내용이 사라지실 수 있으니 미리 메모장에 적고 옮기는 걸 추천드려요!"
+          class="modal__introduce"/>
+      </div>
       <dimi-button
         v-if="!finish"
         :gray="!(applyable && deadline)"
@@ -254,6 +266,14 @@ export default {
     margin-top: 12px;
   }
 
+  &__modal-introduce-title {
+    color: $black;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
   &__badge {
     margin: 0 auto 25px;
     max-width: 40px;
@@ -283,18 +303,15 @@ export default {
   }
 
   &__modal-name {
+    color: $black;
+    font-size: 24px;
     font-weight: $font-weight-bold;
+    line-height: 1.2;
     word-break: break-all;
   }
 
   &__modal-logo {
     margin-right: 24px;
-  }
-
-  &__modal-name {
-    color: $black;
-    font-size: 24px;
-    line-height: 1.2;
   }
 
   &__modal-info + &__modal-info {

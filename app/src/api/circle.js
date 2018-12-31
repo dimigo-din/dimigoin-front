@@ -39,7 +39,7 @@ export async function getAppliedCircle () {
   try {
     const res = await axios.get('/circles/apply/user')
 
-    return res.data['circle_request'].map(v => ({
+    return res.data['circle_apply'].map(v => ({
       idx: v['idx'],
       circleIdx: v['circle_idx'],
       userIdx: v['user_idx'],
@@ -55,9 +55,13 @@ export async function getAppliedCircle () {
   }
 }
 
-export async function applyCircle (circleIdx) {
+/**
+ * @param introduce
+ * @returns {Promise<void>}
+ */
+export async function applyCircle (circleIdx, introduce) {
   try {
-    await axios.put(`/circles/apply/${circleIdx}`)
+    await axios.put(`/circles/apply/${circleIdx}`, { introduce })
   } catch ({ message, response: res }) {
     console.error(message)
     if (!res) throw new Error('네트워크에 문제가 있습니다.')

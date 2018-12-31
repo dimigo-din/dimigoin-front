@@ -67,6 +67,7 @@ export default {
   box-sizing: border-box;
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
+  line-height: 20pt;
   padding: 0.75em 1.75em;
   width: 100%;
 

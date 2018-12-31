@@ -96,7 +96,7 @@ export default {
             class="applicant-row">
 
             <td class="applicant-row__cell applicant-row__serial">{{ item.serial }}</td>
-            <td class="applicant-row__cell applicant-row__name">{{ item.name }}</td>
+            <td class="applicant-row__cell applicant-row__name">{{ item.name }} <br> {{ item.introduce }} </td>
             <td class="applicant-row__cell applicant-row__status">
               <dimi-button-group
                 v-if="item.status === 0"
