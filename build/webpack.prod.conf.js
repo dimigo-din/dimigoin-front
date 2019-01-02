@@ -10,7 +10,6 @@ const DotenvPlugin = require('webpack-dotenv-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const OfflinePlugin = require('offline-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const SentryCli = require('@sentry/cli')
@@ -124,10 +123,6 @@ const webpackConfig = async () => {
           ignore: ['.*']
         }
       ]),
-      new OfflinePlugin({
-        externals: ['/'],
-        appShell: '/'
-      }),
       new SentryCliPlugin({
         include: '.',
         ignoreFile: '.gitignore',
