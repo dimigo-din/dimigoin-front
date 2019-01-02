@@ -13,6 +13,14 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 
+import * as Sentry from '@sentry/browser'
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [new Sentry.Integrations.Vue({ Vue })],
+  release: process.env.SENTRY_PROPOSED_VERSION
+})
+
 sync(store, router)
 
 Vue.use(DimiRu)

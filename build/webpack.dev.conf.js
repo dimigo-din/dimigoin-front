@@ -65,8 +65,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         : undefined
     }),
     new DotenvPlugin({
-      path: 'dev.env',
-      sample: 'example.env'
+      path: 'env/.dev.env',
+      sample: 'env/.env.example'
     })
   ]
 })

@@ -1,4 +1,9 @@
 const path = require('path')
+require('dotenv-safe').config({
+  example: 'env/.webpack.env.example',
+  path: 'env/.webpack.env'
+})
+
 const utils = require('./utils')
 const config = require('./config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
