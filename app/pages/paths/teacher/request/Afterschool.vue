@@ -1,13 +1,12 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
 import { days } from '@/src/util/index'
 import { afterschool } from '@/src/api/index'
 
 export default {
   name: 'Afterschool',
-  components: { ContentWrapper, DefaultNavbar },
+  components: { ContentWrapper },
 
   data () {
     return {
@@ -123,11 +122,13 @@ export default {
 
 <template>
   <content-wrapper class="mng-afsc">
-    <h1 slot="header"><span class="icon-club"/>2018년 겨울방학 방과 후 활동 관리</h1>
+    <h1 slot="header">
+      <span class="icon-club" />2018년 겨울방학 방과 후 활동 관리
+    </h1>
     <dimi-card
       slot="main"
-      class="mng-afsc__main">
-
+      class="mng-afsc__main"
+    >
       <dimi-tab
         v-model="currentGrade"
         :tabs="['1학년', '2학년', '3학년']"
@@ -141,20 +142,23 @@ export default {
         <nav class="mng-afsc__toolbar">
           <dimi-checkbox
             v-model="selectAll"
-            class="mng-afsc__tool mng-afsc__select-all">
+            class="mng-afsc__tool mng-afsc__select-all"
+          >
             모두 선택
           </dimi-checkbox>
 
           <span
             class="mng-afsc__tool mng-afsc__delete"
-            @click="deleteChecked">
-            <span class="mng-afsc__delete-icon icon-delete"/> 선택 삭제
+            @click="deleteChecked"
+          >
+            <span class="mng-afsc__delete-icon icon-delete" /> 선택 삭제
           </span>
 
           <dimi-dropdown
-            :items="['필터 없음', ...days.map(v => v.text)]"
             v-model="filter"
-            class="mng-afsc__tool mng-afsc__sort"/>
+            :items="['필터 없음', ...days.map(v => v.text)]"
+            class="mng-afsc__tool mng-afsc__sort"
+          />
         </nav>
 
         <table class="mng-afsc__list">
@@ -162,34 +166,47 @@ export default {
             <tr
               v-for="(item, index) in filteredList"
               :key="index"
-              class="mng-afsc__row">
-
+              class="mng-afsc__row"
+            >
               <td class="mng-afsc__cell">
                 <dimi-checkbox
                   v-model="checks[index]"
-                  class="mng-afsc__item-check">
-                  {{ getDayTextByCode(item.day) }}</dimi-checkbox>
+                  class="mng-afsc__item-check"
+                >
+                  {{ getDayTextByCode(item.day) }}
+                </dimi-checkbox>
               </td>
 
-              <td class="mng-afsc__cell">{{ item.teacherName }}</td>
-              <td class="mng-afsc__cell mng-afsc__cell--name">{{ item.name }}</td>
-              <td class="mng-afsc__cell">총 {{ item.maxCount || '?' }}명</td>
-              <td class="mng-afsc__cell">{{ item.count || '?' }}명 신청</td>
+              <td class="mng-afsc__cell">
+                {{ item.teacherName }}
+              </td>
+              <td class="mng-afsc__cell mng-afsc__cell--name">
+                {{ item.name }}
+              </td>
+              <td class="mng-afsc__cell">
+                총 {{ item.maxCount || '?' }}명
+              </td>
+              <td class="mng-afsc__cell">
+                {{ item.count || '?' }}명 신청
+              </td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
-                <span class="icon-long-arrow-right"/> 세부관리
+                <span class="icon-long-arrow-right" /> 세부관리
               </td>
             </tr>
           </tbody>
         </table>
-
       </section>
 
       <section class="mng-afsc__section">
-        <h2 class="mng-afsc__title">방과 후 활동 추가</h2>
+        <h2 class="mng-afsc__title">
+          방과 후 활동 추가
+        </h2>
         <div class="mng-afsc__form">
           <div class="mng-afsc__form-row">
             <div class="mng-afsc__field mng-afsc__field--full">
-              <label class="mng-afsc__label">활동명</label>
+              <label class="mng-afsc__label">
+                활동명
+              </label>
               <dimi-input
                 v-model="form.name"
                 class="mng-afsc__input"
@@ -198,52 +215,67 @@ export default {
             </div>
           </div>
           <div class="mng-afsc__form-row">
-
             <div class="mng-afsc__field">
-              <label class="mng-afsc__label">담당자</label>
+              <label class="mng-afsc__label">
+                담당자
+              </label>
               <dimi-input
                 v-model="form.teacherName"
-                class="mng-afsc__input mng-afsc__input--manager"/>
+                class="mng-afsc__input mng-afsc__input--manager"
+              />
             </div>
 
             <div class="mng-afsc__field">
-              <label class="mng-afsc__label">총원</label>
+              <label class="mng-afsc__label">
+                총원
+              </label>
               <dimi-input
                 v-model="form.maxCount"
-                class="mng-afsc__input mng-afsc__input--maxCount"/>
-              <span class="msg-afsc__maxCount-attr">명</span>
+                class="mng-afsc__input mng-afsc__input--maxCount"
+              />
+              <span class="msg-afsc__maxCount-attr">
+                명
+              </span>
             </div>
 
             <div class="mng-afsc__field">
-              <label class="mng-afsc__label">요일</label>
+              <label class="mng-afsc__label">
+                요일
+              </label>
               <dimi-dropdown
+                v-model="form.day"
                 :items="days.map(v => v.text)"
                 :dropup="true"
-                v-model="form.day"
-                class="mng-afsc__input mng-afsc__input--day"/>
+                class="mng-afsc__input mng-afsc__input--day"
+              />
             </div>
           </div>
 
           <div class="mng-afsc__form-row">
             <div class="mng-afsc__field">
-              <label class="mng-afsc__label">신청 시작</label>
-              <dimi-date-input v-model="form.startDate"/>
+              <label class="mng-afsc__label">
+                신청 시작
+              </label>
+              <dimi-date-input v-model="form.startDate" />
             </div>
           </div>
 
           <div class="mng-afsc__form-row">
             <div class="mng-afsc__field">
-              <label class="mng-afsc__label">신청 마감</label>
-              <dimi-date-input v-model="form.endDate"/>
+              <label class="mng-afsc__label">
+                신청 마감
+              </label>
+              <dimi-date-input v-model="form.endDate" />
             </div>
           </div>
 
           <div class="mng-afsc__form-row mng-afsc__form-row--submit">
             <div class="mng-afsc__field mng-afsc__field--right">
-              <dimi-button @click="addAfterschool">추가하기</dimi-button>
+              <dimi-button @click="addAfterschool">
+                추가하기
+              </dimi-button>
             </div>
           </div>
-
         </div>
       </section>
     </dimi-card>

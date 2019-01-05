@@ -14,22 +14,26 @@ export default {
     <div class="not-found__col">
       <img
         src="@/assets/rose-in-glass.png"
-        class="not-found__illust">
+        class="not-found__illust"
+      >
     </div>
 
     <div class="not-found__col">
       <img
         src="@/assets/404.png"
-        class="not-found__404">
+        class="not-found__404"
+      >
       <p class="not-found__message">
         페이지를 찾을 수 없습니다.
         주소를 다시 확인해주세요.
       </p>
       <a
         class="not-found__back"
-        @click="back"><span class="icon-long-arrow-right"/> 이전으로</a>
+        @click="back"
+      >
+        <span class="icon-long-arrow-right" /> 이전으로
+      </a>
     </div>
-
   </div>
 </template>
 

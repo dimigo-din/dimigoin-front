@@ -89,10 +89,9 @@ exports.createNotifierCallback = () => {
     const filename = error.file && error.file.split('!').pop()
 
     notifier.notify({
-      title: require('../../dimigoin-front-migrating/package.json').name,
+      title: 'dimigoin-front',
       message: severity + ': ' + error.name,
-      subtitle: filename || '',
-      icon: path.join(__dirname, 'logo.png')
+      subtitle: filename || ''
     })
   }
 }

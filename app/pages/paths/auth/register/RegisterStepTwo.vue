@@ -85,7 +85,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-id">아이디</label>
+          for="input-id"
+        >
+          아이디
+        </label>
         <dimi-input
           id="input-id"
           v-model="formData.id.value"
@@ -97,7 +100,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-password">비밀번호</label>
+          for="input-password"
+        >
+          비밀번호
+        </label>
         <dimi-input
           id="input-password"
           v-model="formData.password.value"
@@ -110,7 +116,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-repassword">비밀번호 확인</label>
+          for="input-repassword"
+        >
+          비밀번호 확인
+        </label>
         <dimi-input
           id="input-repassword"
           v-model="formData.repassword.value"
@@ -124,21 +133,26 @@ export default {
         <div class="register__nav__start">
           <a
             class="register__nav__link register__nav__link--previous"
-            @click="previous"><span class="icon-arrow-slim-left"/>뒤로</a>
+            @click="previous"
+          >
+            <span class="icon-arrow-slim-left" />뒤로
+          </a>
         </div>
         <div class="register__circles">
-          <div class="register__nav__circle register__nav__circle--active"/>
-          <div class="register__nav__circle"/>
-          <div class="register__nav__circle"/>
+          <div class="register__nav__circle register__nav__circle--active" />
+          <div class="register__nav__circle" />
+          <div class="register__nav__circle" />
         </div>
         <div class="register__nav__end">
           <a
             class="register__nav__link register__nav__link--next"
-            @click="next">
+            @click="next"
+          >
             {{ pending ? '로딩 중...' : '완료' }}
             <span
               v-if="!pending"
-              class="icon-ok"/>
+              class="icon-ok"
+            />
           </a>
         </div>
       </div>

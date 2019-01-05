@@ -84,74 +84,96 @@ export default {
 
 <template>
   <content-wrapper>
-
     <h1 slot="header">
-      <span class="icon-book-sm"/>도서신청 관리
+      <span class="icon-book-sm" />도서신청 관리
       <span
         class="book__notice"
-        @click="modal = true">
-        <span class="icon-edit"/>공지 추가하기
+        @click="modal = true"
+      >
+        <span class="icon-edit" />공지 추가하기
       </span>
       <span
         class="book__excel"
-        onclick="location.href='http://dev-api.dimigo.in/book_info/excel'">
-        <span class="icon-long-arrow-down"/>엑셀 다운로드
+        onclick="location.href='http://dev-api.dimigo.in/book_info/excel'"
+      >
+        <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
     </h1>
 
     <dimi-card
       slot="main"
-      class="book__main">
-
+      class="book__main"
+    >
       <div
         v-if="pending"
-        class="book__loader-wrapper">
-        <dimi-loader/>
+        class="book__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <template v-else>
         <div
           v-for="(book, idx) in list"
-          :key="`${idx}`">
+          :key="`${idx}`"
+        >
           <div
             class="book__book"
-            @click="book.open = !book.open">
+            @click="book.open = !book.open"
+          >
             <dimi-badge
               :color="book.acceptable === 'accept' ? 'aloes' : book.acceptable === 'reject' ? 'orange' : 'gray'"
-              class="book__badge">
+              class="book__badge"
+            >
               {{ book.acceptable === 'accept' ? '수락' : book.acceptable === 'reject' ? '거절' : '대기' }}
             </dimi-badge>
-            <span class="book__item book__title">{{ book.title }}</span>
-            <span class="book__item">{{ book.author }}</span>
+            <span class="book__item book__title">
+              {{ book.title }}
+            </span>
+            <span class="book__item">
+              {{ book.author }}
+            </span>
             <div class="book__item book__expand">
-              <span :class="`icon-arrow-${book.open ? 'up' : 'down'}`"/>
+              <span :class="`icon-arrow-${book.open ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
             v-if="book.open"
-            class="book__open">
-            <div
-              class="book__detail">
-              <span class="book__item">출판사</span>
-              <span class="book__item">{{ book.publisher }}</span>
-              <span class="book__item">가격</span>
-              <span class="book__item">{{ book.price }}</span>
-              <span class="book__item">보유여부</span>
+            class="book__open"
+          >
+            <div class="book__detail">
+              <span class="book__item">
+                출판사
+              </span>
+              <span class="book__item">
+                {{ book.publisher }}
+              </span>
+              <span class="book__item">
+                가격
+              </span>
+              <span class="book__item">
+                {{ book.price }}
+              </span>
+              <span class="book__item">
+                보유여부
+              </span>
               <span
                 :title="book.possession"
-                class="book__item">
+                class="book__item"
+              >
                 {{ book.possession ? 'O' : 'X' }}
               </span>
             </div>
             <div
               class="book__item--accept"
-              @click="acceptBook(book)">
-              <span class="icon-ok"/> 승인하기
+              @click="acceptBook(book)"
+            >
+              <span class="icon-ok" /> 승인하기
             </div>
             <div
               class="book__item--reject"
-              @click="rejectBook(book)">
-              <span class="icon-cross"/> 거절하기
+              @click="rejectBook(book)"
+            >
+              <span class="icon-cross" /> 거절하기
             </div>
           </div>
         </div>
@@ -159,19 +181,25 @@ export default {
       <dimi-modal
         :opened="modal"
         class="modal__modal"
-        @close="closeModal">
-        <h3 class="modal__title">공지 추가하기</h3>
+        @close="closeModal"
+      >
+        <h3 class="modal__title">
+          공지 추가하기
+        </h3>
 
         <div class="modal__field">
           <dimi-long-input
             v-model="form.desc"
             :height="500"
-            class="modal__notice"/>
+            class="modal__notice"
+          />
         </div>
 
         <div class="modal__field">
           <div class="modal__button">
-            <dimi-button @click="addNotice">추가하기</dimi-button>
+            <dimi-button @click="addNotice">
+              추가하기
+            </dimi-button>
           </div>
         </div>
       </dimi-modal>

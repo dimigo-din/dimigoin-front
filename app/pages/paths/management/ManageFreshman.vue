@@ -39,12 +39,13 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-notice"/>신입생 공지 관리
+      <span class="icon-notice" />신입생 공지 관리
     </h1>
 
     <dimi-card
       slot="main"
-      class="push__main">
+      class="push__main"
+    >
       <div>
         To.
         <dimi-input
@@ -56,11 +57,13 @@ export default {
       <dimi-input
         v-model="writer"
         class="push__input"
-        placeholder="작성자를 입력하세요."/>
+        placeholder="작성자를 입력하세요."
+      />
       <dimi-input
         v-model="title"
         class="push__input"
-        placeholder="제목을 입력하세요."/>
+        placeholder="제목을 입력하세요."
+      />
       <dimi-long-input
         v-model="content"
         :height="300"
@@ -72,7 +75,8 @@ export default {
       </div>
       <div class="push__button">
         <dimi-button
-          @click="push">
+          @click="push"
+        >
           공지하기
         </dimi-button>
       </div>

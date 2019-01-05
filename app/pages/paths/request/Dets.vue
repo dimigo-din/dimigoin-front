@@ -58,44 +58,69 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-dets-lg"/>Dets 신청
+      <span class="icon-dets-lg" />Dets 신청
     </h1>
 
     <dimi-card
       slot="main"
-      class="dets__main">
+      class="dets__main"
+    >
       <div
         v-if="pending"
-        class="dets__loader-wrapper">
-        <dimi-loader/>
+        class="dets__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
       <template v-else>
         <div
           v-for="(dets, index) in list"
-          :key="`detslist_${index}`">
+          :key="`detslist_${index}`"
+        >
           <div
             class="dets__dets"
-            @click="dets.open = !dets.open">
-            <span class="dets__item dets__title">{{ dets.title }}</span>
-            <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
+            @click="dets.open = !dets.open"
+          >
+            <span class="dets__item dets__title">
+              {{ dets.title }}
+            </span>
+            <span class="dets__item">
+              {{ dets.speakerSerial }} {{ dets.speakerName }}
+            </span>
             <div class="dets__item dets__expand">
-              <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
+              <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
             v-if="dets.open"
-            class="dets__open">
-            <span class="dets__item dets__description">{{ dets.description }}</span>
+            class="dets__open"
+          >
+            <span class="dets__item dets__description">
+              {{ dets.description }}
+            </span>
             <div
-              class="dets__down">
+              class="dets__down"
+            >
               <div
-                class="dets__detail">
-                <span class="dets__item">강의실</span>
-                <span class="dets__item">{{ dets.room }}</span>
-                <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ dets.date }}</span>
-                <span class="dets__item">인원</span>
-                <span class="dets__item">{{ dets.count }} / {{ dets.maxCount }} 명</span>
+                class="dets__detail"
+              >
+                <span class="dets__item">
+                  강의실
+                </span>
+                <span class="dets__item">
+                  {{ dets.room }}
+                </span>
+                <span class="dets__item">
+                  강의시각
+                </span>
+                <span class="dets__item">
+                  {{ dets.date }}
+                </span>
+                <span class="dets__item">
+                  인원
+                </span>
+                <span class="dets__item">
+                  {{ dets.count }} / {{ dets.maxCount }} 명
+                </span>
               </div>
               <div
                 :class="{
@@ -104,16 +129,17 @@ export default {
                   'dets__item--full': dets.maxCount === dets.count,
                   'dets__item--applied': dets.status === 'request'
                 }"
-                @click="toggleApply(dets)">
+                @click="toggleApply(dets)"
+              >
                 <template v-if="dets.status === 'request'">
-                  <span class="icon-cross"/> 신청취소
+                  <span class="icon-cross" /> 신청취소
                 </template>
                 <template v-else>
                   <template v-if="dets.maxCount > dets.count">
-                    <span class="icon-ok"/> 신청하기
+                    <span class="icon-ok" /> 신청하기
                   </template>
                   <template v-else>
-                    <span class="icon-alert"/> 신청불가
+                    <span class="icon-alert" /> 신청불가
                   </template>
                 </template>
               </div>

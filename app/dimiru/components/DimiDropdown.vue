@@ -85,32 +85,35 @@ export default {
     :class="classes"
     @click="open"
     @mouseover="open(hovered = true)"
-    @mouseout="closeDelayed(hovered = false)">
-
+    @mouseout="closeDelayed(hovered = false)"
+  >
     <div class="dropdown__view">
       {{ items[value] }}
-      <span class="dropdown__view-icon icon-arrow-down"/>
+      <span class="dropdown__view-icon icon-arrow-down" />
     </div>
 
     <dimi-card
       ref="list"
       class="dropdown__list"
-      shadow>
-
+      shadow
+    >
       <template v-for="(item, index) in items">
         <p
           v-show="index !== value"
           ref="items"
           :key="`item-${index}`"
           class="dropdown__item"
-          @click.stop="select(index)">
-
-          <span class="dropdown__item-name">{{ item }}</span>
+          @click.stop="select(index)"
+        >
+          <span class="dropdown__item-name">
+            {{ item }}
+          </span>
         </p>
 
         <dimi-divider
           :key="`divider-${index}`"
-          class="dropdown__item-divider"/>
+          class="dropdown__item-divider"
+        />
       </template>
     </dimi-card>
   </div>

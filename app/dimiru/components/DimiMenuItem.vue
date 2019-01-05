@@ -15,7 +15,10 @@ export default {
   <router-link
     :to="to"
     class="menu-item"
-    exact-active-class="menu-item--active"><slot/></router-link>
+    exact-active-class="menu-item--active"
+  >
+    <slot />
+  </router-link>
 </template>
 
 <style lang="scss">

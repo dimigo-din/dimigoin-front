@@ -33,8 +33,10 @@ export default {
       v-for="(m, i) in meals"
       :key="i"
       :current="m.isActive()"
-      :meal="m.name">
-      {{ meal[m.key] | prettyMeal }}</dimi-meal-item>
+      :meal="m.name"
+    >
+      {{ meal[m.key] | prettyMeal }}
+    </dimi-meal-item>
   </div>
 </template>
 

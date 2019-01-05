@@ -9,7 +9,9 @@ export default {
 </script>
 
 <template>
-  <dimi-card class="menu"><slot/></dimi-card>
+  <dimi-card class="menu">
+    <slot />
+  </dimi-card>
 </template>
 
 <style lang="scss">

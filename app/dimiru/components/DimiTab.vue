@@ -56,16 +56,21 @@ export default {
         ref="tab"
         :key="`tab-${idx}`"
         :class="['tab__item', idx === value && 'tab__item--active']"
-        @click="go(idx)">
-
-        <span class="tab__tab">{{ tab }}</span>
-        <span class="tab__tab--tiny">{{ smallTabs[idx] || tab }}</span>
+        @click="go(idx)"
+      >
+        <span class="tab__tab">
+          {{ tab }}
+        </span>
+        <span class="tab__tab--tiny">
+          {{ smallTabs[idx] || tab }}
+        </span>
       </li>
     </ul>
 
     <div
       ref="bar"
-      class="tab__bar"/>
+      class="tab__bar"
+    />
   </nav>
 </template>
 

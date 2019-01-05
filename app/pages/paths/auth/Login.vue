@@ -52,7 +52,9 @@ export default {
       shadow
     >
       <div class="section">
-        <h2 class="section__title">로그인</h2>
+        <h2 class="section__title">
+          로그인
+        </h2>
         <div class="section__content section__content--mt">
           <dimi-input
             v-model="id"
@@ -87,12 +89,14 @@ export default {
           </p>
         </div>
       </div>
-      <dimi-divider vertical/>
-      <dimi-divider horizontal/>
+      <dimi-divider vertical />
+      <dimi-divider horizontal />
       <div class="section">
-        <h2 class="section__title">오늘의 급식</h2>
+        <h2 class="section__title">
+          오늘의 급식
+        </h2>
         <div class="section__content">
-          <meal-group/>
+          <meal-group />
         </div>
       </div>
     </dimi-card>

@@ -33,24 +33,27 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-club"/>2019년 동아리 가입 신청🚀
+      <span class="icon-club" />2019년 동아리 가입 신청🚀
     </h1>
     <div
       slot="main"
-      class="circle">
-
+      class="circle"
+    >
       <div
         v-if="pending"
-        class="circle__loader-wrapper">
-        <dimi-loader/>
+        class="circle__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <template v-else>
         <section
           v-show="appliedCircles.length > 0"
-          class="circle__section">
-
-          <h2 class="circle__title">신청한 동아리</h2>
+          class="circle__section"
+        >
+          <h2 class="circle__title">
+            신청한 동아리
+          </h2>
           <div class="circle__circles">
             <circle-card
               v-for="(circle, index) in appliedCircles"
@@ -60,7 +63,9 @@ export default {
           </div>
         </section>
         <section class="circle__section">
-          <h2 class="circle__title">전체 동아리</h2>
+          <h2 class="circle__title">
+            전체 동아리
+          </h2>
           <div class="circle__circles">
             <circle-card
               v-for="(circle, index) in circles"

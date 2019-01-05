@@ -57,13 +57,15 @@ export default {
   <div class="services">
     <div
       v-if="services.length === 0"
-      class="services__loader">
-      <dimi-loader/>
+      class="services__loader"
+    >
+      <dimi-loader />
     </div>
 
     <div
       v-else
-      class="services__cards">
+      class="services__cards"
+    >
       <dimi-card
         v-for="(service, index) in services"
         ref="cards"
@@ -71,13 +73,17 @@ export default {
         :class="['services__card', !service.url && 'services__card--disabled']"
         shadow
         hover
-        @click.native="clickServiceCard(service)">
-
+        @click.native="clickServiceCard(service)"
+      >
         <div class="services__card-icon">
-          <span :class="service.icon"/>
+          <span :class="service.icon" />
         </div>
-        <h4 class="services__card-title">{{ service.title }}</h4>
-        <p class="services__card-description">{{ service.description }}</p>
+        <h4 class="services__card-title">
+          {{ service.title }}
+        </h4>
+        <p class="services__card-description">
+          {{ service.description }}
+        </p>
       </dimi-card>
     </div>
   </div>

@@ -27,22 +27,24 @@ export default {
   <div :class="computedClass">
     <template v-if="$slots.button">
       <div class="c-card__content">
-        <slot/>
+        <slot />
       </div>
 
       <dimi-divider
         horizontal
-        class="c-card__divider"/>
+        class="c-card__divider"
+      />
 
       <div
         class="c-card__button"
-        @click="$emit('button')">
-        <slot name="button"/>
+        @click="$emit('button')"
+      >
+        <slot name="button" />
       </div>
     </template>
 
     <template v-else>
-      <slot/>
+      <slot />
     </template>
   </div>
 </template>

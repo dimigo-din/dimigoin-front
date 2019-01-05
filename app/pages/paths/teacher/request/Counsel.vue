@@ -1,13 +1,12 @@
 <script>
 import moment from 'moment'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import DefaultNavbar from '@/components/DefaultNavbar.vue'
 import { counsel } from '@/src/api/index'
 
 export default {
   name: 'Counsel',
 
-  components: { ContentWrapper, DefaultNavbar },
+  components: { ContentWrapper },
 
   filters: {
     filterTime (time) {
@@ -49,28 +48,31 @@ export default {
 <template lang="html">
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-comment"/>상담 신청 관리
+      <span class="icon-comment" />상담 신청 관리
       <span
         class="counsel__excel"
-        onclick="location.href='http://dev-api.dimigo.in/counsel/excel'">
-        <span class="icon-long-arrow-down"/>엑셀 다운로드
+        onclick="location.href='http://dev-api.dimigo.in/counsel/excel'"
+      >
+        <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
     </h1>
 
     <dimi-card
       slot="main"
-      class="counsel__main">
-
+      class="counsel__main"
+    >
       <div
         v-if="pending"
-        class="counsel__loader-wrapper">
-        <dimi-loader/>
+        class="counsel__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <template v-else>
         <div
           v-for="(counsel, index) in list"
-          :key="`counsel-${index}`">
+          :key="`counsel-${index}`"
+        >
           <div class="counsel__list">
             <span class="counsel__title">
               {{ counsel.startDate | filterTime }}{{ counsel.endDate | filterEndTime }}
@@ -79,7 +81,9 @@ export default {
               <template v-if="counsel.caniapplied === 'no'">
                 {{ counsel.request[0].user.serial }} {{ counsel.request[0].user.name }}
               </template>
-              <span v-else>신청자 없음</span>
+              <span v-else>
+                신청자 없음
+              </span>
             </div>
           </div>
         </div>

@@ -59,7 +59,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-name">이름</label>
+          for="input-name"
+        >
+          이름
+        </label>
         <dimi-input
           id="input-name"
           v-model="formData.name.value"
@@ -71,7 +74,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-birthday">생일</label>
+          for="input-birthday"
+        >
+          생일
+        </label>
         <dimi-input
           id="input-birthday"
           v-model="formData.birthday.value"
@@ -82,24 +88,33 @@ export default {
         />
       </div>
       <div class="form__field">
-        <h4 class="form__label">성별</h4>
+        <h4 class="form__label">
+          성별
+        </h4>
         <div class="gender-radio">
           <dimi-button-radio
             v-model="formData.gender.value"
             class="gender-radio__item"
             name="M"
-          >남성</dimi-button-radio>
+          >
+            남성
+          </dimi-button-radio>
           <dimi-button-radio
             v-model="formData.gender.value"
             class="gender-radio__item"
             name="F"
-          >여성</dimi-button-radio>
+          >
+            여성
+          </dimi-button-radio>
         </div>
       </div>
       <div class="form__field">
         <label
           class="form__label"
-          for="input-phone">전화번호</label>
+          for="input-phone"
+        >
+          전화번호
+        </label>
         <dimi-input
           id="input-phone"
           v-model="formData.phone.value"
@@ -111,7 +126,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-email">이메일</label>
+          for="input-email"
+        >
+          이메일
+        </label>
         <dimi-input
           id="input-email"
           v-model="formData.email.value"
@@ -122,16 +140,19 @@ export default {
         />
       </div>
       <div class="register__nav">
-        <div class="register__nav__start"/>
+        <div class="register__nav__start" />
         <div class="register__circles">
-          <div class="register__nav__circle register__nav__circle--active"/>
-          <div class="register__nav__circle"/>
-          <div class="register__nav__circle"/>
+          <div class="register__nav__circle register__nav__circle--active" />
+          <div class="register__nav__circle" />
+          <div class="register__nav__circle" />
         </div>
         <div class="register__nav__end">
           <a
             class="register__nav__link register__nav__link--next"
-            @click="next">다음 단계<span class="icon-arrow-right"/></a>
+            @click="next"
+          >
+            다음 단계<span class="icon-arrow-right" />
+          </a>
         </div>
       </div>
     </div>

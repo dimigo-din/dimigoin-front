@@ -1,12 +1,11 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import DefaultNavbar from '@/components/DefaultNavbar.vue'
 import { dets } from '@/src/api/index'
 import { days } from '@/src/util/index'
 
 export default {
-  name: 'Dets',
-  components: { ContentWrapper, DefaultNavbar },
+  name: 'ManageDets',
+  components: { ContentWrapper },
 
   data () {
     return {
@@ -151,74 +150,97 @@ export default {
 
 <template>
   <content-wrapper>
-
     <h1 slot="header">
-      <span class="icon-dets-lg"/>Dets 신청 관리
+      <span class="icon-dets-lg" />Dets 신청 관리
       <span
         class="dets__create"
-        @click="modal = true">
-        <span class="icon-plus"/>추가하기
+        @click="modal = true"
+      >
+        <span class="icon-plus" />추가하기
       </span>
       <span
         class="dets__excel"
-        onclick="location.href='http://dev-api.dimigo.in/dets/excel'">
-        <span class="icon-long-arrow-down"/>엑셀 다운로드
+        onclick="location.href='http://dev-api.dimigo.in/dets/excel'"
+      >
+        <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
     </h1>
 
     <dimi-card
       slot="main"
-      class="dets__main">
+      class="dets__main"
+    >
       <dimi-tab
         v-model="currentGrade"
-        :tabs="['1학년', '2학년', '3학년']"/>
+        :tabs="['1학년', '2학년', '3학년']"
+      />
 
       <div
         v-if="pending"
-        class="dets__loader-wrapper">
-        <dimi-loader/>
+        class="dets__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <template v-else>
         <div
           v-for="(dets, index) in list[currentGrade]"
-          :key="`${index}`">
-
+          :key="`${index}`"
+        >
           <div
             class="dets__dets"
-            @click="dets.open = !dets.open">
-            <span class="dets__item dets__title">{{ dets.title }}</span>
-            <span class="dets__item">{{ dets.speakerSerial }} {{ dets.speakerName }}</span>
+            @click="dets.open = !dets.open"
+          >
+            <span class="dets__item dets__title">
+              {{ dets.title }}
+            </span>
+            <span class="dets__item">
+              {{ dets.speakerSerial }} {{ dets.speakerName }}
+            </span>
             <div class="dets__item dets__expand">
-              <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`"/>
+              <span :class="`icon-arrow-${dets.open ? 'up' : 'down'}`" />
             </div>
           </div>
 
           <div
             v-if="dets.open"
-            class="dets__open">
-            <span class="dets__item dets__description">{{ dets.description }}</span>
+            class="dets__open"
+          >
+            <span class="dets__item dets__description">
+              {{ dets.description }}
+            </span>
             <div
-              class="dets__down">
+              class="dets__down"
+            >
               <div
-                class="dets__detail">
-                <span class="dets__item">강의실</span>
-                <span class="dets__item">{{ dets.room }}</span>
-                <span class="dets__item">강의시각</span>
-                <span class="dets__item">{{ dets.date }}</span>
+                class="dets__detail"
+              >
+                <span class="dets__item">
+                  강의실
+                </span>
+                <span class="dets__item">
+                  {{ dets.room }}
+                </span>
+                <span class="dets__item">
+                  강의시각
+                </span>
+                <span class="dets__item">
+                  {{ dets.date }}
+                </span>
               </div>
 
               <div
                 class="dets__item dets__item--edit"
-                @click="openEditModal(dets)">
-                <span class="icon-edit"/> 수정하기
+                @click="openEditModal(dets)"
+              >
+                <span class="icon-edit" /> 수정하기
               </div>
               <div
                 class="dets__item dets__item--delete"
-                @click="deleteDets(dets)">
-                <span class="icon-cross"/> 삭제하기
+                @click="deleteDets(dets)"
+              >
+                <span class="icon-cross" /> 삭제하기
               </div>
-
             </div>
           </div>
         </div>
@@ -227,88 +249,124 @@ export default {
       <dimi-modal
         :opened="modal"
         class="modal__modal"
-        @close="closeModal">
-        <h3 class="modal__title">{{ create ? 'Dets 추가' : 'Dets 수정' }}</h3>
+        @close="closeModal"
+      >
+        <h3 class="modal__title">
+          {{ create ? 'Dets 추가' : 'Dets 수정' }}
+        </h3>
 
         <div class="modal__field">
-          <label class="modal__label">강의명</label>
+          <label class="modal__label">
+            강의명
+          </label>
           <dimi-input
             id="dets-title"
             v-model="form.title"
-            placeholder="강의의 제목을 기입하세요"/>
+            placeholder="강의의 제목을 기입하세요"
+          />
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">설명</label>
+          <label class="modal__label">
+            설명
+          </label>
           <dimi-input
             id="dets-description"
             v-model="form.description"
-            placeholder="강의의 주제을 기입하세요"/>
+            placeholder="강의의 주제을 기입하세요"
+          />
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">강의시간</label>
+          <label class="modal__label">
+            강의시간
+          </label>
           <dimi-input
             id="dets-time"
             v-model="form.date"
             class="modal__leftInput"
-            placeholder="월요일 1타임"/>
-          <label class="modal__label">강의실</label>
+            placeholder="월요일 1타임"
+          />
+          <label class="modal__label">
+            강의실
+          </label>
           <dimi-input
             id="dets-room"
             v-model="form.room"
-            placeholder="디지털컨텐츠실"/>
+            placeholder="디지털컨텐츠실"
+          />
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">총인원</label>
+          <label class="modal__label">
+            총인원
+          </label>
           <dimi-input
             id="dets-max"
             v-model="form.maxCount"
             class="modal__leftInput"
-            placeholder="15"/>
-          <label class="modal__label">대상 학년</label>
+            placeholder="15"
+          />
+          <label class="modal__label">
+            대상 학년
+          </label>
           <dimi-input
             id="dets-grade"
             v-model="form.targetGrade"
-            placeholder="1"/>
+            placeholder="1"
+          />
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">학생 학번</label>
+          <label class="modal__label">
+            학생 학번
+          </label>
           <dimi-input
             id="dets-speaker-serial"
             v-model="form.speakerSerial"
             class="modal__leftInput"
-            placeholder="1234"/>
-          <label class="modal__label">학생 이름</label>
+            placeholder="1234"
+          />
+          <label class="modal__label">
+            학생 이름
+          </label>
           <dimi-input
             id="dets-speaker-name"
             v-model="form.speakerName"
-            placeholder="홍길동"/>
+            placeholder="홍길동"
+          />
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">신청 마감</label>
-          <dimi-date-input v-model="form.endDate"/>
+          <label class="modal__label">
+            신청 마감
+          </label>
+          <dimi-date-input v-model="form.endDate" />
         </div>
 
         <div class="modal__field">
           <div class="modal__button">
             <template
-              v-if="create">
+              v-if="create"
+            >
               <dimi-button
-                @click="createDets">추가하기</dimi-button>
+                @click="createDets"
+              >
+                추가하기
+              </dimi-button>
             </template>
             <template
-              v-else>
+              v-else
+            >
               <dimi-button
-                @click="editDets(modal)">수정하기</dimi-button>
+                @click="editDets(modal)"
+              >
+                수정하기
+              </dimi-button>
             </template>
           </div>
         </div>
       </dimi-modal>
-
     </dimi-card>
   </content-wrapper>
 </template>

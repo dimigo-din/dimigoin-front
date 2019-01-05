@@ -133,12 +133,13 @@ export default {
     <dimi-card
       v-ripple="'rgba(0, 0, 0, 0.05)'"
       class="circle-card"
-      @click.native="opened = true">
-
+      @click.native="opened = true"
+    >
       <dimi-badge
         v-if="hasBadge"
         :color="color"
-        class="circle-card__badge">
+        class="circle-card__badge"
+      >
         <slot>{{ badgeText }}</slot>
       </dimi-badge>
 
@@ -148,23 +149,32 @@ export default {
           :title="circle.title"
           width="64"
           height="64"
-          class="circle-card__logo">
+          class="circle-card__logo"
+        >
 
         <div>
-          <h4 class="circle-card__name">{{ circle.name }}</h4>
-          <h5 class="circle-card__category">{{ circle.category }}</h5>
+          <h4 class="circle-card__name">
+            {{ circle.name }}
+          </h4>
+          <h5 class="circle-card__category">
+            {{ circle.category }}
+          </h5>
         </div>
       </div>
 
-      <div class="circle-card__description">{{ circle.description }}</div>
+      <div class="circle-card__description">
+        {{ circle.description }}
+      </div>
 
       <div
         v-if="circle.status === 'accept'"
-        class="circle-card__final-wrapper">
+        class="circle-card__final-wrapper"
+      >
         <div
           class="circle-card__final"
-          @click.stop="setFinal">
-          <span class="icon-ok"/> 가입하기
+          @click.stop="setFinal"
+        >
+          <span class="icon-ok" /> 가입하기
         </div>
       </div>
     </dimi-card>
@@ -172,26 +182,35 @@ export default {
     <dimi-modal
       :opened="opened"
       class="circle-card__modal"
-      @close="opened = false">
-
+      @close="opened = false"
+    >
       <div class="circle-card__modal-header">
         <img
           :src="imageurl + circle.idx"
           :title="circle.title"
           width="80"
           height="80"
-          class="circle-card__modal-logo">
+          class="circle-card__modal-logo"
+        >
 
         <div>
-          <h4 class="circle-card__modal-name">{{ circle.name }}</h4>
+          <h4 class="circle-card__modal-name">
+            {{ circle.name }}
+          </h4>
           <div>
             <span class="circle-card__modal-info">
-              <span class="circle-card__modal-info-key">분류</span>
-              <span class="circle-card__modal-info-value">{{ circle.category }}</span>
+              <span class="circle-card__modal-info-key">
+                분류
+              </span>
+              <span class="circle-card__modal-info-value">
+                {{ circle.category }}
+              </span>
             </span>
 
             <span class="circle-card__modal-info">
-              <span class="circle-card__modal-info-key">동장</span>
+              <span class="circle-card__modal-info-key">
+                동장
+              </span>
               <span class="circle-card__modal-info-value">
                 {{ circle.chairSerial[0] }}학년
                 {{ circle.chairSerial[1] }}반
@@ -202,15 +221,20 @@ export default {
         </div>
       </div>
 
-      <div class="circle-card__modal-description">{{ circle.description }}</div>
+      <div class="circle-card__modal-description">
+        {{ circle.description }}
+      </div>
 
-      <div class="circle-card__modal-introduce-title">자기소개</div>
+      <div class="circle-card__modal-introduce-title">
+        자기소개
+      </div>
       <div class="modal__field">
         <dimi-long-input
           v-model="introduce"
           :height="500"
           placeholder="1000자 이내로 작성해주시고, 창을 받으시면 내용이 사라지실 수 있으니 미리 메모장에 적고 옮기는 걸 추천드려요!"
-          class="modal__introduce"/>
+          class="modal__introduce"
+        />
       </div>
       <dimi-button
         v-if="!finish"
@@ -220,11 +244,12 @@ export default {
           'circle-card__submit-btn--post': hasBadge
         }"
         :loading="pending"
-        @click="toggleSubmit">
+        @click="toggleSubmit"
+      >
         {{ buttonText }}
       </dimi-button>
 
-      <div style="clear: both;"/>
+      <div style="clear: both;" />
     </dimi-modal>
   </div>
 </template>

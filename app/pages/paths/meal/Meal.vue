@@ -39,30 +39,35 @@ export default {
 
 <template>
   <div>
-    <default-navbar/>
+    <default-navbar />
     <content-wrapper class="container meal">
       <h1 slot="header">
-        <span class="icon-school-meal"/>
+        <span class="icon-school-meal" />
         {{ month }}월 {{ week }}주차 급식 편성
       </h1>
       <dimi-card
         slot="main"
-        class="meal__card">
-
+        class="meal__card"
+      >
         <dimi-tab
           v-model="currentDay"
           :tabs="weeks"
           :small-tabs="tinyWeeks"
-          class="meal__tabs"/>
+          class="meal__tabs"
+        />
 
         <div
           v-for="(meal, index) in meals"
           :key="index"
           :active="today === currentDay && meal.isActive()"
-          class="meal__timeline">
-
-          <h3 class="meal__title">{{ meal.name }}</h3>
-          <p class="meal__content">{{ currentMeals[meal.key] | prettyMeal }}</p>
+          class="meal__timeline"
+        >
+          <h3 class="meal__title">
+            {{ meal.name }}
+          </h3>
+          <p class="meal__content">
+            {{ currentMeals[meal.key] | prettyMeal }}
+          </p>
         </div>
       </dimi-card>
     </content-wrapper>

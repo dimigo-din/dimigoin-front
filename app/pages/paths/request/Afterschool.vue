@@ -96,40 +96,52 @@ export default {
 <template>
   <content-wrapper class="req-afsc">
     <h1 slot="header">
-      <span class="icon-ball"/>2018년 ⛷겨울방학☃ 방과 후 활동 신청
+      <span class="icon-ball" />2018년 ⛷겨울방학☃ 방과 후 활동 신청
       <span
         class="req-afsc__refresh"
-        @click="refresh">새로고침</span>
+        @click="refresh"
+      >
+        새로고침
+      </span>
     </h1>
 
     <dimi-card
       slot="main"
-      class="req-afsc__main">
-
+      class="req-afsc__main"
+    >
       <dimi-tab
         v-model="currentDay"
         :tabs="days.map(v => v.text)"
-        :small-tabs="days.map(v => v.smallText)"/>
+        :small-tabs="days.map(v => v.smallText)"
+      />
 
       <div
         v-if="pending"
-        class="req-afsc__loader-wrapper">
-        <dimi-loader/>
+        class="req-afsc__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <table
         v-else
-        class="req-afsc__list">
+        class="req-afsc__list"
+      >
         <tbody>
           <tr
             v-for="(item, idx) in currentList"
             :key="`aftc-${currentDay}-${idx}`"
-            class="req-afsc__row">
-            <td class="req-afsc__cell req-afsc__cell--name">{{ item.name }}</td>
-            <td class="req-afsc__cell">{{ item.teacherName }}</td>
+            class="req-afsc__row"
+          >
+            <td class="req-afsc__cell req-afsc__cell--name">
+              {{ item.name }}
+            </td>
+            <td class="req-afsc__cell">
+              {{ item.teacherName }}
+            </td>
             <td
               :title="`${item.count}/${item.maxCount}`"
-              class="req-afsc__cell">
+              class="req-afsc__cell"
+            >
               {{ (item.maxCount - item.count) + '명 남음' }}
             </td>
             <td
@@ -140,19 +152,19 @@ export default {
                 'req-afsc__cell--applied': item.status === 'request'
               }"
               :title="item | dateRange"
-              @click="toggleApply(item)">
-
+              @click="toggleApply(item)"
+            >
               <template v-if="applied">
                 <template v-if="item.status === 'request'">
-                  <span class="icon-cross"/> 신청취소
+                  <span class="icon-cross" /> 신청취소
                 </template>
               </template>
 
               <template v-else>
                 <template v-if="item.maxCount > item.count">
-                  <span class="icon-ok"/> 신청하기
+                  <span class="icon-ok" /> 신청하기
                 </template><template v-else>
-                  <span class="icon-alert"/> 신청불가
+                  <span class="icon-alert" /> 신청불가
                 </template>
               </template>
             </td>
@@ -167,13 +179,14 @@ export default {
 
       <dimi-modal
         :opened="captchaOpen"
-        @close="captchaOpen = false">
-
+        @close="captchaOpen = false"
+      >
         <vue-recaptcha
           ref="recaptcha"
           :sitekey="sitekey"
           @verify="verifyRecaptcha"
-          @expired="verifyRecaptcha(null)"/>
+          @expired="verifyRecaptcha(null)"
+        />
       </dimi-modal>
     </dimi-card>
   </content-wrapper>

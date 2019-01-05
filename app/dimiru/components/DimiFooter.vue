@@ -8,10 +8,16 @@ export default {
   <div class="footer">
     <div class="container container--naive">
       <div class="footer__container">
-        <span class="footer__copyright"><slot name="copyright"/></span>
+        <span class="footer__copyright">
+          <slot name="copyright" />
+        </span>
         <div class="footer__contacts">
-          <span class="footer__contact footer__mail"><slot name="mail"/></span>
-          <span class="footer__contact footer__facebook"><slot name="facebook"/></span>
+          <span class="footer__contact footer__mail">
+            <slot name="mail" />
+          </span>
+          <span class="footer__contact footer__facebook">
+            <slot name="facebook" />
+          </span>
         </div>
       </div>
     </div>

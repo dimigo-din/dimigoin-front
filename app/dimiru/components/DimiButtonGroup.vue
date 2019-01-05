@@ -54,8 +54,8 @@ export default {
       :key="`button-${index}`"
       :active="index === value"
       class="button-group__button"
-      @click="onClick(index)">
-
+      @click="onClick(index)"
+    >
       {{ item }}
     </div>
   </div>

@@ -6,7 +6,7 @@ import store from '@/store'
 
 import NotFound from '@/pages/NotFound.vue'
 const Main = () => import(/* webpackChunkName: "main" */ '@/pages/Main.vue')
-const Meal = () => import(/* webpackChunkName: "service-meal" */ '@/pages/meal/Meal.vue')
+const Meal = () => import(/* webpackChunkName: "service-meal" */ '@/pages/paths/meal/Meal.vue')
 const Draft = () => import(/* webpackChunkName: "draft" */ '@/pages/Draft.vue')
 const ExplorerFound = () => import(/* webpackChunkName: "explorer-found" */ '@/pages/ExplorerFound.vue')
 

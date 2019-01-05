@@ -3,7 +3,7 @@ import { withPrefix } from '@/src/util'
 const Manage = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/Manage.vue')
 const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')
 const ManageDets = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageDets.vue')
-const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/manageBook.vue')
+const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageBook.vue')
 const ManageFreshman = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageFreshman.vue')
 
 export default [

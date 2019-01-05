@@ -76,62 +76,77 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-internet-class"/>인강실 신청 관리
+      <span class="icon-internet-class" />인강실 신청 관리
     </h1>
     <dimi-card
       slot="main"
-      class="ingang">
+      class="ingang"
+    >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['엑셀', '블랙리스트', '공지']"/>
+        :tabs="['엑셀', '블랙리스트', '공지']"
+      />
       <div
         v-if="pending"
-        class="ingang__loader">
-        <dimi-loader/>
+        class="ingang__loader"
+      >
+        <dimi-loader />
       </div>
       <template v-else>
         <div
           v-if="currentTab === 0"
-          class="excel">
+          class="excel"
+        >
           <dimi-button
             :loading="pending"
             href="http://dev-api.dimigo.in/ingangs/excel/1"
-            class="excel__item">
+            class="excel__item"
+          >
             1학년 엑셀 다운
           </dimi-button>
           <dimi-button
             :loading="pending"
             href="http://dev-api.dimigo.in/ingangs/excel/2"
-            class="excel__item">
+            class="excel__item"
+          >
             2학년 엑셀 다운
           </dimi-button>
         </div>
         <div
           v-if="currentTab === 1"
-          class="black__cards">
+          class="black__cards"
+        >
           <dimi-card
             v-for="(black, i) in blacklist"
             :key="`${i}`"
             class="black__card"
             hover
-            @click="openModal(black)">
-            <div class="black__title">{{ black.serial }} {{ black.name }}</div>
-            <div class="blakc__date">{{ black.endDate | blackDate }}</div>
+            @click="openModal(black)"
+          >
+            <div class="black__title">
+              {{ black.serial }} {{ black.name }}
+            </div>
+            <div class="blakc__date">
+              {{ black.endDate | blackDate }}
+            </div>
             <!--<div class="black__count">{{ black.totalCount }}</div>-->
           </dimi-card>
         </div>
         <div
-          v-if="currentTab === 2">
+          v-if="currentTab === 2"
+        >
           <div class="notice">
             <dimi-long-input
               v-model="notice"
               :height="300"
-              class="notice__input"/>
+              class="notice__input"
+            />
           </div>
           <div class="notice__button">
             <dimi-button
               class="notice__button"
-              @click="addNotice()">
+              @click="addNotice()"
+            >
               공지 수정하기
             </dimi-button>
           </div>

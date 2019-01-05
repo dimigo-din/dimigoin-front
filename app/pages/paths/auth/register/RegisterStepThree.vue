@@ -39,7 +39,10 @@ export default {
       <div class="form__field">
         <label
           class="form__label"
-          for="input-authcode">인증 코드</label>
+          for="input-authcode"
+        >
+          인증 코드
+        </label>
         <dimi-input
           id="input-authcode"
           v-model="formData.authcode.value"
@@ -51,7 +54,10 @@ export default {
       <div class="register__final-btn">
         <dimi-button
           :loading="pending"
-          @click="confirm">인증</dimi-button>
+          @click="confirm"
+        >
+          인증
+        </dimi-button>
       </div>
     </div>
   </dimi-card>

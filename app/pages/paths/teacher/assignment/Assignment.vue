@@ -128,125 +128,168 @@ export default {
   <div>
     <assignment-base
       :loading="loading"
-      :assignments="assignments">
+      :assignments="assignments"
+    >
       <template slot-scope="{ ass }">
         <span
           class="assignor__item"
-          @click="openEditModal(ass)">
-          <span class="icon-edit"/> 수정하기
+          @click="openEditModal(ass)"
+        >
+          <span class="icon-edit" /> 수정하기
         </span>
         <span
           v-if="now.getTime() <= (new Date(ass.end_date)).getTime()"
           class="assignor__item--del"
-          @click="deleteAss(ass)">
-          <span class="icon-cross"/> 삭제하기
+          @click="deleteAss(ass)"
+        >
+          <span class="icon-cross" /> 삭제하기
         </span>
         <span
           v-else
           class="assignor__item--down"
-          @click="download(ass)">
-          <span class="icon-long-arrow-down"/> 다운로드
+          @click="download(ass)"
+        >
+          <span class="icon-long-arrow-down" /> 다운로드
         </span>
       </template>
 
       <span slot="header">
         <span class="assignor__header">
-          <span class="icon-submission"/>과제 제출 관리
+          <span class="icon-submission" />과제 제출 관리
 
           <span
             class="assignor__plus"
-            @click="modals.create = true">
-            <span class="icon-plus"/>추가하기
+            @click="modals.create = true"
+          >
+            <span class="icon-plus" />추가하기
           </span>
         </span>
       </span>
 
       <span
         slot="opponent"
-        slot-scope="{ ass }">
+        slot-scope="{ ass }"
+      >
         {{ ass.target_grade }}학년
         {{ ass.target_class }}반 대상
       </span>
-
     </assignment-base>
 
     <dimi-modal
       :opened="modals.create"
-      @close="closeModal">
-      <h3 class="assignor__title">과제 제출 추가</h3>
+      @close="closeModal"
+    >
+      <h3 class="assignor__title">
+        과제 제출 추가
+      </h3>
 
       <div class="assignor__form-field">
-        <label class="assignor__form-label">과제명</label>
+        <label class="assignor__form-label">
+          과제명
+        </label>
         <dimi-input
           id="ass-title"
           v-model="form.title"
           class="assignor__form-input"
-          placeholder="과제의 제목을 입력하세요"/>
-        <label class="assignor__form-label assignor__form-label--target">학년</label>
+          placeholder="과제의 제목을 입력하세요"
+        />
+        <label class="assignor__form-label assignor__form-label--target">
+          학년
+        </label>
         <dimi-input
           id="ass-target-grade"
           v-model="form.targetGrade"
-          class="assignor__form-input assignor__form-input--target"/>
-        <label class="assignor__form-label assignor__form-label--target">반</label>
+          class="assignor__form-input assignor__form-input--target"
+        />
+        <label class="assignor__form-label assignor__form-label--target">
+          반
+        </label>
         <dimi-input
           id="ass-target-class"
           v-model="form.targetClass"
-          class="assignor__form-input assignor__form-input--target"/>
+          class="assignor__form-input assignor__form-input--target"
+        />
       </div>
       <div class="assignor__form-field">
-        <label class="assignor__form-label">과제 설명</label>
+        <label class="assignor__form-label">
+          과제 설명
+        </label>
         <dimi-input
           id="ass-desc"
           v-model="form.description"
-          placeholder="과제에 대해 설명해주세요"/>
+          placeholder="과제에 대해 설명해주세요"
+        />
       </div>
       <div class="assignor__form-field">
-        <label class="assignor__form-label">제출 마감일</label>
-        <dimi-date-input v-model="form.endDate"/>
+        <label class="assignor__form-label">
+          제출 마감일
+        </label>
+        <dimi-date-input v-model="form.endDate" />
       </div>
 
       <div class="assignor__submit">
-        <dimi-button @click="create">추가</dimi-button>
+        <dimi-button @click="create">
+          추가
+        </dimi-button>
       </div>
     </dimi-modal>
 
     <dimi-modal
       :opened="modals.edit"
-      @close="closeModal">
-      <h3 class="assignor__title">과제 제출 수정</h3>
+      @close="closeModal"
+    >
+      <h3 class="assignor__title">
+        과제 제출 수정
+      </h3>
 
       <div class="assignor__form-field">
-        <label class="assignor__form-label">과제명</label>
+        <label class="assignor__form-label">
+          과제명
+        </label>
         <dimi-input
           id="ass-title"
           v-model="form.title"
           class="assignor__form-input"
-          placeholder="과제의 제목을 입력하세요"/>
-        <label class="assignor__form-label assignor__form-label--target">학년</label>
+          placeholder="과제의 제목을 입력하세요"
+        />
+        <label class="assignor__form-label assignor__form-label--target">
+          학년
+        </label>
         <dimi-input
           id="ass-target-grade"
           v-model="form.targetGrade"
-          class="assignor__form-input assignor__form-input--target"/>
-        <label class="assignor__form-label assignor__form-label--target">반</label>
+          class="assignor__form-input assignor__form-input--target"
+        />
+        <label class="assignor__form-label assignor__form-label--target">
+          반
+        </label>
         <dimi-input
           id="ass-target-class"
           v-model="form.targetClass"
-          class="assignor__form-input assignor__form-input--target"/>
+          class="assignor__form-input assignor__form-input--target"
+        />
       </div>
       <div class="assignor__form-field">
-        <label class="assignor__form-label">과제 설명</label>
+        <label class="assignor__form-label">
+          과제 설명
+        </label>
         <dimi-input
           id="ass-desc"
           v-model="form.description"
-          placeholder="과제에 대해 설명해주세요"/>
+          placeholder="과제에 대해 설명해주세요"
+        />
       </div>
       <div class="assignor__form-field">
-        <label class="assignor__form-label">제출 마감일</label>
-        <dimi-date-input v-model="form.endDate"/>
+        <label class="assignor__form-label">
+          제출 마감일
+        </label>
+        <dimi-date-input v-model="form.endDate" />
       </div>
 
       <div class="assignor__submit">
-        <dimi-button @click="edit(modals.temp)">수정</dimi-button>
+        <dimi-button @click="edit(modals.temp)">
+          수정
+        </dimi-button>
       </div>
     </dimi-modal>
   </div>

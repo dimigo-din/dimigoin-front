@@ -82,39 +82,51 @@ export default {
 
 <template>
   <content-wrapper class="mng-circle">
-    <h1 slot="header"><span class="icon-club"/>동아리 신청자 관리</h1>
+    <h1 slot="header">
+      <span class="icon-club" />동아리 신청자 관리
+    </h1>
     <dimi-card
       slot="main"
-      class="mng-circle__card">
-      <h2 class="mng-circle__title">동아리 신청자 관리</h2>
+      class="mng-circle__card"
+    >
+      <h2 class="mng-circle__title">
+        동아리 신청자 관리
+      </h2>
 
       <table class="mng-circle__table">
         <tbody>
           <tr
             v-for="(item, index) in list"
             :key="index"
-            class="applicant-row">
-
-            <td class="applicant-row__cell applicant-row__serial">{{ item.serial }}</td>
-            <td class="applicant-row__cell applicant-row__name">{{ item.name }} <br> {{ item.introduce }} </td>
+            class="applicant-row"
+          >
+            <td class="applicant-row__cell applicant-row__serial">
+              {{ item.serial }}
+            </td>
+            <td class="applicant-row__cell applicant-row__name">
+              {{ item.name }} <br> {{ item.introduce }}
+            </td>
             <td class="applicant-row__cell applicant-row__status">
               <dimi-button-group
                 v-if="item.status === 0"
                 v-model="item.status"
                 :items="['보류', '합격', '불합격']"
                 :colors="['gray', 'aloes', 'orange']"
-                @click="updateStatus($event, item)"/>
+                @click="updateStatus($event, item)"
+              />
 
               <dimi-button-group
                 v-else-if="item.status === 3"
                 :items="['최종']"
-                :colors="['cyan']"/>
+                :colors="['cyan']"
+              />
 
               <dimi-button-group
                 v-else
                 :value="item.status - 1"
                 :items="['합격', '불합격']"
-                :colors="['aloes', 'orange']"/>
+                :colors="['aloes', 'orange']"
+              />
             </td>
           </tr>
         </tbody>

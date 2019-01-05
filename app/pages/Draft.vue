@@ -12,5 +12,5 @@ export default {
 </script>
 
 <template>
-  <div class="draft"/>
+  <div class="draft" />
 </template>

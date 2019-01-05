@@ -50,11 +50,12 @@ export default {
 <template>
   <div class="input-wrapper">
     <input
-      :class="computedClass"
       v-model="innerValue"
+      :class="computedClass"
       :type="type"
       :placeholder="placeholder"
-      @keyup.enter="$emit('enter')">
+      @keyup.enter="$emit('enter')"
+    >
     <p
       v-if="errorMessage"
       class="input__error-message"

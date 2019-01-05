@@ -8,10 +8,16 @@ export default {
   <div class="navbar">
     <div class="container">
       <div class="navbar__wrapper">
-        <div class="navbar__brand"><slot name="brand"/></div>
+        <div class="navbar__brand">
+          <slot name="brand" />
+        </div>
         <div class="navbar__menu">
-          <div class="navbar__start"><slot name="start"/></div>
-          <div class="navbar__end"><slot name="end"/></div>
+          <div class="navbar__start">
+            <slot name="start" />
+          </div>
+          <div class="navbar__end">
+            <slot name="end" />
+          </div>
         </div>
       </div>
     </div>

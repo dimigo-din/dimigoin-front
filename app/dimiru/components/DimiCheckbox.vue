@@ -22,13 +22,13 @@ export default {
   <div class="checkbox__wrapper">
     <span
       :class="classes"
-      @click="$emit('input', !value)">
-
-      <span class="checkbox__icon icon-ok"/>
+      @click="$emit('input', !value)"
+    >
+      <span class="checkbox__icon icon-ok" />
     </span>
 
     <span :class="$slots.default && 'checkbox__content'">
-      <slot/>
+      <slot />
     </span>
   </div>
 </template>

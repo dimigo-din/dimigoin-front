@@ -89,7 +89,7 @@ export const request = {
    * @param idx
    * @returns {Promise<Ingang>}
    */
-  async AdminGetIngang (idx) {
+  async adminGetIngangRequestByStudent (idx) {
     const ingang = await magician(() => axios.get(`/ingangs/users/${idx}/requests/`), {
       404: () => []
     })
@@ -102,14 +102,15 @@ export const request = {
    * @param idx
    * @param ingangIdx
    */
-  async AdminPostIngang (idx, ingangIdx) {
+  async adminRequestIngangByStudent (idx, ingangIdx) {
     await magician(() => axios.post(`/ingangs/users/${idx}/request/${ingangIdx}`), {
       401: () => new Error('알맞지 않는 인강실이 아닙니다.'),
       403: () => new Error('모든 티켓을 사용했습니다.'),
       404: () => new Error('존재하지 않는 인강실 신청입니다.'),
       405: () => new Error('신청가능한 시간이 아닙니다.'),
       409: () => new Error('이미 신청을 했거나 인원이 꽉 찼습니다.'),
-      451: () => new Error('블랙리스트입니다.')})
+      451: () => new Error('블랙리스트입니다.')
+    })
   },
 
   /**
@@ -118,7 +119,7 @@ export const request = {
    * @param idx
    * @param ingangIdx
    */
-  async AdminDelIngang (idx, ingangIdx) {
+  async adminDeleteIngangRequestByStudent (idx, ingangIdx) {
     await magician(() => axios.delete(`/ingangs/users/${idx}/request/${ingangIdx}`), {
       401: () => new Error('알맞지 않는 인강실이 아닙니다.'),
       403: () => new Error('모든 티켓을 사용했습니다.'),
@@ -131,7 +132,7 @@ export const request = {
    *
    * @returns {Promise<Ingang>}
    */
-  async getIngang () {
+  async getIngangList () {
     const ingang = await magician(() => axios.get(`/ingangs/me/requests`), {
       404: () => []
     })
@@ -149,7 +150,7 @@ export const request = {
    * @param ingangIdx
    * @returns {Promise<void>}
    */
-  async postIngang (ingangIdx) {
+  async requestIngang (ingangIdx) {
     await magician(() => axios.post(`/ingangs/me/requests/${ingangIdx}`), {
       401: () => new Error('알맞지 않는 인강실이 아닙니다.'),
       403: () => new Error('모든 티켓을 사용했습니다.'),
@@ -166,7 +167,7 @@ export const request = {
    * @param ingangIdx
    * @returns {Promise<void>}
    */
-  async delIngang (ingangIdx) {
+  async deleteIngangRequest (ingangIdx) {
     await magician(() => axios.delete(`/ingangs/me/requests/${ingangIdx}`), {
       401: () => new Error('알맞지 않는 인강실이 아닙니다.'),
       403: () => new Error('모든 티켓을 사용했습니다.'),
@@ -180,7 +181,7 @@ export const request = {
    * @param grade
    * @returns {Promise<Array<ingang>>}
    */
-  async getGradeIngang (grade) {
+  async getIngangRequestList (grade) {
     const { ingang } = await magician(() => axios.get(`/ingangs/grade/${grade}`), {
       404: () => []
     })
@@ -194,7 +195,7 @@ export const request = {
    * @param time
    * @returns {Promise<Array<ingang>>}
    */
-  async getGradeTimeIngang (grade, time) {
+  async getIngangRequestListByTime (grade, time) {
     const { ingang } = await magician(() => axios.get(`/ingangs/grade/${grade}/${time}`), {
       404: () => []
     })

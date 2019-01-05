@@ -34,7 +34,7 @@ export default {
       {{ title }}
     </h4>
     <div class="meal-item__content">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>

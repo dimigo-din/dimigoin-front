@@ -20,17 +20,18 @@ export default {
     <div
       v-show="opened"
       class="modal__overlay"
-      @click.stop="close">
-
+      @click.stop="close"
+    >
       <div
         class="modal"
-        @click.stop>
-
+        @click.stop
+      >
         <span
           class="icon-cross"
-          @click.stop="close"/>
+          @click.stop="close"
+        />
 
-        <slot/>
+        <slot />
       </div>
     </div>
   </transition>

@@ -19,20 +19,24 @@ export default {
   <div class="register">
     <h1
       class="register__title"
-      @click="$router.push('/')">
-
-      <brand height="36px"/>
-      <span class="register__subtitle">회원가입</span>
+      @click="$router.push('/')"
+    >
+      <brand height="36px" />
+      <span class="register__subtitle">
+        회원가입
+      </span>
     </h1>
     <div class="register__content">
       <div class="container container--custom">
         <div class="row center-xs middle-xs">
           <router-view
             class="col-xs-24 col-md-12"
-            name="side"/>
+            name="side"
+          />
           <router-view
             class="col-xs-24 col-md-12"
-            name="form"/>
+            name="form"
+          />
         </div>
       </div>
     </div>

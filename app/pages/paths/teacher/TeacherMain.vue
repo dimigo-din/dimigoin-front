@@ -21,10 +21,12 @@ export default {
 
 <template>
   <div>
-    <not-found v-if="rejected"/>
+    <not-found v-if="rejected" />
     <template v-else>
       <div class="main">
-        <h1 class="main__title">관리</h1>
+        <h1 class="main__title">
+          관리
+        </h1>
         <div class="main__cards">
           <dimi-card
             v-for="(service, key) in services"
@@ -35,9 +37,13 @@ export default {
             hover
             @click.native="clickService(service)"
           >
-            <span :class="['main__card-icon', service.icon]"/>
-            <h3 class="main__card-title">{{ service.title }}</h3>
-            <p class="main__card-desc">{{ service.description }}</p>
+            <span :class="['main__card-icon', service.icon]" />
+            <h3 class="main__card-title">
+              {{ service.title }}
+            </h3>
+            <p class="main__card-desc">
+              {{ service.description }}
+            </p>
           </dimi-card>
         </div>
       </div>

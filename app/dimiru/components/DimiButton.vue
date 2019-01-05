@@ -1,10 +1,6 @@
 <script>
-import DimiLoader from './DimiLoader.vue'
-
 export default {
   name: 'DimiButton',
-
-  components: { DimiLoader },
 
   props: {
     gray: {
@@ -69,7 +65,7 @@ export default {
     :href="href"
     @click="click"
   >
-    <slot/>
+    <slot />
   </a>
 </template>
 

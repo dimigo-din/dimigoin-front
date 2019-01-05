@@ -16,8 +16,11 @@ export default {
 <template>
   <div
     id="app"
-    class="root">
-    <main class="root__router"><router-view/></main>
+    class="root"
+  >
+    <main class="root__router">
+      <router-view />
+    </main>
     <Snowf
       :amount="80"
       :size="10"
@@ -30,7 +33,7 @@ export default {
       :resize="true"
       color="#e0e0e0"
     />
-    <awesome-footer class="root__footer"/>
+    <awesome-footer class="root__footer" />
   </div>
 </template>
 

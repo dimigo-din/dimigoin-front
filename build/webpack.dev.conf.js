@@ -62,7 +62,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       onErrors: config.dev.notifyOnErrors
         ? utils.createNotifierCallback()
-        : undefined
+        : undefined,
+      clearConsole: true
     }),
     new DotenvPlugin({
       path: 'env/.dev.env',

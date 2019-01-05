@@ -20,15 +20,17 @@ export default {
       <router-link
         slot="brand"
         :to="{ name: 'main' }"
-        class="brand">
-        <brand height="32px"/>
+        class="brand"
+      >
+        <brand height="32px" />
       </router-link>
       <span slot="end">
         {{ $store.state.account.informations.name }}
         <a
           class="icon-logout logout-btn"
           title="로그아웃"
-          @click="logout"/>
+          @click="logout"
+        />
       </span>
     </dimi-navbar>
   </header>

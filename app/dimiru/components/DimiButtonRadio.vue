@@ -40,6 +40,6 @@ export default {
     :gray="name !== value"
     @click="click"
   >
-    <slot/>
+    <slot />
   </dimi-button>
 </template>

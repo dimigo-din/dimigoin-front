@@ -19,7 +19,9 @@ export default {
 </script>
 
 <template>
-  <div :class="computedClass"><slot/></div>
+  <div :class="computedClass">
+    <slot />
+  </div>
 </template>
 
 <style lang="scss">

@@ -40,15 +40,17 @@ export default {
 
 <template>
   <div>
-    <default-navbar/>
+    <default-navbar />
     <div
       v-if="loading"
-      class="assignment__loading">
-      <dimi-loader/>
+      class="assignment__loading"
+    >
+      <dimi-loader />
     </div>
     <div
       v-else
-      class="container">
+      class="container"
+    >
       <div class="row">
         <main class="main col-xs">
           <content-wrapper class="assignment">
@@ -56,18 +58,22 @@ export default {
               <slot name="header" />
             </h1>
             <dimi-card
-              slot="main">
+              slot="main"
+            >
               <template v-for="(ass, i) in assignments">
                 <div
                   :key="i"
                   class="assignment__assignment"
-                  @click="toggle(i)">
-
+                  @click="toggle(i)"
+                >
                   <slot
                     :ass="ass"
-                    name="badge"/>
+                    name="badge"
+                  />
 
-                  <span class="assignment__item assignment__title">{{ ass.title }}</span>
+                  <span class="assignment__item assignment__title">
+                    {{ ass.title }}
+                  </span>
 
                   <span class="assignment__item">
                     <slot
@@ -76,21 +82,24 @@ export default {
                     />
                   </span>
 
-                  <span class="assignment__item">{{ ass.end_date | deadline }}</span>
+                  <span class="assignment__item">
+                    {{ ass.end_date | deadline }}
+                  </span>
 
                   <div class="assignment__item assignment__expand">
-                    <span :class="`icon-arrow-${selection[i] ? 'up' : 'down'}`"/>
+                    <span :class="`icon-arrow-${selection[i] ? 'up' : 'down'}`" />
                   </div>
                 </div>
 
                 <div
                   v-show="selection[i]"
                   :key="i + 'desc'"
-                  class="assignment__assignment assignment__description">
+                  class="assignment__assignment assignment__description"
+                >
                   {{ ass.description }}
 
                   <span class="assignment__nav">
-                    <slot :ass="ass"/>
+                    <slot :ass="ass" />
                   </span>
                 </div>
               </template>

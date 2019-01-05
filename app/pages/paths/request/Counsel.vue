@@ -61,25 +61,29 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-comment"/>상담 신청
+      <span class="icon-comment" />상담 신청
     </h1>
 
     <dimi-card
       slot="main"
-      class="counsel__main">
+      class="counsel__main"
+    >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['Wee 클래스 상담', '진로상담']"/>
+        :tabs="['Wee 클래스 상담', '진로상담']"
+      />
 
       <div
         v-if="pending"
-        class="counsel__loader-wrapper">
-        <dimi-loader/>
+        class="counsel__loader-wrapper"
+      >
+        <dimi-loader />
       </div>
 
       <template v-else>
         <section
-          v-if="currentTab === 0">
+          v-if="currentTab === 0"
+        >
           <div class="counsel__field">
             <div class="counsel__item">
               Wee 클래스 상담은 친구·가족·이성관계, 학교폭력, 진로, 성격문제, 인터넷·스마트폰과 같이 학교생활, 학업문제 전반에 걸친 폭넓은 고민거리를 주제로 상담사 김주은께서 진행하시는 상담입니다.
@@ -102,15 +106,23 @@ export default {
             </div>
           </div>
           <div
-            class="counsel__buttons">
+            class="counsel__buttons"
+          >
             <dimi-button
-              href="https://goo.gl/sY9qwe">보호자 동의서 다운로드</dimi-button>
+              href="https://goo.gl/sY9qwe"
+            >
+              보호자 동의서 다운로드
+            </dimi-button>
             <dimi-button
-              href="https://goo.gl/e7YhGk">상담 신청서 다운로드</dimi-button>
+              href="https://goo.gl/e7YhGk"
+            >
+              상담 신청서 다운로드
+            </dimi-button>
           </div>
         </section>
         <section
-          v-if="currentTab === 1">
+          v-if="currentTab === 1"
+        >
           <div class="counsel__field">
             <div class="counsel__item">
               진로 상담은 대학 진학 ·고졸 취업과 같이 상담자의 진로를 주제로 교사 남승완께서 진행하는 상담입니다. 매주 수요일·금요일에 상담 신청자에 한하여 본교무실(본관 1층)에서 진행됩니다.
@@ -125,10 +137,12 @@ export default {
             </div>
           </div>
           <div
-            class="list__top">
+            class="list__top"
+          >
             <div
               v-for="(counsel, index) in list"
-              :key="`counsel-${index}`">
+              :key="`counsel-${index}`"
+            >
               <div class="list__list">
                 <span class="list__title">
                   {{ counsel.startDate | filterTime }}{{ counsel.endDate | filterEndTime }}
@@ -139,16 +153,17 @@ export default {
                     'list__full': counsel.caniapplied === 'no',
                     'list__applied': counsel.applied === 'applied'
                   }"
-                  @click="toggleApply(counsel)">
+                  @click="toggleApply(counsel)"
+                >
                   <template v-if="counsel.applied === 'applied'">
-                    <span class="icon-cross"/> 신청취소
+                    <span class="icon-cross" /> 신청취소
                   </template>
                   <template v-else>
                     <template v-if="counsel.caniapplied === 'yes'">
-                      <span class="icon-ok"/> 신청하기
+                      <span class="icon-ok" /> 신청하기
                     </template>
                     <template v-else>
-                      <span class="icon-alert"/> 신청불가
+                      <span class="icon-alert" /> 신청불가
                     </template>
                   </template>
                 </div>

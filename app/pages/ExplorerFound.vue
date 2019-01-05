@@ -22,7 +22,8 @@ export default {
     <div class="ienope__col">
       <img
         src="@/assets/ienope.png"
-        class="ienope__illust">
+        class="ienope__illust"
+      >
     </div>
 
     <div class="ienope__col">
@@ -39,9 +40,9 @@ export default {
           v-for="b in browsers"
           :key="b.href"
           :href="b.href"
-          class="ienope__link">
-
-          <span class="icon-long-arrow-right"/> {{ b.name }} 브라우저 다운로드
+          class="ienope__link"
+        >
+          <span class="icon-long-arrow-right" /> {{ b.name }} 브라우저 다운로드
         </a>
       </div>
     </div>

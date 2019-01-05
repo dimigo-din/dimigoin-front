@@ -46,26 +46,30 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-internet-class"/>공지사항 관리
+      <span class="icon-internet-class" />공지사항 관리
     </h1>
     <dimi-card
-      slot="main">
+      slot="main"
+    >
       <div
         v-if="pending"
-        class="notice__loader">
-        <dimi-loader/>
+        class="notice__loader"
+      >
+        <dimi-loader />
       </div>
       <template v-else>
         <div class="notice">
           <dimi-long-input
             v-model="description"
             :height="300"
-            class="notice__input"/>
+            class="notice__input"
+          />
         </div>
         <div class="notice__button">
           <dimi-button
             class="notice__button"
-            @click="addNotice()">
+            @click="addNotice()"
+          >
             공지사항 수정
           </dimi-button>
         </div>

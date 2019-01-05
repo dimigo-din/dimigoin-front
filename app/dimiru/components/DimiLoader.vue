@@ -5,7 +5,7 @@ export default {
 </script>
 
 <template>
-  <div class="loader"/>
+  <div class="loader" />
 </template>
 
 <style lang="scss">

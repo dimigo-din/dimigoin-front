@@ -41,13 +41,15 @@ export default {
 <template>
   <div
     :style="{height: height+'px'}"
-    class="input-wrapper">
+    class="input-wrapper"
+  >
     <textarea
       v-model="innerValue"
       :type="type"
       :placeholder="placeholder"
       :style="{height: height+'px'}"
-      class="input"/>
+      class="input"
+    />
   </div>
 </template>
 

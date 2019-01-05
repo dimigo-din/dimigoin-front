@@ -1,5 +1,5 @@
 <script>
-import Brand from '@/assets/brand.svg'
+import Logo from '@/assets/brand.svg'
 import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
@@ -8,7 +8,7 @@ import { notice } from '@/src/api/index'
 
 export default {
   name: 'Main',
-  components: { Brand, MealGroup, ServiceCards },
+  components: { Logo, MealGroup, ServiceCards },
 
   data: () => ({
     photoCDN: process.env.DIMIGO_API_URL + '/user_photo/',
@@ -67,36 +67,48 @@ export default {
   <div class="container container--naive">
     <h1
       class="brand"
-      @click="hots">
-      <brand width="212px"/>
+      @click="hots"
+    >
+      <logo style="width: 212px;" />
     </h1>
     <div class="info">
       <div class="column">
         <section class="info__profile info-section">
-          <h2 class="info-section__title">프로필</h2>
+          <h2 class="info-section__title">
+            프로필
+          </h2>
           <dimi-card
             shadow
-            class="info__profile-card info-section__content">
-
+            class="info__profile-card info-section__content"
+          >
             <div class="profile-info__left">
               <img
                 v-if="photoUrl"
                 :src="photoCDN + photoUrl"
-                class="profile-info__photo">
+                class="profile-info__photo"
+              >
               <span
                 v-else
-                class="profile-info__default-photo icon-profile"/>
+                class="profile-info__default-photo icon-profile"
+              />
 
               <span class="profile-info">
                 <template v-if="userType === 'T'">
-                  <span class="profile-info__name">{{ name }}</span>
-                  <span class="profile-info__serial"> 선생님</span>
+                  <span class="profile-info__name">
+                    {{ name }}
+                  </span>
+                  <span class="profile-info__serial">
+                    선생님
+                  </span>
                 </template>
                 <template v-else>
-                  <span class="profile-info__serial">{{ `${grade}학년 ${klass}반` }}</span>
-                  <span class="profile-info__name">{{ name }}</span>
+                  <span class="profile-info__serial">
+                    {{ `${grade}학년 ${klass}반` }}
+                  </span>
+                  <span class="profile-info__name">
+                    {{ name }}
+                  </span>
                 </template>
-
               </span>
             </div>
 
@@ -104,32 +116,44 @@ export default {
               <a
                 class="icon-setting profile-info__btn"
                 title="설정"
-                @click="openSetting"/>
+                @click="openSetting"
+              />
               <a
                 class="icon-logout profile-info__btn"
                 title="로그아웃"
-                @click="logout"/>
+                @click="logout"
+              />
             </nav>
           </dimi-card>
         </section>
         <section class="info__notification info-section">
-          <h2 class="info-section__title">알림</h2>
+          <h2 class="info-section__title">
+            알림
+          </h2>
           <dimi-card
             class="info__notice info-section__content"
-            shadow>
-            <p class="info__notice--content">{{ notice }}</p>
+            shadow
+          >
+            <p class="info__notice--content">
+              {{ notice }}
+            </p>
           </dimi-card>
         </section>
       </div>
       <div class="column">
         <section class="info__meal info-section">
-          <h2 class="info-section__title">오늘의 급식</h2>
+          <h2 class="info-section__title">
+            오늘의 급식
+          </h2>
           <dimi-card
             shadow
             class="info-section__content"
-            @button="$router.push({ name: 'meal' })">
-            <span slot="button">주간 급식 보기</span>
-            <meal-group/>
+            @button="$router.push({ name: 'meal' })"
+          >
+            <span slot="button">
+              주간 급식 보기
+            </span>
+            <meal-group />
           </dimi-card>
         </section>
       </div>
@@ -137,8 +161,10 @@ export default {
     <div class="service">
       <div class="column">
         <section class="info-section">
-          <h2 class="info-section__title">서비스</h2>
-          <service-cards/>
+          <h2 class="info-section__title">
+            서비스
+          </h2>
+          <service-cards />
         </section>
       </div>
     </div>
