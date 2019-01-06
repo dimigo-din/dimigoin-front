@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 const DotenvPlugin = require('webpack-dotenv-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -46,10 +46,9 @@ const webpackConfig = async () => {
     },
     optimization: {
       minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
+        new TerserPlugin({
           parallel: true,
-          sourceMap: config.build.productionSourceMap
+          sourceMap: true
         }),
         new OptimizeCssAssetsPlugin({
           cssProcessorOptions: config.build.productionSourceMap && {
