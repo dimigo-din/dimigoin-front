@@ -118,7 +118,7 @@ const webpackConfig = async () => {
       }),
       new CopyWebpackPlugin([
         {
-          from: path.resolve(__dirname, '../public'),
+          from: path.resolve(__dirname, '../static'),
           to: config.build.assetsSubDirectory,
           ignore: ['.*']
         }
