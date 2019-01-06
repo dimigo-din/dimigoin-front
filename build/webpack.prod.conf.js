@@ -8,6 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 const DotenvPlugin = require('webpack-dotenv-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -81,22 +82,6 @@ const webpackConfig = async () => {
         filename: utils.assetsPath('css/[name].[chunkhash].css'),
         chunkFilename: utils.assetsPath('css/[id].[chunkhash].css')
       }),
-      new HtmlPlugin({
-        title: 'DIMIGOIN',
-        template: 'index.html',
-        filename: 'index.html',
-        inject: true,
-        chunksSortMode: 'dependency',
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          html5: true,
-          minifyCSS: true,
-          removeComments: true,
-          removeEmptyAttributes: true
-        },
-        hash: true
-      }),
       new DotenvPlugin({
         path: 'env/.prod.env',
         sample: 'env/.env.example'
@@ -115,6 +100,23 @@ const webpackConfig = async () => {
           ignore: ['.*']
         }
       ]),
+      new HtmlPlugin({
+        title: 'DIMIGOIN',
+        template: 'index.html',
+        filename: 'index.html',
+        inject: true,
+        chunksSortMode: 'dependency',
+        minify: {
+          removeAttributeQuotes: true,
+          collapseWhitespace: true,
+          html5: true,
+          minifyCSS: true,
+          removeComments: true,
+          removeEmptyAttributes: true
+        },
+        hash: true
+      }),
+      new PreloadWebpackPlugin(),
       ...(process.env.CI
         ? [new SentryCliPlugin({
           include: '.',
