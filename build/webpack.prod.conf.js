@@ -90,7 +90,8 @@ const webpackConfig = async () => {
         hash: true
       }),
       new PreloadWebpackPlugin({
-        rel: 'prefetch'
+        rel: 'preload',
+        include: ['fonts']
       }),
       ...(process.env.CI
         ? [new SentryCliPlugin({
