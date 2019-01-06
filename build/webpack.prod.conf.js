@@ -12,6 +12,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SentryCli = require('@sentry/cli')
 const SentryCliPlugin = require('@sentry/webpack-plugin')
 
@@ -32,14 +33,14 @@ const webpackConfig = async () => {
           test: /\.scss$/,
           use: utils.scssLoaders({
             extract: true,
-            sourceMap: config.dev.cssSourceMap
+            sourceMap: config.build.productionSourceMap
           })
         },
         {
           test: /\.css$/,
           use: utils.cssLoaders({
             extract: true,
-            sourceMap: config.dev.cssSourceMap
+            sourceMap: config.build.productionSourceMap
           })
         }
       ]
@@ -60,22 +61,14 @@ const webpackConfig = async () => {
         })
       ],
       splitChunks: {
-        chunks: 'all',
+        name: false,
         cacheGroups: {
+          default: false,
           commons: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors'
-          },
-          styles: {
-            name: 'styles',
-            test: /\.(css|scss)$/,
-            enforce: true
-          },
-          default: {
-            name: 'default',
-            minChunks: 2,
-            priority: -10,
-            reuseExistingChunk: true
+            name: 'vendors',
+            chunks: 'all',
+            minChunks: 2
           }
         }
       }
@@ -122,12 +115,15 @@ const webpackConfig = async () => {
           ignore: ['.*']
         }
       ]),
-      new SentryCliPlugin({
-        include: '.',
-        ignoreFile: '.gitignore',
-        configFile: '.sentryclirc',
-        release: sentryProposedVersion
-      })
+      ...(process.env.CI
+        ? [new SentryCliPlugin({
+          include: '.',
+          ignoreFile: '.gitignore',
+          configFile: '.sentryclirc',
+          release: sentryProposedVersion
+        })]
+        : [new BundleAnalyzerPlugin()]
+      )
     ]
   })
 }
