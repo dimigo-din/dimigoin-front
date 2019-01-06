@@ -4,7 +4,7 @@ import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
 import restaurance from 'restaurance'
-import { notice } from '@/src/api/index'
+import { notice } from '@/src/api'
 
 export default {
   name: 'Main',
@@ -32,7 +32,7 @@ export default {
     try {
       await this.autoLogin()
       if (this.needVerify) this.$router.push({ name: 'register/step/3' })
-      this.notice = await notice.getAllNotice()
+      this.notice = await notice.getNotice()
     } catch (err) {
       console.error(err)
     }
