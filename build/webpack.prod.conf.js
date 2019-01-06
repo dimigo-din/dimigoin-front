@@ -75,6 +75,32 @@ const webpackConfig = async () => {
       }
     },
     plugins: [
+      new HtmlPlugin({
+        title: 'DIMIGOIN',
+        template: 'index.html',
+        filename: 'index.html',
+        minify: {
+          removeAttributeQuotes: true,
+          collapseWhitespace: true,
+          html5: true,
+          minifyCSS: true,
+          removeComments: true,
+          removeEmptyAttributes: true
+        },
+        hash: true
+      }),
+      new PreloadWebpackPlugin({
+        rel: 'prefetch'
+      }),
+      ...(process.env.CI
+        ? [new SentryCliPlugin({
+          include: '.',
+          ignoreFile: '.gitignore',
+          configFile: '.sentryclirc',
+          release: sentryProposedVersion
+        })]
+        : [new BundleAnalyzerPlugin()]
+      ),
       new StylelintPlugin({
         files: ['**/*.css', '**/*.scss', '**/*.vue']
       }),
@@ -99,33 +125,7 @@ const webpackConfig = async () => {
           to: config.build.assetsSubDirectory,
           ignore: ['.*']
         }
-      ]),
-      new HtmlPlugin({
-        title: 'DIMIGOIN',
-        template: 'index.html',
-        filename: 'index.html',
-        inject: true,
-        chunksSortMode: 'dependency',
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          html5: true,
-          minifyCSS: true,
-          removeComments: true,
-          removeEmptyAttributes: true
-        },
-        hash: true
-      }),
-      new PreloadWebpackPlugin(),
-      ...(process.env.CI
-        ? [new SentryCliPlugin({
-          include: '.',
-          ignoreFile: '.gitignore',
-          configFile: '.sentryclirc',
-          release: sentryProposedVersion
-        })]
-        : [new BundleAnalyzerPlugin()]
-      )
+      ])
     ]
   })
 }

@@ -22,7 +22,7 @@ export default {
         :to="{ name: 'main' }"
         class="brand"
       >
-        <brand height="32px" />
+        <brand style="height: 32px;" />
       </router-link>
       <span slot="end">
         {{ $store.state.account.informations.name }}

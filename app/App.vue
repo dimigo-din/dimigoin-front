@@ -1,11 +1,11 @@
 <script>
-import 'dimigoincon'
-import 'typeface-nanum-square-round'
-
 import './scss/theme.scss'
 import AwesomeFooter from './components/AwesomeFooter.vue'
 
 import Snowf from 'vue-snowf'
+
+import('dimigoincon' /* webpackChunkName: "fonts" */)
+import('typeface-nanum-square-round' /* webpackChunkName: "fonts" */)
 
 export default {
   name: 'App',
