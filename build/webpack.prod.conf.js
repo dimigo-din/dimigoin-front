@@ -97,7 +97,9 @@ const webpackConfig = async () => {
       }),
       new PreloadWebpackPlugin({
         rel: 'preload',
-        include: ['fonts']
+        include: 'allAssets',
+        fileWhitelist: [/.woff2/],
+        as: 'font'
       }),
       ...(process.env.CI
         ? [new SentryCliPlugin({
