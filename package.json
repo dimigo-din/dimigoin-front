@@ -18,6 +18,7 @@
   "author": "dimigoin",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "@sentry/browser": "^4.4.2",
     "axios": "^0.18.0",
     "debounce": "^1.2.0",
