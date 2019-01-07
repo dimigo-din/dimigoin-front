@@ -1,4 +1,5 @@
-import 'babel-polyfill'
+import 'core-js/modules/es6.promise'
+import 'core-js/modules/es6.array.iterator'
 
 import Vue from 'vue'
 import DimiRu from './dimiru'

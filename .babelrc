@@ -1,13 +1,4 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
-        }
-      }
-    ],
-    "stage-1"
-  ]
+  "presets": ["@babel/env"],
+  "plugins": ["@babel/plugin-syntax-dynamic-import", "@babel/plugin-proposal-export-namespace-from"]
 }

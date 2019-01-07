@@ -25,8 +25,7 @@ const webpackConfig = async () => {
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
       path: config.build.assetsRoot,
-      filename: utils.assetsPath('js/[name].[chunkhash].js'),
-      chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+      filename: utils.assetsPath('js/[name].[chunkhash].js')
     },
     module: {
       rules: [
@@ -50,7 +49,7 @@ const webpackConfig = async () => {
       minimizer: [
         new TerserPlugin({
           parallel: true,
-          sourceMap: true
+          sourceMap: config.build.productionSourceMap
         }),
         new OptimizeCssAssetsPlugin({
           cssProcessorOptions: config.build.productionSourceMap && {
@@ -61,15 +60,22 @@ const webpackConfig = async () => {
           }
         })
       ],
+      runtimeChunk: 'single',
       splitChunks: {
-        name: false,
+        chunks: 'all',
+        maxInitialRequests: 3,
+        minSize: 30000,
         cacheGroups: {
-          default: false,
-          commons: {
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-            minChunks: 2
+            name (module) {
+              // get the name. E.g. node_modules/packageName/not/this/part.js
+              // or node_modules/packageName
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+
+              // npm package names are URL-safe, but some servers don't like @ symbols
+              return `npm.${packageName.replace('@', '')}`
+            }
           }
         }
       }

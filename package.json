@@ -20,8 +20,6 @@
   "dependencies": {
     "@sentry/browser": "^4.4.2",
     "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-stage-1": "^6.24.1",
     "debounce": "^1.2.0",
     "dimigoincon": "^2.5.1",
     "file-dialog": "^0.0.7",
@@ -41,13 +39,15 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
     "@sentry/cli": "^1.37.2",
     "@sentry/webpack-plugin": "^1.6.2",
     "add": "^2.0.6",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-loader": "7",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
