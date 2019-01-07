@@ -4,7 +4,7 @@ import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState, mapActions } from 'vuex'
 import restaurance from 'restaurance'
-import { notice } from '@/src/api'
+import * as notice from '@/src/api/notice'
 
 export default {
   name: 'Main',

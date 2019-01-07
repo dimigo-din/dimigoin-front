@@ -1,7 +1,7 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
 import throwable from '@/mixins/throwable'
-import { assignment } from '@/src/api/index'
+import * as assignment from '@/src/api/assignment'
 
 export default {
   name: 'Assignment',

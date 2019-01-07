@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { book } from '@/src/api/index'
+import * as book from '@/src/api/book'
 
 export default {
   name: 'ManagementBook',

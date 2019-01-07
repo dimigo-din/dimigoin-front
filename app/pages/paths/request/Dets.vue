@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { dets } from '@/src/api/index'
-import { days } from '@/src/util/index'
+import * as dets from '@/src/api/dets'
+import days from '@/src/util/days'
 
 export default {
   name: 'RequestDets',

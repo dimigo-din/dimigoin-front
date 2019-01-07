@@ -1,23 +1,4 @@
-import { struct } from 'superstruct'
-
-const _StudentDets = struct.interface({
-  idx: 'number',
-  title: 'string',
-  description: 'string',
-  startDate: 'string',
-  endDate: 'string',
-  speakerSerial: 'string',
-  speakerName: 'string',
-  date: 'string',
-  room: 'string',
-  maxCount: 'number',
-  targetGrade: 'number',
-  count: 'number',
-  status: 'string | null | undefined',
-  open: 'boolean?'
-})
-
-export const StudentDets = dets => _StudentDets({
+export const StudentDets = dets => ({
   idx: dets['idx'],
   title: dets['title'],
   description: dets['description'],
@@ -34,23 +15,7 @@ export const StudentDets = dets => _StudentDets({
   open: false
 })
 
-const _Dets = struct.interface({
-  idx: 'number',
-  title: 'string',
-  description: 'string',
-  startDate: 'string',
-  endDate: 'string',
-  speakerSerial: 'string',
-  speakerName: 'string',
-  date: 'string',
-  room: 'string',
-  maxCount: 'number',
-  targetGrade: 'number',
-  count: 'number',
-  open: 'boolean?'
-})
-
-export const Dets = dets => _Dets({
+export const Dets = dets => ({
   idx: dets['idx'],
   title: dets['title'],
   description: dets['description'],

@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
-import { afterschool } from '@/src/api/index'
-import { days } from '@/src/util/index'
+import * as afterschool from '@/src/api/afterschool'
+import days from '@/src/util/days'
 
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import VueRecaptcha from 'vue-recaptcha'

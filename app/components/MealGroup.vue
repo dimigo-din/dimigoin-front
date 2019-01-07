@@ -1,6 +1,6 @@
 <script>
-import { meals } from '@/src/util'
-import { meal } from '@/src/api'
+import meals from '@/src/util/meals'
+import * as meal from '@/src/api/meal'
 
 export default {
   name: 'MealGroup',

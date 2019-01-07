@@ -1,5 +1,6 @@
-import { register, getAccessToken, verifyStudent } from '@/src/api'
-import { setAuthorizationToken, parseToken } from '@/src/util'
+import * as auth from '@/src/api/auth'
+import setAuthorizationToken from '@/src/util/axios-set-authorization'
+import parseToken from '@/src/util/parse-token'
 import axios from '@/src/api/axios'
 import * as types from './mutation-types'
 
@@ -35,11 +36,11 @@ export default {
 
   actions: {
     async register (ctx, payload) {
-      await register(payload)
+      await auth.register(payload)
     },
 
     async verify ({ commit }, { authcode }) {
-      await verifyStudent(authcode)
+      await auth.verifyStudent(authcode)
       commit(types.VERIFY)
     },
 
@@ -48,7 +49,7 @@ export default {
     },
 
     async login ({ dispatch }, { id, password }) {
-      const { token, needVerify } = await getAccessToken(id, password)
+      const { token, needVerify } = await auth.getAccessToken(id, password)
       await dispatch('loginWithToken', { token, needVerify })
     },
 

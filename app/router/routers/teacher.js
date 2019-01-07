@@ -1,4 +1,4 @@
-import { withPrefix } from '@/src/util'
+import withPrefix from '@/src/util/path-with-prefix'
 
 const TeacherMain = () => import(/* webpackChunkName: "teacher-main" */ '@/pages/paths/teacher/TeacherMain.vue')
 

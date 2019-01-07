@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
-import { meals } from '@/src/util/index'
-import { meal } from '@/src/api/index'
+import meals from '@/src/util/meals'
+import * as meal from '@/src/api/meal'
 
 import DefaultNavbar from '@/components/DefaultNavbar.vue'
 import ContentWrapper from '@/components/ContentWrapper.vue'

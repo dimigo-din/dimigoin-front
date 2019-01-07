@@ -1,6 +1,6 @@
 import axios from './axios'
 import magician from './magician'
-import sleep from '@/src/util'
+import sleep from '@/src/util/sleep'
 import moment from 'moment'
 
 export function getTodayMeal () {

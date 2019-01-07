@@ -1,8 +1,8 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
-import { days } from '@/src/util/index'
-import { afterschool } from '@/src/api/index'
+import days from '@/src/util/days'
+import * as afterschool from '@/src/api/afterschool'
 
 export default {
   name: 'Afterschool',

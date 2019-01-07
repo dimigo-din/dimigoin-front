@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
-import { circle } from '@/src/api/index'
+import * as circle from '@/src/api/circle'
 import * as handleCircle from '@/src/util/handle-circle-status'
 
 export default {

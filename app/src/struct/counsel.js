@@ -1,32 +1,3 @@
-import { struct } from 'superstruct'
-
-const _User = struct.interface({
-  idx: 'number',
-  name: 'string',
-  grade: 'number',
-  class: 'number',
-  number: 'number',
-  serial: 'string | undefined | null'
-})
-
-const _Request = struct.interface({
-  idx: 'number',
-  time: 'string',
-  user: _User
-})
-
-const _Counsel = struct.interface({
-  idx: 'number',
-  day: 'string',
-  startDate: 'string',
-  endDate: 'string',
-  date: 'string',
-  applied: 'string | null',
-  caniapplied: 'string | null',
-  applicant: 'string | null',
-  request: [_Request]
-})
-
 const convertRequest = v => (v && {
   idx: v['idx'],
   time: v['request_time'],
@@ -40,7 +11,7 @@ const convertRequest = v => (v && {
   }
 })
 
-export const Counsel = counsel => _Counsel({
+export const Counsel = counsel => ({
   idx: counsel['idx'],
   day: counsel['day'],
   startDate: counsel['counsel_start_date'],

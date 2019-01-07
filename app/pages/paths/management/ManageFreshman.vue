@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { freshman } from '@/src/api/index'
+import * as freshman from '@/src/api/freshman'
 
 export default {
   name: 'ManagementFreshman',

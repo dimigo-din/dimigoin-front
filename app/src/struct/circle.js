@@ -1,30 +1,4 @@
-import { struct } from 'superstruct'
-
-const _Circle = struct.interface({
-  idx: 'number',
-  name: 'string',
-  description: 'string',
-  category: 'string',
-  profileImg: 'string | null | undefined',
-  applyStartDate: 'string',
-  applyEndDate: 'string',
-  chairIdx: 'string',
-  chairSerial: 'string',
-  chairName: 'string',
-  status: 'string | null | undefined'
-})
-
-const _CircleApplicant = struct.interface({
-  idx: 'string',
-  name: 'string',
-  serial: 'string | null',
-  circleIdx: 'string',
-  userIdx: 'string',
-  introduce: 'string',
-  status: 'string'
-})
-
-export const Circle = applicant => _Circle({
+export const Circle = applicant => ({
   idx: applicant['idx'],
   name: applicant['name'],
   description: applicant['description'],
@@ -39,7 +13,7 @@ export const Circle = applicant => _Circle({
   status: applicant['status']
 })
 
-export const CircleApplicant = applicant => _CircleApplicant({
+export const CircleApplicant = applicant => ({
   idx: applicant['idx'],
   name: applicant['name'],
   serial: applicant['serial'],

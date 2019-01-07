@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { ingang } from '@/src/api'
+import * as ingang from '@/src/api/ingang'
 
 export default {
   name: 'Ingang',

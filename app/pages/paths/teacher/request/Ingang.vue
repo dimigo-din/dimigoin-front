@@ -2,7 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import moment from 'moment'
 
-import { ingang } from '@/src/api/index'
+import * as ingang from '@/src/api/ingang'
 import dummy from './dummy'
 
 export default {

@@ -1,4 +1,4 @@
-import { withPrefix } from '@/src/util'
+import withPrefix from '@/src/util/path-with-prefix'
 
 const Manage = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/Manage.vue')
 const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')

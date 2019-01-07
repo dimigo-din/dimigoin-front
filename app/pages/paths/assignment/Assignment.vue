@@ -3,7 +3,7 @@ import AssignmentBase from '@/components/AssignmentBase.vue'
 import throwable from '@/mixins/throwable'
 
 import fileDialog from 'file-dialog'
-import { assignment } from '@/src/api/index'
+import * as assignment from '@/src/api/assignment'
 
 const assignee = assignment.assignee
 

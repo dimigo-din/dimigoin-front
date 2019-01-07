@@ -1,7 +1,7 @@
 <script>
 import moment from 'moment'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { counsel } from '@/src/api/index'
+import * as counsel from '@/src/api/counsel'
 
 export default {
   name: 'RequestCounsel',

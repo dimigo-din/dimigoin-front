@@ -1,19 +1,4 @@
-import { struct } from 'superstruct'
-
-const _Afterschool = struct.interface({
-  idx: 'number',
-  name: 'string',
-  startDate: 'string',
-  endDate: 'string',
-  day: 'string',
-  grade: 'number',
-  maxCount: 'number',
-  teacherName: 'string',
-  count: 'number | undefined',
-  status: 'string | null | undefined'
-})
-
-export const Afterschool = afterschool => _Afterschool({
+export const Afterschool = afterschool => ({
   idx: afterschool['idx'],
   name: afterschool['name'],
   startDate: afterschool['request_start_date'],

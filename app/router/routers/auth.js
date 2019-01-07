@@ -1,4 +1,4 @@
-import { withPrefix } from '@/src/util'
+import withPrefix from '@/src/util/path-with-prefix'
 
 const Register = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/Register.vue')
 const RegisterStepOne = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterStepOne.vue')

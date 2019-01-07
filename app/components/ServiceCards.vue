@@ -1,5 +1,6 @@
 <script>
-import { service, permission } from '@/src/api'
+import * as service from '@/src/api/service'
+import * as permission from '@/src/api/permission'
 
 export default {
   name: 'ServiceCards',

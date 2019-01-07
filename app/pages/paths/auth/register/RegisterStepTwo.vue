@@ -1,6 +1,5 @@
 <script>
-import { mapActions } from 'vuex'
-
+import { register } from '@/src/api/auth'
 import awesomeMixin from './mixins/preserve-state'
 import validator from './mixins/validator'
 
@@ -58,7 +57,7 @@ export default {
       try {
         this.pending = true
         const result = this.mergeFormData()
-        await this.register(Object.keys(result).reduce((pv, cv) => {
+        await register(Object.keys(result).reduce((pv, cv) => {
           pv[cv] = result[cv].value
           return pv
         }, {}))
@@ -72,9 +71,7 @@ export default {
 
     isRetypedPasswordOk () {
       return this.formData.password.value === this.formData.repassword.value
-    },
-
-    ...mapActions('account', ['register'])
+    }
   }
 }
 </script>

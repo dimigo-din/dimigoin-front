@@ -2,7 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import CircleCard from '@/components/CircleCard.vue'
 
-import { circle } from '@/src/api/index'
+import * as circle from '@/src/api/circle'
 
 export default {
   name: 'Circle',
