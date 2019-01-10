@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import notice from '@/src/api/notice'
+import * as notice from '@/src/api/notice'
 
 export default {
   name: 'Notice',
