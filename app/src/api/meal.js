@@ -1,4 +1,4 @@
-import axios from './axios'
+import { pureAxios as axios } from './axios'
 import magician from './magician'
 import moment from 'moment'
 
