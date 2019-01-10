@@ -17,7 +17,7 @@ export async function postNotice (notice) {
  * @returns {Promise<Array<notice>>}
  */
 export async function getAllNotice () {
-  const { notice } = await magician(() => axios.get(`/notice/`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/notice/`), {})
   return notice
 }
 
@@ -27,6 +27,6 @@ export async function getAllNotice () {
  * @returns {Promise<Array<notice>>}
  */
 export async function getNotice () {
-  const { notice } = await magician(() => axios.get(`/notice/latest`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/notice/latest`), {})
   return notice[0].description
 }

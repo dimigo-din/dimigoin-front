@@ -23,7 +23,7 @@ export const warning = {
    * @returns {Promise<Array<Warning>>}
    */
   async getBlack () {
-    const { students } = await magician(() => axios.get(`/ingangs/blacklist/`), {})
+    const { data: { students } } = await magician(() => axios.get(`/ingangs/blacklist/`), {})
     return students
   },
 
@@ -33,7 +33,7 @@ export const warning = {
    * @returns {Promise<Array<Warning>>}
    */
   async getAllWarning () {
-    const { students } = await magician(() => axios.get(`/ingangs/warnings/`), {})
+    const { data: { students } } = await magician(() => axios.get(`/ingangs/warnings/`), {})
     return students
   },
 
@@ -44,7 +44,7 @@ export const warning = {
    * @returns {Promise<WarningLog>}
    */
   async getWarningLog (idx) {
-    const log = await magician(() => axios.get(`/ingangs/users/${idx}/warnings`), {})
+    const { data: log } = await magician(() => axios.get(`/ingangs/users/${idx}/warnings`), {})
     return log
   },
 
@@ -90,7 +90,7 @@ export const request = {
    * @returns {Promise<Ingang>}
    */
   async adminGetIngangRequestByStudent (idx) {
-    const ingang = await magician(() => axios.get(`/ingangs/users/${idx}/requests/`), {
+    const { data: ingang } = await magician(() => axios.get(`/ingangs/users/${idx}/requests/`), {
       404: () => []
     })
     return ingang
@@ -182,7 +182,7 @@ export const request = {
    * @returns {Promise<Array<ingang>>}
    */
   async getIngangRequestList (grade) {
-    const { ingang } = await magician(() => axios.get(`/ingangs/grade/${grade}`), {
+    const { data: { ingang } } = await magician(() => axios.get(`/ingangs/grade/${grade}`), {
       404: () => []
     })
     return ingang
@@ -196,7 +196,7 @@ export const request = {
    * @returns {Promise<Array<ingang>>}
    */
   async getIngangRequestListByTime (grade, time) {
-    const { ingang } = await magician(() => axios.get(`/ingangs/grade/${grade}/${time}`), {
+    const { data: { ingang } } = await magician(() => axios.get(`/ingangs/grade/${grade}/${time}`), {
       404: () => []
     })
     return ingang
@@ -210,7 +210,7 @@ export const notice = {
    * @returns {Promise<Array<Notice>>}
    */
   async getAllNotice () {
-    const { notice } = await magician(() => axios.get(`/ingangs/notices/`), {})
+    const { data: { notice } } = await magician(() => axios.get(`/ingangs/notices/`), {})
     return notice
   },
 
@@ -230,7 +230,7 @@ export const notice = {
    * @returns {Promise<Notice>}
    */
   async getNotice (noticeIdx) {
-    const notice = await magician(() => axios.get(`/ingangs/notices/${noticeIdx}`), {})
+    const { data: notice } = await magician(() => axios.get(`/ingangs/notices/${noticeIdx}`), {})
     return notice
   },
 
@@ -261,7 +261,7 @@ export const notice = {
    * @returns {Promise<notice>}
    */
   async getLatestNotice () {
-    const notice = await magician(() => axios.get(`/ingangs/notices/latest`), {})
+    const { data: notice } = await magician(() => axios.get(`/ingangs/notices/latest`), {})
     return notice
   }
 }

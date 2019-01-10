@@ -2,7 +2,7 @@ export default async (action, errorHandler) => {
   try {
     const res = await action()
 
-    return res.data
+    return res
   } catch (err) {
     console.warn(err)
     if (!err.response) throw new Error('네트워크에 문제가 있습니다.')

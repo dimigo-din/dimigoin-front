@@ -17,7 +17,7 @@ export async function createAfterschool (afterschool) {
 }
 
 export async function getGradeAfterschool (grade) {
-  const { afterschools } = await magician(() => axios.get(`/afterschools/grade/${grade}`), {
+  const { data: { afterschools } } = await magician(() => axios.get(`/afterschools/grade/${grade}`), {
     404: () => []
   })
   return afterschools.map(Afterschool)
@@ -41,7 +41,7 @@ export async function applyAfterschool (idx, captcha) {
 }
 
 export async function getStudentAfterschool () {
-  const { afterschools } = await magician(() => axios.get(`/afterschools/student/`), {
+  const { data: { afterschools } } = await magician(() => axios.get(`/afterschools/student/`), {
     404: () => []
   })
   return afterschools.map(Afterschool)

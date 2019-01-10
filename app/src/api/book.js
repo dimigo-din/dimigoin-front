@@ -1,6 +1,6 @@
 import axios from './axios'
 import magician from './magician'
-import { Boook, Notice } from '@/src/struct/book'
+import { Book, Notice } from '@/src/struct/book'
 
 /**
  * 도서 신청을 합니다.
@@ -21,8 +21,8 @@ export async function addBook (book) {
  * @returns {Promise<Array<Book>>}
  */
 export async function getAllBook () {
-  const { Book } = await magician(() => axios.get(`/book_info/`), {})
-  return Book.map(Boook)
+  const { data: { Book: book } } = await magician(() => axios.get(`/book_info/`), {})
+  return book.map(Book)
 }
 
 /**
@@ -87,10 +87,10 @@ export async function deleteBook (idx) {
  * @return {Promise<Book>}
  */
 export async function getBook (idx) {
-  const { Book } = await magician(() => axios.get(`/book_info/book/${idx}`), {
+  const { data: { Book: book } } = await magician(() => axios.get(`/book_info/book/${idx}`), {
     404: () => new Error('존재하지 않는 신청입니다.')
   })
-  return Book.map(Boook)
+  return book.map(Book)
 }
 
 /**
@@ -109,7 +109,7 @@ export async function addNotice (notice) {
  * @returns {Promise<Array<Notice>>}
  */
 export async function getAllNotice () {
-  const { notice } = await magician(() => axios.get(`/book_info/library`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/book_info/library`), {})
   return notice.map(Notice)
 }
 
@@ -119,7 +119,7 @@ export async function getAllNotice () {
  * @returns {Promise<Notice>}
  */
 export async function getNotice () {
-  const notice = await magician(() => axios.get(`/book_info/library_latest`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/book_info/library_latest`), {})
   return Notice(notice)
 }
 
@@ -129,8 +129,8 @@ export async function getNotice () {
  * @returns {Promise<Array<Book>>}
  */
 export async function getStudentBook () {
-  const { Book } = await magician(() => axios.get(`/book_info/student/`), {
+  const { data: { Book: book } } = await magician(() => axios.get(`/book_info/student/`), {
     404: () => []
   })
-  return Book.map(Boook)
+  return book.map(Book)
 }

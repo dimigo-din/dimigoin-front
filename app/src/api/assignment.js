@@ -11,7 +11,7 @@ export const admin = {
    * @returns {Promise<Array<Assignment>>}
    */
   async getAssignmentList () {
-    const { assignments } = await magician(() => axios.get('/assignments/'), {
+    const { data: { assignments } } = await magician(() => axios.get('/assignments/'), {
       403: () => new Error('권한이 없습니다')
     })
 
@@ -39,7 +39,7 @@ export const admin = {
    * @returns {Promise<Assignment>}
    */
   async getAssignment (idx) {
-    const assignment = await magician(() => axios.get(`/assignments/${idx}`), {
+    const { data: assignment } = await magician(() => axios.get(`/assignments/${idx}`), {
       403: () => new Error('권한이 없습니다'),
       404: () => new Error('과제를 찾을 수 없습니다.')
     })
@@ -85,7 +85,7 @@ export const assignee = {
    * @returns {Promise<Array<Assignment>>}
    */
   async getAssignmentList () {
-    const { assignments } = await magician(() => axios.get('/assignments/assignee'))
+    const { data: { assignments } } = await magician(() => axios.get('/assignments/assignee'))
 
     return assignments
   },
@@ -97,7 +97,7 @@ export const assignee = {
    * @returns {Promise<Assignment>}
    */
   async getAssignment (idx) {
-    const assignment = await magician(() => axios.get(`/assignments/assignee/${idx}`))
+    const { data: assignment } = await magician(() => axios.get(`/assignments/assignee/${idx}`))
 
     return assignment
   },
@@ -153,7 +153,7 @@ export const assignor = {
    * @returns {Promise<Array<Assignment>>}
    */
   async getAssignmentList () {
-    const { assignments } = await magician(() => axios.get('/assignments/assignor'))
+    const { data: { assignments } } = await magician(() => axios.get('/assignments/assignor'))
 
     return assignments
   },
@@ -165,7 +165,7 @@ export const assignor = {
    * @returns {Promise<Assignment>}
    */
   async getAssignment (idx) {
-    const assignment = await magician(() => axios.get(`/assignments/assignor/${idx}`), {
+    const { data: assignment } = await magician(() => axios.get(`/assignments/assignor/${idx}`), {
       403: () => new Error('과제에 접근할 권한이 없습니다.'),
       404: () => new Error('과제를 찾을 수 없습니다.')
     })
@@ -207,7 +207,7 @@ export const assignor = {
    * @returns {Promise<void>}
    */
   async getResult (idx) {
-    const data = await magician(() => axios.get(`/assignments/${idx}/reports`, {
+    const { data } = await magician(() => axios.get(`/assignments/${idx}/reports`, {
       responseType: 'blob'
     }), {
       403: () => new Error('존재하지 않거나 접근할 수 없는 과제입니다.')

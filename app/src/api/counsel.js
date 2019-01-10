@@ -3,12 +3,12 @@ import magician from './magician'
 import { Counsel } from '@/src/struct/counsel'
 
 export async function getCounsel () {
-  const { counsel } = await magician(() => axios.get(`/counsel/`), {})
+  const { data: { counsel } } = await magician(() => axios.get(`/counsel/`), {})
   return counsel.map(Counsel)
 }
 
 export async function getAdminCounsel () {
-  const { counsel } = await magician(() => axios.get(`/counsel/admin`), {})
+  const { data: { counsel } } = await magician(() => axios.get(`/counsel/admin`), {})
   return counsel.map(Counsel)
 }
 
@@ -19,7 +19,7 @@ export async function addCounsel () {
 }
 
 export async function getDateCounsel (date) {
-  const { counsel } = await magician(() => axios.get(`/counsel/date/${date}`), {})
+  const { data: { counsel } } = await magician(() => axios.get(`/counsel/date/${date}`), {})
   return counsel.map(Counsel)
 }
 
@@ -37,6 +37,6 @@ export async function applyCounsel (idx) {
 }
 
 export async function getIdxCounsel (idx) {
-  const { counsel } = await magician(() => axios.get(`/counsel/${idx}`), {})
+  const { data: { counsel } } = await magician(() => axios.get(`/counsel/${idx}`), {})
   return counsel.map(Counsel)
 }

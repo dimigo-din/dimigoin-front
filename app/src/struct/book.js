@@ -1,4 +1,4 @@
-export const Boook = book => ({
+export const Book = book => ({
   idx: book['idx'],
   title: book['name'],
   author: book['author'],
