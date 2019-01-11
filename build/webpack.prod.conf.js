@@ -125,7 +125,6 @@ const webpackConfig = async () => {
         SENTRY_PROPOSED_VERSION: sentryProposedVersion
       }),
       new webpack.HashedModuleIdsPlugin(),
-      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ko/),
       new CleanWebpackPlugin('dist', {
         root: path.resolve(__dirname, '..')
       }),

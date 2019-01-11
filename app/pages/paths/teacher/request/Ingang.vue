@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import moment from 'moment'
+import { format } from 'date-fns'
 
 import * as ingang from '@/src/api/ingang'
 import dummy from './dummy'
@@ -11,7 +11,7 @@ export default {
 
   filters: {
     blackDate (val) {
-      return moment(val).format('YY-MM-DD')
+      return format(val, 'YY-MM-DD')
     }
   },
 

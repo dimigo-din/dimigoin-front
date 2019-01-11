@@ -1,5 +1,5 @@
 <script>
-import moment from 'moment'
+import { getISOWeek, startOfMonth, setDay } from 'date-fns'
 import meals from '@/src/util/meals'
 import * as meal from '@/src/api/meal'
 
@@ -14,7 +14,8 @@ export default {
   components: { DefaultNavbar, ContentWrapper },
 
   data: () => ({
-    currentDay: moment().day(),
+    currentDate: new Date(),
+    currentDay: new Date().getDay(),
     list: [...Array(7)].map(_ => ({}))
   }),
 
@@ -22,15 +23,15 @@ export default {
     meals: () => meals,
     weeks: () => longWeeks,
     tinyWeeks: () => shortWeeks,
-    today: () => moment().day(),
-    month: () => 1 + moment().month(),
-    week: () => 1 + moment().week() - moment().date(1).week(),
+    today: () => new Date().getDay(),
+    month: () => 1 + new Date().getMonth(),
+    week: () => 1 + getISOWeek(this.currentDate) - getISOWeek(startOfMonth(this.currentDate)),
     currentMeals () { return this.list[this.currentDay] }
   },
 
   async created () {
     const meals = this.weeks.map((v, i) =>
-      meal.getMeal(moment().day(i)))
+      meal.getMeal(setDay(this.currentDate, i)))
 
     this.list = await Promise.all(meals)
   }

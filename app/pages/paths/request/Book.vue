@@ -1,5 +1,5 @@
 <script>
-import moment from 'moment'
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as book from '@/src/api/book'
 
@@ -10,7 +10,7 @@ export default {
 
   filters: {
     filterDate (time) {
-      return moment(time).format('YYYY-MM-DD')
+      return format(time, 'YYYY-MM-DD')
     }
   },
 

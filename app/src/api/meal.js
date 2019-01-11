@@ -1,14 +1,14 @@
 import { pureAxios as axios } from './axios'
 import magician from './magician'
-import moment from 'moment'
+import { format } from 'date-fns'
 
 export function getTodayMeal () {
   return getMeal(new Date())
 }
 
-export async function getMeal (date, time = 1) {
+export async function getMeal (date) {
   return (await magician(
-    () => axios.get(`/dimibobs/${moment(date).format('YYYY-MM-DD')}`),
+    () => axios.get(`/dimibobs/${format(date, 'YYYY-MM-DD')}`),
     { 404: () => {} }
   )).data
 }

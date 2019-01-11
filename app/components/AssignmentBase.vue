@@ -1,5 +1,5 @@
 <script>
-import moment from 'moment'
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
@@ -9,7 +9,7 @@ export default {
 
   filters: {
     deadline (val) {
-      return moment(val).format('YYYY.MM.DD') + '까지'
+      return format(val, 'YYYY.MM.DD까지')
     }
   },
 

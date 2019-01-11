@@ -1,5 +1,6 @@
 <script>
-import moment from 'moment'
+import { format, distanceInWordsToNow } from 'date-fns'
+import koLocale from 'date-fns/locale/ko'
 import * as afterschool from '@/src/api/afterschool'
 import days from '@/src/util/days'
 
@@ -12,9 +13,13 @@ export default {
 
   filters: {
     dateRange (item) {
-      moment.locale('ko')
-      const [a, b] = [moment(item.startDate), moment(item.endDate)]
-      return `${a.fromNow()}에 시작 (${a.format('llll')})\n${b.fromNow()}에 마감 (${b.format('llll')})`
+      const [a, b] = [new Date(item.startDate), new Date(item.endDate)]
+      const startSince = distanceInWordsToNow(a, { locale: koLocale })
+      const endSince = distanceInWordsToNow(b, { locale: koLocale })
+      const startFormat = format(a, 'YYYY년 MM월 DD일 dddd A h시 m분', { locale: koLocale })
+      const endFormat = format(b, 'YYYY년 MM월 DD일 dddd A h시 m분', { locale: koLocale })
+
+      return `${startSince}에 시작 (${startFormat})\n${endSince}에 마감 (${endFormat})`
     }
   },
 

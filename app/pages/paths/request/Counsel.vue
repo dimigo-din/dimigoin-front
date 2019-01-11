@@ -1,5 +1,6 @@
 <script>
-import moment from 'moment'
+import { format } from 'date-fns'
+import koLocale from 'date-fns/locale/ko'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as counsel from '@/src/api/counsel'
 
@@ -10,17 +11,12 @@ export default {
 
   filters: {
     filterTime (time) {
-      const month = moment(time).format('MM')
-      const date = moment(time).format('DD')
-      const day = moment(time).format('dddd') === 'Wednesday' ? '수요일' : '금요일'
-      const hour = moment(time).format('hh')
-      const minute = moment(time).format('mm')
-      return `${day} ( ${month}월 ${date}일 ) ${hour}시 ${minute}분 ~ `
+      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', {
+        locale: koLocale
+      })
     },
     filterEndTime (time) {
-      const hour = moment(time).format('hh')
-      const minute = moment(time).format('mm')
-      return `${hour}시 ${minute}분`
+      return format(time, 'hh시 mm분')
     }
   },
 

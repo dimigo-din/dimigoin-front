@@ -1,5 +1,5 @@
 <script>
-import moment from 'moment'
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as ingang from '@/src/api/ingang'
 
@@ -10,11 +10,11 @@ export default {
 
   filters: {
     filterDate (time) {
-      return moment(time).format('YYYY-MM-DD')
+      return format(time, 'YYYY-MM-DD')
     },
 
     filterBlackDate (time) {
-      return moment(time).format('MM월 DD까지 인강실을 사용할 수 없습니다.')
+      return format(time, 'MM월 DD까지 인강실을 사용할 수 없습니다.')
     }
   },
 
