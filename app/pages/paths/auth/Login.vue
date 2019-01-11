@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from '@/store/modules/account/helpers'
 
 import MealGroup from '@/components/MealGroup.vue'
 
@@ -17,9 +17,7 @@ export default {
   },
 
   computed: {
-    ...mapState('account', {
-      isLoggedIn: ({ auth }) => auth.isLoggedIn
-    })
+    ...mapGetters(['isLoggedIn'])
   },
 
   created () {
@@ -40,7 +38,7 @@ export default {
 
       this.$router.push({ name: 'main' })
     },
-    ...mapActions('account', ['login'])
+    ...mapActions(['login'])
   }
 }
 </script>

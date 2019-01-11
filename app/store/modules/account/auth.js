@@ -2,35 +2,48 @@ import * as auth from '@/src/api/auth'
 import setAuthorizationToken from '@/src/util/axios-set-authorization'
 import parseToken from '@/src/util/parse-token'
 import axios from '@/src/api/axios'
-import * as types from './mutation-types'
+import {
+  ASSIGN_ACCESS_TOKEN,
+  ASSIGN_REFRESH_TOKEN,
+  REMOVE_TOKENS,
+  RESET_INFO,
+  UPDATE_INFO
+} from './mutation-types'
 
 export default {
   state: {
-    token: window.localStorage.getItem('token'),
-    isLoggedIn: !!window.localStorage.getItem('token'),
-    needVerify: false
+    refreshToken: window.localStorage.getItem('refreshToken'),
+    accessToken: window.localStorage.getItem('accessToken')
+  },
+
+  getters: {
+    isLoggedIn: state => !!(state.refreshToken && state.accessToken)
   },
 
   mutations: {
-    [types.VERIFY] (state) {
-      state.needVerify = false
+    [ASSIGN_ACCESS_TOKEN] (state, { accessToken }) {
+      window.localStorage.setItem('accessToken', accessToken)
+      state.accessToken = accessToken
+
+      setAuthorizationToken(axios, accessToken)
     },
 
-    [types.LOGIN] (state, { token, needVerify }) {
-      window.localStorage.setItem('token', token)
-      setAuthorizationToken(axios, token)
-
-      state.needVerify = needVerify
-      state.token = token
+    [ASSIGN_REFRESH_TOKEN] (state, { refreshToken }) {
+      window.localStorage.setItem('refreshToken', refreshToken)
+      state.refreshToken = refreshToken
       state.isLoggedIn = true
+
+      setAuthorizationToken(axios, refreshToken)
     },
 
-    [types.LOGOUT] (state) {
-      window.localStorage.removeItem('token')
+    [REMOVE_TOKENS] (state) {
+      window.localStorage.removeItem('refreshToken')
+      window.localStorage.removeItem('accessToken')
+
       setAuthorizationToken(axios, '')
 
-      state.token = null
-      state.isLoggedIn = false
+      state.accessToken = null
+      state.refreshtoken = null
     }
   },
 
@@ -41,49 +54,54 @@ export default {
 
     async verify ({ commit }, { authcode }) {
       await auth.verifyStudent(authcode)
-      commit(types.VERIFY)
+      commit(REMOVE_TOKENS)
     },
 
-    async autoLogin ({ dispatch, state }) {
-      if (state.isLoggedIn) await dispatch('loginWithToken', state)
+    async autoLogin ({ dispatch, state, getters }) {
+      if (getters.isLoggedIn) await dispatch('loginWithToken', state)
     },
 
     async login ({ dispatch }, { id, password }) {
-      const { token, needVerify } = await auth.getAccessToken(id, password)
-      await dispatch('loginWithToken', { token, needVerify })
+      const { accessToken, refreshToken } = await auth.auth(id, password)
+      await dispatch('loginWithToken', { accessToken, refreshToken })
     },
 
-    async loginWithToken ({ commit }, { token, needVerify }) {
-      if (!token) {
-        const err = new Error()
-        err.name = 'NoTokenError'
-        err.message = '알 수 없는 이유로 로그인에 실패했습니다. 관리자에게 문의해주세요.'
-        throw err
+    async regenerateAccessToken ({ dispatch, commit, state }) {
+      const { accessToken, refreshToken } = await auth.generateAccessToken(state.refreshToken)
+
+      if (refreshToken) commit(ASSIGN_REFRESH_TOKEN, { refreshToken })
+      commit(ASSIGN_ACCESS_TOKEN, { accessToken })
+    },
+
+    async loginWithToken ({ commit, dispatch }, { accessToken, refreshToken }) {
+      try {
+        const info = parseToken(refreshToken)
+
+        commit(ASSIGN_REFRESH_TOKEN, { refreshToken })
+        if (!accessToken) await dispatch('regenerateAccessToken')
+        else commit(ASSIGN_ACCESS_TOKEN, { accessToken })
+        commit(UPDATE_INFO, {
+          idx: info.idx,
+          name: info.name,
+          userType: info['user_type'],
+          email: info.email,
+          photoUrl: info.photo,
+          serial: info.serial,
+          grade: info.grade,
+          klass: info.klass,
+          number: info.number,
+          ssoToken: info['sso_token']
+        })
+      } catch (error) {
+        commit(RESET_INFO)
+        commit(REMOVE_TOKENS)
       }
-
-      const info = parseToken(token)
-
-      commit(types.LOGIN, {
-        token,
-        needVerify: needVerify || info['user_type'] === 'O'
-      })
-
-      commit(types.UPDATE_INFO, {
-        idx: info.idx,
-        name: info.name,
-        userType: info['user_type'],
-        email: info.email,
-        photoUrl: info.photo,
-        serial: info.serial,
-        grade: info.grade,
-        klass: info.klass,
-        number: info.number,
-        ssoToken: info['sso_token']
-      })
     },
 
-    logout ({ commit }) {
-      commit(types.LOGOUT)
+    async logout ({ commit, state }) {
+      await auth.logout(state.refreshToken)
+      commit(RESET_INFO)
+      commit(REMOVE_TOKENS)
     }
   }
 }

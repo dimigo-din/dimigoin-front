@@ -2,7 +2,7 @@
 import Logo from '@/assets/brand.svg'
 import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import restaurance from 'restaurance'
 import * as notice from '@/src/api/notice'
 
@@ -29,25 +29,16 @@ export default {
   },
 
   async created () {
-    try {
-      await this.autoLogin()
-      if (this.needVerify) this.$router.push({ name: 'register/step/3' })
-      this.notice = await notice.getNotice()
-    } catch (err) {
-      console.error(err)
-    }
+    this.notice = await notice.getNotice()
   },
 
   methods: {
-    ...mapActions('account', ['autoLogin']),
-
     openSetting () {
       window.location.href = `https://student.dimigo.hs.kr/user/sso?token=${this.ssoToken}&url=/user/profile`
     },
 
     async logout () {
       await this.$store.dispatch('account/logout')
-      this.$router.push({ name: 'login' })
     },
 
     async hots () {
