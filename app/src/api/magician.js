@@ -4,7 +4,6 @@ export default async (action, errorHandler) => {
 
     return res
   } catch (err) {
-    console.warn(err)
     if (!err.response) throw new Error('네트워크에 문제가 있습니다.')
 
     const handler = errorHandler[err.response.status] ||
@@ -14,6 +13,6 @@ export default async (action, errorHandler) => {
     const value = handler()
 
     if (value instanceof Error) throw value
-    else return value
+    else return { data: value }
   }
 }
