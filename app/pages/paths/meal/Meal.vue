@@ -25,7 +25,9 @@ export default {
     tinyWeeks: () => shortWeeks,
     today: () => new Date().getDay(),
     month: () => 1 + new Date().getMonth(),
-    week: () => 1 + getISOWeek(this.currentDate) - getISOWeek(startOfMonth(this.currentDate)),
+    week () {
+      return 1 + getISOWeek(this.currentDate) - getISOWeek(startOfMonth(this.currentDate))
+    },
     currentMeals () { return this.list[this.currentDay] }
   },
 

@@ -7,8 +7,18 @@ export function getTodayMeal () {
 }
 
 export async function getMeal (date) {
+  const formattedDate = format(date, 'YYYY-MM-DD')
+
   return (await magician(
-    () => axios.get(`/dimibobs/${format(date, 'YYYY-MM-DD')}`),
-    { 404: () => {} }
+    () => axios.get(`/dimibobs/${formattedDate}`),
+    {
+      404: () => ({
+        breakfast: '',
+        lunch: '',
+        dinner: '',
+        snack: '',
+        date: formattedDate
+      })
+    }
   )).data
 }
