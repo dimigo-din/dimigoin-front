@@ -8,7 +8,7 @@ import magician from './magician'
  * @returns {Promise<void>}
  */
 export async function postNotice (notice) {
-  await magician(() => axios.post(`/notice/`, notice), {})
+  await magician(() => axios.post(`/notice/`, notice))
 }
 
 /**
@@ -17,7 +17,7 @@ export async function postNotice (notice) {
  * @returns {Promise<Array<notice>>}
  */
 export async function getAllNotice () {
-  const { data: { notice } } = await magician(() => axios.get(`/notice/`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/notice/`))
   return notice
 }
 
@@ -27,6 +27,6 @@ export async function getAllNotice () {
  * @returns {Promise<Array<notice>>}
  */
 export async function getNotice () {
-  const { data: { notice } } = await magician(() => axios.get(`/notice/latest`), {})
+  const { data: { notice } } = await magician(() => axios.get(`/notice/latest`))
   return notice[0].description
 }
