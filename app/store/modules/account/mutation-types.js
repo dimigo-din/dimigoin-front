@@ -1,4 +1,4 @@
-export const NAMESPACE = 'account/'
+export const NAMESPACE = 'account'
 
 export const REMOVE_TOKENS = `${NAMESPACE}:LOGOUT`
 export const ASSIGN_ACCESS_TOKEN = `${NAMESPACE}:ASSIGN_ACCESS_TOKEN`
