@@ -1,7 +1,8 @@
 const path = require('path')
 require('dotenv-safe').config({
   example: 'env/.webpack.env.example',
-  path: 'env/.webpack.env'
+  path: 'env/.webpack.env',
+  allowEmptyValues: true
 })
 
 const utils = require('./utils')
