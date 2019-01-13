@@ -12,8 +12,28 @@ import store from './store'
 import router from './router'
 
 import * as Sentry from '@sentry/browser'
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
 
 if (process.env.NODE_ENV === 'production') {
+  OfflinePluginRuntime.install({
+    onUpdating: () => {
+      console.log('SW Event:', 'onUpdating')
+    },
+    onUpdateReady: () => {
+      console.log('SW Event:', 'onUpdateReady')
+      // Tells to new SW to take control immediately
+      OfflinePluginRuntime.applyUpdate()
+    },
+    onUpdated: () => {
+      console.log('SW Event:', 'onUpdated')
+      // Reload the webpage to load into the new version
+      window.location.reload()
+    },
+    onUpdateFailed: () => {
+      console.log('SW Event:', 'onUpdateFailed')
+    }
+  })
+
   Vue.use(VueAnalytics, {
     router,
     id: process.env.GOOGLE_ANALYTICS_TRACKING_ID

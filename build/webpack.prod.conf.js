@@ -16,6 +16,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SentryCli = require('@sentry/cli')
 const SentryCliPlugin = require('@sentry/webpack-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const webpackConfig = async () => {
   const sentryProposedVersion = await (new SentryCli(path.resolve(__dirname, '../.sentryclirc'))).releases.proposeVersion()
@@ -135,7 +136,14 @@ const webpackConfig = async () => {
           to: config.build.assetsSubDirectory,
           ignore: ['.*']
         }
-      ])
+      ]),
+      new OfflinePlugin({
+        appShell: '/',
+        externals: ['/'],
+        ServiceWorker: {
+          events: true
+        }
+      })
     ]
   })
 }
