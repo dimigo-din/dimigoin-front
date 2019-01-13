@@ -1,4 +1,8 @@
 {
-  "presets": ["@babel/env"],
+  "presets": [
+    ["@babel/env", {
+      "useBuiltIns": "entry"
+    }]
+  ],
   "plugins": ["@babel/plugin-syntax-dynamic-import", "@babel/plugin-proposal-export-namespace-from"]
 }
