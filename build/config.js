@@ -1,5 +1,4 @@
 const path = require('path')
-const merge = require('webpack-merge')
 
 const baseConfig = {
   devtool: '',
@@ -9,7 +8,8 @@ const baseConfig = {
 }
 
 module.exports = {
-  dev: merge(baseConfig, {
+  dev: {
+    ...baseConfig,
     devtool: 'cheap-module-eval-source-map',
     cssSourceMap: true,
 
@@ -20,13 +20,15 @@ module.exports = {
     host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     proxyTable: {} // for local api server
-  }),
+  },
 
-  build: merge(baseConfig, {
+  build: {
+    ...baseConfig,
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
+    assetsPublicPath: process.env.PUBLIC_PATH,
     productionSourceMap: true,
     devtool: 'source-map'
-  })
+  }
 }

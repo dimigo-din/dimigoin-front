@@ -24,6 +24,7 @@ const webpackConfig = async () => {
     mode: 'production',
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     output: {
+      publicPath: config.build.assetsPublicPath,
       path: config.build.assetsRoot,
       filename: utils.assetsPath('js/[name].[chunkhash].js')
     },
@@ -119,7 +120,7 @@ const webpackConfig = async () => {
       }),
       new DotenvPlugin({
         path: 'env/.prod.env',
-        sample: 'env/.env.example'
+        sample: 'env/.prod.env.example'
       }),
       new webpack.EnvironmentPlugin({
         SENTRY_PROPOSED_VERSION: sentryProposedVersion
