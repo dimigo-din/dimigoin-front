@@ -6,12 +6,14 @@ export default {
   name: 'ServiceCards',
 
   data: () => ({
-    services: []
+    services: [],
+    isLoading: true
   }),
 
   async created () {
     this.services = await service.getServiceList()
-    this.checkPermission()
+    await this.checkPermission()
+    this.isLoading = false
     this.$nextTick(this.updateServiceCardHeight)
   },
 
@@ -37,17 +39,14 @@ export default {
 
     async checkPermission () {
       const permissions = await permission.getPermission()
-      for (var i = 0; i < permissions.length; i++) {
-        if (permissions[i].section === 'dets' || permissions[i].section === 'book') {
-          this.services.push({
-            order: 99,
-            title: '관리',
-            description: 'Dets, 인강실',
-            icon: 'icon-submission',
-            url: 'management'
-          })
-          return
-        }
+      if (permissions.length > 0) {
+        this.services.unshift({
+          order: 99,
+          title: '관리',
+          description: 'Dets, 인강실',
+          icon: 'icon-submission',
+          url: 'management'
+        })
       }
     }
   }
@@ -57,7 +56,7 @@ export default {
 <template>
   <div class="services">
     <div
-      v-if="services.length === 0"
+      v-if="isLoading"
       class="services__loader"
     >
       <dimi-loader />
