@@ -20,17 +20,31 @@ export default {
   },
 
   mutations: {
-    [UPDATE_INFO] (state, payload) {
-      Object.keys(payload).forEach(v => (state[v] = payload[v]))
+    [UPDATE_INFO] (state, decodedToken) {
+      const info = decodedToken.identity[0]
+
+      Object.assign(state, {
+        id: info.id,
+        idx: info.idx,
+        name: info.name,
+        userType: info['user_type'],
+        email: info.email,
+        photoUrl: info.photo,
+        serial: info.serial,
+        grade: info.grade,
+        klass: info.klass,
+        number: info.number,
+        ssoToken: info['sso_token']
+      })
 
       Sentry.configureScope(scope => {
         scope.setUser({
-          id: payload.id,
-          userIdx: payload.idx,
-          username: payload.name,
-          serial: payload.serial,
-          photoUrl: payload.photoUrl,
-          userType: payload.userType
+          id: info.id,
+          userIdx: info.idx,
+          username: info.name,
+          serial: info.serial,
+          photoUrl: info.photoUrl,
+          userType: info.userType
         })
       })
     },

@@ -25,6 +25,7 @@
     "debounce": "^1.2.0",
     "dimigoincon": "^2.5.1",
     "file-dialog": "^0.0.7",
+    "jwt-decode": "^2.2.0",
     "line-clamp": "^0.0.9",
     "restaurance": "^1.0.3",
     "typeface-nanum-square-round": "^1.0.2",

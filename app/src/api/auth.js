@@ -24,7 +24,8 @@ export async function logout (refreshToken) {
       'Authorization': `Bearer ${refreshToken}`
     }
   }), {
-    401: () => {} // 이미 만료된 토큰인 경우
+    401: () => {}, // Expired token
+    422: () => {} // Wrong token
   })
 }
 
@@ -35,7 +36,7 @@ export async function generateAccessToken (refreshToken) {
     }
   }), {
     401: () => {
-      const err = new Error('토큰이 만료되었습니다.')
+      const err = new Error('리프레쉬 토큰이 만료되었습니다.')
       err.code = 401
       return err
     }
@@ -56,35 +57,17 @@ export async function register ({
   phone,
   birthday
 }) {
-  try {
-    await axios.post('/register/', {
-      name, email, gender, id, password, phone_number: phone, birthday
-    })
-  } catch ({ message, response: res }) {
-    console.error(message)
-    switch (res.status) {
-      case 422:
-        throw new Error('이미 존재하는 아이디 혹은 입력된 정보가 잘못되었습니다.')
-      case 403:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
+  await magician(() => axios.post('/register/', {
+    name, email, gender, id, password, phone_number: phone, birthday
+  }), {
+    422: () => new Error('이미 존재하는 아이디 혹은 입력된 정보가 잘못되었습니다.'),
+    403: () => new Error('API 서버 오류입니다.')
+  })
 }
 
 export async function verifyStudent (authcode) {
-  try {
-    await axios.post('/register_student/', { authcode })
-  } catch ({ message, response: res }) {
-    console.error(message)
-    switch (res.status) {
-      case 422:
-        throw new Error('인증 코드가 잘못되었습니다.')
-      case 403:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-      default:
-        throw new Error('알 수 없는 오류로 잠시 후 다시 시도해주세요.')
-    }
-  }
+  await magician(() => axios.post('/register_student/', { authcode }), {
+    422: () => new Error('인증 코드가 잘못되었습니다.'),
+    403: () => new Error('API 서버 오류입니다.')
+  })
 }
