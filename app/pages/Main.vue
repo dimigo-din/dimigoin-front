@@ -123,9 +123,7 @@ export default {
             class="info__notice info-section__content"
             shadow
           >
-            <p class="info__notice--content">
-              {{ notice }}
-            </p>
+            <p class="info__notice--content">{{ notice }}</p>
           </dimi-card>
         </section>
       </div>

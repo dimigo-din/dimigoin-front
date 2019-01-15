@@ -11,5 +11,8 @@
   ],
   "parserOptions": {
     "parser": "babel-eslint"
+  },
+  "rules": {
+    "vue/singleline-html-element-content-newline": "off"
   }
 }
