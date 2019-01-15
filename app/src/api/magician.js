@@ -10,7 +10,7 @@ export default async (action, errorHandler = {}) => {
       errorHandler['default'] ||
       (() => err)
 
-    const value = handler()
+    const value = handler(err)
 
     if (value instanceof Error) return Promise.reject(value)
     else return { data: value }
