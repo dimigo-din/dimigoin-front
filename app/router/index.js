@@ -4,8 +4,8 @@ import VueRouter from 'vue-router'
 import * as routers from './routers'
 import store from '@/store'
 
+import Main from '@/pages/Main.vue'
 import NotFound from '@/pages/NotFound.vue'
-const Main = () => import(/* webpackChunkName: "main" */ '@/pages/Main.vue')
 const Meal = () => import(/* webpackChunkName: "service-meal" */ '@/pages/paths/meal/Meal.vue')
 const Draft = () => import(/* webpackChunkName: "draft" */ '@/pages/Draft.vue')
 const ExplorerFound = () => import(/* webpackChunkName: "explorer-found" */ '@/pages/ExplorerFound.vue')
