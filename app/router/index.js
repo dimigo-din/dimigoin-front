@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NProgress from 'nprogress'
 
 import * as routers from './routers'
 import store from '@/store'
@@ -64,6 +65,8 @@ const needVerify = () => store.getters['account/needVerify']
 const isIE = () => /MSIE |Trident\//.test(window.navigator.userAgent)
 
 router.beforeEach((to, from, next) => {
+  NProgress.start()
+
   if (isIE()) {
     if (to.name === 'ienope') return next()
     else return next({ name: 'ienope' })
@@ -77,6 +80,10 @@ router.beforeEach((to, from, next) => {
   if (to.meta.draft) return next({ name: 'draft' })
   if (to.meta.title) document.title = to.meta.title
   next()
+})
+
+router.afterEach((to, from, next) => {
+  NProgress.done()
 })
 
 export default router
