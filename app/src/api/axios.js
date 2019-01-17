@@ -16,7 +16,7 @@ client.interceptors.response.use(r => r, async error => {
   if (!error.response) return error
 
   const errorCode = error.response.status
-  if (errorCode === 401) { // When access token is expired
+  if (errorCode === 401 || errorCode === 422) { // When access token is expired or invalid
     try {
       await store.dispatch('account/regenerateAccessToken')
       error.config.headers['Authorization'] =
