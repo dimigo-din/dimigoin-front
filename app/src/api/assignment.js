@@ -1,5 +1,6 @@
 import axios from './axios'
 import magician from './magician'
+import APIError from '@/src/errors/api-error'
 
 /**
  *  관리자 이상의 권한을 요구하는 요청입니다.
@@ -12,7 +13,7 @@ export const admin = {
    */
   async getAssignmentList () {
     const { data: { assignments } } = await magician(() => axios.get('/assignments/'), {
-      403: () => new Error('권한이 없습니다')
+      403: () => new APIError('권한이 없습니다', 403)
     })
 
     return assignments
@@ -27,8 +28,8 @@ export const admin = {
    */
   async createAssignment (assignment) {
     await magician(() => axios.post('/assignments/', assignment), {
-      403: () => new Error('권한이 없습니다'),
-      default: () => new Error('과제를 추가하던 중 문제가 발생했습니다.')
+      403: () => new APIError('권한이 없습니다', 403),
+      default: err => new APIError('과제를 추가하던 중 문제가 발생했습니다.', err.response && err.response.status)
     })
   },
 
@@ -40,8 +41,8 @@ export const admin = {
    */
   async getAssignment (idx) {
     const { data: assignment } = await magician(() => axios.get(`/assignments/${idx}`), {
-      403: () => new Error('권한이 없습니다'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('권한이 없습니다', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
 
     return assignment
@@ -55,8 +56,8 @@ export const admin = {
    */
   async deleteAssignment (idx) {
     await magician(() => axios.delete(`/assignments/${idx}`), {
-      403: () => new Error('권한이 없습니다'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('권한이 없습니다', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
   },
 
@@ -69,8 +70,8 @@ export const admin = {
    */
   async editAssignment (idx, assignment) {
     await magician(() => axios.put(`/assignments/${idx}`, assignment), {
-      403: () => new Error('권한이 없습니다'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('권한이 없습니다', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
   }
 }
@@ -114,11 +115,11 @@ export const assignee = {
     formData.append('file', file)
 
     await magician(() => axios.post(`/assignments/${idx}/reports`, formData, { onUploadProgress }), {
-      400: () => new Error('파일을 찾을 수 없습니다. 다시 확인해주세요.'),
-      403: () => new Error('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지 확인해주세요.'),
-      405: () => new Error('이미 과제를 제출했습니다.'),
-      406: () => new Error('할당받은 과제가 아닙니다.'),
-      412: () => new Error('제출 기한이 마감되었습니다.')
+      400: () => new APIError('파일을 찾을 수 없습니다. 다시 확인해주세요.', 400),
+      403: () => new APIError('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지 확인해주세요.', 403),
+      405: () => new APIError('이미 과제를 제출했습니다.', 405),
+      406: () => new APIError('할당받은 과제가 아닙니다.', 406),
+      412: () => new APIError('제출 기한이 마감되었습니다.', 412)
     })
   },
 
@@ -133,12 +134,12 @@ export const assignee = {
     formData.append('file', file)
 
     await magician(() => axios.put(`/assignments/${idx}/reports`, formData, { onUploadProgress }), {
-      400: () => new Error('파일을 찾을 수 없습니다. 다시 확인해주세요.'),
-      403: () => new Error('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지' +
-        ' 확인해주세요.'),
-      405: () => new Error('이미 과제를 제출했습니다.'),
-      406: () => new Error('할당받은 과제가 아닙니다.'),
-      412: () => new Error('제출 기한이 마감되었습니다.')
+      400: () => new APIError('파일을 찾을 수 없습니다. 다시 확인해주세요.', 400),
+      403: () => new APIError('제출된 파일에 문제가 있습니다. 허가되지 않은 파일을 업로드하지 않았는지' +
+        ' 확인해주세요.', 403),
+      405: () => new APIError('이미 과제를 제출했습니다.', 405),
+      406: () => new APIError('할당받은 과제가 아닙니다.', 406),
+      412: () => new APIError('제출 기한이 마감되었습니다.', 412)
     })
   }
 }
@@ -166,8 +167,8 @@ export const assignor = {
    */
   async getAssignment (idx) {
     const { data: assignment } = await magician(() => axios.get(`/assignments/assignor/${idx}`), {
-      403: () => new Error('과제에 접근할 권한이 없습니다.'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('과제에 접근할 권한이 없습니다.', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
 
     return assignment
@@ -181,8 +182,8 @@ export const assignor = {
    */
   async deleteAssignment (idx) {
     await magician(() => axios.delete(`/assignments/assignor/${idx}`), {
-      403: () => new Error('과제에 접근할 권한이 없습니다.'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('과제에 접근할 권한이 없습니다.', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
   },
 
@@ -195,8 +196,8 @@ export const assignor = {
    */
   async editAssignment (idx, assignment) {
     await magician(() => axios.put(`/assignments/assignor/${idx}`, assignment), {
-      403: () => new Error('과제에 접근할 권한이 없습니다.'),
-      404: () => new Error('과제를 찾을 수 없습니다.')
+      403: () => new APIError('과제에 접근할 권한이 없습니다.', 403),
+      404: () => new APIError('과제를 찾을 수 없습니다.', 404)
     })
   },
 
@@ -210,7 +211,7 @@ export const assignor = {
     const { data } = await magician(() => axios.get(`/assignments/${idx}/reports`, {
       responseType: 'blob'
     }), {
-      403: () => new Error('존재하지 않거나 접근할 수 없는 과제입니다.')
+      403: () => new APIError('존재하지 않거나 접근할 수 없는 과제입니다.', 403)
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
