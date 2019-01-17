@@ -1,7 +1,5 @@
 import withPrefix from '@/src/util/path-with-prefix'
 
-import Login from '@/pages/paths/auth/Login.vue'
-
 const Register = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/Register.vue')
 const RegisterStepOne = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterStepOne.vue')
 const RegisterStepTwo = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterStepTwo.vue')
@@ -9,6 +7,8 @@ const RegisterStepThree = () => import(/* webpackChunkName: "register" */ '@/pag
 const RegisterSideOne = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterSideOne.vue')
 const RegisterSideTwo = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterSideTwo.vue')
 const RegisterSideThree = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/RegisterSideThree.vue')
+
+const Login = () => import(/* webpackChunkName: "login" */ '@/pages/paths/auth/Login.vue')
 
 export default withPrefix('/auth', [
   {
