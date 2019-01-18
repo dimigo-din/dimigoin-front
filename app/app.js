@@ -6,6 +6,7 @@ import swal from 'vue-sweetalert2'
 import Ripple from 'vue-ripple-directive'
 import { sync } from 'vuex-router-sync'
 import VueAnalytics from 'vue-analytics'
+import NProgress from 'nprogress'
 
 import App from './App.vue'
 import store from './store'
@@ -13,6 +14,9 @@ import router from './router'
 
 import * as Sentry from '@sentry/browser'
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+
+NProgress.configure({ showSpinner: false })
+NProgress.start()
 
 if (process.env.NODE_ENV === 'production') {
   OfflinePluginRuntime.install({
@@ -67,3 +71,5 @@ const $vm = new Vue({
 })
 
 $vm.$mount('#app')
+
+NProgress.done()
