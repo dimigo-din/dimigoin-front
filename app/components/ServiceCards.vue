@@ -1,4 +1,5 @@
 <script>
+import NProgress from 'nprogress'
 import * as service from '@/src/api/service'
 import * as permission from '@/src/api/permission'
 
@@ -7,14 +8,15 @@ export default {
 
   data: () => ({
     services: [],
-    isLoading: true
+    isLoading: false
   }),
 
   async created () {
+    this.toggleLoading()
     this.services = await service.getServiceList()
     await this.checkPermission()
-    this.isLoading = false
-    this.$nextTick(this.updateServiceCardHeight)
+    this.toggleLoading()
+    this.$nextTick(() => this.updateServiceCardHeight())
   },
 
   async mounted () {
@@ -22,6 +24,11 @@ export default {
   },
 
   methods: {
+    toggleLoading () {
+      this.isLoading = !this.isLoading
+      this.isLoading ? NProgress.start() : NProgress.done()
+    },
+
     updateServiceCardHeight () {
       const cards = this.$refs.cards || []
       cards.forEach(({ $el: v }) => (v.style.height = window.getComputedStyle(v).width))
@@ -56,14 +63,14 @@ export default {
 <template>
   <div class="services">
     <div
-      v-if="isLoading"
+      v-show="isLoading"
       class="services__loader"
     >
       <dimi-loader />
     </div>
 
     <div
-      v-else
+      v-show="!isLoading"
       class="services__cards"
     >
       <dimi-card
