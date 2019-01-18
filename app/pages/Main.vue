@@ -4,6 +4,7 @@ import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState } from 'vuex'
 import restaurance from 'restaurance'
+import NProgress from 'nprogress'
 import * as notice from '@/src/api/notice'
 
 export default {
@@ -29,7 +30,9 @@ export default {
   },
 
   async created () {
+    NProgress.start()
     this.notice = await notice.getNotice()
+    NProgress.done()
   },
 
   methods: {
