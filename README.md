@@ -3,19 +3,7 @@
 
 당신의 삶을 액션빔, [DIMIGOIN](https://dimigo.in)
 
-## Usage
-```bash
-cp example.env .env # You should edit .env file
-yarn && yarn build
-```
-
-## Variables
-| Key | Description |
-| :----- | :----- |
-| `API_URL` | 디미고인 API 주소 |
-| `DIMIGO_API_URL` | 디미고 공식 RESTful API 주소 |
-| `RECAPTCHA_SITE_KEY` | reCAPTCHA 사이트 키 |
-| `GOOGLE_ANALYTICS_TRACKING_ID` | 구글 애널리틱스 트래킹 ID |
+[Documentation](https://dimigoin.gitbook.io/front)
 
 ## License
 [MIT](LICENSE)
