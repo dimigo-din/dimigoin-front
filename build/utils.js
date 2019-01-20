@@ -67,7 +67,10 @@ exports.scssLoaders = function (options = {
   const scssLoader = {
     loader: 'sass-loader',
     options: {
-      sourceMap: options.sourceMap
+      sourceMap: options.sourceMap,
+      data: `
+        @import '~styles/variables', '~styles/mixins';
+      `
     }
   }
 
