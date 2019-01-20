@@ -42,6 +42,7 @@ export default {
   cursor: pointer;
   height: 1em;
   padding: 0.1em;
+  text-align: center;
   transition: background-color 0.2s ease;
   width: 1em;
 
@@ -56,7 +57,6 @@ export default {
   }
 
   &__icon {
-
     color: $white;
     display: inline-block;
     font-size: 50%;
