@@ -11,6 +11,10 @@ export default {
       type: String,
       default: ''
     },
+    id: {
+      type: String,
+      default: ''
+    },
     placeholder: {
       type: String,
       default: ''
@@ -50,6 +54,7 @@ export default {
 <template>
   <div class="input-wrapper">
     <input
+      :id="id"
       v-model="innerValue"
       :class="computedClass"
       :type="type"
