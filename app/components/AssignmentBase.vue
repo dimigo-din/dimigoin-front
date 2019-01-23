@@ -125,11 +125,11 @@ export default {
   }
 
   &__assignment {
-    align-items: center;
-    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: 24px;
+    cursor: pointer;
   }
 
   &__assignment:not(:first-of-type) {
@@ -146,8 +146,8 @@ export default {
   }
 
   &__title {
-    color: $black !important;
     flex: 1;
+    color: $black !important;
   }
 
   &__expand {
@@ -155,20 +155,20 @@ export default {
   }
 
   &__description {
+    flex-direction: column;
     align-items: stretch;
     color: $gray;
     cursor: default;
-    flex-direction: column;
     font-size: 16px;
     line-height: 1.8;
   }
 
   &__nav {
-    color: $red;
     display: flex;
+    justify-content: flex-end;
+    color: $red;
     font-size: 18px;
     font-weight: $font-weight-bold;
-    justify-content: flex-end;
   }
 }
 </style>

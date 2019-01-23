@@ -92,35 +92,35 @@ export default {
   }
 
   &__title::before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 16px;
     background-color: $gray;
     border-radius: 50%;
     content: '';
-    display: inline-block;
-    height: 16px;
-    margin-right: 16px;
-    width: 16px;
   }
 
   &__content {
+    position: relative;
+    min-height: 80px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 32px;
     color: $gray-light;
     font-size: 16px;
     line-height: 1.8;
-    min-height: 80px;
-    padding-bottom: 16px;
-    padding-left: 32px;
-    padding-top: 16px;
-    position: relative;
   }
 
   &__timeline:not(:last-of-type) &__content::before {
+    position: absolute;
+    top: 0;
+    left: calc(0.5em - 2px);
+    width: 4px;
+    height: 100%;
     background-color: $gray-lighten;
     border-radius: 2px;
     content: '';
-    height: 100%;
-    left: calc(0.5em - 2px);
-    position: absolute;
-    top: 0;
-    width: 4px;
   }
 
   &__timeline:last-of-type &__content {

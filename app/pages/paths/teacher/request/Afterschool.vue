@@ -291,9 +291,9 @@ export default {
   }
 
   &__section {
-    margin-bottom: 24px;
-    margin-top: 36px;
     padding: 0 24px 24px;
+    margin-top: 36px;
+    margin-bottom: 24px;
   }
 
   &__section:last-child {
@@ -301,18 +301,18 @@ export default {
   }
 
   &__title {
+    margin-bottom: 48px;
     color: $gray-dark;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    margin-bottom: 48px;
   }
 
   &__toolbar {
-    color: $gray-light;
     display: flex;
+    margin-bottom: 12px;
+    color: $gray-light;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-bottom: 12px;
   }
 
   &__tool:not(:first-child) {
@@ -324,9 +324,9 @@ export default {
   }
 
   &__delete {
+    display: flex;
     align-items: center;
     cursor: pointer;
-    display: flex;
     user-select: none;
   }
 
@@ -339,12 +339,12 @@ export default {
   }
 
   &__list {
-    color: $gray !important;
     display: block;
-    font-weight: $font-weight-bold;
-    height: 600px;
-    overflow-y: auto;
     width: 100%;
+    height: 600px;
+    color: $gray !important;
+    font-weight: $font-weight-bold;
+    overflow-y: auto;
   }
 
   &__row:not(:last-child) {
@@ -361,9 +361,9 @@ export default {
   }
 
   &__cell--name {
+    width: 99%;
     line-height: 1.5;
     white-space: normal;
-    width: 99%;
   }
 
   &__cell--button {
@@ -383,13 +383,13 @@ export default {
   }
 
   &__form-row--submit {
-    margin-bottom: 0;
     margin-top: 24px;
+    margin-bottom: 0;
   }
 
   &__field {
-    align-items: center;
     display: flex;
+    align-items: center;
   }
 
   &__field--full {
@@ -401,10 +401,10 @@ export default {
   }
 
   &__label {
+    width: 5em;
     max-width: 4em;
     padding-right: 1em;
     text-align: right;
-    width: 5em;
   }
 
   &__input {
@@ -420,10 +420,10 @@ export default {
   }
 
   &__input--day {
-    background-color: $gray-lighten;
-    border: 0;
-    border-radius: 20px;
     padding: 0.75em 1em;
+    border: 0;
+    background-color: $gray-lighten;
+    border-radius: 20px;
   }
 }
 </style>

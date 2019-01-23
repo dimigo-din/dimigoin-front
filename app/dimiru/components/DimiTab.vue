@@ -79,8 +79,8 @@ export default {
 @import '../scss/mixins';
 
 .tab {
-  padding-bottom: 4px;
   width: 100%;
+  padding-bottom: 4px;
 
   &__list {
     display: flex;
@@ -88,12 +88,12 @@ export default {
   }
 
   &__item {
+    flex-basis: 160px;
+    padding: 24px 0 12px;
     color: $gray;
     cursor: pointer;
-    flex-basis: 160px;
     font-size: 18px;
     font-weight: $font-weight-bold;
-    padding: 24px 0 12px;
     text-align: center;
     transition: all 0.25s ease;
   }
@@ -103,12 +103,12 @@ export default {
   }
 
   &__bar {
+    position: absolute;
+    left: 0;
+    height: 4px;
     background-color: $red;
     border-radius: 2px;
     color: $red;
-    height: 4px;
-    left: 0;
-    position: absolute;
     transition: all 0.3s ease-in-out;
   }
 

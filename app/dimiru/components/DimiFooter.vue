@@ -29,18 +29,18 @@ export default {
 @import '../scss/mixins';
 
 .footer {
-  align-items: center;
-  background-color: $gray-lighter;
   display: flex;
   min-height: 8rem;
+  align-items: center;
+  background-color: $gray-lighter;
 
   @include until($tablet) {
     min-height: 12rem;
   }
 
   &__container {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     @include until($tablet) {
@@ -54,8 +54,8 @@ export default {
 
     @include until($tablet) {
       flex-direction: column;
-      padding-bottom: 0;
       padding-top: 24px;
+      padding-bottom: 0;
     }
   }
 

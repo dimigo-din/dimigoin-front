@@ -55,11 +55,11 @@ export default {
 @import '~styles/variables';
 
 .main {
-  align-items: center;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 
   &__title {
@@ -68,35 +68,35 @@ export default {
   }
 
   &__cards {
-    align-items: center;
     display: flex;
     height: 100%;
+    align-items: center;
     justify-content: center;
-    margin-top: 64px;
     padding-bottom: 7rem;
+    margin-top: 64px;
   }
 
   .main__card {
-    cursor: pointer;
-    margin: 0 1rem;
     padding: 4rem;
+    margin: 0 1rem;
+    cursor: pointer;
   }
 
   &__card-icon {
     display: block;
-    font-size: 96px;
     margin-bottom: 24px;
+    font-size: 96px;
   }
 
   &__card-title {
+    margin-bottom: 12px;
     font-size: 28px;
     font-weight: $font-weight-extra-bold;
-    margin-bottom: 12px;
   }
 
   &__card-desc {
-    color: $gray;
     display: block;
+    color: $gray;
     font-size: 18px;
   }
 }

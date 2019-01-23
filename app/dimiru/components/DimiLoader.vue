@@ -22,25 +22,25 @@ export default {
 }
 
 .loader {
-  animation: spinning 1s infinite linear;
-  border-radius: 50%;
+  position: relative;
   display: inline-block;
+  width: 50px;
   height: 50px;
   margin: 3em;
-  position: relative;
+  animation: spinning 1s infinite linear;
+  border-radius: 50%;
   vertical-align: middle;
-  width: 50px;
 }
 
 .loader::before,
 .loader::after {
-  border-radius: 50%;
-  content: '';
-  height: 80%;
-  left: 0;
   position: absolute;
   top: 5%;
+  left: 0;
   width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  content: '';
 }
 
 .loader::before {
@@ -52,15 +52,15 @@ export default {
 }
 
 .loader::before {
-  animation: scaling 1s infinite alternate ease-in-out;
   left: 0;
+  animation: scaling 1s infinite alternate ease-in-out;
   transform-origin: 10% 50%;
 }
 
 .loader::after {
-  animation: scaling 1s 1s infinite alternate ease-in-out;
-  left: auto;
   right: 0;
+  left: auto;
+  animation: scaling 1s 1s infinite alternate ease-in-out;
   transform: scale(0);
   transform-origin: 90% 50%;
 }

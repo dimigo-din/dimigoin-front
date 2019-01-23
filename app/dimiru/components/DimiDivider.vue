@@ -32,19 +32,19 @@ export default {
 @import '../scss/vars';
 
 .divider {
-  border: 0;
   position: absolute;
+  border: 0;
 
   &--horizontal {
-    border-top: solid 1px $gray-lighten;
-    left: 0;
     right: 0;
+    left: 0;
+    border-top: solid 1px $gray-lighten;
   }
 
   &--vertical {
-    border-left: solid 1px $gray-lighten;
-    bottom: 0;
     top: 0;
+    bottom: 0;
+    border-left: solid 1px $gray-lighten;
   }
 }
 </style>

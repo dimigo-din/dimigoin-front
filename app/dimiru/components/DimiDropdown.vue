@@ -123,16 +123,16 @@ export default {
 @import '../scss/vars';
 
 .dropdown {
-  cursor: pointer;
-  padding-bottom: 5px;
-  padding-top: 5px;
   position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
   user-select: none;
   white-space: nowrap;
 
   &__view {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 
@@ -141,19 +141,19 @@ export default {
   }
 
   &__view-icon {
-    font-size: 50%;
     margin-left: 0.5em;
+    font-size: 50%;
   }
 
   &__list {
-    cursor: pointer;
+    position: absolute;
+    z-index: 1;
     display: none;
-    margin-top: 0.7em;
 
     padding: 0;
-    position: absolute;
+    margin-top: 0.7em;
+    cursor: pointer;
     user-select: none;
-    z-index: 1;
   }
 
   &--dropup &__list {
@@ -174,8 +174,8 @@ export default {
   }
 
   &__item-divider {
-    margin: 0;
     position: relative !important;
+    margin: 0;
   }
 
   &__item:last-child &__item-divider {

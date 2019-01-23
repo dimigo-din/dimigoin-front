@@ -112,18 +112,18 @@ export default {
   }
 
   &__loader {
-    align-items: center;
-    display: flex;
-    justify-content: center;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &__card {
-    align-items: center;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition: 0.2s;
   }
 
@@ -143,10 +143,10 @@ export default {
   }
 
   &__card-title {
-    font-size: 24px;
-    font-weight: $font-weight-extra-bold;
 
     margin-top: 1.2rem;
+    font-size: 24px;
+    font-weight: $font-weight-extra-bold;
     text-align: center;
     word-break: break-all;
 
@@ -156,10 +156,10 @@ export default {
   }
 
   &__card-description {
+    margin-top: 0.5rem;
     color: $gray;
     font-size: 14px;
     line-height: 1.5;
-    margin-top: 0.5rem;
     text-align: center;
     word-break: keep-all;
     @include until($tablet) {

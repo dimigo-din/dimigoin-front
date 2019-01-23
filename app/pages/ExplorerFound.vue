@@ -53,11 +53,11 @@ export default {
 @import '~styles/variables';
 
 .ienope {
-  align-items: center;
   display: flex;
-  font-weight: $font-weight-bold;
   height: 100vh;
+  align-items: center;
   justify-content: center;
+  font-weight: $font-weight-bold;
   user-select: none;
 
   &__col {
@@ -69,10 +69,10 @@ export default {
   }
 
   &__message {
+    margin-bottom: 1.5rem;
     color: $black;
     font-size: 16px;
     line-height: 1.8;
-    margin-bottom: 1.5rem;
     word-break: keep-all;
   }
 
@@ -81,11 +81,11 @@ export default {
   }
 
   &__link {
+    display: block;
+    margin-top: 1rem;
     color: $pink;
     cursor: pointer;
-    display: block;
     font-size: 16px;
-    margin-top: 1rem;
     text-decoration: none;
   }
 

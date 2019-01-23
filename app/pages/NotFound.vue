@@ -41,9 +41,9 @@ export default {
 @import '~styles/variables';
 
 .not-found {
-  align-items: center;
   display: flex;
   height: 100vh;
+  align-items: center;
   justify-content: center;
   user-select: none;
 
@@ -60,21 +60,21 @@ export default {
   }
 
   &__message {
+    width: 14em;
+    margin-top: 3.25rem;
     color: $black;
     font-size: 16px;
     line-height: 1.6;
-    margin-top: 3.25rem;
-    width: 14em;
     word-break: keep-all;
   }
 
   &__back {
+    display: block;
+    margin-top: 1rem;
     color: $red;
     cursor: pointer;
-    display: block;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-top: 1rem;
   }
 }
 </style>

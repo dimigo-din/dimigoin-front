@@ -30,11 +30,11 @@ export default {
       <div class="container container--custom">
         <div class="row center-xs middle-xs">
           <router-view
-            class="col-xs-24 col-md-12"
+            class="col-xs-12 col-md-6"
             name="side"
           />
           <router-view
-            class="col-xs-24 col-md-12"
+            class="col-xs-12 col-md-6"
             name="form"
           />
         </div>
@@ -58,31 +58,31 @@ export default {
 @import '~styles/variables';
 
 .register {
-  align-items: center;
   display: flex;
-  flex-direction: column;
   height: 100vh;
+  flex-direction: column;
+  align-items: center;
 
   &__title {
-    cursor: pointer;
     display: flex;
+    margin-top: 5rem;
+    cursor: pointer;
     font-size: 36px;
     font-weight: $font-weight-extra-bold;
-    margin-top: 5rem;
     user-select: none;
     word-spacing: 0.325em;
   }
 
   &__subtitle {
+    padding-left: 0.5em;
     font-size: 36px;
     font-weight: $font-weight-regular;
-    padding-left: 0.5em;
   }
 
   &__content {
-    align-items: center;
     display: flex;
     height: 50%;
+    align-items: center;
     margin-top: 6rem;
   }
 
@@ -96,9 +96,9 @@ export default {
 }
 
 .form__field {
-  align-items: center;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   margin: 1.5rem 0;
 
   .register__input {
@@ -108,26 +108,26 @@ export default {
 }
 
 .form__label {
+  padding: 0.5em 0;
   color: $gray-dark;
   font-size: 14px;
   font-weight: $font-weight-regular;
-  padding: 0.5em 0;
   text-align: start;
 }
 
 .gender-radio {
+  position: relative;
   display: flex;
   flex: 1 0;
   flex-wrap: wrap;
   justify-content: center;
-  position: relative;
 
   &__item {
     display: block;
     flex: 1 0;
+    padding: 0.9em 0 !important;
     font-size: 14px;
     font-weight: $font-weight-regular;
-    padding: 0.9em 0 !important;
   }
 
   &__item:first-child {
@@ -165,13 +165,13 @@ export default {
   position: relative;
 
   &__circle {
-    background-color: $red;
-    border-radius: 50%;
-    height: 12px;
-    margin: 0.5rem;
-    opacity: 0.3;
     position: absolute;
     width: 12px;
+    height: 12px;
+    margin: 0.5rem;
+    background-color: $red;
+    border-radius: 50%;
+    opacity: 0.3;
   }
 
   &__circle--active {
@@ -185,10 +185,10 @@ export default {
   }
 
   &__title {
+    margin-top: 2rem;
     color: $black;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    margin-top: 2rem;
     user-select: none;
   }
 }

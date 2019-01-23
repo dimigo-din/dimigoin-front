@@ -73,18 +73,18 @@ export default {
 @import '../scss/vars';
 
 .btn {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
   align-items: center;
+  justify-content: center;
+  padding: 0.8em 2.7em;
   appearance: none;
   background-color: $red;
   border-radius: 2rem;
   color: $white;
   cursor: pointer;
-  display: inline-flex;
   font-weight: $font-weight-bold;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0.8em 2.7em;
-  position: relative;
   text-decoration: none;
   transition: 0.5s background-color ease;
   user-select: none;

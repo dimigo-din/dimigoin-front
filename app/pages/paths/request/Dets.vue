@@ -156,9 +156,9 @@ export default {
 
 .dets {
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 35vh;
+    align-items: center;
     justify-content: center;
   }
 
@@ -167,24 +167,24 @@ export default {
   }
 
   &__dets {
-    align-items: center;
-    border-bottom: 1px solid $gray-lighter;
-    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: 24px;
+    border-bottom: 1px solid $gray-lighter;
+    cursor: pointer;
   }
 
   &__item {
+    margin-right: 16px;
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-right: 16px;
   }
 
   &__title {
-    color: $black !important;
     flex: 1;
+    color: $black !important;
   }
 
   &__expand {
@@ -193,10 +193,10 @@ export default {
 
   &__open {
     align-items: stretch;
-    border-bottom: 1px solid $gray-lighter;
-    cursor: default;
     justify-content: flex-start;
     padding: 24px;
+    border-bottom: 1px solid $gray-lighter;
+    cursor: default;
   }
 
   &__down {

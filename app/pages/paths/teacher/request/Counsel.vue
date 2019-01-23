@@ -93,9 +93,9 @@ export default {
 
 .counsel {
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 35vh;
+    align-items: center;
     justify-content: center;
   }
 
@@ -104,36 +104,36 @@ export default {
   }
 
   &__excel {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $aloes;
     cursor: pointer;
     float: right;
     font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__list {
-    align-items: center;
-    border-bottom: 1px solid $gray-lighter;
-    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: 24px;
+    border-bottom: 1px solid $gray-lighter;
+    cursor: pointer;
   }
 
   &__title {
-    color: $black !important;
     flex: 1;
+    margin-right: 16px;
+    color: $black !important;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-right: 16px;
   }
 
   &__item {
+    margin-right: 16px;
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-right: 16px;
   }
 
 }

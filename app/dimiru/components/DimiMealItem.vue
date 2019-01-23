@@ -43,8 +43,8 @@ export default {
 @import '../scss/vars';
 
 .meal-item {
-  color: $gray;
   min-height: 4.275em;
+  color: $gray;
   word-break: keep-all;
 
   &:last-child {
@@ -56,9 +56,9 @@ export default {
   }
 
   &__title {
+    margin-bottom: 0.5em;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-bottom: 0.5em;
   }
 
   &__content {

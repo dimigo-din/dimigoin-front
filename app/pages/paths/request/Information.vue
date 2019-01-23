@@ -110,13 +110,13 @@ export default {
 .r-info {
   &__badge {
     display: inline-block;
-    font-size: 14px;
     margin-right: 10px;
+    font-size: 14px;
   }
 
   &__badge-icon {
-    font-size: 9px;
     margin-right: 4px;
+    font-size: 9px;
   }
 
   &__title {
@@ -135,8 +135,8 @@ export default {
   }
 
   &__list-key {
-    color: $gray-dark;
     padding-right: 16px;
+    color: $gray-dark;
   }
 
   &__list-value {

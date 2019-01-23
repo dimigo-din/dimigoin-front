@@ -68,8 +68,8 @@ export default {
 
 <style lang="scss">
 .date-input {
-  align-items: center;
   display: flex;
+  align-items: center;
 
   &__input {
     font-size: 16px;
@@ -80,8 +80,8 @@ export default {
   }
 
   &__input--time {
-    margin-left: 1em;
     width: 4.75em;
+    margin-left: 1em;
   }
 }
 </style>

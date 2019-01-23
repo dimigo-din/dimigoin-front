@@ -106,9 +106,9 @@ export default {
 @import '~styles/mixins';
 
 .container {
-  align-items: center;
   display: flex;
   height: 100vh;
+  align-items: center;
 
   @include until($tablet) {
     display: block;
@@ -119,8 +119,8 @@ export default {
 
 .c-login {
   display: flex;
-  justify-content: center;
   width: 100%;
+  justify-content: center;
 
   @include until($tablet) {
     display: block;
@@ -147,26 +147,26 @@ export default {
 
 .section {
   display: flex;
+  width: 50%;
   flex-direction: column;
   padding: 2rem;
-  width: 50%;
 
   @include until($tablet) {
     width: unset;
   }
 
   &__title {
+    position: relative;
     font-size: 2.25em;
     font-weight: $font-weight-extra-bold;
-    position: relative;
   }
 
   &__content {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 3em;
-    position: relative;
   }
 
   &__content--mt {
@@ -180,9 +180,9 @@ export default {
   // Specify parent element due to css priority rules.
   .c-login__submit-btn {
     align-self: center;
-    font-weight: $font-weight-extra-bold;
-    margin-top: 3rem;
     padding: 0.625em 2.75em;
+    margin-top: 3rem;
+    font-weight: $font-weight-extra-bold;
 
     @include until($tablet) {
       margin-top: 0.8rem;
@@ -192,8 +192,8 @@ export default {
   .c-login__register-description {
 
     align-self: center;
-    color: $gray;
     margin-top: 1rem;
+    color: $gray;
   }
 
   .c-login__register-link {

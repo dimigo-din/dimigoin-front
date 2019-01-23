@@ -160,12 +160,12 @@ export default {
 @import '~styles/variables';
 
 .ingang {
-  border: 0;
   padding: 0;
+  border: 0;
 
   &__loader {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 }
@@ -182,19 +182,19 @@ export default {
 
 .black {
   &__cards {
-    background-color: #f7f7f7;
     display: grid;
+    background-color: #f7f7f7;
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
   &__card {
-    align-items: center;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition: 0.2s;
   }
 
@@ -214,13 +214,13 @@ export default {
   justify-content: center;
 
   &__input {
-    margin: 6px 0;
     padding: 0 12px;
+    margin: 6px 0;
   }
 
   &__button {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     margin: 3px 8px 6px 0;
   }

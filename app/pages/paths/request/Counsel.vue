@@ -177,9 +177,9 @@ export default {
 
 .counsel {
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 35vh;
+    align-items: center;
     justify-content: center;
   }
 
@@ -188,18 +188,18 @@ export default {
   }
 
   &__item {
+    padding: 16px 0;
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
     line-height: 1.5em;
-    padding: 16px 0;
   }
 
   &__title {
+    padding-top: 16px;
     color: $black !important;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    padding-top: 16px;
   }
 
   &__buttons {
@@ -213,20 +213,20 @@ export default {
   }
 
   &__list {
-    align-items: center;
-    border-top: 1px solid $gray-lighter;
-    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: 24px;
+    border-top: 1px solid $gray-lighter;
+    cursor: pointer;
   }
 
   &__title {
-    color: $black !important;
     flex: 1;
+    margin-right: 16px;
+    color: $black !important;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-right: 16px;
   }
 
   &__button {
