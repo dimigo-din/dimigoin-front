@@ -81,11 +81,11 @@ export default {
 .input {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.75em 1.75em;
+  padding: 0.75em 1.5em;
   border: 0;
   appearance: none;
   background-color: $gray-lighten;
-  border-radius: 20px;
+  border-radius: 30px;
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
 
