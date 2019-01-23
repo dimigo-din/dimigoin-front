@@ -94,21 +94,21 @@ export default {
 
   &__input--to {
     display: inline-block;
-    margin-left: 5px;
     width: 100px;
+    margin-left: 5px;
   }
 
   &__from {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
-    margin-bottom: 1rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   &__button {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 }

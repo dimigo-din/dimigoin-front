@@ -28,10 +28,10 @@ export default {
 @import '../scss/vars';
 
 .badge {
+  padding: 0.3em 1.1em;
   border-radius: 10px;
   font-size: 14px;
   line-height: 0.86;
-  padding: 0.3em 1.1em;
   text-align: center;
 
   &--aloes {

@@ -37,28 +37,28 @@ export default {
 @import '../scss/vars';
 
 .checkbox {
+  width: 1em;
+  height: 1em;
+  padding: 0.1em;
   background-color: $gray-light;
   border-radius: 50%;
   cursor: pointer;
-  height: 1em;
-  padding: 0.1em;
   text-align: center;
   transition: background-color 0.2s ease;
-  width: 1em;
 
   &--checked {
     background-color: $red;
   }
 
   &__wrapper {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: left;
   }
 
   &__icon {
-    color: $white;
     display: inline-block;
+    color: $white;
     font-size: 50%;
     vertical-align: middle;
   }

@@ -53,10 +53,10 @@ export default {
 @import '../scss/vars';
 
 .c-card {
+  position: relative;
+  padding: 1.25rem;
   background-color: $white;
   border-radius: 6px;
-  padding: 1.25rem;
-  position: relative;
 
   &--shadow {
     box-shadow: 0 6px 12px 0 rgba(21, 19, 19, 0.1);
@@ -71,8 +71,8 @@ export default {
   }
 
   &--hover:hover {
-    box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
     z-index: 1;
+    box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
   }
 
   &--button {
@@ -86,16 +86,16 @@ export default {
   }
 
   &__divider {
-    margin: 0;
     position: relative !important;
     width: 100%;
+    margin: 0;
   }
 
   &__button {
-    align-items: stretch;
-    cursor: pointer;
     display: flex;
+    align-items: stretch;
     padding: 1.25rem;
+    cursor: pointer;
   }
 
   &__button > span {

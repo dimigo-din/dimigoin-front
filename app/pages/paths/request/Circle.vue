@@ -82,9 +82,9 @@ export default {
 <style lang="scss" scoped>
 .circle {
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 40vh;
+    align-items: center;
     justify-content: center;
   }
 
@@ -93,9 +93,9 @@ export default {
   }
 
   &__title {
-    font-size: 20px;
-    margin-bottom: 24px;
     margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 20px;
   }
 
   &__circles {

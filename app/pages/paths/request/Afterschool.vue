@@ -202,17 +202,17 @@ export default {
 
 .req-afsc {
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 35vh;
+    align-items: center;
     justify-content: center;
   }
 
   &__captcha {
+    padding-bottom: 2em;
     color: $gray-dark;
     font-size: 16px;
     line-height: 1.8;
-    padding-bottom: 2em;
   }
 
   &__main {
@@ -220,12 +220,12 @@ export default {
   }
 
   &__refresh {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $red;
     cursor: pointer;
     float: right;
     font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__row:not(:last-child) {
@@ -233,22 +233,22 @@ export default {
   }
 
   &__list {
+    width: 100%;
     color: $gray !important;
     font-weight: $font-weight-bold;
-    width: 100%;
   }
 
   &__cell {
-    color: $gray;
     padding: 24px;
+    color: $gray;
     white-space: nowrap;
   }
 
   &__cell--name {
+    width: 99%;
     color: $black;
     line-height: 1.5;
     white-space: normal;
-    width: 99%;
   }
 
   // &__cell--placeholder {

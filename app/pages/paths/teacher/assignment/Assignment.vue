@@ -300,34 +300,34 @@ export default {
 
 .assignor {
   &__item {
-    cursor: pointer;
     margin-right: 24px;
+    cursor: pointer;
   }
 
   &__item--del {
+    margin-right: 0;
     color: $gray;
     cursor: pointer;
-    margin-right: 0;
   }
 
   &__item--down {
+    margin-right: 0;
     color: $aloes;
     cursor: pointer;
-    margin-right: 0;
   }
 
   &__header {
-    display: block;
     position: relative;
+    display: block;
   }
 
   &__plus {
+    position: absolute;
+    right: 0;
     bottom: 0;
     color: $pink;
     cursor: pointer;
     font-size: 16px;
-    position: absolute;
-    right: 0;
   }
 
   &__title {
@@ -337,8 +337,8 @@ export default {
   }
 
   &__form-field {
-    align-items: center;
     display: flex;
+    align-items: center;
     margin: 1.5rem 0;
   }
 
@@ -347,8 +347,8 @@ export default {
   }
 
   &__form-label--target {
-    margin-right: 1em;
     min-width: 3em;
+    margin-right: 1em;
     text-align: right;
   }
 

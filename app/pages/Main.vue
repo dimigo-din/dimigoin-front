@@ -170,10 +170,10 @@ export default {
 }
 
 .column {
-  align-items: stretch;
   display: flex;
   flex: 1;
   flex-direction: column;
+  align-items: stretch;
   margin: 0.5rem;
 }
 
@@ -183,10 +183,10 @@ export default {
   margin-bottom: 2rem;
 
   &__title {
+    margin: 1rem 0;
     color: $gray-dark;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    margin: 1rem 0;
   }
 
   &__content {
@@ -196,9 +196,9 @@ export default {
 }
 
 .brand {
+  margin: 3rem 0;
   font-size: 36px;
   font-weight: $font-weight-extra-bold;
-  margin: 3rem 0;
   text-align: center;
 }
 
@@ -219,8 +219,8 @@ export default {
   }
 
   &__notice {
-    color: $gray-dark;
     display: block;
+    color: $gray-dark;
     font-size: 18px;
     line-height: 2;
   }
@@ -239,8 +239,8 @@ export default {
   }
 
   &__profile-card {
-    align-items: center;
     min-height: 46px; // 44 (image height) + 1+1 (image borders)
+    align-items: center;
   }
 
   &__notification,
@@ -261,15 +261,15 @@ export default {
   font-size: 20px;
 
   &__left {
-    align-items: center;
     display: flex;
+    align-items: center;
   }
 
   &__photo,
   &__default-photo {
+    width: 44px;
     height: 44px;
     margin-right: 15px;
-    width: 44px;
   }
 
   &__photo {
@@ -279,9 +279,9 @@ export default {
   }
 
   &__default-photo::before {
-    font-size: 44px;
-    margin-left: 0;
     margin-right: 0;
+    margin-left: 0;
+    font-size: 44px;
   }
 
   &__serial {

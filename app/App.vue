@@ -64,8 +64,8 @@ export default {
 <style lang="scss">
 .root {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
+  flex-direction: column;
 
   &__router {
     flex: 1 0 auto;

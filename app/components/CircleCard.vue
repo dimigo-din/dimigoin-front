@@ -269,39 +269,39 @@ export default {
   }
 
   &__name {
-    line-height: 16px;
     margin-top: 12px;
+    line-height: 16px;
   }
 
   &__category {
-    color: $gray-light;
     margin-top: 6px;
+    color: $gray-light;
     size: 14px;
   }
 
   /* stylelint-disable value-no-vendor-prefix, property-no-vendor-prefix */
   &__description {
+    display: -webkit-box;
+    height: 14 * 1.8 * 3; // 3 lines
+    margin-top: 12px;
     -webkit-box-orient: vertical;
     color: $black;
-    display: -webkit-box;
     font-size: 14px;
-    height: 14 * 1.8 * 3; // 3 lines
     -webkit-line-clamp: 3;
     line-height: 1.8;
-    margin-top: 12px;
   }
 
   &__modal-introduce-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
     color: $black;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    margin-bottom: 20px;
-    margin-top: 20px;
   }
 
   &__badge {
-    margin: 0 auto 25px;
     max-width: 40px;
+    margin: 0 auto 25px;
   }
 
   &__final-wrapper {
@@ -310,10 +310,10 @@ export default {
   }
 
   &__final {
+    padding: 0.3rem;
+    margin-left: auto;
     color: $orange;
     cursor: pointer;
-    margin-left: auto;
-    padding: 0.3rem;
   }
 
   &__modal {
@@ -321,8 +321,8 @@ export default {
   }
 
   &__modal-header {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
     padding-top: 24px;
   }
@@ -356,16 +356,16 @@ export default {
   }
 
   &__modal-description {
+    margin-top: 32px;
     color: $black;
     font-size: 16px;
     line-height: 1.8;
-    margin-top: 32px;
   }
 
   &__submit-btn {
+    margin-top: 20px;
     float: right;
     font-weight: $font-weight-bold;
-    margin-top: 20px;
   }
 
   &__submit-btn--post {

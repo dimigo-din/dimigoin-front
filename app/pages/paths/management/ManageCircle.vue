@@ -140,11 +140,11 @@ export default {
 
 .mng-circle {
   &__title {
+    padding-bottom: 10px;
+    padding-left: 10px;
     color: $gray-dark;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    padding-bottom: 10px;
-    padding-left: 10px;
   }
 
   &__card {
@@ -156,8 +156,8 @@ export default {
   }
 
   &__finish-btn {
-    float: right;
     margin-top: 2rem;
+    float: right;
   }
 }
 
@@ -168,9 +168,9 @@ export default {
   }
 
   &__name {
+    width: 99%;
     line-height: 1.5;
     white-space: normal;
-    width: 99%;
   }
 
   &:not(:last-child) {

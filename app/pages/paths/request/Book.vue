@@ -317,38 +317,38 @@ export default {
 .book {
   &__badge {
     display: inline-block;
-    font-size: 14px;
     margin-right: 10px;
+    font-size: 14px;
   }
 
   &__badge-icon {
-    font-size: 9px;
     margin-right: 4px;
+    font-size: 9px;
   }
 
   &__loader-wrapper {
-    align-items: center;
     display: flex;
     height: 35vh;
+    align-items: center;
     justify-content: center;
   }
 
   &__notice {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $orange;
     cursor: pointer;
     float: right;
     font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__create {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $red;
     cursor: pointer;
     float: right;
     font-size: 16px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__main {
@@ -356,24 +356,24 @@ export default {
   }
 
   &__book {
-    align-items: center;
-    border-bottom: 1px solid $gray-lighter;
-    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     padding: 24px;
+    border-bottom: 1px solid $gray-lighter;
+    cursor: pointer;
   }
 
   &__item {
+    margin-right: 16px;
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
-    margin-right: 16px;
   }
 
   &__title {
-    color: $black !important;
     flex: 1;
+    color: $black !important;
   }
 
   &__expand {
@@ -381,12 +381,12 @@ export default {
   }
 
   &__open {
-    align-items: stretch;
-    border-bottom: 1px solid $gray-lighter;
-    cursor: default;
     display: flex;
+    align-items: stretch;
     justify-content: flex-start;
     padding: 24px;
+    border-bottom: 1px solid $gray-lighter;
+    cursor: default;
   }
 
   &__down {
@@ -414,9 +414,9 @@ export default {
   }
 
   &__item--delete {
+    margin-left: 16px;
     color: $gray-light;
     cursor: pointer;
-    margin-left: 16px;
   }
 }
 
@@ -428,8 +428,8 @@ export default {
   }
 
   &__field {
-    align-items: center;
     display: flex;
+    align-items: center;
     margin: 1.5rem 0;
   }
 
@@ -442,9 +442,9 @@ export default {
   }
 
   &__button {
-    padding-top: 20px;
     position: absolute;
     right: 25px;
+    padding-top: 20px;
   }
 
   &__notice {

@@ -171,9 +171,9 @@ export default {
 
 .ingang {
   &__pending {
-    align-items: center;
     display: flex;
     height: 30vh;
+    align-items: center;
     justify-content: center;
   }
 
@@ -193,45 +193,45 @@ export default {
   }
 
   &__black--title {
+    padding-top: 4rem;
     color: $red;
     font-size: 64px;
     font-weight: $font-weight-extra-bold;
-    padding-top: 4rem;
   }
 
   &__black--comment {
+    padding-bottom: 4rem;
     font-size: 22px;
     font-weight: $font-weight-regular;
-    padding-bottom: 4rem;
   }
 
   &__ticket {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $red;
     float: right;
     font-size: 18px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__btn {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
   }
 
   &__notice {
+    margin-top: 1em;
+    margin-right: 0.5em;
     color: $orange;
     cursor: pointer;
     float: right;
     font-size: 18px;
-    margin-right: 0.5em;
-    margin-top: 1em;
   }
 
   &__content {
     display: flex;
-    font-weight: $font-weight-bold;
     justify-content: center;
+    font-weight: $font-weight-bold;
   }
 
   &__current,
@@ -274,8 +274,8 @@ export default {
   }
 
   &__field {
-    align-items: center;
     display: flex;
+    align-items: center;
     margin: 1.5rem 0;
   }
 
@@ -288,9 +288,9 @@ export default {
   }
 
   &__button {
-    padding-top: 20px;
     position: absolute;
     right: 25px;
+    padding-top: 20px;
   }
 
   &__notice {

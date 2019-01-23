@@ -86,19 +86,19 @@ export default {
   justify-content: center;
 
   &__loader {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
   }
 
   &__input {
-    margin: 6px 0;
     padding: 0 12px;
+    margin: 6px 0;
   }
 
   &__button {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     margin: 3px 8px 6px 0;
   }

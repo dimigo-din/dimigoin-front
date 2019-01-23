@@ -71,14 +71,14 @@ export default {
   user-select: none;
 
   &__button {
+    display: inline-block;
+    width: 70px;
+    padding-top: 0.35em;
+    padding-bottom: 0.25em;
     border: 1px solid $black;
     cursor: pointer;
-    display: inline-block;
-    padding-bottom: 0.25em;
-    padding-top: 0.35em;
     text-align: center;
     transition: all 0.2s ease-in-out;
-    width: 70px;
   }
 
   &__button:first-child {
@@ -93,9 +93,9 @@ export default {
 
   &__button:first-child::before,
   &__button:last-child::after {
-    content: '';
     display: inline-block;
     width: 2px;
+    content: '';
   }
 
   &__button:not(:last-child) {

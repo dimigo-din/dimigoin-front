@@ -16,10 +16,10 @@
   padding: 2rem 0;
 
   &__header {
+    padding-bottom: 1rem;
     color: $gray-dark;
     font-size: 32px;
     font-weight: $font-weight-bold;
-    padding-bottom: 1rem;
   }
 }
 </style>
