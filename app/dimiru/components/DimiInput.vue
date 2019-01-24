@@ -54,7 +54,7 @@ export default {
 <template>
   <div class="input-wrapper">
     <input
-      :id="id"
+      :id="id ? id : false"
       v-model="innerValue"
       :class="computedClass"
       :type="type"
