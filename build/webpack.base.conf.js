@@ -23,11 +23,10 @@ const webpackConfig = {
     filename: '[name].bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.js', '.json', '.scss'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
-      '@': resolve('app'),
-      'styles': resolve('app/scss')
+      ...require('../alias.config.js').webpack
     }
   },
   module: {

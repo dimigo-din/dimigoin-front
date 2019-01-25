@@ -173,8 +173,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .counsel {
   &__loader-wrapper {
     display: flex;

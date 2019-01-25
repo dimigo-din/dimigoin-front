@@ -152,8 +152,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .dets {
   &__loader-wrapper {
     display: flex;

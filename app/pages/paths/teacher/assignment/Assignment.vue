@@ -296,8 +296,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~styles/variables';
-
 .assignor {
   &__item {
     margin-right: 24px;

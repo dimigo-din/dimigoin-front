@@ -283,8 +283,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .mng-afsc {
   &__main {
     padding: 0;

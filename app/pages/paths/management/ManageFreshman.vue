@@ -85,8 +85,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .push {
   &__input {
     margin-bottom: 1rem;

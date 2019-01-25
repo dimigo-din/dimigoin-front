@@ -102,9 +102,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-@import '~styles/mixins';
-
 .container {
   display: flex;
   height: 100vh;

@@ -112,8 +112,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~styles/variables';
-
 .assignment {
   &__loading {
     display: flex;

@@ -50,8 +50,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .ienope {
   display: flex;
   height: 100vh;

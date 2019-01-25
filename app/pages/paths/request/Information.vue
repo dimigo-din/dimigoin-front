@@ -105,8 +105,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .r-info {
   &__badge {
     display: inline-block;

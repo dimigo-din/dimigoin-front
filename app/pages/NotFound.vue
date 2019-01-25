@@ -38,8 +38,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .not-found {
   display: flex;
   height: 100vh;

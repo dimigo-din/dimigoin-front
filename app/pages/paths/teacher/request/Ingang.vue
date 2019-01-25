@@ -157,8 +157,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .ingang {
   padding: 0;
   border: 0;

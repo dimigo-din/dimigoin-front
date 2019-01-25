@@ -79,8 +79,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .notice {
   display: flex;
   justify-content: center;

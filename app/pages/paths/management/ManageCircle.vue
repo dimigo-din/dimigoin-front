@@ -136,8 +136,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .mng-circle {
   &__title {
     padding-bottom: 10px;
