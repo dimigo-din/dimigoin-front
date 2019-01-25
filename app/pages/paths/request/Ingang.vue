@@ -167,8 +167,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~styles/variables';
-
 .ingang {
   &__pending {
     display: flex;

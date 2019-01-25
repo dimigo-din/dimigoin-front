@@ -10,8 +10,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .content {
   padding: 2rem 0;
 

@@ -78,8 +78,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~styles/variables';
-
 .meal {
   &__card {
     padding-top: 0 !important;

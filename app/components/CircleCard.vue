@@ -255,8 +255,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~styles/variables';
-
 .circle-card {
   cursor: pointer;
 

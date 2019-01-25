@@ -52,8 +52,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .main {
   display: flex;
   min-height: 100vh;

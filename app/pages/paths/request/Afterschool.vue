@@ -198,8 +198,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-
 .req-afsc {
   &__loader-wrapper {
     display: flex;
