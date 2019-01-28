@@ -3,6 +3,8 @@
     "browser": true
   },
   "plugins": [
+    "html",
+    "standard",
     "vue"
   ],
   "extends": [
