@@ -43,8 +43,8 @@ export default {
           userIdx: info.idx,
           username: info.name,
           serial: info.serial,
-          photoUrl: info.photoUrl,
-          userType: info.userType
+          photoUrl: info.photo,
+          userType: info['user_type']
         })
       })
     },

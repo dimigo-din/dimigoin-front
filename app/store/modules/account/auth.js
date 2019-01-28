@@ -15,8 +15,14 @@ export default {
   state: {
     refreshToken: window.localStorage.getItem('refreshToken'),
     accessToken: window.localStorage.getItem('accessToken'),
-    decodedRefreshToken: null,
-    decodedAccessToken: null
+    decodedRefreshToken: undefined,
+    decodedAccessToken: undefined
+  },
+
+  getters: {
+    isLoggedIn: state => !!(state.refreshToken && state.accessToken),
+    isRefreshTokenExpired: ({ decodedRefreshToken }) => isTokenExpired(decodedRefreshToken),
+    isAccessTokenExpired: ({ decodedAccessToken }) => isTokenExpired(decodedAccessToken)
   },
 
   mutations: {
@@ -42,25 +48,17 @@ export default {
 
       setAuthorizationToken(axios, '')
 
-      state.accessToken = null
-      state.refreshtoken = null
+      state.accessToken = undefined
+      state.refreshtoken = undefined
+      state.decodedAccessToken = undefined
+      state.decodedRefreshToken = undefined
     }
   },
 
-  getters: {
-    isLoggedIn: state => !!(state.refreshToken && state.accessToken),
-    isRefreshTokenExpired: ({ decodedRefreshToken }) => isTokenExpired(decodedRefreshToken),
-    isAccessTokenExpired: ({ decodedAccessToken }) => isTokenExpired(decodedAccessToken)
-  },
-
   actions: {
-    async register (ctx, payload) {
-      await auth.register(payload)
-    },
-
-    async verify ({ commit }, { authcode }) {
+    async verify ({ commit, dispatch }, { authcode }) {
       await auth.verifyStudent(authcode)
-      commit(REMOVE_TOKENS)
+      await dispatch('logout')
     },
 
     async autoLogin ({ dispatch, state, getters }) {
