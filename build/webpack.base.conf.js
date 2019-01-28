@@ -20,7 +20,8 @@ const webpackConfig = {
   },
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js'
   },
   resolve: {
     extensions: ['.js', '.json', '.scss'],
