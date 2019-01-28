@@ -44,7 +44,7 @@ export default {
     },
 
     openModal (black) {
-      this.modale = {
+      this.modal = {
         profile: black
       }
     },
