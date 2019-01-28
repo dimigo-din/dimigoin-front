@@ -1,39 +1,29 @@
 <script>
-import awesomeMixin from './mixins/preserve-state'
 import validator from './mixins/validator'
+import InputData from './input-data'
+import RegisterStepWrapper from './RegisterStepWrapper.vue'
+import Illust from '@/assets/register-side-1.svg'
 
 export default {
   name: 'RegisterStepOne',
+  components: { RegisterStepWrapper },
+  mixins: [ validator ],
 
-  mixins: [ awesomeMixin, validator ],
+  props: {
+    formData: {
+      type: Object,
+      required: true
+    }
+  },
 
   data () {
     return {
-      formData: {
-        name: {
-          value: '',
-          error: ''
-        },
-
-        birthday: {
-          value: '',
-          error: ''
-        },
-
-        gender: {
-          value: '',
-          error: ''
-        },
-
-        email: {
-          value: '',
-          error: ''
-        },
-
-        phone: {
-          value: '',
-          error: ''
-        }
+      illust: Illust,
+      internalFormData: {
+        ...InputData.copyData(
+          this.formData,
+          ['name', 'birthday', 'email', 'gender', 'phone']
+        )
       }
     }
   },
@@ -41,114 +31,113 @@ export default {
   methods: {
     next () {
       if (!this.validate()) return
-
-      this.$router.push({
-        name: 'register/step/2',
-        params: {
-          formData: this.mergeFormData()
-        }
-      })
+      this.$emit('sync', this.internalFormData)
+      this.$emit('next')
     }
   }
 }
 </script>
 
 <template>
-  <dimi-card shadow>
-    <div class="register__form">
-      <div class="form__field">
+  <register-step-wrapper :illust="illust">
+    <template slot="title">Step 1. 기본 정보 입력</template>
+    <div
+      slot="form"
+      class="form"
+    >
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-2"
           for="input-name"
         >
           이름
         </label>
         <dimi-input
           id="input-name"
-          v-model="formData.name.value"
-          :error-message="formData.name.error"
-          class="register__input"
+          v-model="internalFormData.name.value"
+          :error-message="internalFormData.name.error"
+          class="form__input col-xs"
           placeholder="실명을 입력하세요"
         />
       </div>
-      <div class="form__field">
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-2"
           for="input-birthday"
         >
           생일
         </label>
         <dimi-input
           id="input-birthday"
-          v-model="formData.birthday.value"
-          :error-message="formData.birthday.error"
-          class="register__input"
+          v-model="internalFormData.birthday.value"
+          :error-message="internalFormData.birthday.error"
+          class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
         />
       </div>
-      <div class="form__field">
-        <h4 class="form__label">
-          성별
-        </h4>
-        <div class="gender-radio">
-          <dimi-button-radio
-            v-model="formData.gender.value"
-            class="gender-radio__item"
-            name="M"
-          >
-            남성
-          </dimi-button-radio>
-          <dimi-button-radio
-            v-model="formData.gender.value"
-            class="gender-radio__item"
-            name="F"
-          >
-            여성
-          </dimi-button-radio>
+      <div class="form__field form__field--margin row middle-xs">
+        <h4 class="form__label col-xs-12 col-md-2">성별</h4>
+        <div class="col-xs">
+          <div class="row">
+            <dimi-button-radio
+              v-model="internalFormData.gender.value"
+              class="form__radio col-xs"
+              name="M"
+            >
+              남성
+            </dimi-button-radio>
+            <dimi-button-radio
+              v-model="internalFormData.gender.value"
+              class="form__radio col-xs"
+              name="F"
+            >
+              여성
+            </dimi-button-radio>
+          </div>
         </div>
       </div>
-      <div class="form__field">
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-3"
           for="input-phone"
         >
           전화번호
         </label>
         <dimi-input
           id="input-phone"
-          v-model="formData.phone.value"
-          :error-message="formData.phone.error"
-          class="register__input"
+          v-model="internalFormData.phone.value"
+          :error-message="internalFormData.phone.error"
+          class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
         />
       </div>
-      <div class="form__field">
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-3"
           for="input-email"
         >
           이메일
         </label>
         <dimi-input
           id="input-email"
-          v-model="formData.email.value"
-          :error-message="formData.email.error"
-          class="register__input"
+          v-model="internalFormData.email.value"
+          :error-message="internalFormData.email.error"
+          class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
         />
       </div>
-      <div class="register__nav">
-        <div class="register__nav__start" />
-        <div class="register__circles">
-          <div class="register__nav__circle register__nav__circle--active" />
-          <div class="register__nav__circle" />
-          <div class="register__nav__circle" />
+      <div class="navigation">
+        <div class="navigation__item navigation__item--start" />
+        <div class="navigation__item">
+          <div class="navigation__circle navigation__circle--active" />
+          <div class="navigation__circle" />
+          <div class="navigation__circle" />
         </div>
-        <div class="register__nav__end">
+        <div class="navigation__item navigation__item--end">
           <a
-            class="register__nav__link register__nav__link--next"
+            class="navigation__link navigation__link--next"
             @click="next"
           >
             다음 단계<span class="icon-arrow-right" />
@@ -156,11 +145,9 @@ export default {
         </div>
       </div>
     </div>
-  </dimi-card>
+  </register-step-wrapper>
 </template>
 
 <style lang="scss" scoped>
-.form__label {
-  flex: 0 0 60px;
-}
+
 </style>

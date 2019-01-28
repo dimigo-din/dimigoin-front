@@ -61,7 +61,7 @@ export async function register ({
   await magician(() => axios.post('/register/', {
     name, email, gender, id, password, phone_number: phone, birthday
   }), {
-    422: () => new APIError('이미 존재하는 아이디 혹은 입력된 정보가 잘못되었습니다.', 422),
+    400: () => new APIError('이미 존재하는 아이디이거나 입력하신 정보가 잘못되었습니다.', 400),
     403: () => new APIError('API 서버 오류입니다.', 403)
   })
 }

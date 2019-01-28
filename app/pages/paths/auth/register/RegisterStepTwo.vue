@@ -1,67 +1,57 @@
 <script>
-import { register } from '@/src/api/auth'
-import awesomeMixin from './mixins/preserve-state'
 import validator from './mixins/validator'
+import InputData from '@/pages/paths/auth/register/input-data'
+import Illust from '@/assets/register-side-2.svg'
+import RegisterStepWrapper from './RegisterStepWrapper.vue'
 
 export default {
   name: 'RegisterStepTwo',
+  components: { RegisterStepWrapper },
+  mixins: [ validator ],
 
-  mixins: [ awesomeMixin, validator ],
+  props: {
+    formData: {
+      type: Object,
+      required: true
+    },
+
+    register: {
+      type: Function,
+      required: true
+    }
+  },
 
   data () {
     return {
       pending: false,
-      formData: {
-        id: {
-          value: '',
-          error: ''
-        },
-
-        password: {
-          value: '',
-          error: ''
-        },
-
-        repassword: {
-          value: '',
-          error: ''
-        }
+      illust: Illust,
+      internalFormData: {
+        ...InputData.copyData(
+          this.formData,
+          ['id', 'password', 'repassword']
+        )
       }
     }
   },
 
-  created () {
-    if (Object.keys(this.mergeFormData()).length < 8) this.$router.push({ name: 'register/step/1' })
-  },
-
   methods: {
     previous () {
-      this.$router.push({
-        name: 'register/step/1',
-        params: {
-          formData: this.mergeFormData()
-        }
-      })
+      this.$emit('sync', this.internalFormData)
+      this.$emit('previous')
     },
 
     async next () {
       if (this.pending) return
-
       if (!this.validate()) return
-
       if (!this.isRetypedPasswordOk()) {
-        this.formData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
+        this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
         return
       }
 
+      this.pending = true
       try {
-        this.pending = true
-        const result = this.mergeFormData()
-        await register(Object.keys(result).reduce((pv, cv) => {
-          pv[cv] = result[cv].value
-          return pv
-        }, {}))
-        this.$router.push({ name: 'login' })
+        this.$emit('sync', this.internalFormData)
+        await this.register()
       } catch (err) {
         console.error('register', err)
         this.$swal('에러!', err.message, 'error')
@@ -70,79 +60,83 @@ export default {
     },
 
     isRetypedPasswordOk () {
-      return this.formData.password.value === this.formData.repassword.value
+      return this.internalFormData.password.value === this.internalFormData.repassword.value
     }
   }
 }
 </script>
 
 <template>
-  <dimi-card shadow>
-    <div class="register__form">
-      <div class="form__field">
+  <register-step-wrapper :illust="illust">
+    <template slot="title">Step 2. 아이디 / 비밀번호 입력</template>
+    <div
+      slot="form"
+      class="form"
+    >
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-3"
           for="input-id"
         >
           아이디
         </label>
         <dimi-input
           id="input-id"
-          v-model="formData.id.value"
-          :error-message="formData.id.error"
-          class="register__input"
+          v-model="internalFormData.id.value"
+          :error-message="internalFormData.id.error"
+          class="form__input col-xs"
           placeholder="아이디를 입력하세요"
         />
       </div>
-      <div class="form__field">
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-3"
           for="input-password"
         >
           비밀번호
         </label>
         <dimi-input
           id="input-password"
-          v-model="formData.password.value"
-          :error-message="formData.password.error"
+          v-model="internalFormData.password.value"
+          :error-message="internalFormData.password.error"
           type="password"
-          class="register__input"
+          class="form__input col-xs"
           placeholder="비밀번호를 입력하세요"
         />
       </div>
-      <div class="form__field">
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-4"
           for="input-repassword"
         >
           비밀번호 확인
         </label>
         <dimi-input
           id="input-repassword"
-          v-model="formData.repassword.value"
-          :error-message="formData.repassword.error"
+          v-model="internalFormData.repassword.value"
+          :error-message="internalFormData.repassword.error"
           type="password"
-          class="register__input"
+          class="form__input col-xs"
           placeholder="비밀번호를 한번 더 입력하세요"
         />
       </div>
-      <div class="register__nav">
-        <div class="register__nav__start">
+      <div class="navigation">
+        <div class="navigation__item navigation__item--start">
           <a
-            class="register__nav__link register__nav__link--previous"
+            class="navigation__link navigation__link--previous"
             @click="previous"
           >
             <span class="icon-arrow-slim-left" />뒤로
           </a>
         </div>
-        <div class="register__circles">
-          <div class="register__nav__circle register__nav__circle--active" />
-          <div class="register__nav__circle" />
-          <div class="register__nav__circle" />
+        <div class="navigation__item">
+          <div class="navigation__circle" />
+          <div class="navigation__circle navigation__circle--active" />
+          <div class="navigation__circle" />
         </div>
-        <div class="register__nav__end">
+        <div class="navigation__item navigation__item--end">
           <a
-            class="register__nav__link register__nav__link--next"
+            class="navigation__link navigation__link--next"
             @click="next"
           >
             {{ pending ? '로딩 중...' : '완료' }}
@@ -154,11 +148,9 @@ export default {
         </div>
       </div>
     </div>
-  </dimi-card>
+  </register-step-wrapper>
 </template>
 
 <style lang="scss" scoped>
-.form__label {
-  flex: 0 0 95px;
-}
+
 </style>
