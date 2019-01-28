@@ -14,7 +14,7 @@ export async function postNotice (notice) {
 /**
  * 모든 공지사항을 출력합니다.
  *
- * @returns {Promise<Array<notice>>}
+ * @returns {Promise<Array<Object>>}
  */
 export async function getAllNotice () {
   const { data: { notice } } = await magician(() => axios.get(`/notice/`))
@@ -24,7 +24,7 @@ export async function getAllNotice () {
 /**
  * 최근 공지사항을 출력합니다.
  *
- * @returns {Promise<Array<notice>>}
+ * @returns {Promise<String>}
  */
 export async function getNotice () {
   const { data: { notice } } = await magician(() => axios.get(`/notice/latest`))
