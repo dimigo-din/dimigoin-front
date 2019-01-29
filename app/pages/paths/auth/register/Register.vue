@@ -40,6 +40,15 @@ export default {
     async onRegister () {
       await register(InputData.mapData(this.formData))
       this.$router.push({ name: 'login' })
+    },
+
+    async onVerify (authcode) {
+      await this.$store.dispatch('account/verify', { authcode })
+      this.$router.push({ name: 'main' })
+    },
+
+    async onLogout () {
+      await this.$store.dispatch('account/logout')
     }
   }
 }
@@ -48,13 +57,24 @@ export default {
 <template>
   <div class="register">
     <h1 class="register__title">
-      <brand style="height: 40px;" />
+      <div @click="() => $router.push({ name: 'login' })">
+        <brand
+          style="
+            height: 40px;
+            cursor: pointer;
+          "
+        />
+      </div>
       <span class="register__subtitle">
         회원가입
       </span>
     </h1>
     <div class="register__content">
-      <register-step-three v-if="$store.getters['account/needVerify']" />
+      <register-step-three
+        v-if="$store.getters['account/needVerify']"
+        :on-verify="onVerify"
+        :on-logout="onLogout"
+      />
       <register-step-one
         v-else-if="step === 1"
         :form-data="formData"
@@ -64,8 +84,8 @@ export default {
       <register-step-two
         v-else-if="step === 2"
         :form-data="formData"
-        :register="onRegister"
-        @sync="data => assignFormData(data)"
+        :on-register="onRegister"
+        @sync="assignFormData"
         @previous="() => step = 1"
       />
     </div>
@@ -82,7 +102,6 @@ export default {
   &__title {
     display: flex;
     margin-top: 5rem;
-    cursor: pointer;
     font-size: 36px;
     font-weight: $font-weight-extra-bold;
     user-select: none;

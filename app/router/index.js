@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
 
   if (!/login|register/.test(to.path)) {
     if (!isLoggedIn()) return next({ name: 'login' })
-    if (needVerify()) return next({ name: 'register/step/3' })
+    if (needVerify()) return next({ name: 'register' })
   }
 
   if (to.meta.draft) return next({ name: 'draft' })

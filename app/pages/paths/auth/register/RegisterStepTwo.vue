@@ -15,7 +15,7 @@ export default {
       required: true
     },
 
-    register: {
+    onRegister: {
       type: Function,
       required: true
     }
@@ -51,7 +51,7 @@ export default {
       this.pending = true
       try {
         this.$emit('sync', this.internalFormData)
-        await this.register()
+        await this.onRegister()
       } catch (err) {
         console.error('register', err)
         this.$swal('에러!', err.message, 'error')

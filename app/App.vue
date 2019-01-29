@@ -25,7 +25,7 @@ export default {
   async created () {
     try {
       await this.autoLogin()
-      if (this.needVerify) this.$router.push({ name: 'register/step/3' })
+      if (this.needVerify) this.$router.push({ name: 'register' })
     } catch (err) {
       console.error(err)
     }

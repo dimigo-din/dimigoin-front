@@ -1,44 +1,62 @@
 <script>
+import Illust from '@/assets/register-side-3.svg'
+import RegisterStepWrapper from './RegisterStepWrapper.vue'
+import InputData from './input-data'
+
 export default {
   name: 'RegisterStepThree',
-
+  components: { RegisterStepWrapper },
+  props: {
+    onVerify: {
+      type: Function,
+      required: true
+    },
+    onLogout: {
+      type: Function,
+      required: true
+    }
+  },
   data () {
     return {
+      illust: Illust,
       pending: false,
       formData: {
-        authcode: {
-          value: '',
-          error: ''
-        }
+        authcode: new InputData()
       }
     }
   },
 
   created () {
-    if (!this.$store.state.account.auth.isLoggedIn) this.$router.back()
+    if (!this.$store.getters['account/isLoggedIn'] ||
+      !this.$store.getters['account/needVerify']) this.$router.back()
   },
 
   methods: {
     async confirm () {
+      this.pending = true
+
       try {
-        this.pending = true
-        await this.$store.dispatch('account/verify', { authcode: this.formData.authcode.value })
+        await this.onVerify(this.formData.authcode)
       } catch (err) {
         this.formData.authcode.error = err.message
       }
+
       this.pending = false
-      this.$router.push({ name: 'main' })
     }
   }
 }
 </script>
 
 <template>
-  <dimi-card shadow>
-    <div class="register__form">
-      <div class="form__field">
+  <register-step-wrapper :illust="illust">
+    <template slot="title">Step 3. 인증 코드 입력</template>
+    <div
+      slot="form"
+      class="form"
+    >
+      <div class="form__field row middle-xs">
         <label
-          class="form__label"
+          class="form__label col-xs-12 col-md-3"
           for="input-authcode"
         >
           인증 코드
@@ -47,24 +65,39 @@ export default {
           id="input-authcode"
           v-model="formData.authcode.value"
           :error-message="formData.authcode.error"
-          class="register__input"
+          class="form__input col-xs"
           placeholder="인증코드를 정확하게 입력하세요"
         />
       </div>
-      <div class="register__final-btn">
-        <dimi-button
-          :loading="pending"
-          @click="confirm"
-        >
-          인증
-        </dimi-button>
+      <div class="navigation">
+        <div class="navigation__item navigation__item--start">
+          <dimi-button
+            gray
+            @click="onLogout"
+          >
+            로그아웃
+          </dimi-button>
+        </div>
+        <div class="navigation__item">
+          <div class="navigation__circle" />
+          <div class="navigation__circle" />
+          <div class="navigation__circle navigation__circle--active" />
+        </div>
+        <div class="navigation__item navigation__item--end">
+          <dimi-button
+            :loading="pending"
+            @click="confirm"
+          >
+            인증
+          </dimi-button>
+        </div>
       </div>
     </div>
-  </dimi-card>
+  </register-step-wrapper>
 </template>
 
 <style lang="scss" scoped>
-  .form__label {
-    flex: 0 0 70px;
-  }
+.register__form .navigation {
+  margin-top: 2rem;
+}
 </style>
