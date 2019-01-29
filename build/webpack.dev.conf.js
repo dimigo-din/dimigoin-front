@@ -3,7 +3,6 @@ const utils = require('./utils')
 const config = require('./config')
 const path = require('path')
 const merge = require('webpack-merge')
-const StylelintPlugin = require('stylelint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorPlugin = require('friendly-errors-webpack-plugin')
 const DotenvPlugin = require('webpack-dotenv-plugin')
@@ -47,9 +46,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     quiet: true
   },
   plugins: [
-    new StylelintPlugin({
-      files: ['**/*.css', '**/*.scss', '**/*.vue']
-    }),
     new HtmlWebpackPlugin({
       title: 'DIMIGOIN',
       template: 'index.html',

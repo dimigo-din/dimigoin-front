@@ -5,7 +5,6 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const StylelintPlugin = require('stylelint-webpack-plugin')
 const DotenvPlugin = require('webpack-dotenv-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
 const PreloadWebpackPlugin = require('preload-webpack-plugin')
@@ -112,9 +111,6 @@ const webpackConfig = async () => {
         })]
         : [new BundleAnalyzerPlugin()]
       ),
-      new StylelintPlugin({
-        files: ['**/*.css', '**/*.scss', '**/*.vue']
-      }),
       new MiniCssExtractPlugin({
         filename: utils.assetsPath('css/[name].[chunkhash].css'),
         chunkFilename: utils.assetsPath('css/[id].[chunkhash].css')
