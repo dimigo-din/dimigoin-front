@@ -3,7 +3,15 @@ import Brand from '@/assets/brand.svg'
 
 export default {
   name: 'Register',
-  components: { Brand }
+  components: { Brand },
+  created () {
+    this.$swal({
+      type: 'error',
+      title: '앗... 아아...',
+      text: '지금은 가입할 수 없습니다.',
+      onClose: () => this.$router.push('/')
+    })
+  }
 }
 </script>
 
