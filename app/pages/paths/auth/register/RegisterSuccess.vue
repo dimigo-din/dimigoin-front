@@ -35,7 +35,7 @@ export default {
 
 <template>
   <dimi-card>
-    <h1 class="title">코인오세요</h1>
+    <h1 class="title">환영합니다</h1>
     <div class="navigation">
       <dimi-button
         class="login-button"
