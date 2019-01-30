@@ -11,6 +11,10 @@ export default {
       type: String,
       default: ''
     },
+    id: {
+      type: String,
+      default: ''
+    },
     placeholder: {
       type: String,
       default: ''
@@ -50,6 +54,7 @@ export default {
 <template>
   <div class="input-wrapper">
     <input
+      :id="id ? id : false"
       v-model="innerValue"
       :class="computedClass"
       :type="type"
@@ -76,11 +81,11 @@ export default {
 .input {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.75em 1.75em;
+  padding: 0.75em 1.5em;
   border: 0;
   appearance: none;
   background-color: $gray-lighten;
-  border-radius: 20px;
+  border-radius: 30px;
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
 

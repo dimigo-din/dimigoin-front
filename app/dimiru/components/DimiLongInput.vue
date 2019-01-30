@@ -60,21 +60,4 @@ export default {
   position: relative;
   width: 100%;
 }
-
-.input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.75em 1.75em;
-  border: 0;
-  appearance: none;
-  background-color: $gray-lighten;
-  border-radius: 20px;
-  font-family: 'NanumSquareRound', sans-serif;
-  font-size: inherit;
-  line-height: 20pt;
-
-  &::placeholder {
-    color: $gray;
-  }
-}
 </style>

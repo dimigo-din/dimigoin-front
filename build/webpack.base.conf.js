@@ -8,6 +8,7 @@ require('dotenv-safe').config({
 const utils = require('./utils')
 const config = require('./config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const StylelintPlugin = require('stylelint-webpack-plugin')
 
 function resolve (dir = '') {
   return path.resolve(__dirname, '..', dir)
@@ -35,14 +36,19 @@ const webpackConfig = {
       {
         enforce: 'pre',
         test: /\.(js|vue)$/,
-        use: 'eslint-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            emitError: process.env.NODE_ENV === 'production'
+          }
+        }
       },
       {
         test: /\.js$/,
         use: 'babel-loader',
         include: [resolve('app')],
-        exclude: '/node_modules/'
+        exclude: /node_modules/
       },
       {
         test: /\.vue$/,
@@ -99,7 +105,11 @@ const webpackConfig = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new StylelintPlugin({
+      files: ['**/*.css', '**/*.scss', '**/*.vue'],
+      emitErrors: process.env.NODE_ENV === 'production'
+    })
   ]
 }
 

@@ -1,16 +1,16 @@
 export default {
   methods: {
     getInvalidDataKeys () {
-      return Object.keys(this.formData)
-        .filter(v => !this.formData[v].value)
+      return Object.keys(this.internalFormData)
+        .filter(v => !this.internalFormData[v].value)
     },
 
     updateErrors (bads) {
-      Object.keys(this.formData).forEach(key => {
+      Object.keys(this.internalFormData).forEach(key => {
         if (bads.indexOf(key) !== -1) {
-          this.formData[key].error = '정보를 채워주세요.'
+          this.internalFormData[key].error = '정보를 채워주세요.'
         } else {
-          this.formData[key].error = ''
+          this.internalFormData[key].error = ''
         }
       })
     },

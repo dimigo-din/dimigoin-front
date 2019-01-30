@@ -1,7 +1,9 @@
 module.exports = {
+  baseUrl: '.',
   compilerOptions: {
     baseUrl: '.',
-    target: 'esnext',
-    module: 'es2015'
-  }
+    target: 'es6',
+    module: 'esnext'
+  },
+  excludes: ['node_modules', 'dist']
 }

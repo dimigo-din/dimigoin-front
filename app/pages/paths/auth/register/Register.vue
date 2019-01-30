@@ -1,72 +1,123 @@
 <script>
 import Brand from '@/assets/brand.svg'
+import RegisterStepOne from './RegisterStepOne.vue'
+import RegisterStepTwo from './RegisterStepTwo.vue'
+import RegisterStepThree from './RegisterStepThree.vue'
+import RegisterSuccess from './RegisterSuccess.vue'
+import { register } from '@/src/api/auth'
+import InputData from './input-data'
 
 export default {
   name: 'Register',
-  components: { Brand },
-  created () {
-    this.$swal({
-      type: 'error',
-      title: '앗... 아아...',
-      text: '지금은 가입할 수 없습니다.',
-      onClose: () => this.$router.push('/')
-    })
+  components: {
+    Brand,
+    RegisterStepOne,
+    RegisterStepTwo,
+    RegisterStepThree,
+    RegisterSuccess
+  },
+  data: () => ({
+    step: 1,
+    formData: {
+      ...InputData.arrayFactory([
+        'name',
+        'birthday',
+        'gender',
+        'email',
+        'phone',
+        'id',
+        'password',
+        'repassword'
+      ])
+    },
+    done: false
+  }),
+  computed: {
+    successInfo () {
+      return {
+        ...['name', 'id', 'birthday', 'phone', 'email'].reduce((obj, key) => {
+          obj[key] = this.formData[key].value
+          return obj
+        }, {})
+      }
+    }
+  },
+  methods: {
+    assignFormData (value) {
+      Object.keys(value)
+        .filter(key => value[key].value !== (this.formData[key] || {}).value)
+        .forEach(key => this.$set(this.formData, key, value[key]))
+    },
+
+    async onRegister () {
+      await register(InputData.mapData(this.formData))
+      this.done = true
+    },
+
+    async onVerify (authcode) {
+      await this.$store.dispatch('account/verify', { authcode })
+      this.$router.push({ name: 'main' })
+    },
+
+    async onLogout () {
+      await this.$store.dispatch('account/logout')
+    }
   }
 }
 </script>
 
 <template>
   <div class="register">
-    <h1
-      class="register__title"
-      @click="$router.push('/')"
-    >
-      <brand height="36px" />
+    <h1 class="register__title">
+      <div @click="() => $router.push({ name: 'login' })">
+        <brand
+          style="
+            height: 40px;
+            cursor: pointer;
+          "
+        />
+      </div>
       <span class="register__subtitle">
         회원가입
       </span>
     </h1>
     <div class="register__content">
-      <div class="container container--custom">
-        <div class="row center-xs middle-xs">
-          <router-view
-            class="col-xs-12 col-md-6"
-            name="side"
-          />
-          <router-view
-            class="col-xs-12 col-md-6"
-            name="form"
-          />
-        </div>
-      </div>
+      <register-step-three
+        v-if="$store.getters['account/needVerify']"
+        :on-verify="onVerify"
+        :on-logout="onLogout"
+      />
+      <register-success
+        v-else-if="done"
+        v-bind="successInfo"
+      />
+      <register-step-one
+        v-else-if="step === 1"
+        :form-data="formData"
+        @sync="assignFormData"
+        @next="() => step = 2"
+      />
+      <register-step-two
+        v-else-if="step === 2"
+        :form-data="formData"
+        :on-register="onRegister"
+        @sync="assignFormData"
+        @previous="() => step = 1"
+      />
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '~styles/variables';
-@import '~styles/mixins';
-
-@include from($widescreen) {
-  .container--custom {
-    width: 55rem;
-  }
-}
-</style>
-
-<style lang="scss">
-@import '~styles/variables';
-
 .register {
   display: flex;
-  height: 100vh;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   &__title {
     display: flex;
     margin-top: 5rem;
-    cursor: pointer;
     font-size: 36px;
     font-weight: $font-weight-extra-bold;
     user-select: none;
@@ -83,113 +134,7 @@ export default {
     display: flex;
     height: 50%;
     align-items: center;
-    margin-top: 6rem;
-  }
-
-  &__card {
-    transition: all 0.5s ease;
-  }
-
-  &__form {
-    padding: 0 1rem;
-  }
-}
-
-.form__field {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 1.5rem 0;
-
-  .register__input {
-    flex: 1 0;
-    font-size: 14px;
-  }
-}
-
-.form__label {
-  padding: 0.5em 0;
-  color: $gray-dark;
-  font-size: 14px;
-  font-weight: $font-weight-regular;
-  text-align: start;
-}
-
-.gender-radio {
-  position: relative;
-  display: flex;
-  flex: 1 0;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  &__item {
-    display: block;
-    flex: 1 0;
-    padding: 0.9em 0 !important;
-    font-size: 14px;
-    font-weight: $font-weight-regular;
-  }
-
-  &__item:first-child {
-    margin-right: 0.75rem;
-  }
-}
-
-.register__nav {
-  display: flex;
-  margin-top: 3rem;
-
-  &__start {
-    margin-right: auto;
-  }
-
-  &__end {
-    margin-left: auto;
-  }
-
-  &__link {
-    cursor: pointer;
-    font-weight: $font-weight-bold;
-  }
-
-  &__link--next {
-    color: $red;
-  }
-
-  &__link--previous {
-    color: $gray-light;
-  }
-}
-
-.register__circles {
-  position: relative;
-
-  &__circle {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    margin: 0.5rem;
-    background-color: $red;
-    border-radius: 50%;
-    opacity: 0.3;
-  }
-
-  &__circle--active {
-    opacity: 1;
-  }
-}
-
-.register-side {
-  &__illust {
-    height: 200px;
-  }
-
-  &__title {
-    margin-top: 2rem;
-    color: $black;
-    font-size: 24px;
-    font-weight: $font-weight-bold;
-    user-select: none;
+    margin-top: 3rem;
   }
 }
 </style>

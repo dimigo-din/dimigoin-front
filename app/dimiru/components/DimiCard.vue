@@ -54,7 +54,7 @@ export default {
 
 .c-card {
   position: relative;
-  padding: 1.25rem;
+  padding: 1.5rem;
   background-color: $white;
   border-radius: 6px;
 
