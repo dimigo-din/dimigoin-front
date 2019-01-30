@@ -4,7 +4,7 @@ export default {
   props: {
     illust: {
       type: Object,
-      required: true
+      default: null
     }
   }
 }
@@ -13,7 +13,10 @@ export default {
 <template>
   <div class="container container--naive">
     <div class="row middle-xs start-xs center-sm">
-      <div class="register__side col-xs-12 col-sm-6">
+      <div
+        v-if="$slots.title || illust"
+        class="register__side col-xs-12 col-sm-6"
+      >
         <component
           :is="illust"
           class="register__illust"

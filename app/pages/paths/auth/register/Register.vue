@@ -3,6 +3,7 @@ import Brand from '@/assets/brand.svg'
 import RegisterStepOne from './RegisterStepOne.vue'
 import RegisterStepTwo from './RegisterStepTwo.vue'
 import RegisterStepThree from './RegisterStepThree.vue'
+import RegisterSuccess from './RegisterSuccess.vue'
 import { register } from '@/src/api/auth'
 import InputData from './input-data'
 
@@ -12,7 +13,8 @@ export default {
     Brand,
     RegisterStepOne,
     RegisterStepTwo,
-    RegisterStepThree
+    RegisterStepThree,
+    RegisterSuccess
   },
   data: () => ({
     step: 1,
@@ -27,9 +29,19 @@ export default {
         'password',
         'repassword'
       ])
-    }
+    },
+    done: false
   }),
-  created () { },
+  computed: {
+    successInfo () {
+      return {
+        ...['name', 'id', 'birthday', 'phone', 'email'].reduce((obj, key) => {
+          obj[key] = this.formData[key].value
+          return obj
+        }, {})
+      }
+    }
+  },
   methods: {
     assignFormData (value) {
       Object.keys(value)
@@ -39,7 +51,7 @@ export default {
 
     async onRegister () {
       await register(InputData.mapData(this.formData))
-      this.$router.push({ name: 'login' })
+      this.done = true
     },
 
     async onVerify (authcode) {
@@ -74,6 +86,10 @@ export default {
         v-if="$store.getters['account/needVerify']"
         :on-verify="onVerify"
         :on-logout="onLogout"
+      />
+      <register-success
+        v-else-if="done"
+        v-bind="successInfo"
       />
       <register-step-one
         v-else-if="step === 1"
