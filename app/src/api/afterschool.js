@@ -1,6 +1,5 @@
 import axios from './axios'
 import magician from './magician'
-import APIError from '@/src/errors/api-error'
 import ValidationError from '@/src/errors/validation-error'
 import { Afterschool } from '@/src/struct/afterschool'
 
@@ -15,7 +14,7 @@ function tempValidation (afterschool) {
 export async function createAfterschool (afterschool) {
   tempValidation(afterschool)
   await magician(() => axios.post(`/afterschools/`, afterschool), {
-    403: () => new APIError('권한이 없습니다.', 403)
+    403: '권한이 없습니다.'
   })
 }
 
@@ -28,18 +27,18 @@ export async function getGradeAfterschool (grade) {
 
 export async function cancelAfterschool (idx) {
   await magician(() => axios.delete(`/afterschools/request/${idx}`), {
-    403: () => new APIError('신청 기간이 아니거나 마감되었습니다.', 403),
-    404: () => new APIError('존재하지 않는 방과 후 신청입니다.', 404)
+    403: '신청 기간이 아니거나 마감되었습니다.',
+    404: '존재하지 않는 방과 후 신청입니다.'
   })
 }
 
 export async function applyAfterschool (idx, captcha) {
   await magician(() => axios.post(`/afterschools/request/${idx}`, { 'g-recaptcha-response': captcha }), {
-    401: () => new APIError('잘못된 학년에 신청했습니다.', 401),
-    403: () => new APIError('신청 기간이 아닙니다.', 403),
-    404: () => new APIError('존재하지 않는 과목입니다.', 404),
-    406: () => new APIError('잘못된 요청입니다.', 406),
-    409: () => new APIError('이미 신청을 완료했습니다.', 409)
+    401: '잘못된 학년에 신청했습니다.',
+    403: '신청 기간이 아닙니다.',
+    404: '존재하지 않는 과목입니다.',
+    406: '잘못된 요청입니다.',
+    409: '이미 신청을 완료했습니다.'
   })
 }
 
@@ -52,6 +51,6 @@ export async function getStudentAfterschool () {
 
 export async function deleteAfterschool (idx) {
   await magician(() => axios.delete(`/afterschools/${idx}`), {
-    404: () => new APIError('존재하지 않는 방과후 신청입니다.', 404)
+    404: '존재하지 않는 방과후 신청입니다.'
   })
 }

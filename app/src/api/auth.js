@@ -1,6 +1,5 @@
 import magician from '@/src/api/magician'
 import { pureAxios as axios } from '@/src/api/axios'
-import APIError from '@/src/errors/api-error'
 
 /**
  * @param id
@@ -9,8 +8,8 @@ import APIError from '@/src/errors/api-error'
  */
 export async function auth (id, password) {
   const { data } = await magician(() => axios.post('/auth/', { id, password }), {
-    400: () => new APIError('입력란을 모두 채워주세요.', 400),
-    404: () => new APIError('아이디 혹은 비밀번호가 잘못되었습니다.', 404)
+    400: '존재하지 않거나 접근할 수 없는 과제입니다.',
+    404: '아이디 혹은 비밀번호가 잘못되었습니다.'
   })
 
   return {
@@ -36,11 +35,7 @@ export async function generateAccessToken (refreshToken) {
       'Authorization': `Bearer ${refreshToken}`
     }
   }), {
-    401: () => {
-      const err = new APIError('리프레쉬 토큰이 만료되었습니다.', 401)
-      err.code = 401
-      return err
-    }
+    401: '리프레쉬 토큰이 만료되었습니다.'
   })
 
   return {
@@ -61,14 +56,14 @@ export async function register ({
   await magician(() => axios.post('/register/', {
     name, email, gender, id, password, phone_number: phone, birthday
   }), {
-    400: () => new APIError('이미 존재하는 아이디이거나 입력하신 정보가 잘못되었습니다.', 400),
-    403: () => new APIError('API 서버 오류입니다.', 403)
+    400: '이미 존재하는 아이디이거나 입력하신 정보가 잘못되었습니다.',
+    403: 'API 서버 오류입니다.'
   })
 }
 
 export async function verifyStudent (authcode) {
   await magician(() => axios.post('/register_student/', { authcode }), {
-    422: () => new APIError('인증 코드가 잘못되었습니다.', 422),
-    403: () => new APIError('API 서버 오류입니다.', 403)
+    422: '인증 코드가 잘못되었습니다.',
+    403: 'API 서버 오류입니다.'
   })
 }
