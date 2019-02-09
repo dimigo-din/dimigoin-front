@@ -1,6 +1,5 @@
 import axios from './axios'
 import magician from './magician'
-import APIError from '@/src/errors/api-error'
 
 /**
  * Warning
@@ -105,12 +104,12 @@ export const request = {
    */
   async adminRequestIngangByStudent (idx, ingangIdx) {
     await magician(() => axios.post(`/ingangs/users/${idx}/request/${ingangIdx}`), {
-      401: () => new APIError('알맞지 않는 인강실이 아닙니다.', 401),
-      403: () => new APIError('모든 티켓을 사용했습니다.', 403),
-      404: () => new APIError('존재하지 않는 인강실 신청입니다.', 404),
-      405: () => new APIError('신청가능한 시간이 아닙니다.', 405),
-      409: () => new APIError('이미 신청을 했거나 인원이 꽉 찼습니다.', 409),
-      451: () => new APIError('블랙리스트입니다.', 451)
+      401: '잘못된 인강실입니다.',
+      403: '모든 티켓을 사용했습니다.',
+      404: '존재하지 않는 인강실입니다.',
+      405: '신청가능한 시간이 아닙니다.',
+      409: '이미 신청을 했거나 인원이 꽉 찼습니다.',
+      451: '블랙리스트입니다.'
     })
   },
 
@@ -122,9 +121,9 @@ export const request = {
    */
   async adminDeleteIngangRequestByStudent (idx, ingangIdx) {
     await magician(() => axios.delete(`/ingangs/users/${idx}/request/${ingangIdx}`), {
-      401: () => new APIError('알맞지 않는 인강실이 아닙니다.', 401),
-      403: () => new APIError('모든 티켓을 사용했습니다.', 403),
-      404: () => new APIError('존재하지 않는 인강실 신청입니다.', 404)
+      401: '잘못된 인강실입니다.',
+      403: '모든 티켓을 사용했습니다.',
+      404: '존재하지 않는 인강실입니다.'
     })
   },
 
@@ -153,12 +152,12 @@ export const request = {
    */
   async requestIngang (ingangIdx) {
     await magician(() => axios.post(`/ingangs/me/requests/${ingangIdx}`), {
-      401: () => new APIError('알맞지 않는 인강실이 아닙니다.', 401),
-      403: () => new APIError('모든 티켓을 사용했습니다.', 403),
-      404: () => new APIError('존재하지 않는 인강실 신청입니다.', 404),
-      405: () => new APIError('신청가능한 시간이 아닙니다.', 405),
-      409: () => new APIError('이미 신청을 했거나 인원이 꽉 찼습니다.', 409),
-      451: () => new APIError('블랙리스트입니다.', 451)
+      401: '알맞지 않는 인강실이 아닙니다.',
+      403: '모든 티켓을 사용했습니다.',
+      404: '존재하지 않는 인강실 신청입니다.',
+      405: '신청가능한 시간이 아닙니다.',
+      409: '이미 신청을 했거나 인원이 꽉 찼습니다.',
+      451: '블랙리스트입니다.'
     })
   },
 
@@ -170,9 +169,9 @@ export const request = {
    */
   async deleteIngangRequest (ingangIdx) {
     await magician(() => axios.delete(`/ingangs/me/requests/${ingangIdx}`), {
-      401: () => new APIError('알맞지 않는 인강실이 아닙니다.', 401),
-      403: () => new APIError('모든 티켓을 사용했습니다.', 403),
-      404: () => new APIError('존재하지 않는 인강실 신청입니다.', 404)
+      401: '알맞지 않는 인강실이 아닙니다.',
+      403: '모든 티켓을 사용했습니다.',
+      404: '존재하지 않는 인강실 신청입니다.'
     })
   },
 

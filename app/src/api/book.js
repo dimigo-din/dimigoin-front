@@ -1,6 +1,5 @@
 import axios from './axios'
 import magician from './magician'
-import APIError from '@/src/errors/api-error'
 import { Book, Notice } from '@/src/struct/book'
 
 /**
@@ -11,8 +10,8 @@ import { Book, Notice } from '@/src/struct/book'
  */
 export async function addBook (book) {
   await magician(() => axios.post(`/book_info/`, book), {
-    409: () => new APIError('이미 신청한 도서입니다.', 409),
-    403: () => new APIError('가격은 숫자로 입력하세요.', 403)
+    409: '이미 신청한 도서입니다.',
+    403: '가격은 숫자로 입력하세요.'
   })
 }
 
@@ -65,7 +64,7 @@ export async function rejectBook (idx) {
  */
 export async function changeBook (idx, book) {
   await magician(() => axios.put(`/book_info/book/${idx}`, book), {
-    404: () => new APIError('존재하지 않는 신청입니다.', 404)
+    404: '존재하지 않는 신청입니다.'
   })
 }
 
@@ -77,7 +76,7 @@ export async function changeBook (idx, book) {
  */
 export async function deleteBook (idx) {
   await magician(() => axios.delete(`/book_info/book/${idx}`), {
-    404: () => new APIError('존재하지 않는 신청입니다.', 404)
+    404: '존재하지 않는 신청입니다.'
   })
 }
 
@@ -89,7 +88,7 @@ export async function deleteBook (idx) {
  */
 export async function getBook (idx) {
   const { data: { Book: book } } = await magician(() => axios.get(`/book_info/book/${idx}`), {
-    404: () => new APIError('존재하지 않는 신청입니다.', 404)
+    404: '존재하지 않는 신청입니다.'
   })
   return book.map(Book)
 }
@@ -101,7 +100,9 @@ export async function getBook (idx) {
  * @returns {Promise<void>}
  */
 export async function addNotice (notice) {
-  await magician(() => axios.post(`/book_info/library`, notice), {})
+  await magician(() => axios.post(`/book_info/library`, notice), {
+    403: '권한이 없습니다.'
+  })
 }
 
 /**
