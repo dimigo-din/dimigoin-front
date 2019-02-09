@@ -61,14 +61,11 @@ export default {
       class="brand"
       @click="hots"
     >
-      <logo style="width: 212px;" />
+      <logo style="width: 150px;" />
     </h1>
     <div class="info">
       <div class="column">
         <section class="info__profile info-section">
-          <h2 class="info-section__title">
-            프로필
-          </h2>
           <dimi-card
             shadow
             class="info__profile-card info-section__content"
@@ -119,9 +116,6 @@ export default {
           </dimi-card>
         </section>
         <section class="info__notification info-section">
-          <h2 class="info-section__title">
-            알림
-          </h2>
           <dimi-card
             class="info__notice info-section__content"
             shadow
@@ -132,9 +126,6 @@ export default {
       </div>
       <div class="column">
         <section class="info__meal info-section">
-          <h2 class="info-section__title">
-            오늘의 급식
-          </h2>
           <dimi-card
             shadow
             class="info-section__content"
@@ -151,9 +142,6 @@ export default {
     <div class="service">
       <div class="column">
         <section class="info-section">
-          <h2 class="info-section__title">
-            서비스
-          </h2>
           <service-cards />
         </section>
       </div>
@@ -180,7 +168,7 @@ export default {
 .info-section {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   &__title {
     margin: 1rem 0;
@@ -196,10 +184,9 @@ export default {
 }
 
 .brand {
-  margin: 3rem 0;
+  margin: 2rem 0 1rem 0.5rem;
   font-size: 36px;
   font-weight: $font-weight-extra-bold;
-  text-align: center;
 }
 
 .info {
