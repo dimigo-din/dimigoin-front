@@ -55,7 +55,9 @@ const webpackConfig = {
         use: {
           loader: 'vue-loader',
           options: {
-            extractCSS: true
+            compilerOptions: {
+              whitespace: 'condense' // This option will affect after vue version 2.6 >=
+            }
           }
         }
       },
