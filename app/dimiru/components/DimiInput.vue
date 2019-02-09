@@ -47,6 +47,14 @@ export default {
     value (val) {
       this.innerValue = val
     }
+  },
+
+  methods: {
+    emitEnter (event) {
+      if (event instanceof KeyboardEvent) {
+        this.$emit('enter', event)
+      }
+    }
   }
 }
 </script>
@@ -59,7 +67,7 @@ export default {
       :class="computedClass"
       :type="type"
       :placeholder="placeholder"
-      @keyup.enter="$emit('enter')"
+      @keyup.enter="emitEnter"
     >
     <p
       v-if="errorMessage"
