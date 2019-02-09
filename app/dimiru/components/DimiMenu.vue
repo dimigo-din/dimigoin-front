@@ -19,7 +19,6 @@ export default {
 
 .menu {
   padding: 0.75rem 0.75rem 0.75rem 0 !important;
-  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 </style>

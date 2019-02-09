@@ -11,8 +11,6 @@
 
 <style lang="scss" scoped>
 .content {
-  padding: 2rem 0;
-
   &__header {
     margin-bottom: 1.5rem;
     color: $gray-dark;
