@@ -3,14 +3,12 @@ import './scss/theme.scss'
 import AwesomeFooter from './components/AwesomeFooter.vue'
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
 
-import Snowf from 'vue-snowf'
-
 import('dimigoincon' /* webpackChunkName: "fonts" */)
 import('typeface-nanum-square-round' /* webpackChunkName: "fonts" */)
 
 export default {
   name: 'App',
-  components: { Snowf, AwesomeFooter },
+  components: { AwesomeFooter },
   computed: {
     ...mapGetters(['isLoggedIn', 'needVerify'])
   },
@@ -45,18 +43,6 @@ export default {
     <main class="root__router">
       <router-view />
     </main>
-    <Snowf
-      :amount="80"
-      :size="10"
-      :speed="1.5"
-      :wind="2"
-      :opacity="0.8"
-      :swing="4"
-      :image="null"
-      :z-index="-999"
-      :resize="true"
-      color="#e0e0e0"
-    />
     <awesome-footer class="root__footer" />
   </div>
 </template>
