@@ -50,16 +50,14 @@ export default {
 </template>
 
 <style lang="scss">
-@import '../scss/vars';
-
 .c-card {
   position: relative;
   padding: 1.5rem;
   background-color: $white;
-  border-radius: 6px;
+  border-radius: 15px;
 
   &--shadow {
-    box-shadow: 0 6px 12px 0 rgba(21, 19, 19, 0.1);
+    box-shadow: 15px 19px 32px -18px rgba(21, 19, 19, 0.07);
   }
 
   &--border {
