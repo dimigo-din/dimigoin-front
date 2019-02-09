@@ -31,10 +31,9 @@ export default {
 .navbar {
   display: flex;
   width: 100%;
-  min-height: 3.5rem;
+  min-height: 5rem;
   align-items: center;
-  background-color: $white;
-  box-shadow: 0 4px 16px 0 rgba(21, 19, 19, 0.1);
+  background-color: transparent;
 
   &__wrapper {
     display: flex;
@@ -55,6 +54,10 @@ export default {
     @include until($tablet) {
       display: none;
     }
+  }
+
+  &__end {
+    font-weight: $font-weight-bold;
   }
 }
 </style>

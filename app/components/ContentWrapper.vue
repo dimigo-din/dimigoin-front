@@ -14,9 +14,9 @@
   padding: 2rem 0;
 
   &__header {
-    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: $gray-dark;
-    font-size: 32px;
+    font-size: 26px;
     font-weight: $font-weight-bold;
   }
 }

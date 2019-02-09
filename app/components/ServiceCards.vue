@@ -140,12 +140,11 @@ export default {
   }
 
   &__card-title {
-
     margin-top: 1.2rem;
     font-size: 24px;
     font-weight: $font-weight-extra-bold;
     text-align: center;
-    word-break: break-all;
+    word-break: keep-all;
 
     @include until($tablet) {
       font-size: 16px;
