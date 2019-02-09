@@ -970,7 +970,7 @@ acorn@^5.7.3:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
   integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
 
-acorn@^6.0.2, acorn@^6.0.5:
+acorn@^6.0.2:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-6.0.5.tgz#81730c0815f3f3b34d8efa95cb7430965f4d887a"
   integrity sha512-i33Zgp3XWtmZBMNvCr4azvOFeWVw1Rk6p3hfi3LUDvIFraOMywb1kAtrbi+med14m4Xfpqm3zRZMT+c0FNE7kg==
@@ -7442,15 +7442,6 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.13, postcss@^7.0.14, postcss@^7.0.2
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postcss@^7.0.13, postcss@^7.0.14:
-  version "7.0.14"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.14.tgz#4527ed6b1ca0d82c53ce5ec1a2041c2346bbd6e5"
-  integrity sha512-NsbD6XUUMZvBxtQAJuWDJeeC4QFsmWsfozWxCJPWf3M55K9iu2iMDaKqyoOdTJ1R4usBXuxlVFAIo8rZPQD4Bg==
-  dependencies:
-    chalk "^2.4.2"
-    source-map "^0.6.1"
-    supports-color "^6.1.0"
-
 preload-webpack-plugin@^3.0.0-beta.3:
   version "3.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/preload-webpack-plugin/-/preload-webpack-plugin-3.0.0-beta.3.tgz#945990d0cd90d3ecb15a2f6fc59f742e39930db6"
@@ -8846,21 +8837,19 @@ stylelint-order@>=1.0.0:
     postcss "^7.0.2"
     postcss-sorting "^4.0.1"
 
+stylelint-order@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-1.0.0.tgz#089fc3d5cdf7e7d4ac1882f65b60b25db750413c"
+  integrity sha512-2IVM8GzeKIDQDTETNdmgX99ywGrb7OqFWkniCw7QLqS/xONPGMLY/xAQnvGcUS3oBSo8znsoshsWVBqPz2Kv4Q==
+  dependencies:
+    lodash "^4.17.10"
+    postcss "^7.0.2"
+    postcss-sorting "^4.0.0"
+
 stylelint-scss@^3.4.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.5.1.tgz#3759dbae8da4b03d8a9f60f5b8c098f23961db43"
   integrity sha512-XNWKTU1a2EUNWdauxHPTJlGNNQzIbg48OTTIdBs5xTXxpbYAGtX/J+jBqMPjxfdySXijc/mexubuZ+ZinUGGgw==
-  dependencies:
-    lodash "^4.17.11"
-    postcss-media-query-parser "^0.2.3"
-    postcss-resolve-nested-selector "^0.1.1"
-    postcss-selector-parser "^5.0.0"
-    postcss-value-parser "^3.3.1"
-
-stylelint-scss@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.5.3.tgz#e158b3061eeec26d7f6088f346998a797432f3c8"
-  integrity sha512-QESQUOY1ldU5tlJTTM3Megz/QtJ39S58ByjZ7dZobGDq9qMjy5jbC7PDUasrv/T7pB1UbpPojpxX9K1OR7IPEg==
   dependencies:
     lodash "^4.17.11"
     postcss-media-query-parser "^0.2.3"
@@ -8878,7 +8867,7 @@ stylelint-webpack-plugin@^0.10.5:
     object-assign "^4.1.0"
     ramda "^0.25.0"
 
-stylelint@^9.10.1:
+stylelint@^9.10.1, stylelint@^9.6.0:
   version "9.10.1"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-9.10.1.tgz#5f0ee3701461dff1d68284e1386efe8f0677a75d"
   integrity sha512-9UiHxZhOAHEgeQ7oLGwrwoDR8vclBKlSX7r4fH0iuu0SfPwFaLkb1c7Q2j1cqg9P7IDXeAV2TvQML/fRQzGBBQ==
