@@ -1,35 +1,6 @@
 <script>
-import { format } from 'date-fns'
-
 export default {
-  name: 'RegisterSuccess',
-  filters: {
-    formatDate (date) {
-      return format(date, 'YYYY년 MM월 DD일')
-    }
-  },
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    id: {
-      type: String,
-      required: true
-    },
-    birthday: {
-      type: String,
-      required: true
-    },
-    phone: {
-      type: String,
-      required: true
-    },
-    email: {
-      type: String,
-      required: true
-    }
-  }
+  name: 'RegisterSuccess'
 }
 </script>
 
