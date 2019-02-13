@@ -110,7 +110,7 @@ export default {
   }
 
   &__error-message {
-    position: absolute;
+    position: relative;
     padding-left: 1em;
     margin-top: 0.375em;
     color: $red;
