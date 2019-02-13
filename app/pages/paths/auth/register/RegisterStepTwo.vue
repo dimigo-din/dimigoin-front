@@ -1,5 +1,4 @@
 <script>
-import validator from './mixins/validator'
 import InputData from '@/pages/paths/auth/register/input-data'
 import Illust from '@/assets/register-side-2.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
@@ -7,7 +6,6 @@ import RegisterStepWrapper from './RegisterStepWrapper.vue'
 export default {
   name: 'RegisterStepTwo',
   components: { RegisterStepWrapper },
-  mixins: [ validator ],
 
   props: {
     formData: {
@@ -83,7 +81,6 @@ export default {
         <dimi-input
           id="input-id"
           v-model="internalFormData.id.value"
-          :error-message="internalFormData.id.error"
           class="form__input col-xs"
           placeholder="아이디를 입력하세요"
         />
@@ -98,7 +95,6 @@ export default {
         <dimi-input
           id="input-password"
           v-model="internalFormData.password.value"
-          :error-message="internalFormData.password.error"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 입력하세요"
@@ -114,7 +110,6 @@ export default {
         <dimi-input
           id="input-repassword"
           v-model="internalFormData.repassword.value"
-          :error-message="internalFormData.repassword.error"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 한번 더 입력하세요"

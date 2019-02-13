@@ -1,5 +1,4 @@
 <script>
-import validator from './mixins/validator'
 import InputData from './input-data'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import Illust from '@/assets/register-side-1.svg'
@@ -7,7 +6,6 @@ import Illust from '@/assets/register-side-1.svg'
 export default {
   name: 'RegisterStepOne',
   components: { RegisterStepWrapper },
-  mixins: [ validator ],
 
   props: {
     formData: {
@@ -30,9 +28,11 @@ export default {
 
   methods: {
     next () {
-      if (!this.validate()) return
-      this.$emit('sync', this.internalFormData)
-      this.$emit('next')
+      var result = this.$validator.validateAll()
+      result.then(function () {
+        this.$emit('sync', this.internalFormData)
+        this.$emit('next')
+      })
     }
   }
 }
@@ -55,9 +55,11 @@ export default {
         <dimi-input
           id="input-name"
           v-model="internalFormData.name.value"
-          :error-message="internalFormData.name.error"
+          v-validate="'required'"
+          name="name"
           class="form__input col-xs"
           placeholder="실명을 입력하세요"
+          :error="errors.first('name')"
         />
       </div>
       <div class="form__field row middle-xs">
@@ -70,10 +72,12 @@ export default {
         <dimi-input
           id="input-birthday"
           v-model="internalFormData.birthday.value"
-          :error-message="internalFormData.birthday.error"
+          v-validate="'required'"
+          name="birthDate"
           class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
+          :error="errors.first('birthDate')"
         />
       </div>
       <div class="form__field form__field--margin row middle-xs">
@@ -107,9 +111,11 @@ export default {
         <dimi-input
           id="input-phone"
           v-model="internalFormData.phone.value"
-          :error-message="internalFormData.phone.error"
+          v-validate="'required|numeric'"
+          name="phoneNumber"
           class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
+          :error="errors.first('phoneNumber')"
         />
       </div>
       <div class="form__field row middle-xs">
@@ -122,10 +128,12 @@ export default {
         <dimi-input
           id="input-email"
           v-model="internalFormData.email.value"
-          :error-message="internalFormData.email.error"
+          v-validate="'required|email'"
+          name="email"
           class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
+          :error="errors.first('email')"
         />
       </div>
       <div class="navigation">

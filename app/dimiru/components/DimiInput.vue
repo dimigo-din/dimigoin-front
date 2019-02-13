@@ -7,7 +7,11 @@ export default {
       type: [String, Number],
       default: ''
     },
-    errorMessage: {
+    name: {
+      type: String,
+      default: ''
+    },
+    error: {
       type: String,
       default: ''
     },
@@ -67,13 +71,13 @@ export default {
       :class="computedClass"
       :type="type"
       :placeholder="placeholder"
+      :name="name"
       @keyup.enter="emitEnter"
     >
     <p
-      v-if="errorMessage"
       class="input__error-message"
     >
-      {{ errorMessage }}
+      {{ error }}
     </p>
   </div>
 </template>

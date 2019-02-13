@@ -1,7 +1,6 @@
 export default class InputData {
-  constructor ({ value = '', error = '' } = {}) {
+  constructor ({ value = '' } = {}) {
     this.value = value
-    this.error = error
   }
 
   static mapData (data = {}) {
