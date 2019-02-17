@@ -130,15 +130,15 @@ export default {
 .prefix {
   position: absolute;
   top: 50%;
-  transform: translate(0, -50%);
   left: 0.75em;
+  transform: translate(0, -50%);
 }
 
 .suffix {
   position: absolute;
   top: 50%;
-  transform: translate(0, -50%);
   right: 1.3em;
+  transform: translate(0, -50%);
 }
 
 </style>
