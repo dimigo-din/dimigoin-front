@@ -40,8 +40,7 @@ const webpackConfig = {
         use: {
           loader: 'eslint-loader',
           options: {
-            [process.env.NODE_ENV === 'production'
-              ? 'emitError' : 'emitWarning']: true
+            [process.env.NODE_ENV === 'production' ? 'emitError' : 'emitWarning']: true
           }
         }
       },
