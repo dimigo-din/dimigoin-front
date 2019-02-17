@@ -2,6 +2,7 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as book from '@/src/api/book'
+import validators from '@/src/validators'
 
 export default {
   name: 'RequestBook',
@@ -29,7 +30,30 @@ export default {
         publisher: '',
         price: null,
         possession: ''
-      }
+      },
+      status: {
+        title: {
+          changed: false,
+          error: false
+        },
+        author: {
+          changed: false,
+          error: false
+        },
+        publisher: {
+          changed: false,
+          error: false
+        },
+        price: {
+          changed: false,
+          error: false
+        },
+        possession: {
+          changed: false,
+          error: false
+        }
+      },
+      vld: validators
     }
   },
 
@@ -47,6 +71,9 @@ export default {
     },
 
     async createBook () {
+      if (!this.validate()) {
+        return
+      }
       try {
         await book.addBook(this.restructure(this.form))
         await this.$swal('추가되었습니다', '', 'success')
@@ -55,6 +82,30 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
+    },
+
+    getInvalidDataKeys () {
+      const special = {
+        'price': this.vld.digit,
+        'possession': () => true
+      }
+      return Object.keys(this.form)
+        .filter(k => {
+          return k in special ? !special[k](this.form[k]) : !this.vld.required(this.form[k])
+        })
+    },
+
+    updateErrors (bads) {
+      Object.keys(this.form).forEach(key => {
+        this.status[key].error = bads.indexOf(key) !== -1
+      })
+    },
+
+    validate () {
+      const bads = this.getInvalidDataKeys()
+
+      this.updateErrors(bads)
+      return bads.length === 0
     },
 
     closeModal () {
@@ -68,6 +119,28 @@ export default {
         publisher: '',
         price: null,
         possession: ''
+      }
+      this.status = {
+        title: {
+          changed: false,
+          error: false
+        },
+        author: {
+          changed: false,
+          error: false
+        },
+        publisher: {
+          changed: false,
+          error: false
+        },
+        price: {
+          changed: false,
+          error: false
+        },
+        possession: {
+          changed: false,
+          error: false
+        }
       }
     },
 
@@ -239,7 +312,15 @@ export default {
           <dimi-input
             id="book-title"
             v-model="form.title"
-          />
+            @changed="status.title.changed=true"
+          >
+            <dimi-error-message
+              v-if="status.title.changed
+                || status.title.error"
+              :value="form.title"
+              :validators="[vld.required]"
+            />
+          </dimi-input>
         </div>
 
         <div class="modal__field">
@@ -250,15 +331,28 @@ export default {
             id="book-author"
             v-model="form.author"
             class="modal__leftInput"
-          />
+            @changed="status.author.changed=true"
+          >
+            <dimi-error-message
+              v-if="status.author.error"
+              :value="form.author"
+              :validators="[vld.required]"
+            />
+          </dimi-input>
           <label class="modal__label">
             출판사
           </label>
           <dimi-input
             id="book-publisher"
             v-model="form.publisher"
-            placeholder=""
-          />
+            @changed="status.publisher.changed=true"
+          >
+            <dimi-error-message
+              v-if="status.publisher.error"
+              :value="form.publisher"
+              :validators="[vld.required]"
+            />
+          </dimi-input>
         </div>
 
         <div class="modal__field">
@@ -272,7 +366,15 @@ export default {
             v-model="form.price"
             class="modal__leftInput"
             placeholder="숫자만 입력하세요"
-          />
+            prefix="₩"
+            @changed="status.price.changed=true"
+          >
+            <dimi-error-message
+              v-if="status.price.error"
+              :value="form.price"
+              :validators="[vld.digit]"
+            />
+          </dimi-input>
           <label class="modal__label">
             보유시 사유
           </label>
