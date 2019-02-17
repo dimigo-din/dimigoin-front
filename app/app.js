@@ -7,6 +7,7 @@ import Ripple from 'vue-ripple-directive'
 import { sync } from 'vuex-router-sync'
 import VueAnalytics from 'vue-analytics'
 import NProgress from 'nprogress'
+import Vuelidate from 'vuelidate'
 
 import App from './App.vue'
 import store from './store'
@@ -34,6 +35,7 @@ sync(store, router)
 
 Vue.use(DimiRu)
 Vue.use(swal)
+Vue.use(Vuelidate)
 
 Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)
