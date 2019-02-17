@@ -3,6 +3,7 @@ import validator from './mixins/validator'
 import InputData from './input-data'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import Illust from '@/assets/register-side-1.svg'
+import validators from '@/src/validators'
 
 export default {
   name: 'RegisterStepOne',
@@ -24,7 +25,8 @@ export default {
           this.formData,
           ['name', 'birthday', 'email', 'gender', 'phone']
         )
-      }
+      },
+      vld: validators
     }
   },
 
@@ -33,6 +35,10 @@ export default {
       if (!this.validate()) return
       this.$emit('sync', this.internalFormData)
       this.$emit('next')
+    },
+    changed (id) {
+      alert(id.slice(6))
+      this.internalFormData[id.slice(6)].changed = true
     }
   }
 }
@@ -55,10 +61,17 @@ export default {
         <dimi-input
           id="input-name"
           v-model="internalFormData.name.value"
-          :error-message="internalFormData.name.error"
           class="form__input col-xs"
           placeholder="실명을 입력하세요"
-        />
+          @changed.once="internalFormData.name.changed=true"
+        >
+          <dimi-error-message
+            v-if="internalFormData.name.changed
+              || internalFormData.name.error"
+            :value="internalFormData.name.value"
+            :validators="[vld.required]"
+          />
+        </dimi-input>
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -70,11 +83,18 @@ export default {
         <dimi-input
           id="input-birthday"
           v-model="internalFormData.birthday.value"
-          :error-message="internalFormData.birthday.error"
           class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
-        />
+          @changed.once="internalFormData.birthday.changed=true"
+        >
+          <dimi-error-message
+            v-if="internalFormData.birthday.changed
+              || internalFormData.birthday.error"
+            :value="internalFormData.birthday.value"
+            :validators="[vld.required, vld.date]"
+          />
+        </dimi-input>
       </div>
       <div class="form__field form__field--margin row middle-xs">
         <h4 class="form__label col-xs-12 col-md-2">성별</h4>
@@ -95,6 +115,11 @@ export default {
               여성
             </dimi-button-radio>
           </div>
+          <dimi-error-message
+            v-if="internalFormData.gender.error"
+            :value="internalFormData.gender.value"
+            :validators="[vld.required]"
+          />
         </div>
       </div>
       <div class="form__field row middle-xs">
@@ -107,10 +132,18 @@ export default {
         <dimi-input
           id="input-phone"
           v-model="internalFormData.phone.value"
-          :error-message="internalFormData.phone.error"
           class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
-        />
+          type="phone"
+          @changed.once="internalFormData.phone.changed=true"
+        >
+          <dimi-error-message
+            v-if="internalFormData.phone.changed
+              || internalFormData.phone.error"
+            :value="internalFormData.phone.value"
+            :validators="[vld.required, vld.phone]"
+          />
+        </dimi-input>
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -122,11 +155,18 @@ export default {
         <dimi-input
           id="input-email"
           v-model="internalFormData.email.value"
-          :error-message="internalFormData.email.error"
           class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
-        />
+          @changed.once="internalFormData.email.changed=true"
+        >
+          <dimi-error-message
+            v-if="internalFormData.email.changed
+              || internalFormData.email.error"
+            :value="internalFormData.email.value"
+            :validators="[vld.required, vld.email]"
+          />
+        </dimi-input>
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start" />
@@ -149,5 +189,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
 </style>

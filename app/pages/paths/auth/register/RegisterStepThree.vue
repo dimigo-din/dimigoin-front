@@ -38,7 +38,7 @@ export default {
       try {
         await this.onVerify(this.formData.authcode)
       } catch (err) {
-        this.formData.authcode.error = err.message
+        this.formData.authcode.error = true
       }
 
       this.pending = false
@@ -61,13 +61,17 @@ export default {
         >
           인증 코드
         </label>
-        <dimi-input
-          id="input-authcode"
-          v-model="formData.authcode.value"
-          :error-message="formData.authcode.error"
-          class="form__input col-xs"
-          placeholder="인증코드를 정확하게 입력하세요"
-        />
+        <div class="form__input col-xs">
+          <dimi-input
+            id="input-authcode"
+            v-model="formData.authcode.value"
+            placeholder="인증코드를 정확하게 입력하세요"
+            @changed.once="formData.authcode.error=false"
+          />
+          <dimi-error-message
+            v-if="formData.authcode.error"
+          />
+        </div>
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start">

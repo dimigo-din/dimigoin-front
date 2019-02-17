@@ -1,17 +1,27 @@
+import validators from '@/src/validators'
+
+function validate (key, value) {
+  switch (key) {
+    case 'birthday':
+      return validators.date(value)
+    case 'phone':
+      return validators.phone(value)
+    case 'email':
+      return validators.email(value)
+    default:
+      return validators.required(value)
+  }
+}
+
 export default {
   methods: {
     getInvalidDataKeys () {
       return Object.keys(this.internalFormData)
-        .filter(v => !this.internalFormData[v].value)
+        .filter(k => !validate(k, this.internalFormData[k].value))
     },
-
     updateErrors (bads) {
       Object.keys(this.internalFormData).forEach(key => {
-        if (bads.indexOf(key) !== -1) {
-          this.internalFormData[key].error = '정보를 채워주세요.'
-        } else {
-          this.internalFormData[key].error = ''
-        }
+        this.internalFormData[key].error = bads.indexOf(key) !== -1
       })
     },
 
