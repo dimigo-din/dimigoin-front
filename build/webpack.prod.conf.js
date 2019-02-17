@@ -87,6 +87,7 @@ const webpackConfig = async () => {
         title: 'DIMIGOIN',
         template: 'index.html',
         filename: 'index.html',
+        env: process.env,
         minify: {
           removeAttributeQuotes: true,
           collapseWhitespace: true,
