@@ -52,7 +52,6 @@ export default {
         value: {
           required,
           minLength: minLength(8)
-          // sameAs: sameAs('internalFormData.password')
         }
       }
     }
@@ -186,11 +185,6 @@ export default {
         >
           {{ internalFormData.repassword.error }}
         </dimi-error>
-        <!-- <dimi-error
-          v-if="!$v.internalFormData.repassword.value.sameAs"
-        >
-          비밀번호가 일치하지 않습니다.
-        </dimi-error> -->
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start">
