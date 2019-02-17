@@ -1,14 +1,9 @@
 <script>
 export default {
   name: 'DimiInput',
-
   props: {
     value: {
       type: [String, Number],
-      default: ''
-    },
-    errorMessage: {
-      type: String,
       default: ''
     },
     id: {
@@ -34,8 +29,7 @@ export default {
   computed: {
     computedClass () {
       return {
-        'input': true,
-        'input--error': this.errorMessage
+        'input': true
       }
     }
   },
@@ -46,14 +40,6 @@ export default {
     },
     value (val) {
       this.innerValue = val
-    }
-  },
-
-  methods: {
-    emitEnter (event) {
-      if (event instanceof KeyboardEvent) {
-        this.$emit('enter', event)
-      }
     }
   }
 }
@@ -67,14 +53,8 @@ export default {
       :class="computedClass"
       :type="type"
       :placeholder="placeholder"
-      @keyup.enter="emitEnter"
+      @keyup.enter="$emit('enter')"
     >
-    <p
-      v-if="errorMessage"
-      class="input__error-message"
-    >
-      {{ errorMessage }}
-    </p>
   </div>
 </template>
 
@@ -99,18 +79,6 @@ export default {
 
   &::placeholder {
     color: $gray;
-  }
-
-  &--error {
-    background-color: lighten($red, 35%);
-  }
-
-  &__error-message {
-    position: absolute;
-    padding-left: 1em;
-    margin-top: 0.375em;
-    color: $red;
-    font-size: 12px;
   }
 }
 
