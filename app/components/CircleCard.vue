@@ -1,7 +1,7 @@
 <script>
 import lineClamp from 'line-clamp'
 import * as handleStatus from '@/src/util/handle-circle-status'
-import * as circle from '@/src/api/circle'
+import { circleRequestor } from '@/src/api/circle'
 
 export default {
   name: 'CircleCard',
@@ -16,7 +16,8 @@ export default {
   data: () => ({
     opened: false,
     pending: false,
-    imageurl: 'https://dev-api.dimigo.in/circles/image/'
+    imageurl: 'https://dev-api.dimigo.in/circles/image/',
+    introduce: ''
   }),
 
   computed: {
@@ -42,10 +43,6 @@ export default {
 
     cancelable () {
       return this.circle.status === handleStatus.WAIT
-    },
-
-    getIntroduce () {
-      return this.circle.introduce
     },
 
     finish () {
@@ -85,10 +82,10 @@ export default {
       this.pending = true
       try {
         if (this.applyable) {
-          await circle.applyCircle(this.circle.idx, this.introduce)
+          await circleRequestor.applyCircle(this.circle.idx, this.introduce)
           this.$set(this.circle, 'status', handleStatus.WAIT)
         } else if (this.cancelable) {
-          await circle.cancelCircle(this.circle.idx)
+          await circleRequestor.cancelCircle(this.circle.idx)
           this.$set(this.circle, 'status', null)
         }
       } catch (err) {
@@ -111,9 +108,9 @@ export default {
 
       if (!answer) return
       try {
-        const circles = await circle.getAppliedCircle()
+        const circles = await circleRequestor.getAppliedCircle()
         const thisCircle = circles.find(v => Number(v.circleIdx) === Number(this.circle.idx)) || {}
-        await circle.setFinal(thisCircle.idx)
+        await circleRequestor.setFinal(thisCircle.idx)
         this.circle.status = handleStatus.FINAL
       } catch (err) {
         console.error(err)

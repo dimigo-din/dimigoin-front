@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as dets from '@/src/api/dets'
+import { detsManager } from '@/src/api/dets'
 import days from '@/src/util/days'
 
 export default {
@@ -15,9 +15,12 @@ export default {
         2: []
       },
       pending: false,
-      currentGrade: 0,
-      modal: false,
-      create: true,
+      tab: 0,
+      modals: {
+        edit: false,
+        create: false
+      },
+      currentDets: null,
       form: {
         title: '',
         description: '',
@@ -35,6 +38,21 @@ export default {
   computed: {
     days () {
       return days.filter(v => v.idx < 5)
+    },
+
+    detsInput () {
+      return {
+        title: this.form.title,
+        description: this.form.description,
+        startDate: this.timezone(new Date()),
+        endDate: this.timezone(this.form.endDate),
+        speakerSerial: this.form.speakerSerial,
+        speakerName: this.form.speakerName,
+        date: this.form.date,
+        room: this.form.room,
+        maxCount: this.form.maxCount,
+        targetGrade: this.form.targetGrade
+      }
     }
   },
 
@@ -45,15 +63,17 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list[0] = await dets.getGradeDets(1)
-      this.list[1] = await dets.getGradeDets(2)
-      this.list[2] = await dets.getGradeDets(3)
+      ;[this.list[0], this.list[1], this.list[2]] = await Promise.all([
+        detsManager.getDetsListByGrade(1),
+        detsManager.getDetsListByGrade(2),
+        detsManager.getDetsListByGrade(3)
+      ])
       this.pending = false
     },
 
-    async editDets (parameter) {
+    async editDets () {
       try {
-        await dets.changeDets(parameter.idx, this.restructure(this.form))
+        await detsManager.updateDets(this.currentDets.idx, this.detsInput)
         await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
@@ -64,7 +84,7 @@ export default {
 
     async createDets () {
       try {
-        await dets.createDets(this.restructure(this.form))
+        await detsManager.createDets(this.detsInput)
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
@@ -73,24 +93,27 @@ export default {
       }
     },
 
-    openEditModal (parameter) {
-      this.modal = parameter
-      this.create = false
+    openEditModal (dets) {
+      this.modals.edit = true
+      this.currentDets = dets
       this.form = {
-        title: parameter['title'],
-        description: parameter['description'],
-        speakerSerial: parameter['speakerSerial'],
-        speakerName: parameter['speakerName'],
-        date: parameter['date'],
-        room: parameter['room'],
-        maxCount: parameter['maxCount'],
-        targetGrade: parameter['targetGrade'],
-        endDate: new Date(parameter['endDate'])
+        title: dets.title,
+        description: dets.description,
+        speakerSerial: dets.speakerSerial,
+        speakerName: dets.speakerName,
+        date: dets.date,
+        room: dets.room,
+        maxCount: dets.maxCount,
+        targetGrade: dets.targetGrade,
+        endDate: new Date(dets.endDate)
       }
     },
 
     closeModal () {
-      this.modal = false
+      this.modals = {
+        edit: false,
+        create: false
+      }
       this.form = {
         title: '',
         description: '',
@@ -101,21 +124,6 @@ export default {
         maxCount: null,
         targetGrade: null,
         endDate: new Date()
-      }
-    },
-
-    restructure (parameter) {
-      return {
-        'title': parameter['title'],
-        'description': parameter['description'],
-        'request_start_date': this.timezone(new Date()),
-        'request_end_date': this.timezone(parameter['endDate']).toISOString(),
-        'speakerserial': parameter['speakerSerial'],
-        'speakername': parameter['speakerName'],
-        'date': parameter['date'],
-        'room': parameter['room'],
-        'max_of_count': parseInt(parameter['maxCount']),
-        'target_grade': parseInt(parameter['targetGrade'])
       }
     },
 
@@ -130,7 +138,7 @@ export default {
         showCancelButton: true
       })) {
         try {
-          await dets.deleteDets(parameter.idx)
+          await detsManager.deleteDets(parameter.idx)
           this.$swal('삭제되었습니다', '', 'success')
           await this.refresh()
         } catch (err) {
@@ -140,7 +148,7 @@ export default {
     },
 
     timezone (val) {
-      var timezoneOffset = new Date().getTimezoneOffset() * 60000
+      const timezoneOffset = new Date().getTimezoneOffset() * 60000
       return new Date(val - timezoneOffset)
     }
   }
@@ -154,7 +162,7 @@ export default {
       <span class="icon-dets-lg" />Dets 신청 관리
       <span
         class="dets__create"
-        @click="modal = true"
+        @click="modals.create = true"
       >
         <span class="icon-plus" />추가하기
       </span>
@@ -171,7 +179,7 @@ export default {
       class="dets__main"
     >
       <dimi-tab
-        v-model="currentGrade"
+        v-model="tab"
         :tabs="['1학년', '2학년', '3학년']"
       />
 
@@ -184,7 +192,7 @@ export default {
 
       <template v-else>
         <div
-          v-for="(dets, index) in list[currentGrade]"
+          v-for="(dets, index) in list[tab]"
           :key="`${index}`"
         >
           <div
@@ -247,12 +255,12 @@ export default {
       </template>
 
       <dimi-modal
-        :opened="modal"
+        :opened="modals.edit || modals.create"
         class="modal__modal"
         @close="closeModal"
       >
         <h3 class="modal__title">
-          {{ create ? 'Dets 추가' : 'Dets 수정' }}
+          {{ modals.createBook ? 'Dets 추가' : 'Dets 수정' }}
         </h3>
 
         <div class="modal__field">
@@ -347,7 +355,7 @@ export default {
         <div class="modal__field">
           <div class="modal__button">
             <template
-              v-if="create"
+              v-if="modals.createBook"
             >
               <dimi-button
                 @click="createDets"
@@ -359,7 +367,7 @@ export default {
               v-else
             >
               <dimi-button
-                @click="editDets(modal)"
+                @click="editDets"
               >
                 수정하기
               </dimi-button>

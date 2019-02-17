@@ -30,3 +30,16 @@ export const Dets = dets => ({
   count: dets['all_request_count'],
   open: false
 })
+
+export const CreateDetsInput = dets => ({
+  'title': dets.title,
+  'description': dets.description,
+  'request_start_date': dets.startDate.toISOString(),
+  'request_end_date': dets.endDate.toISOString(),
+  'speakerserial': dets.speakerSerial,
+  'speakername': dets.speakerName,
+  'date': dets.date,
+  'room': dets.room,
+  'max_of_count': parseInt(dets.maxCount),
+  'target_grade': parseInt(dets.targetGrade)
+})

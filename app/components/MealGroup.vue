@@ -1,6 +1,6 @@
 <script>
 import meals from '@/src/util/meals'
-import * as meal from '@/src/api/meal'
+import { meal } from '@/src/api/meal'
 import NProgress from 'nprogress'
 
 export default {

@@ -1,5 +1,4 @@
 import APIError from '@/src/errors/api-error'
-import NetworkError from '@/src/errors/network-error'
 
 /**
  * Handles axios error
@@ -15,7 +14,7 @@ export default async function magician (action, errorHandler = {}) {
   try {
     return await action()
   } catch (err) {
-    if (!err.response) throw new NetworkError()
+    if (!err.response) throw err
 
     const handler = errorHandler[err.response.status] || errorHandler['default']
 

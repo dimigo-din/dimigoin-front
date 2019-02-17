@@ -1,7 +1,7 @@
 <script>
 import NProgress from 'nprogress'
-import * as service from '@/src/api/service'
-import * as permission from '@/src/api/permission'
+import { service } from '@/src/api/service'
+import { permission } from '@/src/api/permission'
 
 export default {
   name: 'ServiceCards',
@@ -45,7 +45,7 @@ export default {
     },
 
     async checkPermission () {
-      const permissions = await permission.getPermission()
+      const permissions = await permission.getPermissions()
       if (permissions.length > 0) {
         this.services.unshift({
           order: 99,

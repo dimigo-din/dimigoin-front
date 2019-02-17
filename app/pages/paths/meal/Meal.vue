@@ -1,7 +1,7 @@
 <script>
 import { getISOWeek, startOfMonth, setDay } from 'date-fns'
 import meals from '@/src/util/meals'
-import * as meal from '@/src/api/meal'
+import { meal } from '@/src/api/meal'
 
 import DefaultNavbar from '@/components/DefaultNavbar.vue'
 import ContentWrapper from '@/components/ContentWrapper.vue'

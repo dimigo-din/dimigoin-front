@@ -3,9 +3,7 @@ import AssignmentBase from '@/components/AssignmentBase.vue'
 import throwable from '@/mixins/throwable'
 
 import fileDialog from 'file-dialog'
-import * as assignment from '@/src/api/assignment'
-
-const assignee = assignment.assignee
+import { assignmentSubscriber } from '@/src/api/assignment'
 
 export default {
   name: 'Assignment',
@@ -19,7 +17,7 @@ export default {
   }),
 
   async created () {
-    this.assignments = await assignee.getAssignmentList()
+    this.assignments = await assignmentSubscriber.getAssignmentList()
   },
 
   methods: {
@@ -28,13 +26,13 @@ export default {
       this.$set(this.uploads, ass.idx, true)
       try {
         if (ass.report) {
-          await assignee.editAssignment(ass.idx, files[0], event =>
+          await assignmentSubscriber.editAssignment(ass.idx, files[0], event =>
             this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
         } else {
-          await assignee.submitAssignment(ass.idx, files[0], event =>
+          await assignmentSubscriber.submitAssignment(ass.idx, files[0], event =>
             this.$set(this.percentages, ass.idx, Math.floor((event.loaded * 100) / event.total)))
         }
-        this.assignments = await assignee.getAssignmentList()
+        this.assignments = await assignmentSubscriber.getAssignmentList()
         await this.$swal('성공적으로 제출했습니다', '', 'success')
       } catch (err) {
         this.$_throwable_handleError(err)

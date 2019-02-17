@@ -4,7 +4,7 @@ import RegisterStepOne from './RegisterStepOne.vue'
 import RegisterStepTwo from './RegisterStepTwo.vue'
 import RegisterStepThree from './RegisterStepThree.vue'
 import RegisterSuccess from './RegisterSuccess.vue'
-import { register } from '@/src/api/auth'
+import { auth } from '@/src/api/auth'
 import InputData from './input-data'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     },
 
     async onRegister () {
-      await register(InputData.mapData(this.formData))
+      await auth.register(InputData.mapData(this.formData))
       this.done = true
     },
 

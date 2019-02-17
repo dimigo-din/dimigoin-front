@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as dets from '@/src/api/dets'
+import { detsRequestor } from '@/src/api/dets'
 import days from '@/src/util/days'
 
 export default {
@@ -34,14 +34,14 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await dets.getStudentDets()
+      this.list = await detsRequestor.getDetsList()
       this.pending = false
     },
 
     async toggleApply (parameter) {
       try {
-        if (parameter.status !== 'request') await dets.applyDets(parameter.idx)
-        else await dets.cancelDets(parameter.idx)
+        if (parameter.status !== 'request') await detsRequestor.applyDets(parameter.idx)
+        else await detsRequestor.cancelDets(parameter.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

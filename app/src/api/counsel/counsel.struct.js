@@ -1,4 +1,4 @@
-const convertRequest = v => (v && {
+const CouncelRequest = v => ({
   idx: v['idx'],
   time: v['request_time'],
   user: {
@@ -20,5 +20,5 @@ export const Counsel = counsel => ({
   applied: counsel['applied'],
   caniapplied: counsel['caniapplied'],
   applicant: counsel['applicant'],
-  request: (counsel['counsel_request'] || []).map(convertRequest)
+  request: (counsel['counsel_request'] || []).map(CouncelRequest)
 })

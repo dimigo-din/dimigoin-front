@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as freshman from '@/src/api/freshman'
+import { freshmanManager } from '@/src/api/freshman'
 
 export default {
   name: 'ManagementFreshman',
@@ -9,28 +9,31 @@ export default {
 
   data () {
     return {
-      content: '',
-      title: '',
-      writer: '',
-      klass: '0'
+      form: {
+        content: '',
+        title: '',
+        writer: '',
+        klass: '0'
+      }
     }
   },
 
   methods: {
     reset () {
-      this.content = ''
-      this.title = ''
-      this.writer = ''
-      this.klass = '0'
+      this.form = {
+        content: '',
+        title: '',
+        writer: '',
+        klass: '0'
+      }
     },
     async push () {
-      await freshman.postMessage({
-        'content': this.content,
-        'title': this.title,
-        'writer': this.writer,
-        'specific_class': this.klass
-      })
-      this.reset()
+      try {
+        await freshmanManager.broadcastMessage(this.form)
+        this.reset()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -49,23 +52,23 @@ export default {
       <div>
         To.
         <dimi-input
-          v-model="klass"
+          v-model="form.klass"
           class="push__input push__input--to"
           placeholder="반"
         />
       </div>
       <dimi-input
-        v-model="writer"
+        v-model="form.writer"
         class="push__input"
         placeholder="작성자를 입력하세요."
       />
       <dimi-input
-        v-model="title"
+        v-model="form.title"
         class="push__input"
         placeholder="제목을 입력하세요."
       />
       <dimi-long-input
-        v-model="content"
+        v-model="form.content"
         :height="300"
         class="push__input"
         placeholder="내용을 입력하세요."

@@ -2,7 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { format } from 'date-fns'
 
-import * as ingang from '@/src/api/ingang'
+import { ingangManager } from '@/src/api/ingang'
 import dummy from './dummy'
 
 export default {
@@ -32,7 +32,7 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.notice = (await ingang.notice.getLatestNotice()).description
+      this.notice = (await ingangManager.getLatestNotice()).description
       this.pending = false
     },
 
@@ -57,7 +57,7 @@ export default {
 
     async addNotice () {
       try {
-        await ingang.notice.postNotice(this.restructure(this.notice))
+        await ingangManager.postNotice(this.restructure(this.notice))
         await this.$swal('추가하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
@@ -66,7 +66,7 @@ export default {
     },
 
     timezone (val) {
-      var timezoneOffset = new Date().getTimezoneOffset() * 60000
+      const timezoneOffset = new Date().getTimezoneOffset() * 60000
       return new Date(val - timezoneOffset)
     }
   }

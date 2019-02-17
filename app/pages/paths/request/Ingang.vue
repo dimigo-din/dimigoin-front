@@ -1,7 +1,7 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as ingang from '@/src/api/ingang'
+import { ingangRequestor } from '@/src/api/ingang'
 
 export default {
   name: 'Ingang',
@@ -36,16 +36,16 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs = await ingang.request.getIngangList()
-      this.notice = await ingang.notice.getLatestNotice()
-      this.ticket = this.ingangs[0].week_request_count
+      this.ingangs = await ingangRequestor.getIngangList()
+      this.notice = await ingangRequestor.getLatestNotice()
+      this.ticket = this.ingangs[0]['week_request_count']
       this.pending = false
     },
 
     async toggleApply (ing) {
       try {
-        if (ing.request) await ingang.request.deleteIngangRequest(ing.idx)
-        else await ingang.request.requestIngang(ing.idx)
+        if (ing.request) await ingangRequestor.deleteIngangRequest(ing.idx)
+        else await ingangRequestor.requestIngang(ing.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
