@@ -1,13 +1,12 @@
 <script>
-import validator from './mixins/validator'
 import InputData from '@/pages/paths/auth/register/input-data'
 import Illust from '@/assets/register-side-2.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
+import { required, alphaNum, minLength } from 'vuelidate/lib/validators'
 
 export default {
   name: 'RegisterStepTwo',
   components: { RegisterStepWrapper },
-  mixins: [ validator ],
 
   props: {
     formData: {
@@ -34,6 +33,31 @@ export default {
     }
   },
 
+  validations: {
+    internalFormData: {
+      id: {
+        value: {
+          required,
+          alphaNum,
+          minLength: minLength(5)
+        }
+      },
+      password: {
+        value: {
+          required,
+          minLength: minLength(8)
+        }
+      },
+      repassword: {
+        value: {
+          required,
+          minLength: minLength(8)
+          // sameAs: sameAs('internalFormData.password')
+        }
+      }
+    }
+  },
+
   methods: {
     previous () {
       this.$emit('sync', this.internalFormData)
@@ -42,10 +66,13 @@ export default {
 
     async next () {
       if (this.pending) return
-      if (!this.validate()) return
+      this.$v.internalFormData.$touch()
+      if (this.$v.internalFormData.$error) return
       if (!this.isRetypedPasswordOk()) {
-        this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
+        this.internalFormData.repassword.error = '비밀번호가 일치하지 않습니다.'
         return
+      } else {
+        this.internalFormData.repassword.error = ''
       }
 
       this.pending = true
@@ -83,10 +110,25 @@ export default {
         <dimi-input
           id="input-id"
           v-model="internalFormData.id.value"
-          :error-message="internalFormData.id.error"
           class="form__input col-xs"
+          :class="{ 'input-id--error': $v.internalFormData.id.value.$error }"
           placeholder="아이디를 입력하세요"
         />
+        <dimi-error
+          v-if="!$v.internalFormData.id.value.required"
+        >
+          필수 정보입니다.
+        </dimi-error>
+        <dimi-error
+          v-if="!$v.internalFormData.id.value.alphaNum"
+        >
+          아이디는 영소문자만 사용할 수 있습니다.
+        </dimi-error>
+        <dimi-error
+          v-if="!$v.internalFormData.id.value.minLength"
+        >
+          5자 이상으로 입력하세요.
+        </dimi-error>
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -98,11 +140,21 @@ export default {
         <dimi-input
           id="input-password"
           v-model="internalFormData.password.value"
-          :error-message="internalFormData.password.error"
           type="password"
           class="form__input col-xs"
+          :class="{ 'input-password--error': $v.internalFormData.password.value.$error }"
           placeholder="비밀번호를 입력하세요"
         />
+        <dimi-error
+          v-if="!$v.internalFormData.password.value.required"
+        >
+          필수 정보입니다.
+        </dimi-error>
+        <dimi-error
+          v-if="!$v.internalFormData.password.value.minLength"
+        >
+          8자 이상으로 입력하세요.
+        </dimi-error>
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -114,11 +166,31 @@ export default {
         <dimi-input
           id="input-repassword"
           v-model="internalFormData.repassword.value"
-          :error-message="internalFormData.repassword.error"
           type="password"
           class="form__input col-xs"
+          :class="{ 'input-repassword--error': $v.internalFormData.repassword.value.$error }"
           placeholder="비밀번호를 한번 더 입력하세요"
         />
+        <dimi-error
+          v-if="!$v.internalFormData.repassword.value.required"
+        >
+          필수 정보입니다.
+        </dimi-error>
+        <dimi-error
+          v-if="!$v.internalFormData.repassword.value.minLength"
+        >
+          8자 이상으로 입력하세요.
+        </dimi-error>
+        <dimi-error
+          :class="internalFormData.repassword.error"
+        >
+          {{ internalFormData.repassword.error }}
+        </dimi-error>
+        <!-- <dimi-error
+          v-if="!$v.internalFormData.repassword.value.sameAs"
+        >
+          비밀번호가 일치하지 않습니다.
+        </dimi-error> -->
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start">

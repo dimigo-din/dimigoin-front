@@ -64,10 +64,12 @@ export default {
         <dimi-input
           id="input-authcode"
           v-model="formData.authcode.value"
-          :error-message="formData.authcode.error"
           class="form__input col-xs"
           placeholder="인증코드를 정확하게 입력하세요"
         />
+        <dimi-error>
+          {{ formData.authcode.error }}
+        </dimi-error>
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start">
