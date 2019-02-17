@@ -7,10 +7,6 @@ export default {
       type: [String, Number],
       default: ''
     },
-    errorMessage: {
-      type: String,
-      default: ''
-    },
     id: {
       type: String,
       default: ''
@@ -22,6 +18,14 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    prefix: {
+      type: String,
+      default: ''
+    },
+    suffix: {
+      type: String,
+      default: ''
     }
   },
 
@@ -35,13 +39,15 @@ export default {
     computedClass () {
       return {
         'input': true,
-        'input--error': this.errorMessage
+        'input--prefix': this.prefix,
+        'input--suffix': this.suffix
       }
     }
   },
 
   watch: {
     innerValue (val) {
+      this.$emit('changed', this.id)
       this.$emit('input', val)
     },
     value (val) {
@@ -61,6 +67,12 @@ export default {
 
 <template>
   <div class="input-wrapper">
+    <span
+      v-if="prefix"
+      class="prefix"
+    >
+      {{ prefix }}
+    </span>
     <input
       :id="id ? id : false"
       v-model="innerValue"
@@ -69,12 +81,15 @@ export default {
       :placeholder="placeholder"
       @keyup.enter="emitEnter"
     >
-    <p
-      v-if="errorMessage"
-      class="input__error-message"
+    <span
+      v-if="suffix"
+      class="suffix"
     >
-      {{ errorMessage }}
-    </p>
+      {{ suffix }}
+    </span>
+
+    <!-- error here -->
+    <slot />
   </div>
 </template>
 
@@ -83,10 +98,12 @@ export default {
 
 .input-wrapper {
   position: relative;
+  display: inline-block;
   width: 100%;
 }
 
 .input {
+  display: inline-block;
   width: 100%;
   box-sizing: border-box;
   padding: 0.75em 1.5em;
@@ -97,21 +114,31 @@ export default {
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
 
+  &--prefix {
+    padding-left: 2em;
+  }
+
+  &--suffix {
+    padding-right: 2em;
+  }
+
   &::placeholder {
     color: $gray;
   }
+}
 
-  &--error {
-    background-color: lighten($red, 35%);
-  }
+.prefix {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 0.75em;
+}
 
-  &__error-message {
-    position: absolute;
-    padding-left: 1em;
-    margin-top: 0.375em;
-    color: $red;
-    font-size: 12px;
-  }
+.suffix {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 1.3em;
 }
 
 </style>
