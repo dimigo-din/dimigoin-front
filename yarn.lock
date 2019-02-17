@@ -9658,6 +9658,11 @@ vue@^2.6.4:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.4.tgz#8a5a44e5740d8b8423a420c8655c97663421fb4d"
   integrity sha512-PbR3FWMgCGjRxRjtWURhcTTBSrA/WHvz9g7v6eCcA0GQQZ0a2W6VrbdP0FKxRU62N9iQSHi3+VYLPfZA8W8m+Q==
 
+vuelidate@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.7.4.tgz#5a0e54be09ac0192f1aa3387d74b92e0945bf8aa"
+  integrity sha512-QHZWYOL325Zo+2K7VBNEJTZ496Kd8Z31p85aQJFldKudUUGBmgw4zu4ghl4CyqPwjRCmqZ9lDdx4FSdMnu4fGg==
+
 vuex-router-sync@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vuex-router-sync/-/vuex-router-sync-5.0.0.tgz#1a225c17a1dd9e2f74af0a1b2c62072e9492b305"
