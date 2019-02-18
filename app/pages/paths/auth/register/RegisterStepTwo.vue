@@ -63,6 +63,10 @@ export default {
 
     isRetypedPasswordOk () {
       return this.internalFormData.password.value === this.internalFormData.repassword.value
+    },
+
+    errorShow (formData) {
+      return formData.changed || formData.error
     }
   }
 }
@@ -90,8 +94,7 @@ export default {
           @changed.once="internalFormData.id.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.id.changed
-              || internalFormData.id.error"
+            v-if="errorShow(internalFormData.id)"
             :value="internalFormData.id.value"
             :validators="[vld.required]"
           />
@@ -113,8 +116,7 @@ export default {
           @changed.once="internalFormData.password.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.password.changed
-              || internalFormData.password.error"
+            v-if="errorShow(internalFormData.id)"
             :value="internalFormData.password.value"
             :validators="[vld.required, vld.password]"
           />
@@ -136,8 +138,7 @@ export default {
           @changed.once="internalFormData.repassword.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.repassword.changed
-              || internalFormData.repassword.error"
+            v-if="errorShow(internalFormData.id)"
             :value="internalFormData.repassword.value"
             :validators="[vld.required, isRetypedPasswordOk]"
           />

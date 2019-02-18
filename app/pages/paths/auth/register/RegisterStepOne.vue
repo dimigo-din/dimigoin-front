@@ -36,9 +36,8 @@ export default {
       this.$emit('sync', this.internalFormData)
       this.$emit('next')
     },
-    changed (id) {
-      alert(id.slice(6))
-      this.internalFormData[id.slice(6)].changed = true
+    errorShow (formData) {
+      return formData.changed || formData.error
     }
   }
 }
@@ -66,8 +65,7 @@ export default {
           @changed.once="internalFormData.name.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.name.changed
-              || internalFormData.name.error"
+            v-if="errorShow(internalFormData.name)"
             :value="internalFormData.name.value"
             :validators="[vld.required]"
           />
@@ -89,8 +87,7 @@ export default {
           @changed.once="internalFormData.birthday.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.birthday.changed
-              || internalFormData.birthday.error"
+            v-if="errorShow(internalFormData.birthday)"
             :value="internalFormData.birthday.value"
             :validators="[vld.required, vld.date]"
           />
@@ -116,7 +113,7 @@ export default {
             </dimi-button-radio>
           </div>
           <dimi-error-message
-            v-if="internalFormData.gender.error"
+            v-if="errorShow(internalFormData.gender)"
             :value="internalFormData.gender.value"
             :validators="[vld.required]"
           />
@@ -138,8 +135,7 @@ export default {
           @changed.once="internalFormData.phone.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.phone.changed
-              || internalFormData.phone.error"
+            v-if="errorShow(internalFormData.phone)"
             :value="internalFormData.phone.value"
             :validators="[vld.required, vld.phone]"
           />
@@ -161,8 +157,7 @@ export default {
           @changed.once="internalFormData.email.changed=true"
         >
           <dimi-error-message
-            v-if="internalFormData.email.changed
-              || internalFormData.email.error"
+            v-if="errorShow(internalFormData.email)"
             :value="internalFormData.email.value"
             :validators="[vld.required, vld.email]"
           />
