@@ -38,6 +38,9 @@ export default {
     },
     errorShow (formData) {
       return formData.changed || formData.error
+    },
+    setChanged (formData) {
+      formData.changed = true
     }
   }
 }
@@ -62,7 +65,7 @@ export default {
           v-model="internalFormData.name.value"
           class="form__input col-xs"
           placeholder="실명을 입력하세요"
-          @changed.once="internalFormData.name.changed=true"
+          @changed.once="setChanged(internalFormData.name)"
         >
           <dimi-error-message
             v-if="errorShow(internalFormData.name)"
@@ -84,7 +87,7 @@ export default {
           class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
-          @changed.once="internalFormData.birthday.changed=true"
+          @changed.once="setChanged(internalFormData.birthday)"
         >
           <dimi-error-message
             v-if="errorShow(internalFormData.birthday)"
@@ -132,7 +135,7 @@ export default {
           class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
           type="phone"
-          @changed.once="internalFormData.phone.changed=true"
+          @changed.once="setChanged(internalFormData.phone)"
         >
           <dimi-error-message
             v-if="errorShow(internalFormData.phone)"
@@ -154,7 +157,7 @@ export default {
           class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
-          @changed.once="internalFormData.email.changed=true"
+          @changed.once="setChanged(internalFormData.email)"
         >
           <dimi-error-message
             v-if="errorShow(internalFormData.email)"

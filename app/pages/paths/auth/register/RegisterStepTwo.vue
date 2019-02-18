@@ -67,6 +67,10 @@ export default {
 
     errorShow (formData) {
       return formData.changed || formData.error
+    },
+
+    setChanged (formData) {
+      formData.changed = true
     }
   }
 }
@@ -91,7 +95,7 @@ export default {
           v-model="internalFormData.id.value"
           class="form__input col-xs"
           placeholder="아이디를 입력하세요"
-          @changed.once="internalFormData.id.changed=true"
+          @changed.once="setChanged(internalFormData.id)"
         >
           <dimi-error-message
             v-if="errorShow(internalFormData.id)"
@@ -113,10 +117,10 @@ export default {
           class="form__input col-xs"
           type="password"
           placeholder="비밀번호를 입력하세요"
-          @changed.once="internalFormData.password.changed=true"
+          @changed.once="setChanged(internalFormData.password)"
         >
           <dimi-error-message
-            v-if="errorShow(internalFormData.id)"
+            v-if="errorShow(internalFormData.password)"
             :value="internalFormData.password.value"
             :validators="[vld.required, vld.password]"
           />
@@ -135,10 +139,10 @@ export default {
           class="form__input col-xs"
           type="password"
           placeholder="비밀번호를 한번 더 입력하세요"
-          @changed.once="internalFormData.repassword.changed=true"
+          @changed.once="setChanged(internalFormData.repassword)"
         >
           <dimi-error-message
-            v-if="errorShow(internalFormData.id)"
+            v-if="errorShow(internalFormData.repassword)"
             :value="internalFormData.repassword.value"
             :validators="[vld.required, isRetypedPasswordOk]"
           />

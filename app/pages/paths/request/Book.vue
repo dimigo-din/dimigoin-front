@@ -194,6 +194,14 @@ export default {
           this.$swal('이런!', err.message, 'error')
         }
       }
+    },
+
+    errorShow (statusData) {
+      return statusData.changed || statusData.error
+    },
+
+    setChanged (statusData) {
+      statusData.changed = true
     }
   }
 }
@@ -312,11 +320,10 @@ export default {
           <dimi-input
             id="book-title"
             v-model="form.title"
-            @changed="status.title.changed=true"
+            @changed="setChanged(status.title)"
           >
             <dimi-error-message
-              v-if="status.title.changed
-                || status.title.error"
+              v-if="errorShow(status.title)"
               :value="form.title"
               :validators="[vld.required]"
             />
@@ -331,10 +338,10 @@ export default {
             id="book-author"
             v-model="form.author"
             class="modal__leftInput"
-            @changed="status.author.changed=true"
+            @changed="setChanged(status.title)"
           >
             <dimi-error-message
-              v-if="status.author.error"
+              v-if="errorShow(status.author)"
               :value="form.author"
               :validators="[vld.required]"
             />
@@ -345,10 +352,10 @@ export default {
           <dimi-input
             id="book-publisher"
             v-model="form.publisher"
-            @changed="status.publisher.changed=true"
+            @changed="setChanged(status.publisher)"
           >
             <dimi-error-message
-              v-if="status.publisher.error"
+              v-if="errorShow(status.publisher)"
               :value="form.publisher"
               :validators="[vld.required]"
             />
@@ -367,10 +374,10 @@ export default {
             class="modal__leftInput"
             placeholder="숫자만 입력하세요"
             prefix="₩"
-            @changed="status.price.changed=true"
+            @changed="setChanged(status.price)"
           >
             <dimi-error-message
-              v-if="status.price.error"
+              v-if="errorShow(status.price)"
               :value="form.price"
               :validators="[vld.digit]"
             />
