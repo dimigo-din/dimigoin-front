@@ -26,6 +26,10 @@ export default {
     }
   },
 
+  created: function () {
+    this.internalFormData.gender.value = 'M'
+  },
+
   methods: {
     next () {
       var result = this.$validator.validateAll()
