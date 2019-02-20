@@ -33,9 +33,11 @@ export default {
   methods: {
     next () {
       var result = this.$validator.validateAll()
-      result.then(function () {
-        this.$emit('sync', this.internalFormData)
-        this.$emit('next')
+      result.then(() => {
+        if (!this.errors.any()) {
+          this.$emit('sync', this.internalFormData)
+          this.$emit('next')
+        }
       })
     }
   }
