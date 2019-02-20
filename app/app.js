@@ -8,6 +8,7 @@ import { sync } from 'vuex-router-sync'
 import VueAnalytics from 'vue-analytics'
 import NProgress from 'nprogress'
 import VeeValidate from 'vee-validate'
+import VeeValidateMessagesKo from 'vee-validate/dist/locale/ko'
 
 import App from './App.vue'
 import store from './store'
@@ -35,7 +36,21 @@ sync(store, router)
 
 Vue.use(DimiRu)
 Vue.use(swal)
-Vue.use(VeeValidate)
+
+VeeValidate.Validator.localize({ ko: VeeValidateMessagesKo })
+
+const dictionary = {
+  ko: {
+    attributes: {
+      name: '이름 ',
+      birthDate: '생일 ',
+      phoneNumber: '전화번호 ',
+      email: '이메일 '
+    }
+  }
+}
+
+Vue.use(VeeValidate, { locale: 'ko', dictionary: dictionary })
 
 Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)
