@@ -7,7 +7,7 @@ export class AssignmentManagerService extends ServiceBase {
    * @returns {Object}
    */
   async getAssignmentList () {
-    const { data: { assignments } } = await this.magician(() => this.s.get('/'), {
+    const { data: { assignments } } = await this.magician(() => this.r.get('/'), {
       403: '권한이 없습니다'
     })
 
@@ -21,7 +21,7 @@ export class AssignmentManagerService extends ServiceBase {
    * @param {Object} assignment
    */
   async createAssignment (assignment) {
-    await this.magician(() => this.s.post('/', assignment), {
+    await this.magician(() => this.r.post('/', assignment), {
       403: '권한이 없습니다',
       default: '과제를 추가하던 중 문제가 발생했습니다.'
     })
@@ -34,7 +34,7 @@ export class AssignmentManagerService extends ServiceBase {
    * @returns {Object}
    */
   async getAssignment (idx) {
-    const { data: assignment } = await this.magician(() => this.s.get(`/${idx}`), {
+    const { data: assignment } = await this.magician(() => this.r.get(`/${idx}`), {
       403: '권한이 없습니다',
       404: '과제를 찾을 수 없습니다.'
     })
@@ -48,7 +48,7 @@ export class AssignmentManagerService extends ServiceBase {
    * @param {number} idx
    */
   async deleteAssignment (idx) {
-    await this.magician(() => this.s.delete(`/${idx}`), {
+    await this.magician(() => this.r.delete(`/${idx}`), {
       403: '권한이 없습니다',
       404: '과제를 찾을 수 없습니다.'
     })
@@ -61,7 +61,7 @@ export class AssignmentManagerService extends ServiceBase {
    * @param {Object} assignment
    */
   async editAssignment (idx, assignment) {
-    await this.magician(() => this.s.put(`/${idx}`, assignment), {
+    await this.magician(() => this.r.put(`/${idx}`, assignment), {
       403: '권한이 없습니다',
       404: '과제를 찾을 수 없습니다.'
     })
