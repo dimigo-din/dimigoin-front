@@ -36,7 +36,7 @@ export default {
       this.pending = true
 
       try {
-        await this.onVerify(this.formData.authcode)
+        await this.onVerify(this.formData.authcode.value)
       } catch (err) {
         this.formData.authcode.error = err.message
       }
