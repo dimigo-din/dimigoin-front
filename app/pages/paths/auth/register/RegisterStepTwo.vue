@@ -1,5 +1,5 @@
 <script>
-// import validator from './mixins/validator'
+import { required } from 'vuelidate/lib/validators'
 import InputData from '@/pages/paths/auth/register/input-data'
 import Illust from '@/assets/register-side-2.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
@@ -7,7 +7,6 @@ import RegisterStepWrapper from './RegisterStepWrapper.vue'
 export default {
   name: 'RegisterStepTwo',
   components: { RegisterStepWrapper },
-  // mixins: [ validator ],
 
   props: {
     formData: {
@@ -34,6 +33,29 @@ export default {
     }
   },
 
+  validations: {
+    internalFormData: {
+      id: {
+        value: {
+          required
+        }
+      },
+      password: {
+        value: {
+          required
+        }
+      },
+      repassword: {
+        value: {
+          required,
+          match: function (repassword) {
+            return (repassword === this.internalFormData.password.value)
+          }
+        }
+      }
+    }
+  },
+
   methods: {
     previous () {
       this.$emit('sync', this.internalFormData)
@@ -41,22 +63,23 @@ export default {
     },
 
     async next () {
-      // if (this.pending) return
-      // if (!this.validate()) return
-      // if (!this.isRetypedPasswordOk()) {
-      //   this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
-      //   return
-      // }
+      this.$v.internalFormData.$touch()
+      if (this.pending) return
+      if (this.$v.internalFormData.$error) return
+      if (!this.isRetypedPasswordOk()) {
+        this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
+        return
+      }
 
-      // this.pending = true
-      // try {
-      //   this.$emit('sync', this.internalFormData)
-      //   await this.onRegister()
-      // } catch (err) {
-      //   console.error('register', err)
-      //   this.$swal('에러!', err.message, 'error')
-      // }
-      // this.pending = false
+      this.pending = true
+      try {
+        this.$emit('sync', this.internalFormData)
+        await this.onRegister()
+      } catch (err) {
+        console.error('register', err)
+        this.$swal('에러!', err.message, 'error')
+      }
+      this.pending = false
     },
 
     isRetypedPasswordOk () {
@@ -83,9 +106,13 @@ export default {
         <dimi-input
           id="input-id"
           v-model="internalFormData.id.value"
-          :error-message="internalFormData.id.error"
           class="form__input col-xs"
           placeholder="아이디를 입력하세요"
+          :error="$v.internalFormData.id.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.id.value.$dirty && !$v.internalFormData.id.value.required"
+          message="아이디를 입력해주세요."
         />
       </div>
       <div class="form__field row middle-xs">
@@ -98,10 +125,14 @@ export default {
         <dimi-input
           id="input-password"
           v-model="internalFormData.password.value"
-          :error-message="internalFormData.password.error"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 입력하세요"
+          :error="$v.internalFormData.password.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.password.value.$dirty && !$v.internalFormData.password.value.required"
+          message="비밀번호를 입력해주세요."
         />
       </div>
       <div class="form__field row middle-xs">
@@ -114,10 +145,18 @@ export default {
         <dimi-input
           id="input-repassword"
           v-model="internalFormData.repassword.value"
-          :error-message="internalFormData.repassword.error"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 한번 더 입력하세요"
+          :error="$v.internalFormData.repassword.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.repassword.value.$dirty && !$v.internalFormData.repassword.value.required"
+          message="비밀번호를 다시 입력해주세요."
+        />
+        <dimi-error
+          v-else-if="!$v.internalFormData.repassword.value.match"
+          message="비밀번호가 일치하지 않습니다."
         />
       </div>
       <div class="navigation">
@@ -152,5 +191,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
+.error-message {
+  margin-right: 1.2rem;
+  text-align: right;
+}
 </style>
