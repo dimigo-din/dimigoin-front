@@ -1,5 +1,5 @@
 <script>
-import validator from './mixins/validator'
+import { required, numeric, email, maxLength, minLength } from 'vuelidate/lib/validators'
 import InputData from './input-data'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import Illust from '@/assets/register-side-1.svg'
@@ -7,7 +7,6 @@ import Illust from '@/assets/register-side-1.svg'
 export default {
   name: 'RegisterStepOne',
   components: { RegisterStepWrapper },
-  mixins: [ validator ],
 
   props: {
     formData: {
@@ -28,9 +27,44 @@ export default {
     }
   },
 
+  validations: {
+    internalFormData: {
+      name: {
+        value: {
+          required
+        }
+      },
+      birthday: {
+        value: {
+          required
+        }
+      },
+      email: {
+        value: {
+          required,
+          email
+        }
+      },
+      gender: {
+        value: {
+          required
+        }
+      },
+      phone: {
+        value: {
+          required,
+          numeric,
+          maxLength: maxLength(11),
+          minLength: minLength(9)
+        }
+      }
+    }
+  },
+
   methods: {
     next () {
-      if (!this.validate()) return
+      this.$v.internalFormData.$touch()
+      if (this.$v.internalFormData.$error) return
       this.$emit('sync', this.internalFormData)
       this.$emit('next')
     }
@@ -55,9 +89,13 @@ export default {
         <dimi-input
           id="input-name"
           v-model="internalFormData.name.value"
-          :error-message="internalFormData.name.error"
           class="form__input col-xs"
           placeholder="실명을 입력하세요"
+          :error="$v.internalFormData.name.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.name.value.required"
+          message="이름을 입력해주세요."
         />
       </div>
       <div class="form__field row middle-xs">
@@ -70,10 +108,14 @@ export default {
         <dimi-input
           id="input-birthday"
           v-model="internalFormData.birthday.value"
-          :error-message="internalFormData.birthday.error"
           class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
+          :error="$v.internalFormData.birthday.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.birthday.value.required"
+          message="생일을 입력해주세요."
         />
       </div>
       <div class="form__field form__field--margin row middle-xs">
@@ -94,6 +136,10 @@ export default {
             >
               여성
             </dimi-button-radio>
+            <dimi-error
+              v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.gender.value.required"
+              message="성별을 입력해주세요."
+            />
           </div>
         </div>
       </div>
@@ -107,9 +153,21 @@ export default {
         <dimi-input
           id="input-phone"
           v-model="internalFormData.phone.value"
-          :error-message="internalFormData.phone.error"
           class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
+          :error="$v.internalFormData.phone.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.required"
+          message="전화번호를 입력해주세요."
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.numeric"
+          message="유효한 전화번호를 입력해주세요."
+        />
+        <dimi-error
+          v-else-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.maxLength || !$v.internalFormData.phone.value.minLength"
+          message="유효한 길이의 전화번호를 입력해주세요."
         />
       </div>
       <div class="form__field row middle-xs">
@@ -122,10 +180,18 @@ export default {
         <dimi-input
           id="input-email"
           v-model="internalFormData.email.value"
-          :error-message="internalFormData.email.error"
           class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
+          :error="$v.internalFormData.email.value.$error"
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.email.value.required"
+          message="이메일을 입력해주세요."
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.email.value.email"
+          message="유효한 이메일을 입력해주세요."
         />
       </div>
       <div class="navigation">
@@ -149,5 +215,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
+.error-message {
+  margin-right: 1.2rem;
+  text-align: right;
+}
 </style>

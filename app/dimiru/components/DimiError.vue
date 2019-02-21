@@ -22,6 +22,7 @@ export default {
 
 .error-message {
   position: relative;
+  width: 100%;
   padding-left: 1em;
   margin: 0.25rem;
   color: $red;
