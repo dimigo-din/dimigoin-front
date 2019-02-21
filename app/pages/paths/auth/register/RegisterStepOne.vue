@@ -31,7 +31,8 @@ export default {
     internalFormData: {
       name: {
         value: {
-          required
+          required,
+          maxLength: maxLength(30)
         }
       },
       birthday: {
@@ -96,6 +97,10 @@ export default {
         <dimi-error
           v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.name.value.required"
           message="이름을 입력해주세요."
+        />
+        <dimi-error
+          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.name.value.maxLength"
+          message="유효한 이름을 입력해주세요."
         />
       </div>
       <div class="form__field row middle-xs">
