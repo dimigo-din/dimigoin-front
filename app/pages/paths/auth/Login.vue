@@ -36,6 +36,7 @@ export default {
 
   methods: {
     async confirmLoggingIn () {
+      if (!this.$v.id.required || !this.$v.password.required) return
       try {
         this.pending = true
         await this.login({ id: this.id, password: this.password })
