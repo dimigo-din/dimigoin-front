@@ -13,8 +13,7 @@ export default {
 
   async created () {
     this.toggleLoading()
-    this.services = await service.getServiceList()
-    await this.checkPermission()
+    ;[this.services] = await Promise.all([service.getServiceList(), this.addManagementService()])
     this.toggleLoading()
     this.$nextTick(() => this.updateServiceCardHeight())
   },
@@ -44,7 +43,7 @@ export default {
       }
     },
 
-    async checkPermission () {
+    async addManagementService () {
       const permissions = await permission.getPermissions()
       if (permissions.length > 0) {
         this.services.unshift({
