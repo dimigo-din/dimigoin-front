@@ -36,7 +36,8 @@ export default {
 
   methods: {
     async confirmLoggingIn () {
-      if (!this.$v.id.required || !this.$v.password.required) return
+      this.$v.$touch()
+      if (this.$v.$error) return
       try {
         this.pending = true
         await this.login({ id: this.id, password: this.password })
@@ -70,11 +71,11 @@ export default {
             class="c-login__input"
             placeholder="아이디"
             type="text"
-            :error="!$v.id.required"
+            :error="$v.id.$error"
             @enter="confirmLoggingIn"
           />
           <dimi-error
-            v-if="!$v.id.required"
+            v-if="$v.id.$dirty && !$v.id.required"
             message="아이디를 입력해주세요."
           />
           <dimi-input
@@ -82,11 +83,11 @@ export default {
             class="c-login__input"
             placeholder="비밀번호"
             type="password"
-            :error="!$v.password.required"
+            :error="$v.password.$error"
             @enter="confirmLoggingIn"
           />
           <dimi-error
-            v-if="!$v.password.required"
+            v-if="$v.password.$dirty && !$v.password.required"
             message="비밀번호를 입력해주세요."
           />
           <dimi-button
@@ -152,6 +153,7 @@ export default {
 
   &__input:last-of-type {
     margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .section:first-child {
