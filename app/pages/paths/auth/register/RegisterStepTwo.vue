@@ -1,5 +1,5 @@
 <script>
-import validator from './mixins/validator'
+// import validator from './mixins/validator'
 import InputData from '@/pages/paths/auth/register/input-data'
 import Illust from '@/assets/register-side-2.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
@@ -7,7 +7,7 @@ import RegisterStepWrapper from './RegisterStepWrapper.vue'
 export default {
   name: 'RegisterStepTwo',
   components: { RegisterStepWrapper },
-  mixins: [ validator ],
+  // mixins: [ validator ],
 
   props: {
     formData: {
@@ -41,22 +41,22 @@ export default {
     },
 
     async next () {
-      if (this.pending) return
-      if (!this.validate()) return
-      if (!this.isRetypedPasswordOk()) {
-        this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
-        return
-      }
+      // if (this.pending) return
+      // if (!this.validate()) return
+      // if (!this.isRetypedPasswordOk()) {
+      //   this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
+      //   return
+      // }
 
-      this.pending = true
-      try {
-        this.$emit('sync', this.internalFormData)
-        await this.onRegister()
-      } catch (err) {
-        console.error('register', err)
-        this.$swal('에러!', err.message, 'error')
-      }
-      this.pending = false
+      // this.pending = true
+      // try {
+      //   this.$emit('sync', this.internalFormData)
+      //   await this.onRegister()
+      // } catch (err) {
+      //   console.error('register', err)
+      //   this.$swal('에러!', err.message, 'error')
+      // }
+      // this.pending = false
     },
 
     isRetypedPasswordOk () {
