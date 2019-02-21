@@ -7,9 +7,9 @@ export default {
       type: [String, Number],
       default: ''
     },
-    errorMessage: {
-      type: String,
-      default: ''
+    error: {
+      type: Boolean,
+      default: false
     },
     id: {
       type: String,
@@ -35,7 +35,7 @@ export default {
     computedClass () {
       return {
         'input': true,
-        'input--error': this.errorMessage
+        'input--error': this.error
       }
     }
   },
@@ -69,12 +69,6 @@ export default {
       :placeholder="placeholder"
       @keyup.enter="emitEnter"
     >
-    <p
-      v-if="errorMessage"
-      class="input__error-message"
-    >
-      {{ errorMessage }}
-    </p>
   </div>
 </template>
 
@@ -103,14 +97,6 @@ export default {
 
   &--error {
     background-color: lighten($red, 35%);
-  }
-
-  &__error-message {
-    position: absolute;
-    padding-left: 1em;
-    margin-top: 0.375em;
-    color: $red;
-    font-size: 12px;
   }
 }
 
