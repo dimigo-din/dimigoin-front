@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
+import { required } from 'vuelidate/lib/validators'
 
 import MealGroup from '@/components/MealGroup.vue'
 
@@ -13,6 +14,15 @@ export default {
       id: '',
       password: '',
       pending: false
+    }
+  },
+
+  validations: {
+    id: {
+      required
+    },
+    password: {
+      required
     }
   },
 
@@ -59,14 +69,24 @@ export default {
             class="c-login__input"
             placeholder="아이디"
             type="text"
+            :error="!$v.id.required"
             @enter="confirmLoggingIn"
+          />
+          <dimi-error
+            v-if="!$v.id.required"
+            message="아이디를 입력해주세요."
           />
           <dimi-input
             v-model="password"
             class="c-login__input"
             placeholder="비밀번호"
             type="password"
+            :error="!$v.password.required"
             @enter="confirmLoggingIn"
+          />
+          <dimi-error
+            v-if="!$v.password.required"
+            message="비밀번호를 입력해주세요."
           />
           <dimi-button
             :loading="pending"
@@ -129,8 +149,8 @@ export default {
 
   .divider--horizontal { display: none; }
 
-  &__input {
-    margin-bottom: 1rem;
+  &__input:last-of-type {
+    margin-top: 1rem;
   }
 
   .section:first-child {
