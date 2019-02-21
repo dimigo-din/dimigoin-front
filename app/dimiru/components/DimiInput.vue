@@ -66,6 +66,7 @@ export default {
       v-model="innerValue"
       :class="computedClass"
       :type="type"
+      :max="type === 'date' ? '2999-12-31' : false"
       :placeholder="placeholder"
       @keyup.enter="emitEnter"
     >
