@@ -1,4 +1,5 @@
 <script>
+import { required } from 'vuelidate/lib/validators'
 import Illust from '@/assets/register-side-3.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import InputData from './input-data'
@@ -6,6 +7,7 @@ import InputData from './input-data'
 export default {
   name: 'RegisterStepThree',
   components: { RegisterStepWrapper },
+
   props: {
     onVerify: {
       type: Function,
@@ -16,12 +18,23 @@ export default {
       required: true
     }
   },
+
   data () {
     return {
       illust: Illust,
       pending: false,
       formData: {
         authcode: new InputData()
+      }
+    }
+  },
+
+  validations: {
+    formData: {
+      authcode: {
+        value: {
+          required
+        }
       }
     }
   },
@@ -33,6 +46,8 @@ export default {
 
   methods: {
     async confirm () {
+      this.$v.formData.$touch()
+      if (this.$v.formData.$error) return
       this.pending = true
 
       try {
@@ -64,9 +79,13 @@ export default {
         <dimi-input
           id="input-authcode"
           v-model="formData.authcode.value"
-          :error-message="formData.authcode.error"
           class="form__input col-xs"
-          placeholder="인증코드를 정확하게 입력하세요"
+          placeholder="인증 코드를 정확하게 입력하세요"
+          :error="$v.formData.authcode.value.$error"
+        />
+        <dimi-error
+          v-if="$v.formData.authcode.value.$dirty && !$v.formData.authcode.value.required"
+          message="인증 코드를 입력해주세요."
         />
       </div>
       <div class="navigation">
@@ -99,5 +118,10 @@ export default {
 <style lang="scss" scoped>
 .register__form .navigation {
   margin-top: 2rem;
+}
+
+.error-message {
+  margin-right: 1.2rem;
+  text-align: right;
 }
 </style>
