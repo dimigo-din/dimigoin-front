@@ -11,6 +11,10 @@ export default {
       type: String,
       default: ''
     },
+    errorMessage: {
+      type: String,
+      default: ''
+    },
     placeholder: {
       type: String,
       default: ''
@@ -66,7 +70,7 @@ export default {
     >
     <dimi-error
       v-model="innerValue"
-      errmsg = "TEST"
+      :errmsg="errorMessage"
     />
   </div>
 </template>

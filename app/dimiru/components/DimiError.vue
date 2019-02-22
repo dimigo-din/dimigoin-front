@@ -8,23 +8,22 @@ export default {
       default: ''
     }
   }
-
-  
 }
 </script>
 
 <template>
   <p
     v-if="errmsg"
-    class= "errmsg"
-    value = this.errmsg
-  />
+    class="error-message"
+  >
+    {{ errmsg }}
+  </p>
 </template>
 
 <style lang="scss">
-@import '../scss/vars';
+  @import '../scss/vars';
 
-.error-message {
+  .error-message {
     position: absolute;
     padding-left: 1em;
     margin-top: 0.375em;
