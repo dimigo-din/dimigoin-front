@@ -13,7 +13,10 @@ export default {
 
   async created () {
     this.toggleLoading()
-    ;[this.services] = await Promise.all([service.getServiceList(), this.addManagementService()])
+    this.services = (await Promise.all([
+      this.getManagementService(),
+      service.getServiceList()
+    ])).flatMap(v => v)
     this.toggleLoading()
     this.$nextTick(() => this.updateServiceCardHeight())
   },
@@ -43,16 +46,16 @@ export default {
       }
     },
 
-    async addManagementService () {
+    async getManagementService () {
       const permissions = await permission.getPermissions()
       if (permissions.length > 0) {
-        this.services.unshift({
+        return {
           order: 99,
           title: '관리',
           description: 'Dets, 인강실',
           icon: 'icon-submission',
           url: 'management'
-        })
+        }
       }
     }
   }
