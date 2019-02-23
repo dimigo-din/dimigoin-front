@@ -119,7 +119,7 @@ export default {
           :error="$v.internalFormData.birthday.value.$error"
         />
         <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.birthday.value.required"
+          v-if="$v.internalFormData.birthday.value.$dirty && !$v.internalFormData.birthday.value.required"
           message="생일을 입력해주세요."
         />
       </div>
@@ -142,7 +142,7 @@ export default {
               여성
             </dimi-button-radio>
             <dimi-error
-              v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.gender.value.required"
+              v-if="$v.internalFormData.gender.value.$dirty && !$v.internalFormData.gender.value.required"
               message="성별을 입력해주세요."
             />
           </div>
@@ -163,15 +163,15 @@ export default {
           :error="$v.internalFormData.phone.value.$error"
         />
         <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.required"
+          v-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.required"
           message="전화번호를 입력해주세요."
         />
         <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.numeric"
+          v-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.numeric"
           message="유효한 전화번호를 입력해주세요."
         />
         <dimi-error
-          v-else-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.phone.value.maxLength || !$v.internalFormData.phone.value.minLength"
+          v-else-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.maxLength || !$v.internalFormData.phone.value.minLength"
           message="유효한 길이의 전화번호를 입력해주세요."
         />
       </div>
@@ -191,11 +191,11 @@ export default {
           :error="$v.internalFormData.email.value.$error"
         />
         <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.email.value.required"
+          v-if="$v.internalFormData.email.value.$dirty && !$v.internalFormData.email.value.required"
           message="이메일을 입력해주세요."
         />
         <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.email.value.email"
+          v-if="$v.internalFormData.email.value.$dirty && !$v.internalFormData.email.value.email"
           message="유효한 이메일을 입력해주세요."
         />
       </div>
