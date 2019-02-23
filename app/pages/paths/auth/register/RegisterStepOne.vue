@@ -1,6 +1,5 @@
 <script>
 import { required, numeric, email, maxLength, minLength } from 'vuelidate/lib/validators'
-import InputData from './input-data'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import Illust from '@/assets/register-side-1.svg'
 
@@ -17,56 +16,40 @@ export default {
 
   data () {
     return {
-      illust: Illust,
-      internalFormData: {
-        ...InputData.copyData(
-          this.formData,
-          ['name', 'birthday', 'email', 'gender', 'phone']
-        )
-      }
+      illust: Illust
     }
   },
 
   validations: {
-    internalFormData: {
+    formData: {
       name: {
-        value: {
-          required,
-          maxLength: maxLength(30)
-        }
+        required,
+        maxLength: maxLength(30)
       },
       birthday: {
-        value: {
-          required
-        }
+        required
       },
       email: {
-        value: {
-          required,
-          email
-        }
+        required,
+        email
       },
       gender: {
-        value: {
-          required
-        }
+        required
       },
       phone: {
-        value: {
-          required,
-          numeric,
-          maxLength: maxLength(11),
-          minLength: minLength(9)
-        }
+        required,
+        numeric,
+        maxLength: maxLength(11),
+        minLength: minLength(9)
       }
     }
   },
 
   methods: {
     next () {
-      this.$v.internalFormData.$touch()
-      if (this.$v.internalFormData.$error) return
-      this.$emit('sync', this.internalFormData)
+      this.$v.formData.$touch()
+      if (this.$v.formData.$error) return
+      this.$emit('sync', this.formData)
       this.$emit('next')
     }
   }
@@ -89,19 +72,12 @@ export default {
         </label>
         <dimi-input
           id="input-name"
-          v-model="internalFormData.name.value"
+          v-model="formData.name"
           class="form__input col-xs"
           placeholder="실명을 입력하세요"
-          :error="$v.internalFormData.name.value.$error"
+          :error="$v.formData.name.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.name.value.required"
-          message="이름을 입력해주세요."
-        />
-        <dimi-error
-          v-if="$v.internalFormData.name.value.$dirty && !$v.internalFormData.name.value.maxLength"
-          message="유효한 이름을 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.name" />
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -112,39 +88,33 @@ export default {
         </label>
         <dimi-input
           id="input-birthday"
-          v-model="internalFormData.birthday.value"
+          v-model="formData.birthday"
           class="form__input col-xs"
           placeholder="생년월일을 8자리로 입력하세요"
           type="date"
-          :error="$v.internalFormData.birthday.value.$error"
+          :error="$v.formData.birthday.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.birthday.value.$dirty && !$v.internalFormData.birthday.value.required"
-          message="생일을 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.birthday" />
       </div>
       <div class="form__field form__field--margin row middle-xs">
         <h4 class="form__label col-xs-12 col-md-2">성별</h4>
         <div class="col-xs">
           <div class="row">
             <dimi-button-radio
-              v-model="internalFormData.gender.value"
+              v-model="formData.gender"
               class="form__radio col-xs"
               name="M"
             >
               남성
             </dimi-button-radio>
             <dimi-button-radio
-              v-model="internalFormData.gender.value"
+              v-model="formData.gender"
               class="form__radio col-xs"
               name="F"
             >
               여성
             </dimi-button-radio>
-            <dimi-error
-              v-if="$v.internalFormData.gender.value.$dirty && !$v.internalFormData.gender.value.required"
-              message="성별을 입력해주세요."
-            />
+            <dimi-error :validation="$v.formData.gender" />
           </div>
         </div>
       </div>
@@ -157,23 +127,12 @@ export default {
         </label>
         <dimi-input
           id="input-phone"
-          v-model="internalFormData.phone.value"
+          v-model="formData.phone"
           class="form__input col-xs"
           placeholder="대쉬(-) 없이 전화번호를 입력하세요"
-          :error="$v.internalFormData.phone.value.$error"
+          :error="$v.formData.phone.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.required"
-          message="전화번호를 입력해주세요."
-        />
-        <dimi-error
-          v-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.numeric"
-          message="유효한 전화번호를 입력해주세요."
-        />
-        <dimi-error
-          v-else-if="$v.internalFormData.phone.value.$dirty && !$v.internalFormData.phone.value.maxLength || !$v.internalFormData.phone.value.minLength"
-          message="유효한 길이의 전화번호를 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.phone" />
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -184,20 +143,13 @@ export default {
         </label>
         <dimi-input
           id="input-email"
-          v-model="internalFormData.email.value"
+          v-model="formData.email"
           class="form__input col-xs"
           placeholder="이메일 주소를 입력하세요"
           type="email"
-          :error="$v.internalFormData.email.value.$error"
+          :error="$v.formData.email.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.email.value.$dirty && !$v.internalFormData.email.value.required"
-          message="이메일을 입력해주세요."
-        />
-        <dimi-error
-          v-if="$v.internalFormData.email.value.$dirty && !$v.internalFormData.email.value.email"
-          message="유효한 이메일을 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.email" />
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start" />

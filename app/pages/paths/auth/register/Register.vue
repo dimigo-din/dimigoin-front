@@ -5,7 +5,6 @@ import RegisterStepTwo from './RegisterStepTwo.vue'
 import RegisterStepThree from './RegisterStepThree.vue'
 import RegisterSuccess from './RegisterSuccess.vue'
 import { register } from '@/src/api/auth'
-import InputData from './input-data'
 
 export default {
   name: 'Register',
@@ -19,38 +18,21 @@ export default {
   data: () => ({
     step: 1,
     formData: {
-      ...InputData.arrayFactory([
-        'name',
-        'birthday',
-        'gender',
-        'email',
-        'phone',
-        'id',
-        'password',
-        'repassword'
-      ])
+      name: '',
+      birthday: '',
+      gender: '',
+      email: '',
+      phone: '',
+      id: '',
+      password: '',
+      repassword: ''
     },
     done: false
   }),
-  computed: {
-    successInfo () {
-      return {
-        ...['name', 'id', 'birthday', 'phone', 'email'].reduce((obj, key) => {
-          obj[key] = this.formData[key].value
-          return obj
-        }, {})
-      }
-    }
-  },
-  methods: {
-    assignFormData (value) {
-      Object.keys(value)
-        .filter(key => value[key].value !== (this.formData[key] || {}).value)
-        .forEach(key => this.$set(this.formData, key, value[key]))
-    },
 
+  methods: {
     async onRegister () {
-      await register(InputData.mapData(this.formData))
+      await register(this.formData)
       this.done = true
     },
 
@@ -94,14 +76,12 @@ export default {
       <register-step-one
         v-else-if="step === 1"
         :form-data="formData"
-        @sync="assignFormData"
         @next="() => step = 2"
       />
       <register-step-two
         v-else-if="step === 2"
         :form-data="formData"
         :on-register="onRegister"
-        @sync="assignFormData"
         @previous="() => step = 1"
       />
     </div>

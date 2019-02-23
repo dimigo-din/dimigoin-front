@@ -2,7 +2,6 @@
 import { required } from 'vuelidate/lib/validators'
 import Illust from '@/assets/register-side-3.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
-import InputData from './input-data'
 
 export default {
   name: 'RegisterStepThree',
@@ -24,7 +23,7 @@ export default {
       illust: Illust,
       pending: false,
       formData: {
-        authcode: new InputData()
+        authcode: ''
       }
     }
   },
@@ -32,9 +31,7 @@ export default {
   validations: {
     formData: {
       authcode: {
-        value: {
-          required
-        }
+        required
       }
     }
   },
@@ -53,7 +50,8 @@ export default {
       try {
         await this.onVerify(this.formData.authcode)
       } catch (err) {
-        this.formData.authcode.error = err.message
+        console.error('authcode', err)
+        this.$swal('에러!', err.message, 'error')
       }
 
       this.pending = false
@@ -78,15 +76,12 @@ export default {
         </label>
         <dimi-input
           id="input-authcode"
-          v-model="formData.authcode.value"
+          v-model="formData.authcode"
           class="form__input col-xs"
           placeholder="인증 코드를 정확하게 입력하세요"
-          :error="$v.formData.authcode.value.$error"
+          :error="$v.formData.authcode.$error"
         />
-        <dimi-error
-          v-if="$v.formData.authcode.value.$dirty && !$v.formData.authcode.value.required"
-          message="인증 코드를 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.authcode" />
       </div>
       <div class="navigation">
         <div class="navigation__item navigation__item--start">

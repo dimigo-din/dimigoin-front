@@ -1,6 +1,5 @@
 <script>
-import { required } from 'vuelidate/lib/validators'
-import InputData from '@/pages/paths/auth/register/input-data'
+import { required, sameAs } from 'vuelidate/lib/validators'
 import Illust from '@/assets/register-side-2.svg'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 
@@ -23,67 +22,45 @@ export default {
   data () {
     return {
       pending: false,
-      illust: Illust,
-      internalFormData: {
-        ...InputData.copyData(
-          this.formData,
-          ['id', 'password', 'repassword']
-        )
-      }
+      illust: Illust
     }
   },
 
   validations: {
-    internalFormData: {
+    formData: {
       id: {
-        value: {
-          required
-        }
+        required
       },
       password: {
-        value: {
-          required
-        }
+        required
       },
       repassword: {
-        value: {
-          required,
-          match: function (repassword) {
-            return (repassword === this.internalFormData.password.value)
-          }
-        }
+        required,
+        sameAs: sameAs('password')
       }
     }
   },
 
   methods: {
     previous () {
-      this.$emit('sync', this.internalFormData)
+      this.$emit('sync', this.formData)
       this.$emit('previous')
     },
 
     async next () {
-      this.$v.internalFormData.$touch()
+      this.$v.formData.$touch()
       if (this.pending) return
-      if (this.$v.internalFormData.$error) return
-      if (!this.isRetypedPasswordOk()) {
-        this.internalFormData.repassword.error = '입력하신 비밀번호와 일치하지 않습니다.'
-        return
-      }
+      if (this.$v.formData.$error) return
 
       this.pending = true
       try {
-        this.$emit('sync', this.internalFormData)
+        this.$emit('sync', this.formData)
         await this.onRegister()
       } catch (err) {
         console.error('register', err)
         this.$swal('에러!', err.message, 'error')
       }
       this.pending = false
-    },
-
-    isRetypedPasswordOk () {
-      return this.internalFormData.password.value === this.internalFormData.repassword.value
     }
   }
 }
@@ -105,15 +82,12 @@ export default {
         </label>
         <dimi-input
           id="input-id"
-          v-model="internalFormData.id.value"
+          v-model="formData.id"
           class="form__input col-xs"
           placeholder="아이디를 입력하세요"
-          :error="$v.internalFormData.id.value.$error"
+          :error="$v.formData.id.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.id.value.$dirty && !$v.internalFormData.id.value.required"
-          message="아이디를 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.id" />
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -124,16 +98,13 @@ export default {
         </label>
         <dimi-input
           id="input-password"
-          v-model="internalFormData.password.value"
+          v-model="formData.password"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 입력하세요"
-          :error="$v.internalFormData.password.value.$error"
+          :error="$v.formData.password.$error"
         />
-        <dimi-error
-          v-if="$v.internalFormData.password.value.$dirty && !$v.internalFormData.password.value.required"
-          message="비밀번호를 입력해주세요."
-        />
+        <dimi-error :validation="$v.formData.password" />
       </div>
       <div class="form__field row middle-xs">
         <label
@@ -144,18 +115,15 @@ export default {
         </label>
         <dimi-input
           id="input-repassword"
-          v-model="internalFormData.repassword.value"
+          v-model="formData.repassword"
           type="password"
           class="form__input col-xs"
           placeholder="비밀번호를 한번 더 입력하세요"
-          :error="$v.internalFormData.repassword.value.$error"
+          :error="$v.formData.repassword.$error"
         />
+        <dimi-error :validation="$v.formData.repassword" />
         <dimi-error
-          v-if="$v.internalFormData.repassword.value.$dirty && !$v.internalFormData.repassword.value.required"
-          message="비밀번호를 다시 입력해주세요."
-        />
-        <dimi-error
-          v-else-if="!$v.internalFormData.repassword.value.match"
+          v-if="!$v.formData.repassword.sameAs"
           message="비밀번호가 일치하지 않습니다."
         />
       </div>

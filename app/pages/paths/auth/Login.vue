@@ -74,10 +74,7 @@ export default {
             :error="$v.id.$error"
             @enter="confirmLoggingIn"
           />
-          <dimi-error
-            v-if="$v.id.$dirty && !$v.id.required"
-            message="아이디를 입력해주세요."
-          />
+          <dimi-error :validation="$v.id" />
           <dimi-input
             v-model="password"
             class="c-login__input"
@@ -86,10 +83,7 @@ export default {
             :error="$v.password.$error"
             @enter="confirmLoggingIn"
           />
-          <dimi-error
-            v-if="$v.password.$dirty && !$v.password.required"
-            message="비밀번호를 입력해주세요."
-          />
+          <dimi-error :validation="$v.password" />
           <dimi-button
             :loading="pending"
             large
@@ -153,7 +147,6 @@ export default {
 
   &__input:last-of-type {
     margin-top: 1rem;
-    margin-bottom: 1rem;
   }
 
   .section:first-child {
@@ -201,7 +194,7 @@ export default {
   .c-login__submit-btn {
     align-self: center;
     padding: 0.625em 2.75em;
-    margin-top: 3rem;
+    margin-top: 4rem;
     font-weight: $font-weight-extra-bold;
 
     @include until($tablet) {
