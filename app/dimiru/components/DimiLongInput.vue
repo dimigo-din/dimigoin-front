@@ -47,7 +47,7 @@ export default {
       v-model="innerValue"
       :type="type"
       :placeholder="placeholder"
-      :style="{height: height+'px'}"
+      :style="{ height: height + 'px', padding: '1.2em 1.5em' }"
       class="input"
     />
   </div>
