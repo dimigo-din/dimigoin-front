@@ -1,4 +1,5 @@
 <script>
+import { required, numeric } from 'vuelidate/lib/validators'
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as book from '@/src/api/book'
@@ -33,6 +34,27 @@ export default {
     }
   },
 
+  validations: {
+    form: {
+      title: {
+        required
+      },
+      author: {
+        required
+      },
+      publisher: {
+        required
+      },
+      price: {
+        required,
+        numeric
+      },
+      possession: {
+        required
+      }
+    }
+  },
+
   async created () {
     this.refresh()
   },
@@ -47,6 +69,8 @@ export default {
     },
 
     async createBook () {
+      this.$v.form.$touch()
+      if (this.$v.form.$error) return
       try {
         await book.addBook(this.restructure(this.form))
         await this.$swal('추가되었습니다', '', 'success')
@@ -239,8 +263,10 @@ export default {
           <dimi-input
             id="book-title"
             v-model="form.title"
+            :error="$v.form.title.$error"
           />
         </div>
+        <dimi-error :validation="$v.form.title" />
 
         <div class="modal__field">
           <label class="modal__label">
@@ -250,6 +276,7 @@ export default {
             id="book-author"
             v-model="form.author"
             class="modal__leftInput"
+            :error="$v.form.author.$error"
           />
           <label class="modal__label">
             출판사
@@ -258,8 +285,11 @@ export default {
             id="book-publisher"
             v-model="form.publisher"
             placeholder=""
+            :error="$v.form.publisher.$error"
           />
         </div>
+        <dimi-error :validation="$v.form.author" />
+        <dimi-error :validation="$v.form.publisher" />
 
         <div class="modal__field">
           <label
@@ -272,6 +302,7 @@ export default {
             v-model="form.price"
             class="modal__leftInput"
             placeholder="숫자만 입력하세요"
+            :error="$v.form.price.$error"
           />
           <label class="modal__label">
             보유시 사유
@@ -280,8 +311,11 @@ export default {
             id="book-possession"
             v-model="form.possession"
             placeholder="미보유시 작성 X"
+            :error="$v.form.possession.$error"
           />
         </div>
+        <dimi-error :validation="$v.form.price" />
+        <dimi-error :validation="$v.form.possession" />
 
         <div class="modal__field">
           <div class="modal__button">
@@ -458,5 +492,11 @@ export default {
     font-size: 14px;
     font-weight: $font-weight-light;
   }
+}
+
+.error-message {
+  padding: 0;
+  margin-right: 2rem;
+  text-align: right;
 }
 </style>
