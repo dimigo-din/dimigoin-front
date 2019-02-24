@@ -48,6 +48,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'DIMIGOIN',
+      env: process.env,
       template: 'index.html',
       filename: 'index.html',
       inject: true
