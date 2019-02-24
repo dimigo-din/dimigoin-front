@@ -1,6 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as book from '@/src/api/book'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'ManagementBook',
@@ -15,6 +16,14 @@ export default {
       form: {
         desc: ''
       }
+    }
+  },
+
+  validation: {
+    form:{
+     desc: {
+        required
+     }
     }
   },
 

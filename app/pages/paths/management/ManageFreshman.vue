@@ -1,6 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as freshman from '@/src/api/freshman'
+import {required , numeric} from 'vuelidate/lib/validators'
 
 export default {
   name: 'ManagementFreshman',
@@ -14,6 +15,21 @@ export default {
       writer: '',
       klass: '0'
     }
+  },
+
+  validation :{
+    content :{
+      required
+    },
+    title :{
+      required
+    },
+    writer :{
+      required
+    },
+    klass :{
+      numeric
+    },
   },
 
   methods: {

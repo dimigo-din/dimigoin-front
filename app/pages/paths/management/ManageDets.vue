@@ -2,6 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as dets from '@/src/api/dets'
 import days from '@/src/util/days'
+import { required, numeric } from 'vuelidate/lib/validators'
 
 export default {
   name: 'ManageDets',
@@ -28,6 +29,32 @@ export default {
         maxCount: null,
         targetGrade: null,
         endDate: new Date()
+      }
+    }
+  },
+
+  validation: {
+    form:{
+       title :{
+        required
+      },
+      description :{
+        required
+      },
+      speakerSerial :{
+        required
+      },
+      date :{
+        numeric
+      },
+      room :{
+        required
+      },
+      maxCount :{
+        numeric
+      },
+      targetGrade :{
+        numeric
       }
     }
   },

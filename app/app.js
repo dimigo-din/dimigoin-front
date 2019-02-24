@@ -13,6 +13,7 @@ import store from './store'
 import router from './router'
 
 import * as Sentry from '@sentry/browser'
+import Vuelidate from 'vuelidate'
 
 NProgress.configure({ showSpinner: false })
 NProgress.start()
@@ -34,6 +35,7 @@ sync(store, router)
 
 Vue.use(DimiRu)
 Vue.use(swal)
+Vue.use(Vuelidate)
 
 Ripple.zIndex = 55
 Vue.directive('ripple', Ripple)

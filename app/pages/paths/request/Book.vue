@@ -2,6 +2,7 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import * as book from '@/src/api/book'
+import {required, numeric} from 'vuelidate/lib/validators'
 
 export default {
   name: 'RequestBook',
@@ -31,6 +32,24 @@ export default {
         possession: ''
       }
     }
+  },
+
+  validations: {
+    title: {
+      required
+    },
+    author: {
+      required
+    },
+    publisher: {
+      required
+    },
+    price: {
+      numeric,
+    },
+    possesion: {
+      required
+    },
   },
 
   async created () {
