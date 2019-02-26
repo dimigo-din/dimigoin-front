@@ -24,8 +24,8 @@ export default {
 
   computed: {
     error () {
-      var validators = ['required', 'numeric', 'email', 'maxLength', 'minLength', 'sameAs']
-      for (var idx = 0; idx < validators.length; idx++) {
+      const validators = ['required', 'numeric', 'email', 'maxLength', 'minLength', 'sameAs']
+      for (let idx = 0; idx < validators.length; idx++) {
         if (
           this.validation.hasOwnProperty(validators[idx]) &&
           !this.validation[validators[idx]]
