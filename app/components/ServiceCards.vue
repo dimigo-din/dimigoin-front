@@ -1,5 +1,4 @@
 <script>
-import NProgress from 'nprogress'
 import { service } from '@/src/api/service'
 import { permission } from '@/src/api/permission'
 
@@ -28,7 +27,6 @@ export default {
   methods: {
     toggleLoading () {
       this.isLoading = !this.isLoading
-      this.isLoading ? NProgress.start() : NProgress.done()
     },
 
     updateServiceCardHeight () {

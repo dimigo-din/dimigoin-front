@@ -1,12 +1,25 @@
 import axios from 'axios'
 import store from '@/store'
+import NProgress from 'nprogress'
 
 const client = axios.create({ baseURL: process.env.API_URL })
+
+client.interceptors.request.use(config => {
+  NProgress.start()
+  return config
+})
+client.interceptors.response.use(result => {
+  NProgress.done()
+  return result
+}, err => {
+  NProgress.done()
+  throw err
+})
 
 let requestInterceptor = null
 let responseInterceptor = null
 
-export function getClient (endpoint = '', config = {
+export function createClient (endpoint = '', config = {
   defaultOptions: {}
 }) {
   return new Proxy({
