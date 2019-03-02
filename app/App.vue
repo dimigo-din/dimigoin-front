@@ -9,6 +9,9 @@ import('typeface-nanum-square-round' /* webpackChunkName: "fonts" */)
 export default {
   name: 'App',
   components: { AwesomeFooter },
+  data: () => ({
+    loaded: false
+  }),
   computed: {
     ...mapGetters(['isLoggedIn', 'needVerify'])
   },
@@ -23,6 +26,7 @@ export default {
   async created () {
     try {
       await this.autoLogin()
+      this.loaded = true
       if (this.needVerify) this.$router.push({ name: 'register' })
     } catch (err) {
       console.error(err)
@@ -41,7 +45,7 @@ export default {
     class="root"
   >
     <main class="root__router">
-      <router-view />
+      <router-view v-if="loaded" />
     </main>
     <awesome-footer class="root__footer" />
   </div>

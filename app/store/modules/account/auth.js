@@ -1,8 +1,7 @@
-import * as auth from '@/src/api/auth'
-import setAuthorizationToken from '@/src/util/axios-set-authorization'
+import { auth } from '@/src/api/auth'
 import parseToken from '@/src/util/parse-token'
 import isTokenExpired from '@/src/util/is-token-expired'
-import axios from '@/src/api/axios'
+import { updateHeader, mountTokenRefreshInterceptor, unmountTokenRefreshInterceptor } from '@/src/api/axios'
 import {
   ASSIGN_ACCESS_TOKEN,
   ASSIGN_REFRESH_TOKEN,
@@ -31,7 +30,7 @@ export default {
       state.accessToken = accessToken
       state.decodedAccessToken = parseToken(accessToken)
 
-      setAuthorizationToken(axios, accessToken)
+      updateHeader('Authorization', 'Bearer ' + accessToken)
     },
 
     [ASSIGN_REFRESH_TOKEN] (state, { refreshToken }) {
@@ -39,14 +38,14 @@ export default {
       state.refreshToken = refreshToken
       state.decodedRefreshToken = parseToken(refreshToken)
 
-      setAuthorizationToken(axios, refreshToken)
+      updateHeader('Authorization', 'Bearer ' + refreshToken)
     },
 
     [REMOVE_TOKENS] (state) {
       window.localStorage.removeItem('refreshToken')
       window.localStorage.removeItem('accessToken')
 
-      setAuthorizationToken(axios, '')
+      updateHeader('Authorization', undefined)
 
       state.accessToken = undefined
       state.refreshtoken = undefined
@@ -72,7 +71,7 @@ export default {
     },
 
     async login ({ dispatch }, { id, password }) {
-      const { accessToken, refreshToken } = await auth.auth(id, password)
+      const { accessToken, refreshToken } = await auth.verify(id, password)
       await dispatch('loginWithToken', { accessToken, refreshToken })
     },
 
@@ -84,16 +83,18 @@ export default {
     },
 
     async loginWithToken ({ commit, dispatch, getters, state }, { accessToken, refreshToken }) {
-      // Since token is not assigned yet, we can't check whether token is expired by getters or etc,
+      // Since token is not assigned yet, we can't check whether token is expired or not by getters,
       // so that this function must decode and check itself.
-      if (isTokenExpired(parseToken(refreshToken))) return dispatch('logout')
-      else commit(ASSIGN_REFRESH_TOKEN, { refreshToken })
-      if (!accessToken || isTokenExpired(parseToken(accessToken))) await dispatch('regenerateAccessToken')
+      if (isTokenExpired(parseToken(refreshToken))) throw new Error('Refresh token is Expired')
+      commit(ASSIGN_REFRESH_TOKEN, { refreshToken })
+      if (isTokenExpired(parseToken(accessToken))) await dispatch('regenerateAccessToken')
       else commit(ASSIGN_ACCESS_TOKEN, { accessToken })
       commit(UPDATE_INFO, state.decodedRefreshToken)
+      mountTokenRefreshInterceptor()
     },
 
     async logout ({ commit, state }) {
+      unmountTokenRefreshInterceptor()
       await auth.logout(state.refreshToken)
       commit(RESET_INFO)
       commit(REMOVE_TOKENS)

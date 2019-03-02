@@ -30,6 +30,7 @@
     "nprogress": "^0.2.0",
     "restaurance": "^1.0.3",
     "typeface-nanum-square-round": "^1.0.2",
+    "unix-timestamp": "^0.2.0",
     "vue": "^2.6.4",
     "vue-analytics": "^5.16.2",
     "vue-recaptcha": "^1.1.0",

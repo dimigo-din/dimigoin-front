@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as book from '@/src/api/book'
+import { bookManager } from '@/src/api/book'
 
 export default {
   name: 'ManagementBook',
@@ -18,6 +18,15 @@ export default {
     }
   },
 
+  computed: {
+    noticeInput () {
+      return {
+        desc: this.form.desc,
+        date: this.timezone(new Date()).toISOString()
+      }
+    }
+  },
+
   async created () {
     this.refresh()
   },
@@ -25,12 +34,12 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await book.getAllBook()
+      this.list = await bookManager.getAllBook()
       this.pending = false
     },
 
     timezone (val) {
-      var timezoneOffset = new Date().getTimezoneOffset() * 60000
+      const timezoneOffset = new Date().getTimezoneOffset() * 60000
       return new Date(val - timezoneOffset)
     },
 
@@ -41,16 +50,9 @@ export default {
       }
     },
 
-    restructure (notice) {
-      return {
-        'description': notice.desc,
-        'date': this.timezone(new Date()).toISOString()
-      }
-    },
-
     async addNotice () {
       try {
-        await book.addNotice(this.restructure(this.form))
+        await bookManager.addNotice(this.noticeInput)
         await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
         await this.refresh()
@@ -59,9 +61,9 @@ export default {
       }
     },
 
-    async rejectBook (boook) {
+    async rejectBook (book) {
       try {
-        await book.rejectBook(boook.idx)
+        await bookManager.rejectBook(book.idx)
         this.$swal('거절하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
@@ -69,9 +71,9 @@ export default {
       }
     },
 
-    async acceptBook (boook) {
+    async acceptBook (book) {
       try {
-        await book.acceptBook(boook.idx)
+        await bookManager.acceptBook(book.idx)
         this.$swal('승인하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {

@@ -1,7 +1,6 @@
 <script>
-import NProgress from 'nprogress'
-import * as service from '@/src/api/service'
-import * as permission from '@/src/api/permission'
+import { service } from '@/src/api/service'
+import { permission } from '@/src/api/permission'
 
 export default {
   name: 'ServiceCards',
@@ -13,8 +12,10 @@ export default {
 
   async created () {
     this.toggleLoading()
-    this.services = await service.getServiceList()
-    await this.checkPermission()
+    this.services = (await Promise.all([
+      this.getManagementService(),
+      service.getServiceList()
+    ])).flatMap(v => v)
     this.toggleLoading()
     this.$nextTick(() => this.updateServiceCardHeight())
   },
@@ -26,7 +27,6 @@ export default {
   methods: {
     toggleLoading () {
       this.isLoading = !this.isLoading
-      this.isLoading ? NProgress.start() : NProgress.done()
     },
 
     updateServiceCardHeight () {
@@ -44,16 +44,16 @@ export default {
       }
     },
 
-    async checkPermission () {
-      const permissions = await permission.getPermission()
+    async getManagementService () {
+      const permissions = await permission.getPermissions()
       if (permissions.length > 0) {
-        this.services.unshift({
+        return {
           order: 99,
           title: '관리',
           description: 'Dets, 인강실',
           icon: 'icon-submission',
           url: 'management'
-        })
+        }
       }
     }
   }

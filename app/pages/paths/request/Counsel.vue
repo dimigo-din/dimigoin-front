@@ -2,7 +2,7 @@
 import { format } from 'date-fns'
 import koLocale from 'date-fns/locale/ko'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as counsel from '@/src/api/counsel'
+import { counselRequestor } from '@/src/api/counsel'
 
 export default {
   name: 'RequestCounsel',
@@ -35,14 +35,14 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await counsel.getCounsel()
+      this.list = await counselRequestor.getCounsels()
       this.pending = false
     },
 
     async toggleApply (parameter) {
       try {
-        if (parameter.applied !== 'applied') await counsel.applyCounsel(parameter.idx)
-        else await counsel.cancelCounsel(parameter.idx)
+        if (parameter.applied !== 'applied') await counselRequestor.applyCounsel(parameter.idx)
+        else await counselRequestor.cancelCounsel(parameter.idx)
         this.$swal('성공하였습니다', '', 'success')
       } catch (err) {
         this.$swal('이런', err.message, 'error')

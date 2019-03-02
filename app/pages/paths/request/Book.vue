@@ -1,7 +1,7 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as book from '@/src/api/book'
+import { bookRequestor } from '@/src/api/book'
 
 export default {
   name: 'RequestBook',
@@ -17,12 +17,14 @@ export default {
   data () {
     return {
       list: [],
-      notice: {},
+      notice: null,
       pending: false,
       modals: {
-        book: false,
+        createBook: false,
+        editBook: false,
         notice: false
       },
+      currentBook: null,
       form: {
         title: '',
         author: '',
@@ -40,15 +42,16 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await book.getStudentBook()
-      this.notice = await book.getNotice()
-      this.notice.desc = this.notice.desc.replace(/(?:\r\n|\r|\n)/g, '<br/>')
+      ;[this.list, this.notice] = await Promise.all([
+        bookRequestor.getStudentBook(),
+        bookRequestor.getNotice()
+      ])
       this.pending = false
     },
 
     async createBook () {
       try {
-        await book.addBook(this.restructure(this.form))
+        await bookRequestor.addBook(this.form)
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
@@ -71,30 +74,21 @@ export default {
       }
     },
 
-    restructure (boook) {
-      return {
-        'name': boook['title'],
-        'author': boook['author'],
-        'publisher': boook['publisher'],
-        'price': parseInt(boook['price']),
-        'possession': boook['possession'] ? boook['possession'] : ''
-      }
-    },
-
-    openEditModal (boook) {
-      this.modals.book = boook
+    openEditModal (book) {
+      this.modals.editBook = true
+      this.currentBook = book
       this.form = {
-        title: boook['title'],
-        author: boook['author'],
-        publisher: boook['publisher'],
-        price: boook['price'],
-        possession: boook['possession']
+        title: book.title,
+        author: book.author,
+        publisher: book.publisher,
+        price: book.price,
+        possession: book.possession
       }
     },
 
-    async editBook (boook) {
+    async editBook () {
       try {
-        await book.changeBook(boook.idx, this.restructure(this.form))
+        await bookRequestor.changeBook(this.currentBook.idx, this.form)
         await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
@@ -103,7 +97,7 @@ export default {
       }
     },
 
-    async deleteBook (boook) {
+    async deleteBook (book) {
       if (await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
@@ -114,7 +108,7 @@ export default {
         showCancelButton: true
       })) {
         try {
-          await book.deleteBook(boook.idx)
+          await bookRequestor.deleteBook(book.idx)
           this.$swal('삭제되었습니다', '', 'success')
           await this.refresh()
         } catch (err) {
@@ -132,7 +126,7 @@ export default {
       <span class="icon-book-sm" />도서 신청
       <span
         class="book__create"
-        @click="modals.book = true"
+        @click="modals.createBook = true"
       >
         <span class="icon-plus" />신청하기
       </span>
@@ -158,7 +152,7 @@ export default {
       <template v-else>
         <div
           v-for="(book, idx) in list"
-          :key="`${idx}`"
+          :key="`book-${idx}`"
         >
           <div
             class="book__book"
@@ -225,7 +219,7 @@ export default {
         </div>
       </template>
       <dimi-modal
-        :opened="modals.book"
+        :opened="modals.createBook || modals.editBook"
         @close="closeModal"
       >
         <h3 class="modal__title">
@@ -285,13 +279,23 @@ export default {
 
         <div class="modal__field">
           <div class="modal__button">
-            <dimi-button @click="createBook">
+            <dimi-button
+              v-if="modals.createBook"
+              @click="createBook"
+            >
               추가하기
+            </dimi-button>
+            <dimi-button
+              v-else
+              @click="editBook(book)"
+            >
+              수정하기
             </dimi-button>
           </div>
         </div>
       </dimi-modal>
       <dimi-modal
+        v-if="notice"
         :opened="modals.notice"
         @close="closeModal"
       >

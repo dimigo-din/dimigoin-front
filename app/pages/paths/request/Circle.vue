@@ -2,10 +2,10 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import CircleCard from '@/components/CircleCard.vue'
 
-import * as circle from '@/src/api/circle'
+import { circleRequestor } from '@/src/api/circle'
 
 export default {
-  name: 'Circle',
+  name: 'CircleRequest',
 
   components: { ContentWrapper, CircleCard },
 
@@ -24,7 +24,7 @@ export default {
 
   async created () {
     this.pending = true
-    this.circles = await circle.getCircles()
+    this.circles = await circleRequestor.getCircles()
     this.pending = false
   }
 }

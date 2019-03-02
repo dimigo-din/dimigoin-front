@@ -1,6 +1,6 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as notice from '@/src/api/notice'
+import { noticeManager } from '@/src/api/notice'
 
 export default {
   name: 'Notice',
@@ -20,13 +20,13 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.description = await notice.getNotice()
+      this.description = await noticeManager.getNotice()
       this.pending = false
     },
 
     async addNotice () {
       try {
-        await notice.postNotice(this.resturct(this.description))
+        await noticeManager.postNotice(this.resturct(this.description))
         this.$swal('성공적으로 추가되었습니다', '', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')

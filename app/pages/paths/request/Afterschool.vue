@@ -1,7 +1,7 @@
 <script>
 import { format, distanceInWordsToNow } from 'date-fns'
 import koLocale from 'date-fns/locale/ko'
-import * as afterschool from '@/src/api/afterschool'
+import { afterschool } from '@/src/api/afterschool'
 import days from '@/src/util/days'
 
 import ContentWrapper from '@/components/ContentWrapper.vue'
