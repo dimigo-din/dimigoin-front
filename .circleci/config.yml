@@ -33,7 +33,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - dimigoin-front/dist
+            - dimigoin-front
   test-e2e:
     executor: default
     steps:
