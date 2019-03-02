@@ -30,6 +30,10 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run: yarn run build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - dimigoin-front/dist
   test-e2e:
     executor: default
     steps:
