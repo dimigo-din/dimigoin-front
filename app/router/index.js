@@ -14,6 +14,7 @@ const ExplorerFound = () => import(/* webpackChunkName: "explorer-found" */ '@/p
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
