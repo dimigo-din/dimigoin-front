@@ -1,25 +1,15 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { format } from 'date-fns'
 
 import { ingangManager } from '@/src/api/ingang'
-import dummy from './dummy'
 
 export default {
   name: 'Ingang',
   components: { ContentWrapper },
-
-  filters: {
-    blackDate (val) {
-      return format(val, 'YY-MM-DD')
-    }
-  },
-
   data: () => ({
     pending: false,
     currentTab: 0,
     notice: '',
-    blacklist: dummy,
     modal: {
       profile: {}
     }
@@ -32,7 +22,7 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.notice = (await ingangManager.getLatestNotice()).description
+      this.notice = (await ingangManager.getAnnouncement()).description
       this.pending = false
     },
 
@@ -43,21 +33,9 @@ export default {
       }
     },
 
-    openModal (black) {
-      this.modal = {
-        profile: black
-      }
-    },
-
-    closeModal () {
-      this.modal = {
-        profile: {}
-      }
-    },
-
     async addNotice () {
       try {
-        await ingangManager.postNotice(this.restructure(this.notice))
+        await ingangManager.addAnnouncement(this.restructure(this.notice))
         await this.$swal('추가하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
@@ -84,7 +62,7 @@ export default {
     >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['엑셀', '블랙리스트', '공지']"
+        :tabs="['엑셀', '공지']"
       />
       <div
         v-if="pending"
@@ -114,26 +92,6 @@ export default {
         </div>
         <div
           v-if="currentTab === 1"
-          class="black__cards"
-        >
-          <dimi-card
-            v-for="(black, i) in blacklist"
-            :key="`${i}`"
-            class="black__card"
-            hover
-            @click="openModal(black)"
-          >
-            <div class="black__title">
-              {{ black.serial }} {{ black.name }}
-            </div>
-            <div class="blakc__date">
-              {{ black.endDate | blackDate }}
-            </div>
-            <!--<div class="black__count">{{ black.totalCount }}</div>-->
-          </dimi-card>
-        </div>
-        <div
-          v-if="currentTab === 2"
         >
           <div class="notice">
             <dimi-long-input
@@ -175,35 +133,6 @@ export default {
 
   &__item {
     margin: 16px;
-  }
-}
-
-.black {
-  &__cards {
-    display: grid;
-    background-color: #f7f7f7;
-    grid-column-gap: 1rem;
-    grid-row-gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-
-  &__card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  &__title {
-    color: $gray-dark;
-    font-size: 24px;
-    font-weight: $font-weight-bold;
-  }
-
-  &__date {
-    margin-top: 2px;
   }
 }
 
