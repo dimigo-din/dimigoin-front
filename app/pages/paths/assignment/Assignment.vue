@@ -1,6 +1,5 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
-import throwable from '@/mixins/throwable'
 
 import fileDialog from 'file-dialog'
 import { assignmentSubscriber } from '@/src/api/assignment'
@@ -8,7 +7,6 @@ import { assignmentSubscriber } from '@/src/api/assignment'
 export default {
   name: 'Assignment',
   components: { AssignmentBase },
-  mixins: [throwable],
 
   data: () => ({
     percentages: [],
@@ -35,7 +33,7 @@ export default {
         this.assignments = await assignmentSubscriber.getAssignmentList()
         await this.$swal('성공적으로 제출했습니다', '', 'success')
       } catch (err) {
-        this.$_throwable_handleError(err)
+        this.$swal('에러!', err.message, 'error')
       } finally {
         this.uploads.splice(ass.idx, 1)
         this.$set(this.percentages, ass.idx, 0)
