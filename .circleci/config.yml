@@ -23,7 +23,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - dimigoin
+            - dimigoin-front
   build:
     executor: default
     steps:
