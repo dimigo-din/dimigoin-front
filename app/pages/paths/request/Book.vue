@@ -78,11 +78,11 @@ export default {
       this.modals.editBook = true
       this.currentBook = book
       this.form = {
-        title: book['title'],
-        author: book['author'],
-        publisher: book['publisher'],
-        price: book['price'],
-        possession: book['possession']
+        title: book.title,
+        author: book.author,
+        publisher: book.publisher,
+        price: book.price,
+        possession: book.possession
       }
     },
 

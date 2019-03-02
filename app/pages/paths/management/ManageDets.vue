@@ -260,7 +260,7 @@ export default {
         @close="closeModal"
       >
         <h3 class="modal__title">
-          {{ modals.createBook ? 'Dets 추가' : 'Dets 수정' }}
+          {{ modals.create ? 'Dets 추가' : 'Dets 수정' }}
         </h3>
 
         <div class="modal__field">
@@ -355,7 +355,7 @@ export default {
         <div class="modal__field">
           <div class="modal__button">
             <template
-              v-if="modals.createBook"
+              v-if="modals.create"
             >
               <dimi-button
                 @click="createDets"

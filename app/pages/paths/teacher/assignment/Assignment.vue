@@ -53,10 +53,7 @@ export default {
         try {
           await assignmentPublisher.deleteAssignment(ass.idx)
           this.assignments = await assignmentPublisher.getAssignmentList()
-          this.$swal(
-            '삭제되었습니다',
-            'success'
-          )
+          this.$swal('삭제되었습니다', 'success')
         } catch (err) {
           this.$swal('이런!', err.message, 'error')
         }
