@@ -29,19 +29,19 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
-      - run: yarn build
+      - run: yarn run build
   test-e2e:
     executor: default
     steps:
       - attach_workspace:
           at: ~/project
-      - run: yarn test
+      - run: yarn run test
   deploy:
     executor: default
     steps:
       - attach_workspace:
           at: ~/project
-      - run: yarn deploy
+      - run: yarn run deploy
 
 workflows:
   test-and-deploy:
