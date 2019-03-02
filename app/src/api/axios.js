@@ -45,9 +45,7 @@ export function updateHeader (key, value) {
 
 export function mountTokenRefreshInterceptor () {
   responseInterceptor = client.interceptors.response.use(r => r, async error => {
-    if (!error.response) throw error
-
-    const errorCode = error.response.status
+    const errorCode = (error.response || {}).status
     if (errorCode !== 401 && errorCode !== 422) throw error
 
     try { // When access token is expired or invalid
@@ -63,18 +61,16 @@ export function mountTokenRefreshInterceptor () {
   })
 
   requestInterceptor = client.interceptors.request.use(async config => {
-    if (store.state.account['getters/isAccessTokenExpired']) {
-      try {
-        await store.dispatch('account/regenerateAccessToken')
-        // The above dispatch patches default headers, but not in this request.
-        config.headers['Authorization'] =
-          `Bearer ${store.state.account.auth.accessToken}`
-      } catch (err) {
-        await store.dispatch('account/logout')
-        throw err
-      }
+    if (!store.state.account['getters/isAccessTokenExpired']) return config
+    try {
+      await store.dispatch('account/regenerateAccessToken')
+      // The above dispatch patches default headers, but not in this request.
+      config.headers['Authorization'] =
+        `Bearer ${store.state.account.auth.accessToken}`
+    } catch (err) {
+      await store.dispatch('account/logout')
+      throw err
     }
-
     return config
   })
 }

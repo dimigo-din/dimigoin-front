@@ -8,7 +8,6 @@ export class AuthService extends ServiceBase {
    */
   async verify (id, password) {
     const { data } = await this.magician(() => this.r.post('/auth/', { id, password }), {
-      400: '존재하지 않거나 접근할 수 없는 과제입니다.',
       404: '아이디 혹은 비밀번호가 잘못되었습니다.'
     })
 

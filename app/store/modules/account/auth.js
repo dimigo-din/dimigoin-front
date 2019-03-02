@@ -85,7 +85,7 @@ export default {
     async loginWithToken ({ commit, dispatch, getters, state }, { accessToken, refreshToken }) {
       // Since token is not assigned yet, we can't check whether token is expired or not by getters,
       // so that this function must decode and check itself.
-      if (isTokenExpired(parseToken(refreshToken))) return dispatch('logout')
+      if (isTokenExpired(parseToken(refreshToken))) throw new Error('Refresh token is Expired')
       commit(ASSIGN_REFRESH_TOKEN, { refreshToken })
       if (isTokenExpired(parseToken(accessToken))) await dispatch('regenerateAccessToken')
       else commit(ASSIGN_ACCESS_TOKEN, { accessToken })
