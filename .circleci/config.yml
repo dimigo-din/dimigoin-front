@@ -62,5 +62,5 @@ workflows:
               only:
                 - master
           requires:
-            - cypress/run
+            - test
             - build
