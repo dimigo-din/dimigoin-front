@@ -22,6 +22,10 @@ const webpackConfig = async () => {
   return merge(baseWebpackConfig, {
     mode: 'production',
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
+    entry: {
+      ...baseWebpackConfig.entry,
+      jennifer: path.resolve(__dirname, 'jennifer.js')
+    },
     output: {
       publicPath: config.build.assetsPublicPath,
       path: config.build.assetsRoot,
