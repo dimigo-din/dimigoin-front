@@ -117,7 +117,7 @@ export default {
 <template>
   <content-wrapper class="mng-afsc">
     <h1 slot="header">
-      <span class="icon-club" />2018년 겨울방학 방과 후 활동 관리
+      <span class="icon-club" />방과 후 활동 신청 관리
     </h1>
     <dimi-card
       slot="main"
