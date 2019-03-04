@@ -9,3 +9,13 @@ describe('Annonymous Accessability', () => {
     cy.url().should('eq', Cypress.config().baseUrl + '/auth/login')
   })
 })
+
+describe('Student Accessability', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route('POST', )
+  })
+
+  cy.visit('/auth/login')
+
+})
