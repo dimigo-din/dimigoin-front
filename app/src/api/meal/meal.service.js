@@ -16,7 +16,6 @@ export class MealService extends ServiceBase {
           breakfast: '',
           lunch: '',
           dinner: '',
-          snack: '',
           date: formattedDate
         })
       }
