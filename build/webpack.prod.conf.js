@@ -14,7 +14,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const SentryCli = require('@sentry/cli')
-const SentryCliPlugin = require('@sentry/webpack-plugin')
 const RemoveServiceWorkerPlugin = require('webpack-remove-serviceworker-plugin')
 
 const webpackConfig = async () => {
@@ -105,12 +104,7 @@ const webpackConfig = async () => {
         as: 'font'
       }),
       ...(process.env.CI
-        ? [new SentryCliPlugin({
-          include: '.',
-          ignoreFile: '.gitignore',
-          configFile: '.sentryclirc',
-          release: sentryProposedVersion
-        })]
+        ? []
         : [new BundleAnalyzerPlugin()]
       ),
       new MiniCssExtractPlugin({
