@@ -30,16 +30,15 @@ export default {
         <slot />
       </div>
 
-      <dimi-divider
-        horizontal
-        class="c-card__divider"
-      />
-
       <div
         class="c-card__button"
         @click="$emit('button')"
       >
         <slot name="button" />
+        <dimi-divider
+          horizontal
+          class="c-card__divider"
+        />
       </div>
     </template>
 
@@ -84,7 +83,7 @@ export default {
   }
 
   &__divider {
-    position: relative !important;
+    position: absolute !important;
     width: 100%;
     margin: 0;
   }
@@ -93,11 +92,13 @@ export default {
     display: flex;
     align-items: stretch;
     padding: 1.25rem;
+    margin-top: auto;
     cursor: pointer;
   }
 
   &__button > span {
     flex: 1;
+    margin-top: 20px;
     font-weight: $font-weight-bold;
     text-align: center;
   }
