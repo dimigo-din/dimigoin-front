@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
-import * as circle from '@/src/api/circle'
+import { circleManager } from '@/src/api/circle'
 import * as handleCircle from '@/src/util/handle-circle-status'
 
 const status = [handleCircle.WAIT, handleCircle.ACCEPT, handleCircle.FAIL, handleCircle.FINAL]
@@ -24,12 +24,17 @@ export default {
 
   async created () {
     this.pending = true
-    this.list = (await circle.getCircleApplicant())
-      .sort((a, b) => Number(a.serial) - Number(b.serial))
-      .map(v => ({
-        ...v,
-        status: this.status.indexOf(v.status)
-      }))
+    try {
+      this.list = (await circleManager.getCircleApplicant())
+        .sort((a, b) => Number(a.serial) - Number(b.serial))
+        .map(v => ({
+          ...v,
+          status: this.status.indexOf(v.status)
+        }))
+    } catch (err) {
+      this.$swal('이런!', err.message, 'error')
+    }
+
     this.pending = false
   },
 
@@ -61,7 +66,7 @@ export default {
       }
 
       const answer = await ask(type[event.value][0])
-      const setStatus = () => circle.setApplierStatus(applicant.idx, type[event.value][1])
+      const setStatus = () => circleManager.setApplierStatus(applicant.idx, type[event.value][1])
 
       try {
         if (!answer.value) setPrevent()

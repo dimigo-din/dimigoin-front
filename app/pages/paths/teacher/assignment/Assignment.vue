@@ -1,12 +1,10 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
-import throwable from '@/mixins/throwable'
-import * as assignment from '@/src/api/assignment'
+import { assignmentPublisher } from '@/src/api/assignment'
 
 export default {
   name: 'Assignment',
   components: { AssignmentBase },
-  mixins: [throwable],
 
   data: () => ({
     loading: false,
@@ -32,14 +30,14 @@ export default {
 
   methods: {
     async edit (ass) {
-      await assignment.assignor.editAssignment(ass.idx, this.restructure(this.form))
+      await assignmentPublisher.editAssignment(ass.idx, this.restructure(this.form))
       await this.$swal('수정되었습니다', '', 'success')
       this.closeModal()
       await this.update()
     },
 
     async download (ass) {
-      assignment.assignor.getResult(ass.idx)
+      await assignmentPublisher.getResult(ass.idx)
     },
 
     async deleteAss (ass) {
@@ -53,14 +51,11 @@ export default {
         showCancelButton: true
       })) {
         try {
-          await assignment.assignor.deleteAssignment(ass.idx)
-          this.assignments = await assignment.assignor.getAssignmentList()
-          this.$swal(
-            '삭제되었습니다',
-            'success'
-          )
+          await assignmentPublisher.deleteAssignment(ass.idx)
+          this.assignments = await assignmentPublisher.getAssignmentList()
+          this.$swal('삭제되었습니다', 'success')
         } catch (err) {
-          this.$_throwable_handleError(err)
+          this.$swal('이런!', err.message, 'error')
         }
         await this.update()
       }
@@ -68,18 +63,18 @@ export default {
 
     async create () {
       try {
-        await assignment.admin.createAssignment(this.restructure(this.form))
+        await assignmentPublisher.createAssignment(this.restructure(this.form))
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.update()
       } catch (err) {
-        this.$_throwable_handleError(err)
+        this.$swal('이런!', err.message, 'error')
       }
     },
 
     async update () {
       this.loading = true
-      this.assignments = await assignment.assignor.getAssignmentList()
+      this.assignments = await assignmentPublisher.getAssignmentList()
       this.loading = false
     },
 

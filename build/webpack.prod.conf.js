@@ -23,6 +23,10 @@ const webpackConfig = async () => {
   return merge(baseWebpackConfig, {
     mode: 'production',
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
+    entry: {
+      ...baseWebpackConfig.entry,
+      jennifer: path.resolve(__dirname, 'jennifer.js')
+    },
     output: {
       publicPath: config.build.assetsPublicPath,
       path: config.build.assetsRoot,
@@ -87,6 +91,7 @@ const webpackConfig = async () => {
         title: 'DIMIGOIN',
         template: 'index.html',
         filename: 'index.html',
+        env: process.env,
         minify: {
           removeAttributeQuotes: true,
           collapseWhitespace: true,

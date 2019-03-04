@@ -2,7 +2,8 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import days from '@/src/util/days'
-import * as afterschool from '@/src/api/afterschool'
+import timestamp from 'unix-timestamp'
+import { afterschool } from '@/src/api/afterschool'
 
 export default {
   name: 'Afterschool',
@@ -10,7 +11,7 @@ export default {
 
   data () {
     return {
-      currentGrade: 0,
+      tab: 0,
       checks: [],
       selectAll: false,
       filter: 0,
@@ -38,14 +39,26 @@ export default {
     },
 
     filteredList () {
-      if (this.filter === 0) return this.afterschools[this.currentGrade]
+      if (this.filter === 0) return this.afterschools[this.tab]
 
-      return this.afterschools[this.currentGrade].filter(v => v.day ===
+      return this.afterschools[this.tab].filter(v => v.day ===
         this.days[this.filter - 1].code)
     },
 
-    lengthByGrade () {
-      return this.afterschools[this.currentGrade].length
+    currentCount () {
+      return this.afterschools[this.tab].length
+    },
+
+    afterschoolInput () {
+      return {
+        name: this.form.name,
+        startDate: timestamp.fromDate(this.form.startDate),
+        endDate: timestamp.fromDate(this.form.endDate),
+        day: days[this.form.day].code,
+        grade: this.tab + 1,
+        maxCount: parseInt(this.form.maxCount),
+        teacherName: this.form.teacherName
+      }
     }
   },
 
@@ -66,55 +79,36 @@ export default {
 
   methods: {
     async updateAll () {
-      for (const grade of [1, 2, 3]) {
-        this.afterschools[grade - 1] = await afterschool.getGradeAfterschool(grade)
-      }
-      this.checks = [...Array(this.afterschools[this.currentGrade].length)].map(() => false)
+      [this.afterschools[0], this.afterschools[1], this.afterschools[2]] =
+        await Promise.all([1, 2, 3].map(grade => afterschool.getGradeAfterschool(grade)))
+      this.checks = [...Array(this.afterschools[this.tab].length)].map(() => false)
       this.afterschools = Object.assign({}, this.afterschools)
     },
 
     async addAfterschool () {
       try {
-        await afterschool.createAfterschool(this.restructure(this.form, this.currentGrade))
+        await afterschool.createAfterschool(this.afterschoolInput)
+        this.$swal('성공!', '추가되었습니다.', 'success')
 
         this.form.name = ''
         this.form.maxCount = null
         this.form.teacherName = ''
 
         await this.updateAll()
-
-        this.$swal('성공!', '추가되었습니다.', '', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
     },
 
     getDayTextByCode (code) {
+      if (!code) return '?'
       return this.days.filter(v => v.code === code)[0].text
     },
 
     async deleteChecked () {
-      for (const key in this.checks) {
-        if (this.checks[key]) await afterschool.deleteAfterschool(this.filteredList[key].idx)
-      }
+      await Promise.all(Object.keys(this.checks)
+        .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
       await this.updateAll()
-    },
-
-    restructure (val, grade) {
-      return {
-        'name': val['name'],
-        'request_start_date': this.timezone(val['startDate']).toISOString(),
-        'request_end_date': this.timezone(val['endDate']).toISOString(),
-        'day': days[val['day']].code,
-        'target_grade': grade + 1,
-        'max_of_count': parseInt(val['maxCount']),
-        'teacher_name': val['teacherName']
-      }
-    },
-
-    timezone (val) {
-      var timezoneOffset = new Date().getTimezoneOffset() * 60000
-      return new Date(val - timezoneOffset)
     }
   }
 }
@@ -130,13 +124,13 @@ export default {
       class="mng-afsc__main"
     >
       <dimi-tab
-        v-model="currentGrade"
+        v-model="tab"
         :tabs="['1학년', '2학년', '3학년']"
       />
 
       <section class="mng-afsc__section">
         <h2 class="mng-afsc__title">
-          {{ currentGrade + 1 + '학년' }} 방과 후 활동 관리 ({{ lengthByGrade }}개)
+          {{ tab + 1 + '학년' }} 방과 후 활동 관리 ({{ currentCount }}개)
         </h2>
 
         <nav class="mng-afsc__toolbar">
@@ -184,10 +178,10 @@ export default {
                 {{ item.name }}
               </td>
               <td class="mng-afsc__cell">
-                총 {{ item.maxCount || '?' }}명
+                총 {{ item.maxCount }}명
               </td>
               <td class="mng-afsc__cell">
-                {{ item.count || '?' }}명 신청
+                {{ item.count }}명 신청
               </td>
               <td class="mng-afsc__cell mng-afsc__cell--button">
                 <span class="icon-long-arrow-right" /> 세부관리

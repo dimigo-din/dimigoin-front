@@ -1,8 +1,7 @@
 <script>
 import { format } from 'date-fns'
-import koLocale from 'date-fns/locale/ko'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as counsel from '@/src/api/counsel'
+import { counselManager } from '@/src/api/counsel'
 
 export default {
   name: 'Counsel',
@@ -11,9 +10,7 @@ export default {
 
   filters: {
     filterTime (time) {
-      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', {
-        locale: koLocale
-      })
+      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~')
     },
 
     filterEndTime (time) {
@@ -34,7 +31,11 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.list = await counsel.getAdminCounsel()
+      try {
+        this.list = await counselManager.getCounsels()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
       this.pending = false
     }
   }

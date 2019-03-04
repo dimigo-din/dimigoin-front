@@ -1,55 +1,65 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import * as ingang from '@/src/api/ingang'
+import { ingangRequestor } from '@/src/api/ingang'
+import waitable from '@/mixins/waitable'
 
 export default {
   name: 'Ingang',
-
   components: { ContentWrapper },
-
   filters: {
-    filterDate (time) {
-      return format(time, 'YYYY-MM-DD')
-    },
-
-    filterBlackDate (time) {
-      return format(time, 'MM월 DD까지 인강실을 사용할 수 없습니다.')
-    }
+    filterDate: time => format(time, 'YYYY-MM-DD')
   },
-
+  mixins: [waitable],
   data () {
     return {
-      pending: false,
       ingangs: [],
       today: new Date(),
-      notice: {},
-      ticket: '',
+      announcement: {},
+      ticket: null,
       modal: false
     }
   },
+  computed: {
+    isWaitingInit () { return this.waitable_ids.includes('init') },
+    isWaitingSubmit () { return this.waitable_ids.includes('submit') }
+  },
 
   async created () {
-    this.refresh()
+    this.start('init')
+    const [result, announcement] = await Promise.all([
+      ingangRequestor.getIngangs(),
+      ingangRequestor.getAnnouncement()
+    ])
+    this.ingangs = result.ingangs
+    this.ticket = result.ticket
+    this.announcement = announcement
+    this.finish('init')
+    this.modal = true
   },
 
   methods: {
-    async refresh () {
-      this.pending = true
-      this.ingangs = await ingang.request.getIngangList()
-      this.notice = await ingang.notice.getLatestNotice()
-      this.ticket = this.ingangs[0].week_request_count
-      this.pending = false
+    async fetch () {
+      this.start('fetch')
+      this.ingangs = await ingangRequestor.getIngangs()
+      this.ticket = this.ingangs.ticket
+      this.finish('fetch')
     },
 
-    async toggleApply (ing) {
+    async handleSubmitButton (ing) {
+      this.start('submit')
       try {
-        if (ing.request) await ingang.request.deleteIngangRequest(ing.idx)
-        else await ingang.request.requestIngang(ing.idx)
+        if (ing.request) await ingangRequestor.cancelIngang(ing.idx)
+        else await ingangRequestor.applyIngang(ing.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
-      await this.refresh()
+      await this.fetch()
+      this.finish('submit')
+    },
+
+    getStatusColor (ingang) {
+      return ingang.request ? 'aloes' : 'red'
     }
   }
 }
@@ -58,51 +68,32 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-internet-class" />
-      인강실 사용 신청
+      <span class="icon-internet-class" />인강실 사용 신청
       <span
-        class="ingang__ticket"
-      >
-        남은 티켓 개수 : {{ ticket }} 개
-      </span>
-      <span
-        class="ingang__notice"
+        class="ingang__helper ingang__helper--link"
         @click="modal = true"
       >
-        <span class="icon-notice" />인강실 공지
+        <span class="icon-notice" /> 공지사항
       </span>
     </h1>
 
     <div
-      v-if="pending"
+      v-if="isWaitingInit"
       class="ingang__pending"
     >
       <dimi-loader />
     </div>
 
     <template v-else>
-      <template v-if="ingangs[0].black">
+      <template>
         <dimi-card
+          v-for="(ingang, idx) in ingangs"
           slot="main"
-          class="ingang__card"
-        >
-          <h2 class="ingang__black ingang__black--title">
-            You Are Banned
-          </h2>
-          <div class="ingang__black ingang__black--comment">
-            {{ ingangs[0].black | filterBlackDate }}
-          </div>
-        </dimi-card>
-      </template>
-      <template v-else>
-        <dimi-card
-          v-for="(ing, idx) in ingangs"
-          slot="main"
-          :key="`${idx}`"
+          :key="`ingang-${idx}`"
           class="ingang__card"
         >
           <h2 class="ingang__title">
-            {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ing.time }}타임
+            {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ingang.time }}타임
           </h2>
 
           <div class="ingang__content">
@@ -110,15 +101,15 @@ export default {
               <div
                 :class="[
                   'ingang__number',
-                  'ingang__number--' + (ing.request ? 'aloes' : 'red')
+                  'ingang__number--' + getStatusColor(ingang)
                 ]"
               >
-                {{ ing.count }}
+                {{ ingang.count }}
               </div>
               <div
                 :class="[
                   'ingang__text',
-                  'ingang__text--' + (ing.request ? 'aloes' : 'red')
+                  'ingang__text--' + getStatusColor(ingang)
                 ]"
               >
                 현원
@@ -126,7 +117,7 @@ export default {
             </div>
             <div class="ingang__max">
               <div class="ingang__number">
-                {{ ing.max }}
+                {{ ingang.max }}
               </div>
               <div class="ingang__text">
                 총원
@@ -134,13 +125,17 @@ export default {
             </div>
           </div>
 
-          <div class="ingang__btn">
-            <dimi-button
-              :gray="ing.request"
-              @click="toggleApply(ing)"
-            >
-              {{ ing.request ? '취소하기' : '신청하기' }}
-            </dimi-button>
+          <div class="ingang__btn-wrapper">
+            <div class="ingang__btn">
+              <dimi-button
+                :gray="ingang.request"
+                :active="!isWaitingSubmit"
+                @click="handleSubmitButton(ingang)"
+              >
+                {{ ingang.request ? '취소하기' : '신청하기' }}
+              </dimi-button>
+              <p class="ingang__ticket">이번 주 신청 가능 횟수 : {{ ticket }} 회</p>
+            </div>
           </div>
 
           <dimi-modal
@@ -149,14 +144,14 @@ export default {
             @close="modal = false"
           >
             <h3 class="modal__title">
-              인강실 공지
+              인강실 공지사항
               <span class="modal__date">
-                {{ notice.date | filterDate }}
+                {{ announcement.date | filterDate }}
               </span>
             </h3>
             <div class="modal__field">
-              <p class="modal__notice">
-                {{ notice.description }}
+              <p class="modal__announcement">
+                {{ announcement.description }}
               </p>
             </div>
           </dimi-modal>
@@ -203,27 +198,36 @@ export default {
     font-weight: $font-weight-regular;
   }
 
-  &__ticket {
+  &__helper {
     margin-top: 1em;
-    margin-right: 0.5em;
-    color: $red;
+    margin-left: 1em;
+    color: $gray-dark;
     float: right;
     font-size: 18px;
+  }
+
+  &__helper--link {
+    color: $orange;
+    cursor: pointer;
+  }
+
+  &__btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
   }
 
   &__btn {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
-  &__notice {
-    margin-top: 1em;
-    margin-right: 0.5em;
-    color: $orange;
-    cursor: pointer;
-    float: right;
-    font-size: 18px;
+  &__ticket {
+    margin-top: 0.4rem;
+    color: $gray-dark;
+    font-size: 0.8rem;
+    font-weight: $font-weight-bold;
   }
 
   &__content {
@@ -291,7 +295,7 @@ export default {
     padding-top: 20px;
   }
 
-  &__notice {
+  &__announcement {
     font-family: inherit;
     font-weight: $font-weight-regular;
     line-height: 1.2rem;

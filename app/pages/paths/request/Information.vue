@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
-import * as circle from '@/src/api/circle'
+import { circleRequestor } from '@/src/api/circle'
 import * as handleCircle from '@/src/util/handle-circle-status'
 
 export default {
@@ -33,7 +33,7 @@ export default {
   },
 
   async created () {
-    this.circles = await circle.getCircles()
+    this.circles = await circleRequestor.getCircles()
   }
 }
 </script>

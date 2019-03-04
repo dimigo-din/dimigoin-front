@@ -9,7 +9,9 @@
     "lint:js": "eslint . --ext .js,.vue",
     "lint:css": "stylelint \"**/*.{scss,vue}\"",
     "lint": "run-p lint:*",
-    "deploy": "node .circleci/deploy.js"
+    "sentry-set-commit": "sentry-cli releases set-commits --auto $(sentry-cli releases propose-version)",
+    "deploy": "yarn run sentry-set-commit && node .circleci/deploy.js",
+    "test": "yarn run lint"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "nprogress": "^0.2.0",
     "restaurance": "^1.0.3",
     "typeface-nanum-square-round": "^1.0.2",
+    "unix-timestamp": "^0.2.0",
     "vue": "^2.6.4",
     "vue-analytics": "^5.16.2",
     "vue-recaptcha": "^1.1.0",
@@ -51,7 +54,7 @@
     "babel-loader": "^8.0.5",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^1.0.1",
-    "copy-webpack-plugin": "^4.6.0",
+    "copy-webpack-plugin": "^5.0.0",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "dotenv-safe": "^6.1.0",

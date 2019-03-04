@@ -1,33 +1,67 @@
-version: 2
+version: 2.1
 
-jobs:
-  build:
+executors:
+  default:
+    working_directory: ~/project/dimigoin-front
     docker:
       - image: circleci/node:latest
+
+jobs:
+  install:
+    executor: default
     steps:
       - checkout
-      - run: sudo apt-get install -y lftp
       - restore_cache:
-          name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install Dependencies
           command: yarn install
       - save_cache:
-          name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run: yarn build
-      - run: yarn deploy
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - dimigoin-front
+  build:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn run build
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - dimigoin-front
+  test-e2e:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn run test
+  deploy:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn run deploy
 
 workflows:
-  version: 2
-  deploy:
+  test-and-deploy:
     jobs:
+      - install
+      - test-e2e:
+          requires:
+            - install
       - build:
+          requires:
+            - install
+      - deploy:
           filters:
             branches:
               only:
                 - master
+          requires:
+            - test-e2e
+            - build

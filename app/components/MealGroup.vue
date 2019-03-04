@@ -1,7 +1,6 @@
 <script>
 import meals from '@/src/util/meals'
-import * as meal from '@/src/api/meal'
-import NProgress from 'nprogress'
+import { meal } from '@/src/api/meal'
 
 export default {
   name: 'MealGroup',
@@ -22,9 +21,7 @@ export default {
   },
 
   async created () {
-    NProgress.start()
     this.meal = await meal.getTodayMeal()
-    NProgress.done()
   }
 }
 </script>
