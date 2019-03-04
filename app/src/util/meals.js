@@ -18,5 +18,4 @@ const create = (...list) =>
 export default create(
   ['breakfast', '아침', 0, 815],
   ['lunch', '점심', 816, 1340],
-  ['dinner', '저녁', 1341, 1920],
-  ['snack', '간식', 1921, 2140])
+  ['dinner', '저녁', 1341, 1920])
