@@ -11,8 +11,7 @@ export default {
       meal: {
         breakfast: '',
         lunch: '',
-        dinner: '',
-        snack: ''
+        dinner: ''
       },
       pending: false
     }

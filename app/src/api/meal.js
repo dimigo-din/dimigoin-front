@@ -16,7 +16,6 @@ export async function getMeal (date) {
         breakfast: '',
         lunch: '',
         dinner: '',
-        snack: '',
         date: formattedDate
       })
     }
