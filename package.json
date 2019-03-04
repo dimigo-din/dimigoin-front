@@ -9,7 +9,7 @@
     "lint:js": "eslint . --ext .js,.vue",
     "lint:css": "stylelint \"**/*.{scss,vue}\"",
     "lint": "run-p lint:*",
-    "deploy": "yarn run sentry:set-commit && yarn run sentry:set-env && node .circleci/deploy.js",
+    "deploy": "node .circleci/deploy.js",
     "test": "yarn run lint"
   },
   "repository": {
