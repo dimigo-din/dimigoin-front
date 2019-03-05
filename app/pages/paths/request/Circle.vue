@@ -33,7 +33,7 @@ export default {
 <template>
   <content-wrapper>
     <h1 slot="header">
-      <span class="icon-club" />동아리 가입 신청
+      <span class="icon-club" />2019년 동아리 가입 신청🚀
     </h1>
     <div
       slot="main"
