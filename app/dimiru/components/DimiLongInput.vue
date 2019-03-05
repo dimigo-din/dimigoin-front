@@ -62,6 +62,8 @@ export default {
 }
 
 .input {
+  padding: 1.2em 1.5em;
   line-height: 1.5em;
+  resize: none;
 }
 </style>
