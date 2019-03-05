@@ -60,4 +60,8 @@ export default {
   position: relative;
   width: 100%;
 }
+
+.input {
+  line-height: 1.5em;
+}
 </style>
