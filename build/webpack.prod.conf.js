@@ -123,9 +123,7 @@ const webpackConfig = async () => {
         SENTRY_PROPOSED_VERSION: sentryProposedVersion
       }),
       new webpack.HashedModuleIdsPlugin(),
-      new CleanWebpackPlugin('dist', {
-        root: path.resolve(__dirname, '..')
-      }),
+      new CleanWebpackPlugin(),
       new CopyWebpackPlugin([
         {
           from: path.resolve(__dirname, '../static'),
