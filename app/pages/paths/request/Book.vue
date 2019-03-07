@@ -433,6 +433,7 @@ export default {
     display: flex;
     align-items: center;
     margin: 1.5rem 0;
+    margin-bottom: 0;
   }
 
   &__label {
@@ -444,9 +445,8 @@ export default {
   }
 
   &__button {
-    position: absolute;
     right: 25px;
-    padding-top: 20px;
+    margin-left: auto;
   }
 
   &__notice {
