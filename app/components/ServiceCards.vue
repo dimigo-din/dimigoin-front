@@ -13,9 +13,9 @@ export default {
   async created () {
     this.toggleLoading()
     this.services = (await Promise.all([
-      this.getManagementService(),
+      this.getManagementServices(),
       service.getServiceList()
-    ])).flatMap(v => v)
+    ])).reduce((a, b) => a.concat(b))
     this.toggleLoading()
     this.$nextTick(() => this.updateServiceCardHeight())
   },
@@ -44,17 +44,18 @@ export default {
       }
     },
 
-    async getManagementService () {
+    async getManagementServices () {
       const permissions = await permission.getPermissions()
       if (permissions.length > 0) {
-        return {
+        return [{
           order: 99,
           title: '관리',
-          description: 'Dets, 인강실',
+          description: '디미고인 관리 시스템',
           icon: 'icon-submission',
           url: 'management'
-        }
+        }]
       }
+      return []
     }
   }
 }
