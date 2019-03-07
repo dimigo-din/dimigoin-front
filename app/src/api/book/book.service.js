@@ -65,9 +65,7 @@ export class BookRequestorService extends BookService {
    * @returns {Book~Book[]}
    */
   async getStudentBook () {
-    const { data: { book } } = await this.magician(() => this.r.get(`/student/`), {
-      404: () => []
-    })
+    const { data: { book } } = await this.magician(() => this.r.get(`/student/`))
     return book.map(Book)
   }
 }
