@@ -46,8 +46,10 @@ jobs:
       - run: yarn run test
       - store_artifacts:
           path: ~/project/dimigoin-front/test/videos
+          destination: test/videos
       - store_artifacts:
           path: ~/project/dimigoin-front/test/screenshots
+          destination: test/screenshots
   deploy:
     executor: default
     steps:
