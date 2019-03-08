@@ -62,7 +62,7 @@ export default {
 
     closeModal () {
       this.modals = {
-        book: false,
+        createBook: false,
         notice: false
       }
       this.form = {
