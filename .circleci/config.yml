@@ -34,6 +34,9 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: yarn run build
+      - store_artifacts:
+          path: ~/project/dimigoin-front/dist
+          destination: dist
       - persist_to_workspace:
           root: ~/
           paths:
