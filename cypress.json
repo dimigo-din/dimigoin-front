@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://localhost:8080",
+  "fixturesFolder": "test/fixtures",
+  "integrationFolder": "test/specs",
+  "pluginsFile": "test/plugins",
+  "screenshotsFolder": "test/screenshots",
+  "supportFile": "test/support",
+  "videosFolder": "test/videos"
+}
