@@ -4,7 +4,7 @@ executors:
   default:
     working_directory: ~/project/dimigoin-front
     docker:
-      - image: circleci/node:latest
+      - image: cypress/base:10
 
 jobs:
   install:
@@ -13,13 +13,16 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
       - run:
-          command: yarn install
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ~/.cache/yarn
+            - ~/.cache
       - persist_to_workspace:
           root: ~/project
           paths:
