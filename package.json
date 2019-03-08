@@ -10,7 +10,9 @@
     "lint:css": "stylelint \"**/*.{scss,vue}\"",
     "lint": "run-p lint:*",
     "deploy": "node .circleci/deploy.js",
-    "test": "yarn run lint"
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open",
+    "test": "start-server-and-test dev http://localhost:8080 cypress:run"
   },
   "repository": {
     "type": "git",
@@ -84,6 +86,7 @@
     "postcss-url": "^8.0.0",
     "preload-webpack-plugin": "^3.0.0-beta.3",
     "sass-loader": "7.1.0",
+    "start-server-and-test": "^1.7.11",
     "style-loader": "^0.23.1",
     "stylelint": "^9.10.1",
     "stylelint-config-idiomatic-order": "^6.2.0",

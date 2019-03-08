@@ -43,6 +43,7 @@ export default {
   <div
     id="app"
     class="root"
+    data-test="app-root"
   >
     <main class="root__router">
       <router-view v-if="loaded" />

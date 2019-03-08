@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  cypress: cypress-io/cypress@1
-
 executors:
   default:
     working_directory: ~/project/dimigoin-front
@@ -37,6 +34,16 @@ jobs:
           root: ~/project
           paths:
             - dimigoin-front
+  test-e2e:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: yarn run test
+      - store-artifacts:
+          path: ~/project/dimigoin-front/test/videos
+      - store-artifacts:
+          path: ~/project/dimigoin-front/test/screenshots
   deploy:
     executor: default
     steps:
@@ -48,9 +55,7 @@ workflows:
   test-and-deploy:
     jobs:
       - install
-      - cypress/run:
-          name: test
-          yarn: true
+      - test-e2e:
           requires:
             - install
       - build:

@@ -1,5 +1,6 @@
 describe('Just visit site', function () {
-  it('Visits the main page', () => {
+  it('succesfully mounted', () => {
     cy.visit('/')
+    cy.get('[data-test="app-root"]').should('exist')
   })
 })
