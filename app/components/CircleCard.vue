@@ -46,14 +46,14 @@ export default {
     },
 
     finish () {
-      return Date.now() > (new Date(this.circle.applyEndDate).getTime() +
+      return Date.now() > (new Date(this.circle.requestEndDate).getTime() +
         24 * 60 * 60 * 1000)
     },
 
     deadline () {
       const now = Date.now()
       return !this.finish &&
-        now > new Date(this.circle.applyStartDate).getTime()
+        now > new Date(this.circle.requestStartDate).getTime()
     }
   },
 
