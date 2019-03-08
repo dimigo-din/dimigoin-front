@@ -40,9 +40,9 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run: yarn run test
-      - store-artifacts:
+      - store_artifacts:
           path: ~/project/dimigoin-front/test/videos
-      - store-artifacts:
+      - store_artifacts:
           path: ~/project/dimigoin-front/test/screenshots
   deploy:
     executor: default
