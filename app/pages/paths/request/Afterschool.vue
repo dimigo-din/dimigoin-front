@@ -43,7 +43,7 @@ export default {
     },
 
     applied () {
-      return this.currentList.some(item => item.status === 'request')
+      return this.currentList.filter(item => item.status === 'request').length === 2
     }
   },
 
@@ -69,7 +69,7 @@ export default {
 
     async toggleApply (item) {
       try {
-        if (item.status === null) await this.apply(item)
+        if (item.status === null && !this.applied) await this.apply(item)
         else await afterschool.cancelAfterschool(item.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -159,13 +159,11 @@ export default {
               :title="item | dateRange"
               @click="toggleApply(item)"
             >
-              <template v-if="applied">
-                <template v-if="item.status === 'request'">
-                  <span class="icon-cross" /> 신청취소
-                </template>
+              <template v-if="item.status === 'request'">
+                <span class="icon-cross" /> 신청취소
               </template>
 
-              <template v-else>
+              <template v-else-if="!applied">
                 <template v-if="item.maxCount > item.count">
                   <span class="icon-ok" /> 신청하기
                 </template><template v-else>
