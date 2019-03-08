@@ -57,7 +57,7 @@ jobs:
     executor: default
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run: yarn run deploy
 
 workflows:
