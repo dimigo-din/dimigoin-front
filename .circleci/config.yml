@@ -24,24 +24,25 @@ jobs:
           paths:
             - ~/.cache
       - persist_to_workspace:
-          root: ~/project
+          root: ~/
           paths:
-            - dimigoin-front
+            - project
+            - .cache/Cypress
   build:
     executor: default
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run: yarn run build
       - persist_to_workspace:
-          root: ~/project
+          root: ~/
           paths:
-            - dimigoin-front
+            - project
   test-e2e:
     executor: default
     steps:
       - attach_workspace:
-          at: ~/project
+          at: ~/
       - run: yarn run test
       - store_artifacts:
           path: ~/project/dimigoin-front/test/videos
