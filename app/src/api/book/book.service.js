@@ -77,7 +77,7 @@ export class BookManagerService extends BookService {
    * @returns {Book~Book[]}
    */
   async getAllBook () {
-    const { data: { Book: book } } = await this.magician(() => this.r.get('/'), {
+    const { data: { book } } = await this.magician(() => this.r.get('/'), {
       403: '권한이 없습니다.'
     })
     return book.map(Book)
