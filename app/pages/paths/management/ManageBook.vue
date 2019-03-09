@@ -119,6 +119,7 @@ export default {
           :key="`${idx}`"
         >
           <div
+            v-if="book.acceptable === 'wait'"
             class="book__book"
             @click="book.open = !book.open"
           >
