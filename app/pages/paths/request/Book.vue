@@ -151,6 +151,12 @@ export default {
 
       <template v-else>
         <div
+          v-if="!list.length"
+          class="book__empty"
+        >
+          아직 신청한 도서가 없습니다
+        </div>
+        <div
           v-for="(book, idx) in list"
           :key="`book-${idx}`"
         >
@@ -425,6 +431,14 @@ export default {
     margin-left: 16px;
     color: $gray-light;
     cursor: pointer;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
