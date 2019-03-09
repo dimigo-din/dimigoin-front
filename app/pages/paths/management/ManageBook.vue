@@ -283,7 +283,6 @@ export default {
     align-items: stretch;
     justify-content: flex-start;
     padding: 24px;
-    border-bottom: 1px solid $gray-lighter;
     cursor: default;
   }
 
