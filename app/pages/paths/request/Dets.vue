@@ -73,6 +73,12 @@ export default {
       </div>
       <template v-else>
         <div
+          v-if="!list.length"
+          class="dets__empty"
+        >
+          아직 신청한 DETS 활동이 없습니다
+        </div>
+        <div
           v-for="(dets, index) in list"
           :key="`detslist_${index}`"
         >
@@ -162,6 +168,7 @@ export default {
 
   &__main {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   &__dets {
@@ -226,6 +233,14 @@ export default {
 
   &__item--applied {
     color: $gray-light;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 </style>
