@@ -96,13 +96,13 @@ export default {
         <span class="icon-edit" />공지 추가하기
       </span>
       <span
-        class="book__excel"
+        class="book__sub-menu"
         onclick="location.href='http://dev-api.dimigo.in/book_info/excel'"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
       <span
-        class="book__evaluated"
+        class="book__sub-menu"
         @click="viewEvaluted = !viewEvaluted"
       >
         <span class="icon-list" />
@@ -242,7 +242,7 @@ export default {
     font-size: 16px;
   }
 
-  &__excel, &__evaluated {
+  &__sub-menu {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $aloes;
