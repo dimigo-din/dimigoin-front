@@ -119,7 +119,10 @@ export default {
           :key="`${idx}`"
         >
           <div
-            class="book__book"
+            :class="{
+              'book__book': true,
+              'book__border': idx
+            }"
             @click="book.open = !book.open"
           >
             <dimi-badge
@@ -252,8 +255,11 @@ export default {
     align-items: center;
     justify-content: flex-start;
     padding: 24px;
-    border-bottom: 1px solid $gray-lighter;
     cursor: pointer;
+  }
+
+  &__border {
+    border-top: 1px solid $gray-lighter;
   }
 
   &__item {
