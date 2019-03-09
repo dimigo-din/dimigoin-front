@@ -14,7 +14,8 @@ export default {
       modal: false,
       form: {
         desc: ''
-      }
+      },
+      viewEvaluted: false
     }
   },
 
@@ -100,6 +101,13 @@ export default {
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
+      <span
+        class="book__evaluated"
+        @click="viewEvaluted = !viewEvaluted"
+      >
+        <span class="icon-list" />
+        {{ viewEvaluted ? '처리 안 한 것만 보기' : '처리 한 것만 보기' }}
+      </span>
     </h1>
 
     <dimi-card
@@ -119,7 +127,7 @@ export default {
           :key="`${idx}`"
         >
           <div
-            v-if="book.acceptable === 'wait'"
+            v-if="viewEvaluted ? book.acceptable !== 'wait' : book.acceptable === 'wait'"
             class="book__book"
             @click="book.open = !book.open"
           >
@@ -234,7 +242,7 @@ export default {
     font-size: 16px;
   }
 
-  &__excel {
+  &__excel, &__evaluated {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $aloes;
