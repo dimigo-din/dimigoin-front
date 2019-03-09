@@ -69,7 +69,6 @@ export default {
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.update()
-        console.log(this.restructure(this.form.endDate))
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
