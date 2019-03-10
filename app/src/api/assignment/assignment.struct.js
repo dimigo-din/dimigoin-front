@@ -1,4 +1,5 @@
 import { parse } from 'date-fns'
+import timestamp from 'unix-timestamp'
 
 const convertReport = v => (v && {
   author: {
@@ -13,7 +14,7 @@ export const Assignments = assignment => ({
   idx: assignment['idx'],
   title: assignment['title'],
   description: assignment['description'],
-  end_date: parse(assignment['end_date']),
+  end_date: timestamp.toDate(assignment['end_date']),
   targetGrade: assignment['target_grade'],
   targetClass: assignment['target_class'],
   assignor: assignment['assignor'],
