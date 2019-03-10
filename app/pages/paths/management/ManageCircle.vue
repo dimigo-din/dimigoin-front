@@ -101,6 +101,14 @@ export default {
       <table class="mng-circle__table">
         <tbody>
           <tr
+            v-if="!list.length"
+            class="applicant-row"
+          >
+            <td class="applicant-row__cell applicant-row__serial applicant-row__empty">
+              아직 동아리를 신청한 사람이 없습니다
+            </td>
+          </tr>
+          <tr
             v-for="(item, index) in list"
             :key="index"
             class="applicant-row"
@@ -152,6 +160,7 @@ export default {
 
   &__card {
     overflow: auto;
+    padding-bottom: 0;
   }
 
   &__table {
@@ -182,6 +191,14 @@ export default {
 
   &__status {
     text-align: right;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 </style>

@@ -128,7 +128,7 @@ export default {
       </div>
 
       <table
-        v-else
+        v-else-if="currentList.length"
         class="req-afsc__list"
       >
         <tbody>
@@ -180,6 +180,13 @@ export default {
         </tbody>
       </table>
 
+      <div
+        v-else
+        class="req-afsc__empty"
+      >
+        아직 신청한 방과 후 활동이 없습니다
+      </div>
+
       <dimi-modal
         :opened="captchaOpen"
         @close="captchaOpen = false"
@@ -213,6 +220,7 @@ export default {
 
   &__main {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   &__refresh {
@@ -264,6 +272,14 @@ export default {
 
   &__cell--applied {
     color: $gray-light;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 </style>
