@@ -229,7 +229,7 @@ export default {
         <dimi-long-input
           v-model="introduce"
           :height="300"
-          placeholder="1000자 이내로 작성해주시고, 창을 받으시면 내용이 사라지실 수 있으니 미리 메모장에 적고 옮기는 걸 추천드려요!"
+          placeholder="1000자 이내로 작성해주시고, 창을 닫으시면 내용이 사라지실 수 있으니 미리 메모장에 적고 옮기는 걸 추천드려요!"
           class="modal__introduce"
         />
       </div>
