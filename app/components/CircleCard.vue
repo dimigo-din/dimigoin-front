@@ -355,6 +355,7 @@ export default {
     color: $black;
     font-size: 16px;
     line-height: 1.8;
+    word-break: break-all;
   }
 
   &__submit-btn {
