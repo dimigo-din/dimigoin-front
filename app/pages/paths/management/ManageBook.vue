@@ -15,7 +15,9 @@ export default {
       form: {
         desc: ''
       },
-      viewEvaluted: false
+      filter: {
+        evaluated: false
+      }
     }
   },
 
@@ -101,13 +103,12 @@ export default {
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
-      <span
+      <dimi-checkbox
+        v-model="filter.evaluated"
         class="book__sub-menu"
-        @click="viewEvaluted = !viewEvaluted"
       >
-        <span class="icon-list" />
-        {{ viewEvaluted ? '처리 안 한 것만 보기' : '처리 한 것만 보기' }}
-      </span>
+        처리한 것만 보기
+      </dimi-checkbox>
     </h1>
 
     <dimi-card
@@ -127,7 +128,7 @@ export default {
           :key="`${idx}`"
         >
           <div
-            v-if="viewEvaluted ? book.acceptable !== 'wait' : book.acceptable === 'wait'"
+            v-if="filter.evaluated ? book.acceptable !== 'wait' : book.acceptable === 'wait'"
             class="book__book"
             @click="book.open = !book.open"
           >
