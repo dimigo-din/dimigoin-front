@@ -105,7 +105,7 @@ export default {
       </span>
       <dimi-checkbox
         v-model="filter.evaluated"
-        class="book__sub-menu"
+        class="book__sub-menu book__sub-menu__black"
       >
         처리한 것만 보기
       </dimi-checkbox>
@@ -259,6 +259,10 @@ export default {
     cursor: pointer;
     float: right;
     font-size: 16px;
+  }
+
+  &__sub-menu__black {
+    color: $black;
   }
 
   &__main {
