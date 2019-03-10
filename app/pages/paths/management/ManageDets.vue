@@ -192,6 +192,12 @@ export default {
 
       <template v-else>
         <div
+          v-if="!list[tab].length"
+          class="dets__empty"
+        >
+          아직 신청된 DETS 활동이 없습니다
+        </div>
+        <div
           v-for="(dets, index) in list[tab]"
           :key="`${index}`"
         >
@@ -390,6 +396,7 @@ export default {
 
   &__main {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   &__create {
@@ -469,6 +476,14 @@ export default {
   &__item--delete {
     color: $gray-light;
     cursor: pointer;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
