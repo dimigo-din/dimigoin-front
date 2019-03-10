@@ -2,6 +2,8 @@
 import AssignmentBase from '@/components/AssignmentBase.vue'
 import { assignmentPublisher } from '@/src/api/assignment'
 
+import timestamp from 'unix-timestamp'
+
 export default {
   name: 'Assignment',
   components: { AssignmentBase },
@@ -84,7 +86,7 @@ export default {
       this.form = {
         title: ass['title'],
         description: ass['description'],
-        endDate: new Date(ass['end_date']),
+        endDate: timestamp.fromDate(ass['end_date']),
         targetGrade: ass['target_grade'],
         targetClass: ass['target_class']
       }
@@ -112,7 +114,7 @@ export default {
         'description': ass.description,
         'target_grade': parseInt(ass.targetGrade),
         'target_class': parseInt(ass.targetClass),
-        'end_date': (ass.endDate).toISOString()
+        'end_date': timestamp.fromDate((ass.endDate).toISOString())
       }
     }
   }
@@ -133,7 +135,7 @@ export default {
           <span class="icon-edit" /> 수정하기
         </span>
         <span
-          v-if="now.getTime() <= (new Date(ass.end_date)).getTime()"
+          v-if="now.getTime() <= ass.end_date"
           class="assignor__item--del"
           @click="deleteAss(ass)"
         >

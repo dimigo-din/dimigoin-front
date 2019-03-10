@@ -124,12 +124,21 @@ export default {
 
       <template v-else>
         <div
+          v-if="!list.length"
+          class="book__empty"
+        >
+          아직 신청된 도서가 없습니다
+        </div>
+        <div
           v-for="(book, idx) in list"
           :key="`${idx}`"
         >
           <div
             v-if="filter.evaluated ? book.acceptable !== 'wait' : book.acceptable === 'wait'"
-            class="book__book"
+            :class="{
+              'book__book': true,
+              'book__border': idx
+            }"
             @click="book.open = !book.open"
           >
             <dimi-badge
@@ -254,6 +263,7 @@ export default {
 
   &__main {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   &__book {
@@ -261,8 +271,11 @@ export default {
     align-items: center;
     justify-content: flex-start;
     padding: 24px;
-    border-bottom: 1px solid $gray-lighter;
     cursor: pointer;
+  }
+
+  &__border {
+    border-top: 1px solid $gray-lighter;
   }
 
   &__item {
@@ -286,7 +299,6 @@ export default {
     align-items: stretch;
     justify-content: flex-start;
     padding: 24px;
-    border-bottom: 1px solid $gray-lighter;
     cursor: default;
   }
 
@@ -303,6 +315,14 @@ export default {
     margin-left: 16px;
     color: $red;
     cursor: pointer;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
