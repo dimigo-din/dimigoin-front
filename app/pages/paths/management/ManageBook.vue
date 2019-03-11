@@ -16,7 +16,7 @@ export default {
         desc: ''
       },
       filter: {
-        evaluated: false
+        evaluated: true
       }
     }
   },
