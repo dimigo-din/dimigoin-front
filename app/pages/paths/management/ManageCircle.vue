@@ -155,6 +155,8 @@ export default {
   }
 
   &__card {
+    padding-top: 0;
+    padding-bottom: 0;
     overflow: auto;
   }
 
