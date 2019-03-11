@@ -195,7 +195,7 @@ export default {
           v-if="!list[tab].length"
           class="dets__empty"
         >
-          아직 신청된 DETS 활동이 없습니다
+          아직 등록된 DETS 활동이 없습니다
         </div>
         <div
           v-for="(dets, index) in list[tab]"
