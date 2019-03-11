@@ -94,10 +94,6 @@ export default {
       slot="main"
       class="mng-circle__card"
     >
-      <h2 class="mng-circle__title">
-        동아리 신청자 관리
-      </h2>
-
       <table class="mng-circle__table">
         <tbody>
           <tr
@@ -160,7 +156,6 @@ export default {
 
   &__card {
     overflow: auto;
-    padding-bottom: 0;
   }
 
   &__table {
