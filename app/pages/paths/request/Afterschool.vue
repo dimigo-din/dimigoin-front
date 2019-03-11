@@ -184,7 +184,7 @@ export default {
         v-else
         class="req-afsc__empty"
       >
-        아직 신청한 방과 후 활동이 없습니다
+        아직 등록된 방과 후 활동이 없습니다
       </div>
 
       <dimi-modal
