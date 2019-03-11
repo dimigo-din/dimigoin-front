@@ -51,7 +51,7 @@ export default {
           order: 99,
           title: '관리',
           description: '디미고인 관리 시스템',
-          icon: 'icon-submission',
+          icon: 'icon-dimicat',
           url: 'management'
         }]
       }
