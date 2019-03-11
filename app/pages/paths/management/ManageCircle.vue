@@ -155,9 +155,9 @@ export default {
   }
 
   &__card {
+    overflow: auto;
     padding-top: 0;
     padding-bottom: 0;
-    overflow: auto;
   }
 
   &__table {
