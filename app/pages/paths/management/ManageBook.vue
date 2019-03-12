@@ -14,6 +14,9 @@ export default {
       modal: false,
       form: {
         desc: ''
+      },
+      filter: {
+        evaluated: true
       }
     }
   },
@@ -95,11 +98,17 @@ export default {
         <span class="icon-edit" />공지 추가하기
       </span>
       <span
-        class="book__excel"
+        class="book__sub-menu"
         onclick="location.href='http://dev-api.dimigo.in/book_info/excel'"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
+      <dimi-checkbox
+        v-model="filter.evaluated"
+        class="book__sub-menu book__sub-menu--black"
+      >
+        처리한 것만 보기
+      </dimi-checkbox>
     </h1>
 
     <dimi-card
@@ -125,6 +134,7 @@ export default {
           :key="`${idx}`"
         >
           <div
+            v-if="filter.evaluated ? book.acceptable !== 'wait' : book.acceptable === 'wait'"
             :class="{
               'book__book': true,
               'book__border': idx
@@ -242,13 +252,17 @@ export default {
     font-size: 16px;
   }
 
-  &__excel {
+  &__sub-menu {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $aloes;
     cursor: pointer;
     float: right;
     font-size: 16px;
+  }
+
+  &__sub-menu--black {
+    color: $black;
   }
 
   &__main {
