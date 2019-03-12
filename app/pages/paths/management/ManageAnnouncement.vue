@@ -3,7 +3,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue'
 import { noticeManager } from '@/src/api/notice'
 
 export default {
-  name: 'Notice',
+  name: 'ManageAnnouncement',
   components: { ContentWrapper },
 
   data () {

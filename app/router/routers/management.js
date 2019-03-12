@@ -1,33 +1,77 @@
 import withPrefix from '@/src/util/path-with-prefix'
 
-const Manage = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/Manage.vue')
-const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')
-const ManageDets = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageDets.vue')
-const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageBook.vue')
-const ManageFreshman = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageFreshman.vue')
+const ManageWrapper = () => import('@/pages/paths/management/ManageWrapper.vue')
+const ManageMain = () => import('@/pages/paths/management/ManageMain.vue')
+const ManageAssignment = () => import('@/pages/paths/management/ManageAssignment.vue')
+const ManageAfterschool = () => import('@/pages/paths/management/ManageAfterschool.vue')
+const ManageCounsel = () => import('@/pages/paths/management/ManageCounsel.vue')
+const ManageIngang = () => import('@/pages/paths/management/ManageIngang.vue')
+const ManageAnnouncement = () => import('@/pages/paths/management/ManageAnnouncement.vue')
+const ManageCircle = () => import('@/pages/paths/management/ManageCircle.vue')
+const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
+const ManageBook = () => import('@/pages/paths/management/ManageBook.vue')
+const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue')
 
 export default [
+  {
+    path: '/management',
+    name: 'management',
+    component: ManageMain,
+    meta: {
+      title: '디미고인 > 관리 페이지'
+    }
+  },
   ...withPrefix('/management', [
     {
       path: '/',
-      component: Manage,
+      component: ManageWrapper,
       children: [
         {
-          path: '',
-          name: 'management',
+          path: 'assignment',
+          name: 'management/assignment',
+          component: ManageAssignment,
           meta: {
-            title: '디미고인 > 관리 페이지',
-            perm: 2
-          },
-          redirect: { name: 'management/dets' }
+            title: '디미고인 > 과제 관리'
+          }
+        },
+        {
+          path: 'afterschool',
+          name: 'management/afterschool',
+          component: ManageAfterschool,
+          meta: {
+            title: '디미고인 > 방과후신청 관리'
+          }
+        },
+        {
+          path: 'counsel',
+          name: 'management/counsel',
+          component: ManageCounsel,
+          meta: {
+            title: '디미고인 > 상담 신청 관리'
+          }
+        },
+        {
+          path: 'ingang',
+          name: 'management/ingang',
+          component: ManageIngang,
+          meta: {
+            title: '디미고인 > 인강실 관리'
+          }
+        },
+        {
+          path: 'announcement',
+          name: 'management/announcement',
+          component: ManageAnnouncement,
+          meta: {
+            title: '디미고인 > 공지사항 관리'
+          }
         },
         {
           path: 'circle',
           name: 'management/circle',
           component: ManageCircle,
           meta: {
-            title: '디미고인 > 동아리 신청자 관리',
-            perm: 2
+            title: '디미고인 > 동아리 신청자 관리'
           }
         },
         {
@@ -35,8 +79,7 @@ export default [
           name: 'management/dets',
           component: ManageDets,
           meta: {
-            title: '디미고인 > Dets 관리',
-            perm: 2
+            title: '디미고인 > Dets 관리'
           }
         },
         {
@@ -44,8 +87,7 @@ export default [
           name: 'management/book',
           component: ManageBook,
           meta: {
-            title: '디미고인 > 도서신청 관리',
-            perm: 2
+            title: '디미고인 > 도서신청 관리'
           }
         },
         {
@@ -53,8 +95,7 @@ export default [
           name: 'management/freshman',
           component: ManageFreshman,
           meta: {
-            title: '디미고인 > 신입생 공지 관리',
-            perm: 2
+            title: '디미고인 > 신입생 공지 관리'
           }
         }
       ]
