@@ -4,7 +4,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue'
 import { ingangManager } from '@/src/api/ingang'
 
 export default {
-  name: 'ManageIngang',
+  name: 'Ingang',
   components: { ContentWrapper },
   data: () => ({
     pending: false,

@@ -5,7 +5,7 @@ import { assignmentPublisher } from '@/src/api/assignment'
 import timestamp from 'unix-timestamp'
 
 export default {
-  name: 'ManageAssignment',
+  name: 'Assignment',
   components: { AssignmentBase },
 
   data: () => ({

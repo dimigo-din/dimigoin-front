@@ -1,13 +1,19 @@
 <script>
-export default {
-  name: 'ManageMain',
-  data: () => ({
-    managements: []
-  }),
+import permission from '@/mixins/permission'
 
+import services from './services'
+
+export default {
+  name: 'TeacherMain',
+  mixins: [permission('T')],
+  data: () => ({ services }),
+  mounted () {
+    const cards = this.$refs.cards || []
+    cards.forEach(({ $el: v }) => (v.style.height = window.getComputedStyle(v).width))
+  },
   methods: {
     clickService (service) {
-
+      this.$router.push({ name: service.to })
     }
   }
 }
