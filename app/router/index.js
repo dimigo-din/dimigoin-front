@@ -44,6 +44,7 @@ const router = new VueRouter({
     ...routers.auth,
     ...routers.request,
     ...routers.management,
+    ...routers.teacher,
     ...routers.assignment,
 
     {
