@@ -246,6 +246,11 @@ export default {
     padding: 24px;
     color: $gray;
     white-space: nowrap;
+
+    @include until($tablet) {
+      display: inline-block;
+      padding: 5px;
+    }
   }
 
   &__cell--name {
