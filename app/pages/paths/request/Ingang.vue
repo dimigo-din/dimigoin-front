@@ -161,7 +161,7 @@ export default {
   </content-wrapper>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .ingang {
   &__pending {
     display: flex;
