@@ -225,6 +225,7 @@ export default {
     color: $black !important;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    line-height: 1.5;
   }
 
   &__button {
