@@ -87,6 +87,7 @@ export default {
         } else if (this.cancelable) {
           await circleRequestor.cancelCircle(this.circle.idx)
           this.$set(this.circle, 'status', null)
+          this.opened = false
         }
       } catch (err) {
         console.error(err)
