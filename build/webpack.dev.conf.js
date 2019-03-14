@@ -12,6 +12,7 @@ const PORT = (process.env.PORT && Number(process.env.PORT)) || config.dev.port
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
+  devtool: config.dev.devtool,
   module: {
     rules: [
       {
@@ -30,11 +31,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devServer: {
     clientLogLevel: 'warning',
-    historyApiFallback: {
-      rewrites: [
-        { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') }
-      ]
-    },
+    historyApiFallback: true,
     host: HOST,
     port: PORT,
     overlay: config.dev.errorOverlay
