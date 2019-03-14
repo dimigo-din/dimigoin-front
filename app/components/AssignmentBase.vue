@@ -40,7 +40,6 @@ export default {
 
 <template>
   <div>
-    <default-navbar />
     <div
       v-if="loading"
       class="assignment__loading"

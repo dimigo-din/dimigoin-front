@@ -1,13 +1,21 @@
 <script>
+import { mapState } from '@/store/modules/account/helpers'
+import DefaultNavbar from '@/components/DefaultNavbar.vue'
+
 export default {
   name: 'ManageMain',
-  data: () => ({
-    managements: []
-  }),
-
+  components: { DefaultNavbar },
+  computed: {
+    ...mapState({
+      managements: state => state.informations.permissions
+    })
+  },
+  async created () {
+    await this.$store.dispatch('account/fetchPermissions')
+  },
   methods: {
-    clickService (service) {
-
+    clickService (item) {
+      this.$router.push(item.to)
     }
   }
 }
@@ -15,81 +23,59 @@ export default {
 
 <template>
   <div>
-    <not-found v-if="rejected" />
-    <template v-else>
-      <div class="main">
-        <h1 class="main__title">
-          관리
-        </h1>
-        <div class="main__cards">
-          <dimi-card
-            v-for="(service, key) in services"
-            ref="cards"
-            :key="'service-' + key"
-            class="main__card"
-            shadow
-            hover
-            @click.native="clickService(service)"
-          >
-            <span :class="['main__card-icon', service.icon]" />
-            <h3 class="main__card-title">
-              {{ service.title }}
-            </h3>
-            <p class="main__card-desc">
-              {{ service.description }}
-            </p>
-          </dimi-card>
-        </div>
+    <default-navbar/>
+    <div class="main container">
+      <h1 class="main__title">
+        관리
+      </h1>
+      <div class="main__cards">
+        <dimi-card
+          v-for="(item, index) in managements"
+          ref="cards"
+          :key="`manage-${index}`"
+          class="main__card"
+          shadow
+          hover
+          @click.native="clickService(item)"
+        >
+          <h3 class="main__card-title">
+            {{ item.title }}
+          </h3>
+        </dimi-card>
       </div>
-    </template>
+    </div>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
 .main {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
   &__title {
-    font-size: 64px;
+    margin-top: 3rem;
+    font-size: 2.5rem;
     font-weight: $font-weight-extra-bold;
   }
 
   &__cards {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 7rem;
-    margin-top: 64px;
+    display: grid;
+    margin-top: 2rem;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 
   .main__card {
-    padding: 4rem;
-    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
 
-  &__card-icon {
-    display: block;
-    margin-bottom: 24px;
-    font-size: 96px;
-  }
-
   &__card-title {
-    margin-bottom: 12px;
-    font-size: 28px;
+    display: inline;
+    font-size: 1.5rem;
     font-weight: $font-weight-extra-bold;
-  }
-
-  &__card-desc {
-    display: block;
-    color: $gray;
-    font-size: 18px;
+    line-height: 1.3;
+    text-align: center;
   }
 }
 </style>

@@ -1,10 +1,11 @@
 import { Permission } from './permission.struct'
 import { ServiceBase } from '@/src/api/service-base'
+import permissionList from './permissions'
 
 export class PermissionService extends ServiceBase {
   async getPermissions () {
     const { data: { permissions } } = await this.magician(() => this.r.get('/'), {})
-    return permissions.map(Permission)
+    return permissions.map(Permission).map(item => permissionList[item.section])
   }
 }
 
