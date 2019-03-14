@@ -23,7 +23,7 @@ export default {
 
 <template>
   <div>
-    <default-navbar/>
+    <default-navbar />
     <div class="main container">
       <h1 class="main__title">
         관리
@@ -45,7 +45,6 @@ export default {
       </div>
     </div>
   </div>
-
 </template>
 
 <style lang="scss" scoped>

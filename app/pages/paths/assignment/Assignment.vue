@@ -45,46 +45,45 @@ export default {
 
 <template>
   <div>
-    <default-navbar/>
+    <default-navbar />
     <assignment-base
       class="container"
       :assignments="assignments"
     >
       <template slot-scope="{ ass }">
-      <span
-        class="assignee__upload"
-        @click="uploadFile(ass)"
-      >
-        <span class="icon-upload" /> {{
-          uploads[ass.idx] ? (percentages[ass.idx] || 0) + '%' :
-          ass.report ? '수정' : '제출'
-        }}
-      </span>
+        <span
+          class="assignee__upload"
+          @click="uploadFile(ass)"
+        >
+          <span class="icon-upload" /> {{
+            uploads[ass.idx] ? (percentages[ass.idx] || 0) + '%' :
+            ass.report ? '수정' : '제출'
+          }}
+        </span>
       </template>
-
       <span slot="header">
-      <span class="icon-submission" /> 과제 제출
-    </span>
+        <span class="icon-submission" /> 과제 제출
+      </span>
 
       <span
         slot="opponent"
         slot-scope="{ ass }"
       >
-      {{ ass.assignor.name }}
-    </span>
+        {{ ass.assignor.name }}
+      </span>
 
       <span
         slot="badge"
         slot-scope="{ ass }"
       >
-      <dimi-badge
-        :color="ass.report ? 'aloes' : 'orange'"
-        class="assignee__badge"
-      >
-        <span :class="ass.report ? 'icon-ok' : 'icon-cross'" />
-        {{ ass.report ? '제출' : '미제출' }}
-      </dimi-badge>
-    </span>
+        <dimi-badge
+          :color="ass.report ? 'aloes' : 'orange'"
+          class="assignee__badge"
+        >
+          <span :class="ass.report ? 'icon-ok' : 'icon-cross'" />
+          {{ ass.report ? '제출' : '미제출' }}
+        </dimi-badge>
+      </span>
     </assignment-base>
   </div>
 </template>

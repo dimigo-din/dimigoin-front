@@ -1,11 +1,10 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
 export default {
   name: 'AssignmentBase',
-  components: { ContentWrapper, DefaultNavbar },
+  components: { ContentWrapper },
 
   filters: {
     deadline (val) {
