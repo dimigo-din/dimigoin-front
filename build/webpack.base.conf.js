@@ -17,7 +17,9 @@ function resolve (dir = '') {
 const webpackConfig = {
   context: resolve(),
   entry: {
-    app: path.resolve(resolve('app'), 'app.js')
+    app: path.resolve(resolve('app'), 'app.js'),
+    primaryFonts: 'typeface-nanum-square-round',
+    dimigoincon: 'dimigoincon'
   },
   output: {
     path: config.build.assetsRoot,

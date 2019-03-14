@@ -3,9 +3,6 @@ import './scss/theme.scss'
 import AwesomeFooter from './components/AwesomeFooter.vue'
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
 
-import('dimigoincon' /* webpackChunkName: "fonts" */)
-import('typeface-nanum-square-round' /* webpackChunkName: "fonts" */)
-
 export default {
   name: 'App',
   components: { AwesomeFooter },
