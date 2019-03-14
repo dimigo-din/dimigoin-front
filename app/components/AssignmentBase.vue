@@ -46,10 +46,7 @@ export default {
     >
       <dimi-loader />
     </div>
-    <div
-      v-else
-      class="container"
-    >
+    <div v-else>
       <div class="row">
         <main class="main col-xs">
           <content-wrapper class="assignment">

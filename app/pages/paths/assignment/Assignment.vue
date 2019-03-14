@@ -1,12 +1,12 @@
 <script>
 import AssignmentBase from '@/components/AssignmentBase.vue'
-
+import DefaultNavbar from '@/components/DefaultNavbar.vue'
 import fileDialog from 'file-dialog'
 import { assignmentSubscriber } from '@/src/api/assignment'
 
 export default {
   name: 'Assignment',
-  components: { AssignmentBase },
+  components: { DefaultNavbar, AssignmentBase },
 
   data: () => ({
     percentages: [],
@@ -44,8 +44,13 @@ export default {
 </script>
 
 <template>
-  <assignment-base :assignments="assignments">
-    <template slot-scope="{ ass }">
+  <div>
+    <default-navbar/>
+    <assignment-base
+      class="container"
+      :assignments="assignments"
+    >
+      <template slot-scope="{ ass }">
       <span
         class="assignee__upload"
         @click="uploadFile(ass)"
@@ -55,23 +60,23 @@ export default {
           ass.report ? '수정' : '제출'
         }}
       </span>
-    </template>
+      </template>
 
-    <span slot="header">
+      <span slot="header">
       <span class="icon-submission" /> 과제 제출
     </span>
 
-    <span
-      slot="opponent"
-      slot-scope="{ ass }"
-    >
+      <span
+        slot="opponent"
+        slot-scope="{ ass }"
+      >
       {{ ass.assignor.name }}
     </span>
 
-    <span
-      slot="badge"
-      slot-scope="{ ass }"
-    >
+      <span
+        slot="badge"
+        slot-scope="{ ass }"
+      >
       <dimi-badge
         :color="ass.report ? 'aloes' : 'orange'"
         class="assignee__badge"
@@ -80,7 +85,8 @@ export default {
         {{ ass.report ? '제출' : '미제출' }}
       </dimi-badge>
     </span>
-  </assignment-base>
+    </assignment-base>
+  </div>
 </template>
 
 <style lang="scss">
