@@ -12,7 +12,7 @@ class ManagementService {
 export default {
   'afterschool': new ManagementService('afterschool', '방과후신청 관리', 'afterschool'),
   'ingang': new ManagementService('ingang', '인강실 관리', 'ingang'),
-  'dets': new ManagementService('dets', '뎃츠 관리', 'dets'),
+  'dets': new ManagementService('dets', 'Dets 관리', 'dets'),
   'notice': new ManagementService('notice', '공지사항 관리', 'announcement'),
   'counsel': new ManagementService('counsel', '상담실 관리', 'counsel'),
   'book': new ManagementService('book', '도서 신청 관리', 'book'),
