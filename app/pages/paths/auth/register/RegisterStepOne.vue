@@ -2,7 +2,7 @@
 import validator from './mixins/validator'
 import InputData from './input-data'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
-import Illust from '@/assets/register-side-1.svg'
+import Illust from '@/assets/register-side-1.svg?inline'
 
 export default {
   name: 'RegisterStepOne',

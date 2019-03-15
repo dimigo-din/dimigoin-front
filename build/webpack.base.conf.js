@@ -17,9 +17,7 @@ function resolve (dir = '') {
 const webpackConfig = {
   context: resolve(),
   entry: {
-    app: path.resolve(resolve('app'), 'app.js'),
-    primaryFonts: 'typeface-nanum-square-round',
-    dimigoincon: 'dimigoincon'
+    app: path.resolve(resolve('app'), 'app.js')
   },
   output: {
     path: config.build.assetsRoot,
@@ -95,16 +93,27 @@ const webpackConfig = {
       },
       {
         test: /\.svg(\?.*)?$/,
-        use: {
-          loader: 'vue-svg-loader',
-          options: {
-            svgo: {
-              plugins: [
-                { removeViewBox: false }
-              ]
+        oneOf: [
+          {
+            resourceQuery: /inline/,
+            loader: 'vue-svg-loader',
+            options: {
+              svgo: {
+                plugins: [
+                  { removeDoctype: true },
+                  { removeComments: true }
+                ]
+              }
+            }
+          },
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: utils.assetsPath('img/[name].[hash:7].[ext]')
             }
           }
-        }
+        ]
       }
     ]
   },

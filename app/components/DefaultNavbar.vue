@@ -1,5 +1,5 @@
 <script>
-import Brand from '@/assets/brand.svg'
+import Brand from '@/assets/brand.svg?inline'
 
 export default {
   name: 'DefaultNavbar',
