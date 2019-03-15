@@ -5,7 +5,7 @@ import permissionList from './permissions'
 export class PermissionService extends ServiceBase {
   async getPermissions () {
     const { data: { permissions } } = await this.magician(() => this.r.get('/'), {})
-    return permissions.map(Permission).map(item => permissionList[item.section])
+    return permissions.map(Permission).map(item => permissionList[item.section]).filter(v => v)
   }
 }
 
