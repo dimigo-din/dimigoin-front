@@ -93,6 +93,7 @@ const webpackConfig = {
       },
       {
         test: /\.svg(\?.*)?$/,
+        use: ['babel-loader'],
         oneOf: [
           {
             resourceQuery: /inline/,
