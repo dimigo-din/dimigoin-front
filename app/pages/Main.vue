@@ -188,7 +188,7 @@ export default {
 
 .info {
   display: flex;
-  min-height: 200px;
+  min-height: 300px;
 
   @include until($tablet) {
     display: block;
