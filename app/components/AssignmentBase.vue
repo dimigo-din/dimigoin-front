@@ -9,7 +9,7 @@ export default {
 
   filters: {
     deadline (val) {
-      return format(val, 'YYYY.MM.DD까지')
+      return format(val, 'YYYY.MM.DD HH시 MM분 SS초까지')
     }
   },
 
