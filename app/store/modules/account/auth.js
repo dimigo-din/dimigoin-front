@@ -90,6 +90,7 @@ export default {
       if (isTokenExpired(parseToken(accessToken))) await dispatch('regenerateAccessToken')
       else commit(ASSIGN_ACCESS_TOKEN, { accessToken })
       commit(UPDATE_INFO, state.decodedRefreshToken)
+      await dispatch('fetchPermissions')
       mountTokenRefreshInterceptor()
     },
 
