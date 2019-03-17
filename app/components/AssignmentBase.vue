@@ -10,7 +10,7 @@ export default {
 
   filters: {
     deadline (val) {
-      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 hh시 mm분까지')
+      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 HH시 mm분까지')
     }
   },
 
