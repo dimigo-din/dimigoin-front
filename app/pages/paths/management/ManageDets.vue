@@ -31,7 +31,8 @@ export default {
         maxCount: null,
         targetGrade: null,
         endDate: new Date()
-      }
+      },
+      percentages: 100
     }
   },
 
@@ -88,6 +89,14 @@ export default {
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.refresh()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
+    async download () {
+      try {
+        await detsManager.getExcel()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -168,7 +177,7 @@ export default {
       </span>
       <span
         class="dets__excel"
-        onclick="location.href='http://dev-api.dimigo.in/dets/excel'"
+        @click="download()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
