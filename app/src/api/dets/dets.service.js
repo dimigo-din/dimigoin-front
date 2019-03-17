@@ -84,5 +84,8 @@ export class DetsManagerService extends DetsService {
     link.setAttribute('download', 'dets.xls')
     document.body.appendChild(link)
     link.click()
+    setTimeout(() => {
+      document.body.removeChild(link)
+    }, 500)
   }
 }
