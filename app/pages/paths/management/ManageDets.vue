@@ -31,8 +31,7 @@ export default {
         maxCount: null,
         targetGrade: null,
         endDate: new Date()
-      },
-      percentages: 100
+      }
     }
   },
 
