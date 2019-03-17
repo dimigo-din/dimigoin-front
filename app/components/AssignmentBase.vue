@@ -1,5 +1,6 @@
 <script>
 import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
@@ -9,7 +10,7 @@ export default {
 
   filters: {
     deadline (val) {
-      return format(val, 'YYYY.MM.DD까지')
+      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 hh시 mm분까지')
     }
   },
 

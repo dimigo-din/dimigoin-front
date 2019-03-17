@@ -21,9 +21,7 @@ export class AfterschoolService extends ServiceBase {
   }
 
   async getGradeAfterschool (grade) {
-    const { data: { afterschools } } = await this.magician(() => this.r.get(`/grade/${grade}`), {
-      404: () => []
-    })
+    const { data: { afterschools } } = await this.magician(() => this.r.get(`/grade/${grade}`))
     return afterschools.map(Afterschool)
   }
 
