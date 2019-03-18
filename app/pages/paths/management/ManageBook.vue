@@ -86,7 +86,7 @@ export default {
 
     async download () {
       try {
-        await bookManager.getExcel()
+        await bookManager.downloadExcel()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

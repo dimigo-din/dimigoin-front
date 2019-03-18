@@ -41,7 +41,7 @@ export default {
 
     async download () {
       try {
-        await counselManager.getExcel()
+        await counselManager.downloadExcel()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

@@ -95,7 +95,7 @@ export default {
 
     async download () {
       try {
-        await detsManager.getExcel()
+        await detsManager.downloadExcel()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

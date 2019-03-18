@@ -140,7 +140,7 @@ export class BookManagerService extends BookService {
     })
   }
 
-  async getExcel () {
+  async downloadExcel () {
     const { data } = await this.magician(() => this.r.get(`/excel`, {
       responseType: 'blob'
     }), {

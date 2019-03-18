@@ -45,7 +45,7 @@ export default {
 
     async download (grade) {
       try {
-        await ingangManager.getExcel(grade)
+        await ingangManager.downloadExcel(grade)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }

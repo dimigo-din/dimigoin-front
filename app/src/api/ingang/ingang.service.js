@@ -108,7 +108,7 @@ export class IngangManagerService extends IngangService {
     // TODO
   }
 
-  async getExcel (grade) {
+  async downloadExcel (grade) {
     const { data } = await this.magician(() => this.r.get(`/excel/${grade}`, {
       responseType: 'blob'
     }), {

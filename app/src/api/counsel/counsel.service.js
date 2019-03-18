@@ -49,7 +49,7 @@ export class CounselManagerService extends ServiceBase {
     return counsel.map(Counsel)
   }
 
-  async getExcel () {
+  async downloadExcel () {
     const { data } = await this.magician(() => this.r.get(`/excel`, {
       responseType: 'blob'
     }), {

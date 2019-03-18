@@ -72,7 +72,7 @@ export class DetsManagerService extends DetsService {
     })
   }
 
-  async getExcel () {
+  async downloadExcel () {
     const { data } = await this.magician(() => this.r.get(`/excel`, {
       responseType: 'blob'
     }), {
