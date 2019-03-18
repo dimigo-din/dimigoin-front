@@ -240,6 +240,10 @@ export default {
     width: 100%;
     color: $gray !important;
     font-weight: $font-weight-bold;
+
+    @include until($tablet) {
+      margin-bottom: 0.5em;
+    }
   }
 
   &__cell {
@@ -269,6 +273,10 @@ export default {
   &__cell--button {
     color: $pink;
     cursor: pointer;
+
+    @include until($tablet) {
+      float: right;
+    }
   }
 
   &__cell--full {
