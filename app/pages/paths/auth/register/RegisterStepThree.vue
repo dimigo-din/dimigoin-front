@@ -1,5 +1,5 @@
 <script>
-import Illust from '@/assets/register-side-3.svg'
+import Illust from '@/assets/register-side-3.svg?inline'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 import InputData from './input-data'
 

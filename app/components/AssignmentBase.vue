@@ -1,15 +1,15 @@
 <script>
 import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import DefaultNavbar from '@/components/DefaultNavbar.vue'
 
 export default {
   name: 'AssignmentBase',
-  components: { ContentWrapper, DefaultNavbar },
+  components: { ContentWrapper },
 
   filters: {
     deadline (val) {
-      return format(val, 'YYYY.MM.DD까지')
+      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 HH시 mm분까지')
     }
   },
 
@@ -40,17 +40,13 @@ export default {
 
 <template>
   <div>
-    <default-navbar />
     <div
       v-if="loading"
       class="assignment__loading"
     >
       <dimi-loader />
     </div>
-    <div
-      v-else
-      class="container"
-    >
+    <div v-else>
       <div class="row">
         <main class="main col-xs">
           <content-wrapper class="assignment">

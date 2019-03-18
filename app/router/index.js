@@ -5,9 +5,9 @@ import NProgress from 'nprogress'
 import * as routers from './routers'
 import store from '@/store'
 
-import NotFound from '@/pages/NotFound.vue'
-const Main = () => import(/* webpackChunkName: "main" */ '@/pages/Main.vue')
-const Meal = () => import(/* webpackChunkName: "service-meal" */ '@/pages/paths/meal/Meal.vue')
+import Main from '@/pages/Main.vue'
+const NotFound = () => import(/* webpackPrefetch: true, webpackChunkName: "not-found" */ '@/pages/NotFound.vue')
+const Meal = () => import(/* webpackPrefetch: true, webpackChunkName: "service-meal" */ '@/pages/paths/meal/Meal.vue')
 const Draft = () => import(/* webpackChunkName: "draft" */ '@/pages/Draft.vue')
 const ExplorerFound = () => import(/* webpackChunkName: "explorer-found" */ '@/pages/ExplorerFound.vue')
 
@@ -44,7 +44,6 @@ const router = new VueRouter({
     ...routers.auth,
     ...routers.request,
     ...routers.management,
-    ...routers.teacher,
     ...routers.assignment,
 
     {

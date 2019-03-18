@@ -1,5 +1,5 @@
 <script>
-import Logo from '@/assets/brand.svg'
+import Logo from '@/assets/brand.svg?inline'
 import MealGroup from '@/components/MealGroup.vue'
 import ServiceCards from '@/components/ServiceCards.vue'
 import { mapState } from 'vuex'
@@ -188,7 +188,7 @@ export default {
 
 .info {
   display: flex;
-  min-height: 480px;
+  min-height: 300px;
 
   @include until($tablet) {
     display: block;

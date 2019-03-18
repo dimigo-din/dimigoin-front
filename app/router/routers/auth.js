@@ -1,7 +1,7 @@
 import withPrefix from '@/src/util/path-with-prefix'
+import Login from '@/pages/paths/auth/Login.vue'
 
 const Register = () => import(/* webpackChunkName: "register" */ '@/pages/paths/auth/register/Register.vue')
-const Login = () => import(/* webpackChunkName: "login" */ '@/pages/paths/auth/Login.vue')
 
 export default withPrefix('/auth', [
   {

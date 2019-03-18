@@ -1,7 +1,7 @@
 <script>
 import validator from './mixins/validator'
 import InputData from '@/pages/paths/auth/register/input-data'
-import Illust from '@/assets/register-side-2.svg'
+import Illust from '@/assets/register-side-2.svg?inline'
 import RegisterStepWrapper from './RegisterStepWrapper.vue'
 
 export default {

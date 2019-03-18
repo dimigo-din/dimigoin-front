@@ -1,5 +1,5 @@
 <script>
-import Brand from '@/assets/brand.svg'
+import Brand from '@/assets/brand.svg?inline'
 import RegisterStepOne from './RegisterStepOne.vue'
 import RegisterStepTwo from './RegisterStepTwo.vue'
 import RegisterStepThree from './RegisterStepThree.vue'

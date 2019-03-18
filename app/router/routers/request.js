@@ -1,11 +1,11 @@
-const Wrapper = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Wrapper.vue')
-const Information = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Information.vue')
-const Circle = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Circle.vue')
-const RequestAfterschool = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Afterschool.vue')
-const Ingang = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Ingang.vue')
-const Dets = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Dets.vue')
-const Counsel = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Counsel.vue')
-const Book = () => import(/* webpackChunkName: "service-request" */ '@/pages/paths/request/Book.vue')
+const Wrapper = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Wrapper.vue')
+const Information = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Information.vue')
+const Circle = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Circle.vue')
+const Afterschool = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Afterschool.vue')
+const Ingang = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Ingang.vue')
+const Dets = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Dets.vue')
+const Counsel = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Counsel.vue')
+const Book = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Book.vue')
 
 export default [{
   path: '/request',
@@ -26,7 +26,7 @@ export default [{
     {
       path: 'afterschool',
       name: 'request/afterschool',
-      component: RequestAfterschool,
+      component: Afterschool,
       meta: { title: '신청 > 방과 후 활동 신청' }
     },
     {
