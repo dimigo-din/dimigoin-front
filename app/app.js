@@ -1,4 +1,6 @@
 import '@babel/polyfill'
+import 'typeface-nanum-square-round'
+import 'dimigoincon'
 
 import Vue from 'vue'
 import DimiRu from './dimiru'

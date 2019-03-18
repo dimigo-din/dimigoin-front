@@ -77,6 +77,7 @@ exports.scssLoaders = function (options = {
   return [
     styleLoader(options.extract),
     cssLoader,
+    'resolve-url-loader',
     postcssLoader,
     scssLoader
   ]

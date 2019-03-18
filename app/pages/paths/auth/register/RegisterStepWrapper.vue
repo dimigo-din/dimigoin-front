@@ -48,7 +48,7 @@ export default {
 
 .register__illust {
   display: none;
-  width: 15rem;
+  width: auto;
   margin: 0 auto;
 
   @include from($tablet) {
