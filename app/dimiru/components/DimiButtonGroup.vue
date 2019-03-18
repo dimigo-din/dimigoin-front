@@ -91,13 +91,6 @@ export default {
     border-top-right-radius: 4em;
   }
 
-  &__button:first-child::before,
-  &__button:last-child::after {
-    display: inline-block;
-    width: 2px;
-    content: '';
-  }
-
   &__button:not(:last-child) {
     border-right: 0;
   }
