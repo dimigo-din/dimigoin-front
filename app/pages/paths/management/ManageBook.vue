@@ -82,6 +82,14 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
+    },
+
+    async download () {
+      try {
+        await bookManager.getExcel()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -99,7 +107,7 @@ export default {
       </span>
       <span
         class="book__sub-menu"
-        onclick="location.href='http://dev-api.dimigo.in/book_info/excel'"
+        @click="download()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>

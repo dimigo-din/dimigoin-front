@@ -43,6 +43,14 @@ export default {
       }
     },
 
+    async download (grade) {
+      try {
+        await ingangManager.getExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     timezone (val) {
       const timezoneOffset = new Date().getTimezoneOffset() * 60000
       return new Date(val - timezoneOffset)
@@ -77,15 +85,15 @@ export default {
         >
           <dimi-button
             :loading="pending"
-            href="http://dev-api.dimigo.in/ingangs/excel/1"
             class="excel__item"
+            @click="download(1)"
           >
             1학년 엑셀 다운
           </dimi-button>
           <dimi-button
             :loading="pending"
-            href="http://dev-api.dimigo.in/ingangs/excel/2"
             class="excel__item"
+            @click="download(2)"
           >
             2학년 엑셀 다운
           </dimi-button>

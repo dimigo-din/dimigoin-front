@@ -37,6 +37,14 @@ export default {
         this.$swal('이런!', err.message, 'error')
       }
       this.pending = false
+    },
+
+    async download () {
+      try {
+        await counselManager.getExcel()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -48,7 +56,7 @@ export default {
       <span class="icon-comment" />상담 신청 관리
       <span
         class="counsel__excel"
-        onclick="location.href='http://dev-api.dimigo.in/counsel/excel'"
+        @click="download()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>

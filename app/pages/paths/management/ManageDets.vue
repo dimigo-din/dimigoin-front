@@ -93,6 +93,14 @@ export default {
       }
     },
 
+    async download () {
+      try {
+        await detsManager.getExcel()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     openEditModal (dets) {
       this.modals.edit = true
       this.currentDets = dets
@@ -168,7 +176,7 @@ export default {
       </span>
       <span
         class="dets__excel"
-        onclick="location.href='http://dev-api.dimigo.in/dets/excel'"
+        @click="download()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
