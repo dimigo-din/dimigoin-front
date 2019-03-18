@@ -3,7 +3,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue'
 import { freshmanManager } from '@/src/api/freshman'
 
 export default {
-  name: 'ManagementFreshman',
+  name: 'ManageFreshman',
 
   components: { ContentWrapper },
 

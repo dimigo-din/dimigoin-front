@@ -6,7 +6,7 @@ import timestamp from 'unix-timestamp'
 import { afterschool } from '@/src/api/afterschool'
 
 export default {
-  name: 'Afterschool',
+  name: 'ManageAfterschool',
   components: { ContentWrapper },
 
   data () {

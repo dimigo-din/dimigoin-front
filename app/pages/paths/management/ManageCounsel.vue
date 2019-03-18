@@ -4,7 +4,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue'
 import { counselManager } from '@/src/api/counsel'
 
 export default {
-  name: 'Counsel',
+  name: 'ManageCounsel',
 
   components: { ContentWrapper },
 

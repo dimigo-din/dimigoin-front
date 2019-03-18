@@ -1,5 +1,6 @@
-import { UPDATE_INFO, RESET_INFO } from './mutation-types'
+import { UPDATE_INFO, RESET_INFO, UPDATE_PERMISSIONS } from './mutation-types'
 import * as Sentry from '@sentry/browser'
+import { permission } from '@/src/api/permission'
 
 export default {
   state: {
@@ -12,7 +13,8 @@ export default {
     serial: 0,
     grade: 0,
     klass: 0,
-    number: 0
+    number: 0,
+    permissions: []
   },
 
   getters: {
@@ -49,6 +51,10 @@ export default {
       })
     },
 
+    [UPDATE_PERMISSIONS] (state, permissions) {
+      state.permissions = permissions
+    },
+
     [RESET_INFO] (state) {
       Object.assign(state, {
         idx: 0,
@@ -60,10 +66,17 @@ export default {
         serial: 0,
         grade: 0,
         klass: 0,
-        number: 0
+        number: 0,
+        permissions: []
       })
 
       Sentry.configureScope(scope => scope.setUser({}))
+    }
+  },
+
+  actions: {
+    async fetchPermissions ({ commit }) {
+      commit(UPDATE_PERMISSIONS, await permission.getPermissions())
     }
   }
 }
