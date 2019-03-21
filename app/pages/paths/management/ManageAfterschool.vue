@@ -109,7 +109,7 @@ export default {
       if (!this.checks.filter(v => v).length) return
       await Promise.all(Object.keys(this.checks.filter(v => v))
         .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
-      setTimeout(await this.updateAll, 500)
+      await this.updateAll()
     }
   }
 }
