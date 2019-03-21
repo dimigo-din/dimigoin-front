@@ -21,7 +21,7 @@
   "author": "dimigoin",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
+    "@babel/polyfill": "^7.4.0",
     "@sentry/browser": "^4.5.3",
     "axios": "^0.18.0",
     "date-fns": "^1.30.1",
