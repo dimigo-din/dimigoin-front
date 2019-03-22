@@ -73,7 +73,7 @@ export default {
           <div
             :class="{
               'counsel__list': true,
-              'counsel__border': index
+              'counsel__list--border': index
             }"
           >
             <span class="counsel__title">
@@ -125,7 +125,7 @@ export default {
     cursor: pointer;
   }
 
-  &__border {
+  &__list--border {
     border-top: 1px solid $gray-lighter;
   }
 
