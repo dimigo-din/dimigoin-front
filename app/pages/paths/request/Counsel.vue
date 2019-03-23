@@ -11,9 +11,7 @@ export default {
 
   filters: {
     filterTime (time) {
-      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', {
-        locale: koLocale
-      })
+      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', { locale: koLocale })
     },
     filterEndTime (time) {
       return format(time, 'hh시 mm분')
