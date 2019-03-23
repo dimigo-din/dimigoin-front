@@ -70,7 +70,12 @@ export default {
           v-for="(counsel, index) in list"
           :key="`counsel-${index}`"
         >
-          <div class="counsel__list">
+          <div
+            :class="{
+              'counsel__list': true,
+              'counsel__list--border': index
+            }"
+          >
             <span class="counsel__title">
               {{ counsel.startDate | filterTime }}{{ counsel.endDate | filterEndTime }}
             </span>
@@ -100,6 +105,7 @@ export default {
 
   &__main {
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   &__excel {
@@ -116,8 +122,11 @@ export default {
     align-items: center;
     justify-content: flex-start;
     padding: 24px;
-    border-bottom: 1px solid $gray-lighter;
     cursor: pointer;
+  }
+
+  &__list--border {
+    border-top: 1px solid $gray-lighter;
   }
 
   &__title {
