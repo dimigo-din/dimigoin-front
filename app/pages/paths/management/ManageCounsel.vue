@@ -1,6 +1,6 @@
 <script>
 import { format } from 'date-fns'
-import koLocal from 'date-fns/locale/ko'
+import koLocale from 'date-fns/locale/ko'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { counselManager } from '@/src/api/counsel'
 
@@ -11,7 +11,7 @@ export default {
 
   filters: {
     filterTime (time) {
-      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', , { locale: koLocale })
+      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', { locale: koLocale })
     },
 
     filterEndTime (time) {
