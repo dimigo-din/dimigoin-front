@@ -106,7 +106,8 @@ export default {
     },
 
     async deleteChecked () {
-      await Promise.all(Object.keys(this.checks)
+      if (!this.checks.filter(v => v).length) return
+      await Promise.all(Object.keys(this.checks.filter(v => v))
         .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
       await this.updateAll()
     }
