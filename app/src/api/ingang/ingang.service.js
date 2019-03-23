@@ -117,11 +117,9 @@ export class IngangManagerService extends IngangService {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', 'ingang-' + grade + '학년.xls')
+    link.setAttribute('download', `${grade}학년 ${new Date().getFullYear()}년 ${('0' + (new Date().getMonth() + 1)).slice(-2)}월 ${new Date().getDate()}일 인강실.xlsx`)
     document.body.appendChild(link)
     link.click()
-    setTimeout(() => {
-      document.body.removeChild(link)
-    }, 500)
+    link.remove()
   }
 }

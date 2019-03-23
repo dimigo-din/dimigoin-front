@@ -149,11 +149,9 @@ export class BookManagerService extends BookService {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', 'books.xls')
+    link.setAttribute('download', `${new Date().getFullYear()}년도 ${('0' + (new Date().getMonth() + 1)).slice(-2)}월.xlsx`)
     document.body.appendChild(link)
     link.click()
-    setTimeout(() => {
-      document.body.removeChild(link)
-    }, 500)
+    link.remove()
   }
 }

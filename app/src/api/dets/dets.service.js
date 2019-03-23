@@ -81,11 +81,9 @@ export class DetsManagerService extends DetsService {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', 'dets.xls')
+    link.setAttribute('download', `dets_request(${new Date().toISOString().substring(0, 10)}).xlsx`)
     document.body.appendChild(link)
     link.click()
-    setTimeout(() => {
-      document.body.removeChild(link)
-    }, 500)
+    link.remove()
   }
 }

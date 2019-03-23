@@ -58,11 +58,9 @@ export class CounselManagerService extends ServiceBase {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', 'counsels.xls')
+    link.setAttribute('download', `counsel_request(${new Date().toISOString().substring(0, 10)}).xlsx`)
     document.body.appendChild(link)
     link.click()
-    setTimeout(() => {
-      document.body.removeChild(link)
-    }, 500)
+    link.remove()
   }
 }
