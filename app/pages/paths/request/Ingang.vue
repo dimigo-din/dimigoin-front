@@ -15,10 +15,7 @@ export default {
       ingangs: [],
       today: new Date(),
       announcement: {},
-      ticket: {
-        weekly: null,
-        today: null
-      },
+      status: {},
       modal: false
     }
   },
@@ -31,15 +28,15 @@ export default {
     async refresh () {
       this.pending = true
       this.ingangs = await ingangRequestor.getIngangs()
-      this.ticket.weekly = this.ingangs.weekly_ticket_num
-      this.ticket.today = this.ingangs.daily_ticket_num
+      this.status = await ingangRequestor.getStatus()
+      this.announcement = await ingangRequestor.getAnnouncement()
       this.pending = false
     },
 
-    async handleSubmitButton (ing) {
+    async handleSubmitButton (ingang) {
       try {
-        if (ing.request) await ingangRequestor.cancelIngang(ing.idx)
-        else await ingangRequestor.applyIngang(ing.idx)
+        if (ingang.status) await ingangRequestor.cancelIngang(ingang.idx)
+        else await ingangRequestor.applyIngang(ingang.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -47,7 +44,7 @@ export default {
     },
 
     getStatusColor (ingang) {
-      return ingang.request ? 'aloes' : 'red'
+      return ingang.status ? 'aloes' : 'red'
     }
   }
 }
@@ -61,7 +58,11 @@ export default {
         class="ingang__helper ingang__helper--link"
         @click="modal = true"
       >
-        <span class="icon-notice" /> 공지사항
+        <span class="icon-notice" />공지사항
+      </span>
+      <span class="ingang__helper">
+        <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weekly_ticket_num - status.weekly_request_count }}회 /
+        <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.daily_ticket_num - status.daily_request_count }}회
       </span>
     </h1>
 
@@ -127,8 +128,6 @@ export default {
               >
                 {{ ingang.status ? '취소하기' : '신청하기' }}
               </dimi-button>
-              <p class="ingang__ticket">이번 주 신청 가능 횟수 : {{ ticket.weekly }}회</p>
-              <p class="ingang__ticket">오늘 신청 가능 횟수 : {{ ticket.today }}회</p>
             </div>
           </div>
 
