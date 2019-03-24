@@ -110,6 +110,14 @@ export default {
       await Promise.all(Object.keys(this.checks.filter(v => v))
         .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
       await this.updateAll()
+    },
+
+    async downloadExcel (grade) {
+      try {
+        await afterschool.downloadExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -147,6 +155,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-afsc__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-afsc__tool mng-afsc__excel"
+            @click="downloadExcel(tab + 1)"
+          >
+            <span class="mng-afsc__excel-icon icon-long-arrow-down" /> 엑셀 다운로드
           </span>
 
           <dimi-dropdown
@@ -316,7 +331,8 @@ export default {
     user-select: none;
   }
 
-  &__delete {
+  &__delete,
+  &__excel {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -327,7 +343,8 @@ export default {
     margin-left: 1em !important;
   }
 
-  &__delete-icon {
+  &__delete-icon,
+  &__excel-icon {
     font-size: 18px;
   }
 
