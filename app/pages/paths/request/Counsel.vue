@@ -50,10 +50,6 @@ export default {
     },
 
     downloadPaper (event) {
-      const setPrevent = () => {
-        event.prevent = true
-      }
-
       const hrefs = ['https://goo.gl/sY9qwe', 'https://goo.gl/e7YhGk']
       location.href = hrefs[event.value]
     }
