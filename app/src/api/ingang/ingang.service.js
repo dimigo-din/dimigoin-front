@@ -1,4 +1,5 @@
 import { ServiceBase } from '@/src/api/service-base'
+import { format } from 'date-fns'
 
 class IngangService extends ServiceBase {
   /**
@@ -117,7 +118,7 @@ export class IngangManagerService extends IngangService {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', `${grade}학년 ${new Date().getFullYear()}년 ${('0' + (new Date().getMonth() + 1)).slice(-2)}월 ${new Date().getDate()}일 인강실.xlsx`)
+    link.setAttribute('download', `${grade}학년 ${format(new Date(), 'YYYY')}년 ${format(new Date(), 'MM')}월 ${format(new Date(), 'DD')}일 인강실.xlsx`)
     document.body.appendChild(link)
     link.click()
     link.remove()
