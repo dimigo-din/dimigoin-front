@@ -105,6 +105,14 @@ export default {
       }
     },
 
+    async download (grade) {
+      try {
+        await ingangManager.downloadExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async deleteIngang (idx) {
       await ingangManager.deleteIngang(idx)
       await this.refresh()
@@ -144,15 +152,15 @@ export default {
         >
           <dimi-button
             :loading="pending"
-            href="http://dev-api.dimigo.in/ingang/excel/1"
             class="excel__item"
+            @click="download(1)"
           >
             1학년 엑셀 다운
           </dimi-button>
           <dimi-button
             :loading="pending"
-            href="http://dev-api.dimigo.in/ingang/excel/2"
             class="excel__item"
+            @click="download(2)"
           >
             2학년 엑셀 다운
           </dimi-button>

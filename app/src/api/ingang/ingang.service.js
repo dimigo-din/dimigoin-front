@@ -1,5 +1,7 @@
 import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
+
+import { format } from 'date-fns'
 import { Ingang, Status, CreateIngangInput, Announcement } from './ingang.struct'
 
 function tempValidation (ingang) {
@@ -114,5 +116,20 @@ export class IngangManagerService extends IngangService {
     await this.magician(() => this.r.post(`/notice`, notice), {
       403: '권한이 없습니다.'
     })
+  }
+
+  async downloadExcel (grade) {
+    const { data } = await this.magician(() => this.r.get(`/excel/${grade}`, {
+      responseType: 'blob'
+    }), {
+      403: '권한이 없습니다.',
+      default: '파일을 다운로드하던 중 문제가 발생했습니다.'
+    })
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(new Blob([data]))
+    link.setAttribute('download', `${grade}학년 ${format(new Date(), 'YYYY')}년 ${format(new Date(), 'MM')}월 ${format(new Date(), 'DD')}일 인강실.xlsx`)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
   }
 }
