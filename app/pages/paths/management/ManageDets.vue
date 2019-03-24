@@ -93,7 +93,7 @@ export default {
       }
     },
 
-    async download () {
+    async downloadExcel () {
       try {
         await detsManager.downloadExcel()
       } catch (err) {
@@ -176,7 +176,7 @@ export default {
       </span>
       <span
         class="dets__excel"
-        @click="download()"
+        @click="downloadExcel()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>

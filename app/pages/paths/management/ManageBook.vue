@@ -84,7 +84,7 @@ export default {
       }
     },
 
-    async download () {
+    async downloadExcel () {
       try {
         await bookManager.downloadExcel()
       } catch (err) {
@@ -107,7 +107,7 @@ export default {
       </span>
       <span
         class="book__sub-menu"
-        @click="download()"
+        @click="downloadExcel()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>

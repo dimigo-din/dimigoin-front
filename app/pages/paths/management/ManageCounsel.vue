@@ -40,7 +40,7 @@ export default {
       this.pending = false
     },
 
-    async download () {
+    async downloadExcel () {
       try {
         await counselManager.downloadExcel()
       } catch (err) {
@@ -57,7 +57,7 @@ export default {
       <span class="icon-comment" />상담 신청 관리
       <span
         class="counsel__excel"
-        @click="download()"
+        @click="downloadExcel()"
       >
         <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
