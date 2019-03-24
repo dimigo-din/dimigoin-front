@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import { Ingang, Status, CreateIngangInput, Announcement } from './ingang.struct'
 
 function tempValidation (ingang) {
-  const keys = ['target_grade', 'time', 'date', 'day', '1_max_user', '2_max_user', '3_max_user', '4_max_user', '5_max_user', '6_max_user', 'request_start_date', 'request_end_date']
+  const keys = ['target_grade', 'day', 'time', 'request_start_date', 'request_end_date', 'date', '1_max_user', '2_max_user', '3_max_user', '4_max_user', '5_max_user', '6_max_user']
   const missingArguments = keys.filter(key => !ingang[key])
   if (missingArguments.length > 0) {
     throw new ValidationError('모든 입력란을 채워주세요.', missingArguments)
@@ -101,7 +101,7 @@ export class IngangManagerService extends IngangService {
    * @param idx
    */
   async deleteIngang (idx) {
-    await this.magician(() => this.r.post(`/admin/${idx}`), {
+    await this.magician(() => this.r.delete(`/admin/${idx}`), {
       400: '잘못된 입력입니다.',
       403: '권한이 없습니다.'
     })

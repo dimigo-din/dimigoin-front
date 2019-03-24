@@ -10,7 +10,14 @@ export const Ingang = ingang => ({
   endDate: timestamp.toDate(ingang['request_end_date']),
   status: ingang['status'],
   count: ingang['present'],
-  max: ingang['max_user']
+  max: ingang['max_user'],
+  date: ingang['date'],
+  max_user_1: ingang['1_max_user'],
+  max_user_2: ingang['2_max_user'],
+  max_user_3: ingang['3_max_user'],
+  max_user_4: ingang['4_max_user'],
+  max_user_5: ingang['5_max_user'],
+  max_user_6: ingang['6_max_user']
 })
 
 export const Status = ingang => ({
@@ -26,25 +33,21 @@ export const CreateIngangInput = ingang => ({
   'time': ingang.time,
   'request_start_date': ingang.startDate,
   'request_end_date': ingang.endDate,
-  'date': timestamp.toDate(ingang['date']),
-  '1_max_user': ingang['1_max_user'],
-  '2_max_user': ingang['2_max_user'],
-  '3_max_user': ingang['3_max_user'],
-  '4_max_user': ingang['4_max_user'],
-  '5_max_user': ingang['5_max_user'],
-  '6_max_user': ingang['6_max_user']
+  'date': ingang.date,
+  '1_max_user': ingang.max_user_1,
+  '2_max_user': ingang.max_user_2,
+  '3_max_user': ingang.max_user_3,
+  '4_max_user': ingang.max_user_4,
+  '5_max_user': ingang.max_user_5,
+  '6_max_user': ingang.max_user_6
 })
 
 export const Announcement = notice => ({
-  idx: notice['idx'],
-  title: notice['title'],
   desc: notice['description'],
-  date: timestamp.toDate(notice['date'])
+  grade: notice['grade']
 })
 
 export const CreateAnnouncementInput = notice => ({
-  'idx': notice.idx,
-  'title': notice.title,
   'desc': notice.description,
-  'date': notice.date
+  'grade': notice.grade
 })

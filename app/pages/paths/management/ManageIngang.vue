@@ -13,13 +13,16 @@ export default {
     currentTab: 0,
     checks: [],
     ingangs: [],
-    notice: '',
+    notice: {
+      grade: '',
+      desc: ''
+    },
     modal: {
       profile: {}
     },
 
     form: {
-      target_grade: '',
+      grade: '',
       day: 0,
       time: '',
       date: new Date(),
@@ -41,12 +44,12 @@ export default {
 
     ingangInput () {
       return {
-        grade: this.form.target_grade,
+        grade: this.form.grade,
         day: days[this.form.day].code,
         time: this.form.time,
-        date: timestamp.fromDate(this.form.date),
         startDate: timestamp.fromDate(this.form.startDate),
         endDate: timestamp.fromDate(this.form.endDate),
+        date: timestamp.fromDate(this.form.date),
         max_user_1: parseInt(this.form.max_user_1),
         max_user_2: parseInt(this.form.max_user_2),
         max_user_3: parseInt(this.form.max_user_3),
@@ -71,14 +74,14 @@ export default {
     async refresh () {
       this.pending = true
       this.ingangs = await ingangManager.getIngangs()
-      this.notice = (await ingangManager.getAnnouncement()).description
+      this.notice.desc = (await ingangManager.getAnnouncement()).description
       this.pending = false
     },
 
     restructure (notice) {
       return {
-        'description': notice,
-        'date': this.timezone(new Date()).toISOString()
+        'description': notice.desc,
+        'grade': notice.grade
       }
     },
 
@@ -105,7 +108,7 @@ export default {
       }
     },
 
-    async download (grade) {
+    async downloadExcel (grade) {
       try {
         await ingangManager.downloadExcel(grade)
       } catch (err) {
@@ -153,14 +156,14 @@ export default {
           <dimi-button
             :loading="pending"
             class="excel__item"
-            @click="download(1)"
+            @click="downloadExcel(1)"
           >
             1학년 엑셀 다운
           </dimi-button>
           <dimi-button
             :loading="pending"
             class="excel__item"
-            @click="download(2)"
+            @click="downloadExcel(2)"
           >
             2학년 엑셀 다운
           </dimi-button>
@@ -169,8 +172,15 @@ export default {
           v-if="currentTab === 1"
         >
           <div class="notice">
+            <dimi-input
+              v-model="notice.grade"
+              class="notice__input"
+              placeholder="공지사항을 보내고자 하는 학년을 입력해주세요."
+            />
+          </div>
+          <div class="notice">
             <dimi-long-input
-              v-model="notice"
+              v-model="notice.desc"
               :height="300"
               class="notice__input"
             />
