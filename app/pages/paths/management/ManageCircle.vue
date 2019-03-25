@@ -116,7 +116,7 @@ export default {
               {{ item.name }} <br> {{ item.introduce }}
             </td>
             <td class="applicant-row__cell applicant-row__status">
-              <dimi-button-group
+              <dimi-badge-group
                 v-if="item.status === 0"
                 v-model="item.status"
                 :items="['보류', '합격', '불합격']"
@@ -124,13 +124,13 @@ export default {
                 @click="updateStatus($event, item)"
               />
 
-              <dimi-button-group
+              <dimi-badge-group
                 v-else-if="item.status === 3"
                 :items="['최종']"
                 :colors="['cyan']"
               />
 
-              <dimi-button-group
+              <dimi-badge-group
                 v-else
                 :value="item.status - 1"
                 :items="['합격', '불합격']"
