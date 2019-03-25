@@ -39,7 +39,7 @@ export default {
         value: index,
         items: this.items,
         prevent: false,
-        done: function () {
+        done () {
           if (!this.prevent) this.vm.$emit('input', index)
         }
       }
