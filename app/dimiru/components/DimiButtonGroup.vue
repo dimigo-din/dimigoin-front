@@ -1,5 +1,7 @@
 <script>
 export default {
+  name: 'DimiButtonGroup',
+
   props: {
     value: {
       type: Number,
