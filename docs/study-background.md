@@ -23,31 +23,7 @@
 
 ### Babel
 
-현재 디미고인 프론트는 바벨을 사용하여 최신 문법을 프로젝트에 적용하고 있습니다. 현재 적용된 바벨의 버전은 6.x로, 빠른 시일 내에 최신 버전 7.x로 업데이트를 반드시 해야합니다. 아래는 프로젝트 루트에 위치하고 있는 바벨 설정파일의 전문입니다.
-
-{% code-tabs %}
-{% code-tabs-item title=".babelrc" %}
-```javascript
-{
-  "compact": true,
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
-        }
-      }
-    ],
-    "stage-1"
-  ]
-}
-
-```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
-
-보다시피 stage-1 프리셋이 적용되어 있습니다. 바벨 설정 파일에 대한 문서는 [여기](https://babeljs.io/docs/en/options)에서 참고해주시기 바랍니다.
+프로젝트 루트에 위치하는 `.babelrc` 파일에서 바벨 설정을 관리합니다.
 
 ## 프레임워크 / 라이브러리
 
