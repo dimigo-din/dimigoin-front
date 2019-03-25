@@ -4,6 +4,10 @@
 * [개발 시작하기](getting-start.md)
 * [배경 지식 학습](study-background.md)
 
+## API
+
+* [Magician](api/magician.md)
+
 ## 아키텍쳐
 
 * [API 요청](undefined/api-request.md)
