@@ -47,6 +47,11 @@ export default {
       } finally {
         await this.refresh()
       }
+    },
+
+    downloadPaper (event) {
+      const hrefs = ['https://goo.gl/sY9qwe', 'https://goo.gl/e7YhGk']
+      location.href = hrefs[event.value]
     }
   }
 }
@@ -102,16 +107,10 @@ export default {
           <div
             class="counsel__buttons"
           >
-            <dimi-button
-              href="https://goo.gl/sY9qwe"
-            >
-              보호자 동의서 다운로드
-            </dimi-button>
-            <dimi-button
-              href="https://goo.gl/e7YhGk"
-            >
-              상담 신청서 다운로드
-            </dimi-button>
+            <dimi-long-button-group
+              :items="['보호자 동의서 다운로드', '상담 신청서 다운로드']"
+              @click="downloadPaper"
+            />
           </div>
         </section>
         <section
