@@ -94,8 +94,8 @@ export class IngangManagerService extends IngangService {
     ingang = CreateIngangInput(ingang)
     tempValidation(ingang)
     await this.magician(() => this.r.post(`/admin`, ingang), {
-      403: '권한이 없습니다.',
-      404: '인강실이 없습니다.'
+      400: '잘못된 입력입니다.',
+      403: '권한이 없습니다.'
     })
   }
 
