@@ -107,7 +107,7 @@ export default {
           <div
             class="counsel__buttons"
           >
-            <dimi-long-button-group
+            <dimi-button-group
               :items="['보호자 동의서 다운로드', '상담 신청서 다운로드']"
               @click="downloadPaper"
             />
