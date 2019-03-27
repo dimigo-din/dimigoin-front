@@ -17,10 +17,10 @@ export default {
     },
 
     form: {
-      grade: 1,
-      day: 0,
-      time: 1,
-      date: '',
+      grade: null,
+      day: null,
+      time: null,
+      date: null,
       startDate: new Date(),
       endDate: new Date(),
       maxUser: {}
