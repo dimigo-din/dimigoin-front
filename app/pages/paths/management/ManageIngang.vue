@@ -80,11 +80,6 @@ export default {
       await this.refresh()
     },
 
-    timezone (val) {
-      const timezoneOffset = new Date().getTimezoneOffset() * 60000
-      return new Date(val - timezoneOffset)
-    },
-
     getDayText (code) {
       return days.filter(v => v.code === code)[0].text
     }
