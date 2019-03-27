@@ -23,7 +23,7 @@ export default {
       date: '',
       startDate: new Date(),
       endDate: new Date(),
-      maxUser: []
+      maxUser: {}
     }
   }),
 
