@@ -81,7 +81,7 @@ export default {
     },
 
     getDayText (code) {
-      return days.filter(v => v.code === code)[0].text
+      return days.find(v => v.code === code).text
     }
   }
 }
