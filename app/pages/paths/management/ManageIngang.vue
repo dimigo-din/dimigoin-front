@@ -111,20 +111,11 @@ export default {
           v-if="currentTab === 0"
           class="excel"
         >
-          <dimi-button
-            :loading="pending"
+          <dimi-button-group
+            :items="['1학년 엑셀 다운', '2학년 엑셀 다운']"
             class="excel__item"
-            @click="downloadExcel(1)"
-          >
-            1학년 엑셀 다운
-          </dimi-button>
-          <dimi-button
-            :loading="pending"
-            class="excel__item"
-            @click="downloadExcel(2)"
-          >
-            2학년 엑셀 다운
-          </dimi-button>
+            @click="downloadExcel($event.value + 1)"
+          />
         </div>
         <div
           v-if="currentTab === 1"
