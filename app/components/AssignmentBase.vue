@@ -101,11 +101,12 @@ export default {
                   </span>
                 </div>
               </template>
-              <template>
-                <div class="assignment__empty">
-                  아직 등록된 과제가 없습니다
-                </div>
-              </template>
+              <div
+                v-if="!assignments.length"
+                class="assignment__empty"
+              >
+                아직 등록된 과제가 없습니다
+              </div>
             </dimi-card>
           </content-wrapper>
         </main>
