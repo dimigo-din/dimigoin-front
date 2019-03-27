@@ -180,24 +180,6 @@ export default {
     margin-bottom: 12px;
   }
 
-  &__black {
-    display: flex;
-    justify-content: center;
-  }
-
-  &__black--title {
-    padding-top: 4rem;
-    color: $red;
-    font-size: 64px;
-    font-weight: $font-weight-extra-bold;
-  }
-
-  &__black--comment {
-    padding-bottom: 4rem;
-    font-size: 22px;
-    font-weight: $font-weight-regular;
-  }
-
   &__helper {
     margin-top: 1em;
     margin-left: 1em;
