@@ -5,6 +5,7 @@ const Afterschool = () => import(/* webpackPrefetch: true, webpackChunkName: "se
 const Ingang = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Ingang.vue')
 const Dets = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Dets.vue')
 const Counsel = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Counsel.vue')
+const Mentoring = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Mentoring.vue')
 const Book = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Book.vue')
 
 export default [{
@@ -34,6 +35,12 @@ export default [{
       name: 'request/counsel',
       component: Counsel,
       meta: { title: '신청 > 상담 신청' }
+    },
+    {
+      path: 'mentoring',
+      name: 'request/mentoring',
+      component: Mentoring,
+      meta: { title: '신청 > 멘토링 신청' }
     },
     {
       path: 'ingang',
