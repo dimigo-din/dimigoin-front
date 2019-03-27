@@ -42,7 +42,7 @@ export const CreateIngangInput = ingang => ({
 export const Announcement = notice => ({
   desc: notice['description'],
   grade: notice['grade'],
-  date: notice['date']
+  date: timestamp.toDate(notice['date'])
 })
 
 export const CreateAnnouncementInput = notice => ({

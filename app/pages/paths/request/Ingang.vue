@@ -21,12 +21,6 @@ export default {
     }
   },
 
-  computed: {
-    announcementDate () {
-      return new Date(this.announcement.date * 1000)
-    }
-  },
-
   created () {
     this.refresh()
   },
@@ -146,7 +140,7 @@ export default {
             <h3 class="modal__title">
               인강실 공지사항
               <span class="modal__date">
-                {{ announcementDate | filterDate }}
+                {{ announcement.date | filterDate }}
               </span>
             </h3>
             <div class="modal__field">
