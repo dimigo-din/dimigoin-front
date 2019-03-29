@@ -1,10 +1,10 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-// import { mentoringRequestor } from '@/src/api/mentoring'
+import { mentoringRequestor } from '@/src/api/mentoring'
 
 export default {
-  name: 'RequestBook',
+  name: 'RequestMentoring',
 
   components: { ContentWrapper },
 
@@ -42,7 +42,10 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      //
+      ;[this.list, this.notice] = await Promise.all([
+        mentoringRequestor.getStudentMentoring(),
+        mentoringRequestor.getNotice()
+      ])
       this.pending = false
     }
   }
@@ -190,14 +193,6 @@ export default {
     justify-content: flex-start;
     padding: 24px;
     cursor: pointer;
-  }
-
-  &__border {
-    border-top: 1px solid $gray-lighter;
-  }
-
-  &__detail {
-    flex: 1;
   }
 
   &__empty {
