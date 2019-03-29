@@ -1,7 +1,8 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-import { mentoringRequestor } from '@/src/api/mentoring'
+// import { mentoringRequestor } from '@/src/api/mentoring'
+import days from '@/src/util/days'
 
 export default {
   name: 'RequestMentoring',
@@ -9,8 +10,11 @@ export default {
   components: { ContentWrapper },
 
   filters: {
-    filterDate (time) {
-      return format(time, 'YYYY-MM-DD')
+    filterDay (time) {
+      return format(time, 'MM/DD')
+    },
+    filterTime (time) {
+      return format(time, 'HH:mm')
     }
   },
 
@@ -18,21 +22,47 @@ export default {
     return {
       list: [
         {
-          name: '김태철',
+          idx: 2,
+          day: 'tus',
+          startTime: new Date('2019-05-10 19:30'),
+          endTime: new Date('2019-05-10 19:50'),
           subject: '국어',
-          day: '02/25 (월)',
-          time: '19:30 ~ 19:50'
+          teacher: {
+            idx: 1,
+            name: '김태철'
+          },
+          startDate: new Date('2019-03-27'),
+          endDate: new Date('2019-04-15'),
+          room: '1학년 5반 교실',
+          status: false,
+          present: 2,
+          maxUser: 5
         },
         {
-          name: '김태철',
+          idx: 2,
+          day: 'tus',
+          startTime: new Date('2019-05-10 19:30'),
+          endTime: new Date('2019-05-10 19:50'),
           subject: '국어',
-          day: '02/25 (월)',
-          time: '19:50 ~ 20:20'
+          teacher: {
+            idx: 1,
+            name: '김태철'
+          },
+          startDate: new Date('2019-03-27'),
+          endDate: new Date('2019-04-15'),
+          room: '1학년 5반 교실',
+          status: false,
+          present: 5,
+          maxUser: 5
         }
       ],
       notice: null,
       pending: false
     }
+  },
+
+  computed: {
+    days: () => days
   },
 
   async created () {
@@ -42,11 +72,15 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      ;[this.list, this.notice] = await Promise.all([
-        mentoringRequestor.getStudentMentoring(),
-        mentoringRequestor.getNotice()
-      ])
+      // ;[this.list, this.notice] = await Promise.all([
+      //   mentoringRequestor.getStudentMentoring(),
+      //   mentoringRequestor.getNotice()
+      // ])
       this.pending = false
+    },
+
+    getDaySmallText (code) {
+      return days.find(v => v.code === code).smallText
     }
   }
 }
@@ -80,7 +114,7 @@ export default {
           주의사항
         </h2>
         <div class="mentoring__notice-article">
-          매주 금요일 13시 30분부터 다음 주 멘토링 신청이 가능합니다.
+          매주 금요일 13시 30분부터 다음 주 멘토링 신청이 가능합니다. <br>
           자신의 학년 담당 선생님에게만 멘토링 신청이 가능하며, 일주일에 2회 이상은 신청하실 수 없습니다.
         </div>
         <div
@@ -100,27 +134,44 @@ export default {
               class="mentoring__row"
             >
               <td class="mentoring__cell mentoring__cell--name">
-                {{ item.name }} 선생님
+                {{ item.teacher.name }} 선생님
               </td>
               <td class="mentoring__cell">
                 {{ item.subject }}
               </td>
               <td class="mentoring__cell">
-                {{ item.day }}
+                {{ item.startTime | filterDay }} ({{ getDaySmallText(item.day) }})
               </td>
-              <td class="mentoring__cell">
-                {{ item.time }}
+              <td
+                :class="{
+                  'mentoring__cell--time': true,
+                  'mentoring__cell--disabled': (item.maxUser === item.present)
+                }"
+                class="mentoring__cell"
+              >
+                {{ item.startTime | filterTime }} ~ {{ item.endTime | filterTime }}
               </td>
               <td
                 :class="{
                   'mentoring__cell': true,
-                  'mentoring__cell--button': true
+                  'mentoring__cell--button': true,
+                  'mentoring__cell--full': (item.maxUser === item.present),
+                  'mentoring__cell--applied': item.status
                 }"
                 :title="item | dateRange"
                 @click="toggleApply(item)"
               >
-                <template>
-                  <span class="icon-ok" /> 신청하기
+                <template v-if="item.status">
+                  <span class="icon-cross" /> 신청취소
+                </template>
+
+                <template v-else-if="!item.status">
+                  <template v-if="item.maxUser > item.present">
+                    <span class="icon-ok" /> 신청하기
+                  </template>
+                  <template v-else>
+                    <span class="icon-alert" /> 신청불가
+                  </template>
                 </template>
               </td>
             </tr>
@@ -235,7 +286,7 @@ export default {
 
   &__cell {
     padding: 24px;
-    color: $gray;
+    color: $gray-dark;
     white-space: nowrap;
 
     @include until($tablet) {
@@ -245,10 +296,19 @@ export default {
   }
 
   &__cell--name {
-    width: 99%;
+    width: 35%;
     color: $black;
     line-height: 1.5;
     white-space: normal;
+  }
+
+  &__cell--time {
+    color: $pink;
+  }
+
+  &__cell--disabled {
+    color: $gray-light;
+    text-decoration: line-through;
   }
 
   &__cell--button {
