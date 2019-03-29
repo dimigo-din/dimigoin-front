@@ -1,7 +1,7 @@
 <script>
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
-// import { mentoringRequestor } from '@/src/api/mentoring'
+import { mentoringRequestor } from '@/src/api/mentoring'
 import days from '@/src/util/days'
 
 export default {
@@ -79,6 +79,17 @@ export default {
       this.pending = false
     },
 
+    async toggleApply (item) {
+      try {
+        if (!item.status) await mentoringRequestor.applyMentoring(item.idx)
+        else await mentoringRequestor.cancelMentoring(item.idx)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+
+      await this.refresh()
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -130,7 +141,7 @@ export default {
           <tbody>
             <tr
               v-for="(item, idx) in list"
-              :key="`mtr-${currentDay}-${idx}`"
+              :key="`mtr-${idx}`"
               class="mentoring__row"
             >
               <td class="mentoring__cell mentoring__cell--name">
@@ -158,7 +169,6 @@ export default {
                   'mentoring__cell--full': (item.maxUser === item.present),
                   'mentoring__cell--applied': item.status
                 }"
-                :title="item | dateRange"
                 @click="toggleApply(item)"
               >
                 <template v-if="item.status">
