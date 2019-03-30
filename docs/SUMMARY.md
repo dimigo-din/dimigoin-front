@@ -30,7 +30,10 @@
 
 ## 기타
 
+* [환경변수 설정](etcs/env-setting.md)
 * [Google Analytics](etcs/google-analytics.md)
+* [Jennifer](etcs/jennifer.md)
 * [Sentry](etcs/sentry.md)
+* [Codacy](etcs/codacy.md)
 * [개발자들](etcs/developers.md)
 

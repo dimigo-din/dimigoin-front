@@ -12,6 +12,7 @@ Vue.js 기반 SPA 로 동작하는 디미고인은 Vue.js 공식 라우터인 vu
 ...
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -99,19 +100,24 @@ router.beforeEach((to, from, next) => {
 ```javascript
 ...
 
-const Manage = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/Manage.vue')
-const ManageCircle = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageCircle.vue')
-const ManageDets = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageDets.vue')
-const ManageBook = () => import(/* webpackChunkName: "service-management" */ '@/pages/paths/management/ManageBook.vue')
-const ManageFreshman = () => import(/* webpackChunkName: "service-management" */ '@/pag
-es/paths/management/ManageFreshman.vue')
+const ManageWrapper = () => import('@/pages/paths/management/ManageWrapper.vue')
+const ManageMain = () => import('@/pages/paths/management/ManageMain.vue')
+const ManageAssignment = () => import('@/pages/paths/management/ManageAssignment.vue')
+const ManageAfterschool = () => import('@/pages/paths/management/ManageAfterschool.vue')
+const ManageCounsel = () => import('@/pages/paths/management/ManageCounsel.vue')
+const ManageIngang = () => import('@/pages/paths/management/ManageIngang.vue')
+const ManageAnnouncement = () => import('@/pages/paths/management/ManageAnnouncement.vue')
+const ManageCircle = () => import('@/pages/paths/management/ManageCircle.vue')
+const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
+const ManageBook = () => import('@/pages/paths/management/ManageBook.vue')
+const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue')
 
 ...
 ```
 {% endcode-tabs-item %}
 {% endcode-tabs %}
 
-`() => import( ... )` 를 사용하여 비동기 로딩을 구현하고 있습니다. 또한 Webpack 의 코드 분할 기능을 사용하기 위해 주석으로 `/* webpackChunkName: "service-management" */` 를 페이지 위치 앞에 붙여준 것을 확인할 수 있습니다. 같은 청크 이름을 지정하면 같은 파일에 묶여서 처리됩니다. 자세한 정보는 [여기](https://router.vuejs.org/kr/guide/advanced/lazy-loading.html).
+`() => import( ... )` 를 사용하여 비동기 로딩을 구현하고 있습니다. 또한 Webpack 의 코드 분할 기능을 사용하기 위해 주석으로 `/* webpackChunkName: "service-management" */` 를 페이지 위치 앞에 붙여준 것을 확인할 수 있습니다. 같은 청크 이름을 지정하면 같은 파일에 묶여서 처리됩니다. 자세한 정보는 [여기](https://router.vuejs.org/kr/guide/advanced/lazy-loading.html)를 참고하세요.
 
 
 

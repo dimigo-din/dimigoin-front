@@ -7,7 +7,7 @@
 * Git
 * Node.js &gt;= 8.9
 * Yarn
-* 좋아하는 코드 에디터 \(VSCode 추천\)
+* 좋아하는 코드 에디터 \(Webstorm 추천\)
 
 먼저 깃허브에서 소스코드를 클론받습니다.
 
@@ -53,21 +53,32 @@ dimigoin-front
 │  │  └─components
 │  ├─src - 비즈니스 로직
 │  │  ├─api
-│  │  ├─struct
+│  │  │  ├─afterschool
+│  │  │  ├─assignment
+│  │  │  ├─...
+│  │  │  └─service
+│  │  ├─errors
 │  │  └─util
 │  └─store - Vuex 스토어
 │      └─modules
 │          └─account
 ├─build - Webpack 빌드 관련
-├─public - 정적 리소스
-│  ├─circle_logo
+├─docs - Gitbook 문서 관련
+├─env - 환경변수들
+├─static - 정적 리소스
 │  └─icons
-└─env - 환경변수들
+└─test - test-e2e 관련
+   ├─fixtures
+   ├─plugins
+   ├─specs
+   └─support
 ```
 
 ### 환경변수
 
-`env/` 폴더에 `.env.example` 파일과 `.webpack.env.example` 파일이 환경변수 파일의 예시를 보여주고 있습니다. 개발을 시작하려면, 배포용 빌드 때 필요한 환경변수 파일 `.prod.env` , 개발 서버용 환경변수 파일 `.dev.env` , 그리고 최종 빌드 파일에는 포함되지 않는\(포함돼서는 안되는\) 웹팩 빌드 전용 환경변수 파일 `.webpack.env` 가 필요합니다. `.prod.env` 와 `.dev.env` 는 `.env.example` 파일의 변수들을 복사/붙여넣기 하여 채워주시고, `.webpack.env` 에는 `.webpack.env.example` 파일의 변수들을 복사/붙여넣기 하여 채워주시기 바랍니다.
+`env/` 폴더에 `.prod.env.example`, `.dev.env.example`, `.webpack.env.example` 파일이 환경변수 파일의 예시를 보여주고 있습니다. 개발을 시작하려면, 배포용 빌드 때 필요한 환경변수 파일 `.prod.env` , 개발 서버용 환경변수 파일 `.dev.env` , 그리고 최종 빌드 파일에는 포함되지 않는\(포함돼서는 안되는\) 웹팩 빌드 전용 환경변수 파일 `.webpack.env` 가 필요합니다. `.prod.env`, `.dev.env`, `.webpack.env` 에 각각 `.*.env.example` 파일의 변수들을 복사/붙여넣기 하여 채워주시기 바랍니다.
+
+환경변수에 입력해야될 변수들은 [여기](etcs/env-setting.md)에 정리하였습니다.
 
 ## 코드 스타일
 
@@ -90,6 +101,12 @@ yarn lint # Lint All
 디미고인 프론트의 브랜치 전략은 [Github-Flow](https://githubflow.github.io/) 를 따릅니다. Github-Flow에 관한 쉬운 설명은 [이곳](https://ujuc.github.io/2015/12/16/git-flow-github-flow-gitlab-flow/)에서 확인하실 수 있습니다.
 
 또한 지정된 메인테이너 외에는 master 브랜치로 바로 커밋하는 것을 절대 지양합니다. 아무리 급하더라도 항상 브랜치를 새로 파서 PR을 통해 코드 리뷰를 진행한 후 코드를 반영하도록 합니다.
+
+## 커밋 메시지 규칙
+
+디미고인 프론트의 커밋 메시지 규칙은 [Karma Git Commit Msg](https://karma-runner.github.io/3.0/dev/git-commit-msg.html) 를 따릅니다.
+
+커밋 메시지 규칙을 활용한 대표적인 사례로는 [Vue 공식 깃허브 레포](https://github.com/vuejs/vue)가 있습니다.
 
 ## 배포하기
 
