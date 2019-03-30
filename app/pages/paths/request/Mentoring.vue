@@ -51,6 +51,23 @@ export default {
           startDate: new Date('2019-03-27'),
           endDate: new Date('2019-04-15'),
           room: '1학년 5반 교실',
+          status: true,
+          present: 5,
+          maxUser: 5
+        },
+        {
+          idx: 2,
+          day: 'tus',
+          startTime: new Date('2019-05-10 19:30'),
+          endTime: new Date('2019-05-10 19:50'),
+          subject: '국어',
+          teacher: {
+            idx: 1,
+            name: '김태철'
+          },
+          startDate: new Date('2019-03-27'),
+          endDate: new Date('2019-04-15'),
+          room: '1학년 5반 교실',
           status: false,
           present: 5,
           maxUser: 5
@@ -90,7 +107,7 @@ export default {
       await this.refresh()
     },
 
-    getDaySmallText (code) {
+    getDaySmallTextByCode (code) {
       return days.find(v => v.code === code).smallText
     }
   }
@@ -151,7 +168,7 @@ export default {
                 {{ item.subject }}
               </td>
               <td class="mentoring__cell">
-                {{ item.startTime | filterDay }} ({{ getDaySmallText(item.day) }})
+                {{ item.startTime | filterDay }} ({{ getDaySmallTextByCode(item.day) }})
               </td>
               <td
                 :class="{
@@ -312,9 +329,9 @@ export default {
     white-space: normal;
   }
 
-  &__cell--time {
-    color: $pink;
-  }
+  // &__cell--time {
+  //   color: $pink;
+  // }
 
   &__cell--disabled {
     color: $gray-light;

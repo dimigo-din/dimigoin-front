@@ -6,6 +6,7 @@ const ManageAssignment = () => import('@/pages/paths/management/ManageAssignment
 const ManageAfterschool = () => import('@/pages/paths/management/ManageAfterschool.vue')
 const ManageCounsel = () => import('@/pages/paths/management/ManageCounsel.vue')
 const ManageIngang = () => import('@/pages/paths/management/ManageIngang.vue')
+const ManageMentoring = () => import('@/pages/paths/management/ManageMentoring.vue')
 const ManageAnnouncement = () => import('@/pages/paths/management/ManageAnnouncement.vue')
 const ManageCircle = () => import('@/pages/paths/management/ManageCircle.vue')
 const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
@@ -48,6 +49,14 @@ export default [
           component: ManageCounsel,
           meta: {
             title: '디미고인 > 상담 신청 관리'
+          }
+        },
+        {
+          path: 'mentoring',
+          name: 'management/mentoring',
+          component: ManageMentoring,
+          meta: {
+            title: '디미고인 > 멘토링 신청 관리'
           }
         },
         {
