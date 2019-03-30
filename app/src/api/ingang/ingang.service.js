@@ -31,9 +31,7 @@ export class IngangRequestorService extends IngangService {
    * @returns {Object}
    */
   async getIngangs () {
-    const { data: { ingangs } } = await this.magician(() => this.r.get(`/`), {
-      404: () => []
-    })
+    const { data: { ingangs } } = await this.magician(() => this.r.get(`/`))
     return ingangs.map(Ingang)
   }
 

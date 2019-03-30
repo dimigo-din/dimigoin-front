@@ -2,7 +2,7 @@ import timestamp from 'unix-timestamp'
 
 export const Ingang = ingang => ({
   idx: ingang['idx'],
-  grade: parseInt(ingang['target_grade']),
+  grade: ingang['target_grade'],
   klass: ingang['klass'],
   day: ingang['day'],
   time: ingang['time'],
@@ -44,7 +44,7 @@ export const CreateIngangInput = ingang => ({
 
 export const Announcement = notice => ({
   desc: notice['description'],
-  grade: parseInt(notice['grade'])
+  grade: notice['grade']
 })
 
 export const CreateAnnouncementInput = notice => ({
