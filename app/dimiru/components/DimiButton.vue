@@ -7,9 +7,9 @@ export default {
       type: Boolean,
       default: false
     },
-    active: {
+    disabled: {
       type: Boolean,
-      default: true
+      default: false
     },
     loading: {
       type: Boolean,
