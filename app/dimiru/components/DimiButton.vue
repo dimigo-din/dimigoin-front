@@ -41,18 +41,18 @@ export default {
         'btn--small': this.small,
         'btn--large': this.large,
         'btn--text': this.text,
-        'btn--cursor-disable': !this.isActive
+        'btn--disabled': this.isDisabled
       }
     },
 
-    isActive () {
-      return !this.loading && this.active
+    isDisabled () {
+      return this.loading || this.disabled
     }
   },
 
   methods: {
     click (e) {
-      if (this.active) this.$emit('click', e)
+      if (!this.isDisabled) this.$emit('click', e)
     }
   }
 }
@@ -99,7 +99,8 @@ export default {
     background-color: transparent;
   }
 
-  &--cursor-disable {
+  &--disabled {
+    background-color: lighten($red, 25%);
     cursor: not-allowed;
   }
 
