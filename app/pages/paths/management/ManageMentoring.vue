@@ -1,7 +1,8 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
-// import timestamp from 'unix-timestamp'
+import timestamp from 'unix-timestamp'
+import { mentoringManager } from '@/src/api/mentoring'
 
 export default {
   name: 'ManageMentoring',
@@ -9,6 +10,7 @@ export default {
 
   data () {
     return {
+      pending: true,
       tab: 0,
       checks: [],
       selectAll: false,
@@ -123,15 +125,24 @@ export default {
   },
 
   async created () {
+    this.pending = true
     await this.updateAll()
+    this.pending = false
   },
 
   methods: {
     async updateAll () {
-      // [this.afterschools[0], this.afterschools[1], this.afterschools[2]] =
-      //   await Promise.all([1, 2, 3].map(grade => afterschool.getGradeAfterschool(grade)))
-      // this.checks = [...Array(this.afterschools[this.tab].length)].map(() => false)
-      // this.afterschools = Object.assign({}, this.afterschools)
+      const allMentorings = await mentoringManager.getAllMentorings()
+      ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
+        await Promise.all([1, 2, 3].map(grade => allMentorings.filter(targetGrade =>
+          targetGrade === grade
+        )))
+      this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
+      this.mentorings = Object.assign({}, this.mentorings)
+    },
+
+    async deleteChecked () {
+
     },
 
     getDaySmallTextByCode (code) {
@@ -159,8 +170,16 @@ export default {
         v-model="tab"
         :tabs="['1학년', '2학년', '3학년']"
       />
-
-      <section class="mng-mentoring__section">
+      <div
+        v-if="pending"
+        class="mentoring__loader"
+      >
+        <dimi-loader />
+      </div>
+      <section
+        v-else
+        class="mng-mentoring__section"
+      >
         <h2 class="mng-mentoring__title">
           {{ tab + 1 + '학년' }} 멘토링 신청 관리 ({{ currentCount }}개)
         </h2>
@@ -241,6 +260,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.mentoring {
+  padding: 0;
+  border: 0;
+
+  &__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .mng-mentoring {
   &__main {
     padding: 0;

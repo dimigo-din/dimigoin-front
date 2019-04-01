@@ -38,11 +38,10 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      // ;[this.list, this.notice] = await Promise.all([
-      //   mentoringRequestor.getStudentMentoring(),
-      //   mentoringRequestor.getNotice()
-      // ])
-      this.list = await mentoringRequestor.getStudentMentoring()
+      ;[this.list, this.notice] = await Promise.all([
+        mentoringRequestor.getStudentMentoring(),
+        mentoringRequestor.getNotice()
+      ])
       this.pending = false
     },
 

@@ -8,7 +8,7 @@ export class MentoringService extends ServiceBase {
    * @returns {Object}
    */
   async getNotice () {
-    const { data: notice } = await this.magician(() => this.r.get(`/notice`), {})
+    const { data: notice } = await this.magician(() => this.r.get('/notice'), {})
     return Notice(notice)
   }
 }
@@ -18,7 +18,7 @@ export class MentoringRequestorService extends MentoringService {
    * 학생이 신청할 수 있는 멘토링 목록을 가져옵니다.
    */
   async getStudentMentoring () {
-    const { data: { mentors } } = await this.magician(() => this.r.get(`/request`), {
+    const { data: { mentors } } = await this.magician(() => this.r.get('/request'), {
       404: () => []
     })
     return mentors.map(Mentoring)
@@ -48,5 +48,26 @@ export class MentoringRequestorService extends MentoringService {
       403: '신청 시간이 아닙니다.',
       404: '존재하지 않는 멘토링 신청입니다.'
     })
+  }
+}
+
+export class MentoringManagerService extends MentoringService {
+  /**
+   * 공지사항을 추가합니다.
+   *
+   * @param {Object} notice
+   */
+  async addNotice (notice) {
+    await this.magician(() => this.r.post('/notice', notice), {
+      403: '권한이 없습니다.'
+    })
+  }
+
+  /**
+   * 멘토링 정보를 가져옵니다.
+   */
+  async getAllMentorings () {
+    const { data: { mentorings } } = await this.magician(() => this.r.get('/admin'))
+    return mentorings.map(Mentoring)
   }
 }
