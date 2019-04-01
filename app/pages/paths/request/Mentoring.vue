@@ -20,61 +20,10 @@ export default {
 
   data () {
     return {
-      list: [
-        {
-          idx: 2,
-          day: 'tus',
-          startTime: new Date('2019-05-10 19:30'),
-          endTime: new Date('2019-05-10 19:50'),
-          subject: '국어',
-          teacher: {
-            idx: 1,
-            name: '김태철'
-          },
-          startDate: new Date('2019-03-27'),
-          endDate: new Date('2019-04-15'),
-          room: '1학년 5반 교실',
-          status: false,
-          present: 2,
-          maxUser: 5
-        },
-        {
-          idx: 2,
-          day: 'tus',
-          startTime: new Date('2019-05-10 19:30'),
-          endTime: new Date('2019-05-10 19:50'),
-          subject: '국어',
-          teacher: {
-            idx: 1,
-            name: '김태철'
-          },
-          startDate: new Date('2019-03-27'),
-          endDate: new Date('2019-04-15'),
-          room: '1학년 5반 교실',
-          status: true,
-          present: 5,
-          maxUser: 5
-        },
-        {
-          idx: 2,
-          day: 'tus',
-          startTime: new Date('2019-05-10 19:30'),
-          endTime: new Date('2019-05-10 19:50'),
-          subject: '국어',
-          teacher: {
-            idx: 1,
-            name: '김태철'
-          },
-          startDate: new Date('2019-03-27'),
-          endDate: new Date('2019-04-15'),
-          room: '1학년 5반 교실',
-          status: false,
-          present: 5,
-          maxUser: 5
-        }
-      ],
-      notice: null,
-      pending: false
+      list: [],
+      notice: {},
+      pending: false,
+      modal: false
     }
   },
 
@@ -93,6 +42,7 @@ export default {
       //   mentoringRequestor.getStudentMentoring(),
       //   mentoringRequestor.getNotice()
       // ])
+      this.list = await mentoringRequestor.getStudentMentoring()
       this.pending = false
     },
 
@@ -120,7 +70,7 @@ export default {
       <span class="icon-comment" />멘토링 신청
       <span
         class="mentoring__notice"
-        @click="modals.notice = true"
+        @click="modal = true"
       >
         <span class="icon-notice" />멘토링 공지
       </span>
@@ -149,7 +99,7 @@ export default {
           v-if="!list.length"
           class="mentoring__empty"
         >
-          아직 신청한 멘토링이 없습니다
+          아직 등록된 멘토링이 없습니다.
         </div>
         <table
           v-else-if="list.length"
@@ -207,14 +157,14 @@ export default {
       </template>
 
       <dimi-modal
-        v-if="notice"
-        :opened="modals.notice"
-        @close="closeModal"
+        :opened="modal"
+        class="modal__modal"
+        @close="modal = false"
       >
         <h3 class="modal__title">
           멘토링 공지
           <span class="modal__date">
-            {{ notice.date | filterDate }}
+            {{ notice.date }}
           </span>
         </h3>
         <div class="modal__field">
@@ -361,6 +311,47 @@ export default {
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+  }
+
+  &__label {
+    min-width: 6em;
+  }
+
+  &__leftInput {
+    padding-right: 10px;
+  }
+
+  &__button {
+    position: absolute;
+    right: 25px;
+    padding-top: 20px;
+  }
+
+  &__announcement {
+    font-family: inherit;
+    font-weight: $font-weight-regular;
+    line-height: 1.2rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  &__date {
+    font-size: 14px;
+    font-weight: $font-weight-light;
   }
 }
 </style>

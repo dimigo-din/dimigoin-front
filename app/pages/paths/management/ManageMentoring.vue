@@ -1,8 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
-import timestamp from 'unix-timestamp'
-import { afterschool } from '@/src/api/afterschool'
+// import timestamp from 'unix-timestamp'
 
 export default {
   name: 'ManageMentoring',
@@ -109,18 +108,6 @@ export default {
 
     currentCount () {
       return this.mentorings[this.tab].length
-    },
-
-    afterschoolInput () {
-      return {
-        name: this.form.name,
-        startDate: timestamp.fromDate(this.form.startDate),
-        endDate: timestamp.fromDate(this.form.endDate),
-        day: days[this.form.day].code,
-        grade: this.tab + 1,
-        maxCount: parseInt(this.form.maxCount),
-        teacherName: this.form.teacherName
-      }
     }
   },
 
@@ -147,38 +134,8 @@ export default {
       // this.afterschools = Object.assign({}, this.afterschools)
     },
 
-    async addAfterschool () {
-      try {
-        await afterschool.createAfterschool(this.afterschoolInput)
-        this.$swal('성공!', '추가되었습니다.', 'success')
-
-        this.form.name = ''
-        this.form.maxCount = null
-        this.form.teacherName = ''
-
-        await this.updateAll()
-      } catch (err) {
-        this.$swal('이런!', err.message, 'error')
-      }
-    },
-
     getDaySmallTextByCode (code) {
       return days.find(v => v.code === code).smallText
-    },
-
-    async deleteChecked () {
-      if (!this.checks.filter(v => v).length) return
-      await Promise.all(Object.keys(this.checks.filter(v => v))
-        .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
-      await this.updateAll()
-    },
-
-    async downloadExcel (grade) {
-      try {
-        await afterschool.downloadExcel(grade)
-      } catch (err) {
-        this.$swal('이런!', err.message, 'error')
-      }
     }
   }
 }
@@ -272,6 +229,14 @@ export default {
         </table>
       </section>
     </dimi-card>
+    <dimi-modal
+      :opened="true"
+      class="mng-mentoring__modal"
+    >
+      <h3 class="mng-mentoring__modal-title">
+        멘토링 추가
+      </h3>
+    </dimi-modal>
   </content-wrapper>
 </template>
 
@@ -371,10 +336,12 @@ export default {
   &__cell--button-edit {
     padding-right: 24px;
     color: $red;
+    cursor: pointer;
   }
 
   &__cell--button-delete {
     color: $gray-light;
+    cursor: pointer;
   }
 
   &__form {
@@ -430,6 +397,10 @@ export default {
     border: 0;
     background-color: $gray-lighten;
     border-radius: 20px;
+  }
+
+  &__modal {
+    padding: 24px;
   }
 }
 </style>
