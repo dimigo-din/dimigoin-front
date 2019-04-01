@@ -5,7 +5,11 @@ import { format } from 'date-fns'
 import { Ingang, Status, CreateIngangInput, Announcement } from './ingang.struct'
 
 function tempValidation (ingang) {
-  const keys = ['target_grade', 'day', 'time', 'request_start_date', 'request_end_date', 'date', '1_max_user', '2_max_user', '3_max_user', '4_max_user', '5_max_user', '6_max_user']
+  const keys = [
+    'target_grade', 'day', 'time', 'date',
+    'request_start_date', 'request_end_date',
+    '1_max_user', '2_max_user', '3_max_user', '4_max_user', '5_max_user', '6_max_user'
+  ]
   const missingArguments = keys.filter(key => !ingang[key])
   if (missingArguments.length > 0) {
     throw new ValidationError('모든 입력란을 채워주세요.', missingArguments)
