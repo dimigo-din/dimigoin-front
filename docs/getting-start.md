@@ -86,7 +86,7 @@ dimigoin-front
 
 자바스크립트 코드 스타일은 `.eslintrc` 파일에서 관리하고 있습니다. 자바스크립트에는 [standard](https://standardjs.com/)를, 뷰 템플릿에는 [eslint-plugin-vue ](https://www.npmjs.com/package/eslint-plugin-vue)에서 제공하는  `vue/recommended` 를 적용하고 있습니다. 
 
-CSS/SCSS 코드 스타일은 `.stylelintrc` 에서 관리하고 있습니다. `.scss` 와 `.vue` 파일을 검사합니다. [stylelint-scss](https://www.npmjs.com/package/stylelint-scss) 와 [stylelint-order](https://www.npmjs.com/package/stylelint-order) 플러그인을 사용하고 있고, [stylelint-config-sass-guideline](https://www.npmjs.com/package/stylelint-config-sass-guidelines)을 상속받고 있습니다. 또한 커스텀 룰로 `selector-class-pattern`에 정규식을 적용하여 [BEM 규칙](http://getbem.com/)을 따르도록 강제하고 있습니다. BEM을 포함한 CSS 개발 방법론에 관한 설명은 [이 글](http://wit.nts-corp.com/2015/04/16/3538)에 잘 나와있습니다.
+CSS/SCSS 코드 스타일은 `.stylelintrc` 에서 관리하고 있습니다. `.scss` 와 `.vue` 파일을 검사합니다. [stylelint-scss](https://www.npmjs.com/package/stylelint-scss)와 [stylelint-order](https://www.npmjs.com/package/stylelint-order) 플러그인을 사용하고 있고, [stylelint-config-sass-guideline](https://www.npmjs.com/package/stylelint-config-sass-guidelines)을 상속받고 있습니다. 또한 커스텀 룰로 `selector-class-pattern` 에 정규식을 적용하여 [BEM 규칙](http://getbem.com/)을 따르도록 강제하고 있습니다. BEM을 포함한 CSS 개발 방법론에 관한 설명은 [이 글](http://wit.nts-corp.com/2015/04/16/3538)에 잘 나와있습니다.
 
 ```text
 yarn lint:js # JS/Vue lint
@@ -98,13 +98,13 @@ yarn lint # Lint All
 
 ## 브랜치 전략
 
-디미고인 프론트의 브랜치 전략은 [Github-Flow](https://githubflow.github.io/) 를 따릅니다. Github-Flow에 관한 쉬운 설명은 [이곳](https://ujuc.github.io/2015/12/16/git-flow-github-flow-gitlab-flow/)에서 확인하실 수 있습니다.
+디미고인 프론트의 브랜치 전략은 [Github-Flow](https://githubflow.github.io/)를 따릅니다. Github-Flow에 관한 쉬운 설명은 [이곳](https://ujuc.github.io/2015/12/16/git-flow-github-flow-gitlab-flow/)에서 확인하실 수 있습니다.
 
 또한 지정된 메인테이너 외에는 master 브랜치로 바로 커밋하는 것을 절대 지양합니다. 아무리 급하더라도 항상 브랜치를 새로 파서 PR을 통해 코드 리뷰를 진행한 후 코드를 반영하도록 합니다.
 
 ## 커밋 메시지 규칙
 
-디미고인 프론트의 커밋 메시지 규칙은 [Karma Git Commit Msg](https://karma-runner.github.io/3.0/dev/git-commit-msg.html) 를 따릅니다.
+디미고인 프론트의 커밋 메시지 규칙은 [Karma Git Commit Msg](https://karma-runner.github.io/3.0/dev/git-commit-msg.html)를 따릅니다.
 
 커밋 메시지 규칙을 활용한 대표적인 사례로는 [Vue 공식 깃허브 레포](https://github.com/vuejs/vue)가 있습니다.
 
