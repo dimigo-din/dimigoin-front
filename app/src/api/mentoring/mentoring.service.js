@@ -31,8 +31,8 @@ export class MentoringRequestorService extends MentoringService {
    */
   async applyMentoring (idx) {
     await this.magician(() => this.r.post(`/request/${idx}`), {
-      403: '본인 학년/반 인강실이 아니거나, 일주일치 신청을 모두 했습니다.',
-      404: '인강실 신청이 없습니다.',
+      403: '본인 학년/반 멘토링이 아니거나, 일주일치 신청을 모두 했습니다.',
+      404: '멘토링 신청이 없습니다.',
       405: '신청 시간이 아닙니다.',
       409: '이미 신청을 했거나 인원이 꽉 찼습니다.'
     })

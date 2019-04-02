@@ -145,7 +145,7 @@ export default {
 
     },
 
-    getDaySmallTextByCode (code) {
+    getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
   }
@@ -225,7 +225,7 @@ export default {
                 {{ item.subject }}
               </td>
               <td class="mng-mentoring__cell">
-                {{ getDaySmallTextByCode(item.day) }}
+                {{ getDaySmallText(item.day) }}
               </td>
               <td class="mng-mentoring__cell">
                 {{ item.startTime }} ~ {{ item.endTime }}

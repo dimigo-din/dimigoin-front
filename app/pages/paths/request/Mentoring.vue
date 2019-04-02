@@ -56,7 +56,7 @@ export default {
       await this.refresh()
     },
 
-    getDaySmallTextByCode (code) {
+    getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
   }
@@ -101,7 +101,7 @@ export default {
           아직 등록된 멘토링이 없습니다.
         </div>
         <table
-          v-else-if="list.length"
+          v-else
           class="mentoring__list"
         >
           <tbody>
@@ -117,7 +117,7 @@ export default {
                 {{ item.subject }}
               </td>
               <td class="mentoring__cell">
-                {{ item.startTime | filterDay }} ({{ getDaySmallTextByCode(item.day) }})
+                {{ item.startTime | filterDay }} ({{ getDaySmallText(item.day) }})
               </td>
               <td
                 :class="{
