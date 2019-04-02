@@ -28,9 +28,13 @@ export default {
   methods: {
     async refresh () {
       this.pending = true
-      this.ingangs = await ingangRequestor.getIngangs()
-      this.status = await ingangRequestor.getStatus()
-      this.announcement = await ingangRequestor.getAnnouncement()
+      try {
+        this.ingangs = await ingangRequestor.getIngangs()
+        this.status = await ingangRequestor.getStatus()
+        this.announcement = await ingangRequestor.getAnnouncement()
+      } catch (err) {
+        this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
+      }
       this.pending = false
     },
 
