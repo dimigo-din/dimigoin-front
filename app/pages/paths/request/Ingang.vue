@@ -9,6 +9,7 @@ export default {
   filters: {
     filterDate: time => format(time, 'YYYY-MM-DD')
   },
+
   data () {
     return {
       pending: false,
@@ -20,7 +21,7 @@ export default {
     }
   },
 
-  async created () {
+  created () {
     this.refresh()
   },
 
@@ -65,8 +66,8 @@ export default {
         <span class="icon-notice" />공지사항
       </span>
       <span class="ingang__helper">
-        <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weekly_ticket_num - status.weekly_request_count }}회 /
-        <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.daily_ticket_num - status.daily_request_count }}회
+        <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
+        <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.dailyTicketNum - status.dailyRequestCount }}회
       </span>
     </h1>
 
@@ -177,24 +178,6 @@ export default {
     margin-bottom: 12px;
   }
 
-  &__black {
-    display: flex;
-    justify-content: center;
-  }
-
-  &__black--title {
-    padding-top: 4rem;
-    color: $red;
-    font-size: 64px;
-    font-weight: $font-weight-extra-bold;
-  }
-
-  &__black--comment {
-    padding-bottom: 4rem;
-    font-size: 22px;
-    font-weight: $font-weight-regular;
-  }
-
   &__helper {
     margin-top: 1em;
     margin-left: 1em;
@@ -283,7 +266,7 @@ export default {
   &__field {
     display: flex;
     align-items: center;
-    margin: 1.5rem 0;
+    margin-top: 1.5rem;
   }
 
   &__label {
@@ -303,7 +286,7 @@ export default {
   &__announcement {
     font-family: inherit;
     font-weight: $font-weight-regular;
-    line-height: 1.2rem;
+    line-height: 1.3rem;
     white-space: pre-wrap;
     word-wrap: break-word;
   }

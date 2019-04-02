@@ -56,7 +56,9 @@ export default {
             <dimi-card
               slot="main"
             >
-              <template v-for="(ass, i) in assignments">
+              <template
+                v-for="(ass, i) in assignments"
+              >
                 <div
                   :key="i"
                   class="assignment__assignment"
@@ -99,6 +101,12 @@ export default {
                   </span>
                 </div>
               </template>
+              <div
+                v-if="!assignments.length"
+                class="assignment__empty"
+              >
+                아직 등록된 과제가 없습니다
+              </div>
             </dimi-card>
           </content-wrapper>
         </main>
@@ -162,6 +170,14 @@ export default {
     justify-content: flex-end;
     color: $red;
     font-size: 18px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
     font-weight: $font-weight-bold;
   }
 }

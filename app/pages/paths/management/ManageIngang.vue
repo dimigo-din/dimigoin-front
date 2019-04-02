@@ -2,7 +2,6 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import days from '@/src/util/days'
-import timestamp from 'unix-timestamp'
 import { ingangManager } from '@/src/api/ingang'
 
 export default {
@@ -11,62 +10,28 @@ export default {
   data: () => ({
     pending: false,
     currentTab: 0,
-    checks: [],
     ingangs: [],
     notice: {
       grade: '',
       desc: ''
     },
-    modal: {
-      profile: {}
-    },
 
     form: {
-      grade: '',
+      grade: 1,
       day: 0,
-      time: '',
-      date: new Date(),
+      time: 1,
+      date: '',
       startDate: new Date(),
       endDate: new Date(),
-      max_user_1: '',
-      max_user_2: '',
-      max_user_3: '',
-      max_user_4: '',
-      max_user_5: '',
-      max_user_6: ''
+      maxUser: {}
     }
   }),
 
   computed: {
-    days () {
-      return days
-    },
-
-    ingangInput () {
-      return {
-        grade: this.form.grade,
-        day: days[this.form.day].code,
-        time: this.form.time,
-        startDate: timestamp.fromDate(this.form.startDate),
-        endDate: timestamp.fromDate(this.form.endDate),
-        date: timestamp.fromDate(this.form.date),
-        max_user_1: parseInt(this.form.max_user_1),
-        max_user_2: parseInt(this.form.max_user_2),
-        max_user_3: parseInt(this.form.max_user_3),
-        max_user_4: parseInt(this.form.max_user_4),
-        max_user_5: parseInt(this.form.max_user_5),
-        max_user_6: parseInt(this.form.max_user_6)
-      }
-    }
+    days: () => days
   },
 
-  watch: {
-    selectAll (val) {
-      this.checks = this.checks.map(() => val)
-    }
-  },
-
-  async created () {
+  created () {
     this.refresh()
   },
 
@@ -78,16 +43,12 @@ export default {
       this.pending = false
     },
 
-    restructure (notice) {
-      return {
-        'description': notice.desc,
-        'grade': notice.grade
-      }
-    },
-
     async addNotice () {
       try {
-        await ingangManager.addAnnouncement(this.restructure(this.notice))
+        await ingangManager.addAnnouncement({
+          'description': this.notice.desc,
+          'grade': this.notice.grade
+        })
         await this.$swal('추가하였습니다', '', 'success')
         await this.refresh()
       } catch (err) {
@@ -97,11 +58,9 @@ export default {
 
     async addIngang () {
       try {
-        await ingangManager.createIngang(this.ingangInput)
+        await ingangManager.createIngang(this.form)
+
         this.$swal('성공!', '추가되었습니다.', 'success')
-
-        this.form.repeat = false
-
         await this.refresh()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
@@ -121,9 +80,8 @@ export default {
       await this.refresh()
     },
 
-    timezone (val) {
-      const timezoneOffset = new Date().getTimezoneOffset() * 60000
-      return new Date(val - timezoneOffset)
+    getDayText (code) {
+      return days.find(v => v.code === code).text
     }
   }
 }
@@ -153,20 +111,11 @@ export default {
           v-if="currentTab === 0"
           class="excel"
         >
-          <dimi-button
-            :loading="pending"
+          <dimi-button-group
+            :items="['1학년 엑셀 다운', '2학년 엑셀 다운']"
             class="excel__item"
-            @click="downloadExcel(1)"
-          >
-            1학년 엑셀 다운
-          </dimi-button>
-          <dimi-button
-            :loading="pending"
-            class="excel__item"
-            @click="downloadExcel(2)"
-          >
-            2학년 엑셀 다운
-          </dimi-button>
+            @click="downloadExcel($event.value + 1)"
+          />
         </div>
         <div
           v-if="currentTab === 1"
@@ -198,10 +147,6 @@ export default {
           v-if="currentTab === 2"
         >
           <section class="mng-ing__section">
-            <h2 class="mng-ing__title">
-              인강실 추가/삭제
-            </h2>
-
             <table class="mng-ing__list">
               <tbody>
                 <tr
@@ -210,7 +155,7 @@ export default {
                   class="mng-ing__row"
                 >
                   <td class="mng-ing__cell">
-                    {{ item.day }}
+                    {{ getDayText(item.day) }}
                   </td>
                   <td class="mng-ing__cell">
                     {{ item.grade }}학년 {{ item.klass }}반
@@ -258,7 +203,7 @@ export default {
                     타임
                   </label>
                   <dimi-input
-                    v-model="form.time"
+                    v-model.number="form.time"
                     class="mng-ing__input"
                   />
                 </div>
@@ -272,79 +217,19 @@ export default {
                     type="date"
                   />
                 </div>
-
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    요일
-                  </label>
-                  <dimi-dropdown
-                    v-model="form.day"
-                    :items="days.map(v => v.text)"
-                    :dropup="true"
-                    class="mng-ing__input mng-ing__input--day"
-                  />
-                </div>
               </div>
 
               <div class="mng-ing__form-row">
-                <div class="mng-ing__field">
+                <div
+                  v-for="klass in 6"
+                  :key="`ingang-${klass}`"
+                  class="mng-ing__field"
+                >
                   <label class="mng-ing__label">
-                    1반 최대인원
+                    {{ klass }}반 최대인원
                   </label>
                   <dimi-input
-                    v-model="form.max_user_1"
-                    class="mng-ing__input"
-                  />
-                </div>
-
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    2반 최대인원
-                  </label>
-                  <dimi-input
-                    v-model="form.max_user_2"
-                    class="mng-ing__input"
-                  />
-                </div>
-
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    3반 최대인원
-                  </label>
-                  <dimi-input
-                    v-model="form.max_user_3"
-                    class="mng-ing__input"
-                  />
-                </div>
-              </div>
-
-              <div class="mng-ing__form-row">
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    4반 최대인원
-                  </label>
-                  <dimi-input
-                    v-model="form.max_user_4"
-                    class="mng-ing__input"
-                  />
-                </div>
-
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    5반 최대인원
-                  </label>
-                  <dimi-input
-                    v-model="form.max_user_5"
-                    class="mng-ing__input"
-                  />
-                </div>
-
-                <div class="mng-ing__field">
-                  <label class="mng-ing__label">
-                    6반 최대인원
-                  </label>
-                  <dimi-input
-                    v-model="form.max_user_6"
+                    v-model.number="form.maxUser[klass]"
                     class="mng-ing__input"
                   />
                 </div>
@@ -528,19 +413,6 @@ export default {
     align-items: center;
     justify-content: flex-end;
     margin: 3px 8px 6px 0;
-  }
-}
-
-.modal {
-  &__title {
-    color: $gray-dark;
-    font-size: 24px;
-    font-weight: $font-weight-bold;
-  }
-
-  &__date {
-    font-size: 14px;
-    font-weight: $font-weight-light;
   }
 }
 </style>
