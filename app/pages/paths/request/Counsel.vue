@@ -11,9 +11,7 @@ export default {
 
   filters: {
     filterTime (time) {
-      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', {
-        locale: koLocale
-      })
+      return format(time, 'dddd ( MM월 DD일 ) hh시 mm분 ~', { locale: koLocale })
     },
     filterEndTime (time) {
       return format(time, 'hh시 mm분')
@@ -49,6 +47,11 @@ export default {
       } finally {
         await this.refresh()
       }
+    },
+
+    downloadPaper (event) {
+      const hrefs = ['https://goo.gl/sY9qwe', 'https://goo.gl/e7YhGk']
+      location.href = hrefs[event.value]
     }
   }
 }
@@ -66,7 +69,7 @@ export default {
     >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['Wee 클래스 상담', '진로상담']"
+        :tabs="['Wee 클래스 상담', '취업상담']"
       />
 
       <div
@@ -90,7 +93,7 @@ export default {
               신청방법
             </div>
             <div class="counsel__item">
-              Wee 클래스 상담실(본관 2층 남쪽 복도 끝)에 직접 방문하여 상담 신청서를 작성한 후 상담 시간을 예약하거나, 이 페이지의 하단에서 받을 수 있는 상담 신청서를 작성하여 다음의 이메일 주소로 전송한 이후 회신을 확인합니다 :<br>hotsoul486@naver.com
+              Wee 클래스 상담실(본관 2층 남쪽 복도 끝)에 직접 방문하여 상담 신청서를 작성한 후 상담 시간을 예약하거나,<br>이 페이지의 하단에서 받을 수 있는 상담 신청서를 작성하여 다음의 이메일 주소로 전송한 이후 회신을 확인합니다.<br>상담 내용 이메일 주소 : hotsoul486@naver.com
             </div>
           </div>
           <div class="counsel__field">
@@ -104,16 +107,10 @@ export default {
           <div
             class="counsel__buttons"
           >
-            <dimi-button
-              href="https://goo.gl/sY9qwe"
-            >
-              보호자 동의서 다운로드
-            </dimi-button>
-            <dimi-button
-              href="https://goo.gl/e7YhGk"
-            >
-              상담 신청서 다운로드
-            </dimi-button>
+            <dimi-button-group
+              :items="['보호자 동의서 다운로드', '상담 신청서 다운로드']"
+              @click="downloadPaper"
+            />
           </div>
         </section>
         <section
@@ -121,7 +118,7 @@ export default {
         >
           <div class="counsel__field">
             <div class="counsel__item">
-              진로 상담은 대학 진학 ·고졸 취업과 같이 상담자의 진로를 주제로 교사 남승완께서 진행하는 상담입니다. 매주 수요일·금요일에 상담 신청자에 한하여 본교무실(본관 1층)에서 진행됩니다.
+              취업 상담은 이미순 취업지원관 선생님께서 진행하는 상담으로<br>매주 월요일, 화요일에 상담 신청자에 한하여 신관 IT부서에서 진행됩니다.
             </div>
           </div>
           <div class="counsel__field">
@@ -129,7 +126,7 @@ export default {
               신청방법
             </div>
             <div class="counsel__item counsel_end">
-              아래의 항목에서 원하는 일시에 진행되는 상담을 신청하고, 상담하고 싶은 주제 혹은 내용에 대해 다음의 이메일 주소로 메일을 보냅니다 :<br>nsw55@naver.com
+              아래의 항목에서 원하는 일시에 상담을 신청하고, 상담하고 싶은 주제 혹은 내용에 대해 아래의 이메일 주소로 메일을 보냅니다!<br>상담 내용 이메일 주소 : soon040821@naver.com
             </div>
           </div>
           <div

@@ -4,14 +4,18 @@
 * [개발 시작하기](getting-start.md)
 * [배경 지식 학습](study-background.md)
 
+## API
+
+* [Magician](api/magician.md)
+
 ## 아키텍쳐
 
-* [API 요청](architecture/api-request.md)
-* [계정 \(로그인/로그아웃, 권한\)](architecture/auth.md)
-* [Vue Router](architecture/vue-router.md)
-* [Vuex Store](architecture/vuex-store.md)
-* [Dimiru](architecture/dimiru.md)
-* [Components](architecture/components.md)
+* [API 요청](architectures/api-request.md)
+* [계정 \(로그인/로그아웃, 권한\)](architectures/auth.md)
+* [Vue Router](architectures/vue-router.md)
+* [Vuex Store](architectures/vuex-store.md)
+* [Dimiru](architectures/dimiru.md)
+* [Components](architectures/components.md)
 
 ## 페이지
 
@@ -26,7 +30,7 @@
 
 ## 기타
 
-* [Google Analytics](etc/google-analytics.md)
-* [Sentry](etc/sentry.md)
-* [개발자들](etc/developers.md)
+* [Google Analytics](etcs/google-analytics.md)
+* [Sentry](etcs/sentry.md)
+* [개발자들](etcs/developers.md)
 

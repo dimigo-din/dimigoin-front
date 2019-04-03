@@ -214,5 +214,6 @@ export class AssignmentPublisherService extends ServiceBase {
     link.setAttribute('download', 'assignment.zip')
     document.body.appendChild(link)
     link.click()
+    link.remove()
   }
 }

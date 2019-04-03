@@ -2,7 +2,6 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { ingangRequestor } from '@/src/api/ingang'
-import waitable from '@/mixins/waitable'
 
 export default {
   name: 'Ingang',
@@ -10,56 +9,47 @@ export default {
   filters: {
     filterDate: time => format(time, 'YYYY-MM-DD')
   },
-  mixins: [waitable],
+
   data () {
     return {
+      pending: false,
       ingangs: [],
       today: new Date(),
       announcement: {},
-      ticket: null,
+      status: {},
       modal: false
     }
   },
-  computed: {
-    isWaitingInit () { return this.waitable_ids.includes('init') },
-    isWaitingSubmit () { return this.waitable_ids.includes('submit') }
-  },
 
-  async created () {
-    this.start('init')
-    const [result, announcement] = await Promise.all([
-      ingangRequestor.getIngangs(),
-      ingangRequestor.getAnnouncement()
-    ])
-    this.ingangs = result.ingangs
-    this.ticket = result.ticket
-    this.announcement = announcement
-    this.finish('init')
-    this.modal = true
+  created () {
+    this.refresh()
   },
 
   methods: {
-    async fetch () {
-      this.start('fetch')
-      this.ingangs = await ingangRequestor.getIngangs()
-      this.ticket = this.ingangs.ticket
-      this.finish('fetch')
+    async refresh () {
+      this.pending = true
+      try {
+        this.ingangs = await ingangRequestor.getIngangs()
+        this.status = await ingangRequestor.getStatus()
+        this.announcement = await ingangRequestor.getAnnouncement()
+      } catch (err) {
+        this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
+      }
+      this.pending = false
     },
 
-    async handleSubmitButton (ing) {
-      this.start('submit')
+    async handleSubmitButton (ingang) {
       try {
-        if (ing.request) await ingangRequestor.cancelIngang(ing.idx)
-        else await ingangRequestor.applyIngang(ing.idx)
+        if (ingang.status) await ingangRequestor.cancelIngang(ingang.idx)
+        else await ingangRequestor.applyIngang(ingang.idx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
-      await this.fetch()
-      this.finish('submit')
+      await this.refresh()
     },
 
     getStatusColor (ingang) {
-      return ingang.request ? 'aloes' : 'red'
+      return ingang.status ? 'aloes' : 'red'
     }
   }
 }
@@ -73,18 +63,28 @@ export default {
         class="ingang__helper ingang__helper--link"
         @click="modal = true"
       >
-        <span class="icon-notice" /> 공지사항
+        <span class="icon-notice" />공지사항
+      </span>
+      <span class="ingang__helper">
+        <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
+        <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.dailyTicketNum - status.dailyRequestCount }}회
       </span>
     </h1>
 
     <div
-      v-if="isWaitingInit"
+      v-if="pending"
       class="ingang__pending"
     >
       <dimi-loader />
     </div>
 
     <template v-else>
+      <div
+        v-if="!ingangs.length"
+        class="ingang__empty"
+      >
+        아직 등록된 인강실 신청이 없습니다.
+      </div>
       <template>
         <dimi-card
           v-for="(ingang, idx) in ingangs"
@@ -128,13 +128,11 @@ export default {
           <div class="ingang__btn-wrapper">
             <div class="ingang__btn">
               <dimi-button
-                :gray="ingang.request"
-                :active="!isWaitingSubmit"
+                :gray="ingang.status"
                 @click="handleSubmitButton(ingang)"
               >
-                {{ ingang.request ? '취소하기' : '신청하기' }}
+                {{ ingang.status ? '취소하기' : '신청하기' }}
               </dimi-button>
-              <p class="ingang__ticket">이번 주 신청 가능 횟수 : {{ ticket }} 회</p>
             </div>
           </div>
 
@@ -151,7 +149,7 @@ export default {
             </h3>
             <div class="modal__field">
               <p class="modal__announcement">
-                {{ announcement.description }}
+                {{ announcement.desc }}
               </p>
             </div>
           </dimi-modal>
@@ -178,24 +176,6 @@ export default {
 
   &__card {
     margin-bottom: 12px;
-  }
-
-  &__black {
-    display: flex;
-    justify-content: center;
-  }
-
-  &__black--title {
-    padding-top: 4rem;
-    color: $red;
-    font-size: 64px;
-    font-weight: $font-weight-extra-bold;
-  }
-
-  &__black--comment {
-    padding-bottom: 4rem;
-    font-size: 22px;
-    font-weight: $font-weight-regular;
   }
 
   &__helper {
@@ -266,6 +246,14 @@ export default {
   &__text--red {
     color: $red;
   }
+
+  &__empty {
+    padding: 24px;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+  }
 }
 
 .modal {
@@ -278,7 +266,7 @@ export default {
   &__field {
     display: flex;
     align-items: center;
-    margin: 1.5rem 0;
+    margin-top: 1.5rem;
   }
 
   &__label {
@@ -298,7 +286,7 @@ export default {
   &__announcement {
     font-family: inherit;
     font-weight: $font-weight-regular;
-    line-height: 1.2rem;
+    line-height: 1.3rem;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
