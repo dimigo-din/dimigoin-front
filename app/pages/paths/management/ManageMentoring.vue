@@ -2,7 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 // import timestamp from 'unix-timestamp'
-import { mentoringManager } from '@/src/api/mentoring'
+// import { mentoringManager } from '@/src/api/mentoring'
 
 export default {
   name: 'ManageMentoring',
@@ -16,82 +16,23 @@ export default {
       selectAll: false,
       filter: 0,
 
+      modal: {
+        create: {
+          open: false,
+          grade: false,
+          time: false
+        }
+      },
+
       form: {
-        name: '',
-        startDate: new Date(),
-        endDate: new Date(),
-        day: 0,
-        maxCount: null,
-        teacherName: ''
+        teacher: '',
+        place: '',
+        subject: '',
+        grade: 1
       },
 
       mentorings: [
-        [
-          {
-            idx: 0,
-            day: 'tus',
-            date: new Date('2019-04-02'),
-            startTime: '19:50',
-            endTime: '20:20',
-            subject: '국어',
-            teacher: {
-              idx: 0,
-              name: '김태철'
-            },
-            targetGrade: 1,
-            startDate: new Date('2019-03-20'),
-            requestEdate: new Date('2019-04-01'),
-            room: '비즈쿨실',
-            maxUser: 0,
-            mentoringRequest: [
-              {
-                idx: 0,
-                request_time: new Date('2019-03-30'),
-                requester: {
-                  idx: 0,
-                  name: '여준호',
-                  grade: 1,
-                  klass: 5,
-                  number: 2,
-                  serial: 1520
-                }
-              }
-            ]
-          },
-          {
-            idx: 0,
-            day: 'tus',
-            date: new Date('2019-04-02'),
-            startTime: '19:50',
-            endTime: '20:20',
-            subject: '국어',
-            teacher: {
-              idx: 0,
-              name: '김태철'
-            },
-            targetGrade: 1,
-            startDate: new Date('2019-03-20'),
-            requestEdate: new Date('2019-04-01'),
-            room: '비즈쿨실',
-            maxUser: 0,
-            mentoringRequest: [
-              {
-                idx: 0,
-                request_time: new Date('2019-03-30'),
-                requester: {
-                  idx: 0,
-                  name: '여준호',
-                  grade: 1,
-                  klass: 5,
-                  number: 2,
-                  serial: 1520
-                }
-              }
-            ]
-          }
-        ],
-        [],
-        []
+        [], [], []
       ]
     }
   },
@@ -132,13 +73,28 @@ export default {
 
   methods: {
     async updateAll () {
-      const allMentorings = await mentoringManager.getAllMentorings()
-      ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
-        await Promise.all([1, 2, 3].map(grade => allMentorings.filter(targetGrade =>
-          targetGrade === grade
-        )))
+      // const allMentorings = await mentoringManager.getAllMentorings()
+      // ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
+      //   await Promise.all([1, 2, 3].map(grade => allMentorings.filter(targetGrade =>
+      //     targetGrade === grade
+      //   )))
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
+    },
+
+    closeModal () {
+      this.modal.create.open = false
+    },
+
+    async addMentoring () {
+      try {
+        // await mentoringManager.addMentoring(this.form)
+        await this.$swal('추가하였습니다', '', 'success')
+        this.closeModal()
+        await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     },
 
     async deleteChecked () {
@@ -158,6 +114,7 @@ export default {
       <span class="icon-comment" />멘토링 신청 관리
       <span
         class="mng-mentoring__create"
+        @click="modal.create.open = true"
       >
         <span class="icon-plus" />추가하기
       </span>
@@ -247,15 +204,82 @@ export default {
           </tbody>
         </table>
       </section>
+
+      <dimi-modal
+        :opened="modal.create.open"
+        class="modal__modal"
+        @close="modal.create.open = false"
+      >
+        <h3 class="modal__title">
+          멘토링 추가
+        </h3>
+        <div class="modal__field">
+          <div class="modal__label">선생님 명</div>
+          <dimi-input
+            v-model.trim="form.teacher"
+            class="modal__input"
+            placeholder="선생님 명을 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">장소</div>
+          <dimi-input
+            v-model.trim="form.place"
+            class="modal__input"
+            placeholder="장소를 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">과목</div>
+          <dimi-input
+            v-model.trim="form.subject"
+            class="modal__input"
+            placeholder="과목을 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div @click="modal.create.grade = !modal.create.grade">
+            <div class="modal__label">학년</div>
+            <div class="modal__expand">
+              <span :class="`icon-arrow-${modal.create.grade ? 'up' : 'down'}`" />
+            </div>
+          </div>
+          <div
+            v-if="modal.create.grade"
+            class="modal__input"
+          >
+            <dimi-checkbox
+              v-for="grade in 3"
+              :key="`checkbox-${grade}`"
+              v-model="form.grade"
+              class="modal__checkbox"
+            >
+              {{ grade }}학년
+            </dimi-checkbox>
+          </div>
+        </div>
+        <div class="modal__field">
+          <div @click="modal.create.time = !modal.create.time">
+            <div class="modal__label">시간</div>
+            <div class="modal__expand">
+              <span :class="`icon-arrow-${modal.create.time ? 'up' : 'down'}`" />
+            </div>
+          </div>
+          <div
+            v-if="modal.create.time"
+            class="modal__input"
+          >
+            <dimi-date-input />
+          </div>
+        </div>
+        <span
+          class="modal__create"
+          @click="addMentoring"
+        >
+          <span class="icon-plus" />추가하기
+        </span>
+      </dimi-modal>
     </dimi-card>
-    <dimi-modal
-      :opened="true"
-      class="mng-mentoring__modal"
-    >
-      <h3 class="mng-mentoring__modal-title">
-        멘토링 추가
-      </h3>
-    </dimi-modal>
   </content-wrapper>
 </template>
 
@@ -318,8 +342,7 @@ export default {
     user-select: none;
   }
 
-  &__delete,
-  &__excel {
+  &__delete {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -330,8 +353,7 @@ export default {
     margin-left: 1em !important;
   }
 
-  &__delete-icon,
-  &__excel-icon {
+  &__delete-icon {
     font-size: 18px;
   }
 
@@ -374,33 +396,9 @@ export default {
     cursor: pointer;
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  &__form-row {
-    display: flex;
-    margin-bottom: 24px;
-  }
-
-  &__form-row--submit {
-    margin-top: 24px;
-    margin-bottom: 0;
-  }
-
   &__field {
     display: flex;
     align-items: center;
-  }
-
-  &__field--full {
-    flex-grow: 1;
-  }
-
-  &__field--right {
-    margin-left: auto;
   }
 
   &__label {
@@ -413,24 +411,48 @@ export default {
   &__input {
     font-size: 16px;
   }
+}
 
-  &__input--manager {
-    width: 10em;
+.modal {
+  &__title {
+    margin-bottom: 1.5em;
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
   }
 
-  &__input--maxCount {
-    width: 6em;
+  &__field {
+    margin: 1.5rem 0;
   }
 
-  &__input--day {
-    padding: 0.75em 1em;
-    border: 0;
-    background-color: $gray-lighten;
-    border-radius: 20px;
+  &__label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: $gray-dark;
+    font-size: 20px;
+    font-weight: $font-weight-bold;
+    line-height: 1.15;
   }
 
-  &__modal {
-    padding: 24px;
+  &__expand {
+    display: inline-block;
+    margin-bottom: 16px;
+    margin-left: 8px;
+  }
+
+  &__checkbox {
+    margin-bottom: 13px;
+  }
+
+  &__create {
+    position: absolute;
+    right: 25px;
+    bottom: 1.5em;
+    margin-right: 0.5em;
+    color: $red;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 </style>
