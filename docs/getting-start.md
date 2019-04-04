@@ -43,10 +43,7 @@ dimigoin-front
 │  │      │      └─mixins
 │  │      ├─management
 │  │      ├─meal
-│  │      ├─request
-│  │      └─teacher
-│  │          ├─assignment
-│  │          └─request
+│  │      └─request
 │  ├─router - 라우터 관련
 │  │  └─routers
 │  ├─scss
