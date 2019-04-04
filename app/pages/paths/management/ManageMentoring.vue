@@ -20,15 +20,25 @@ export default {
         create: {
           open: false,
           grade: false,
-          time: false
+          time: false,
+          applyTime: false
         }
       },
 
       form: {
         teacher: '',
-        place: '',
+        day: 0,
+        date: new Date(),
+        time: {
+          hour: 0,
+          minute: 0
+        },
         subject: '',
-        grade: 1
+        room: '',
+        startTime: new Date(),
+        endTime: new Date(),
+        grade: 1,
+        maxUser: 0
       },
 
       mentorings: [
@@ -84,6 +94,21 @@ export default {
 
     closeModal () {
       this.modal.create.open = false
+      this.form = {
+        teacher: '',
+        day: 0,
+        date: new Date(),
+        time: {
+          hour: 0,
+          minute: 0
+        },
+        subject: '',
+        room: '',
+        startTime: new Date(),
+        endTime: new Date(),
+        grade: 1,
+        maxUser: 0
+      }
     },
 
     async addMentoring () {
@@ -224,7 +249,7 @@ export default {
         <div class="modal__field">
           <div class="modal__label">장소</div>
           <dimi-input
-            v-model.trim="form.place"
+            v-model.trim="form.room"
             class="modal__input"
             placeholder="장소를 기입하세요."
           />
@@ -238,29 +263,15 @@ export default {
           />
         </div>
         <div class="modal__field">
-          <div @click="modal.create.grade = !modal.create.grade">
-            <div class="modal__label">학년</div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.create.grade ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.create.grade"
-            class="modal__input"
-          >
-            <dimi-checkbox
-              v-for="grade in 3"
-              :key="`checkbox-${grade}`"
-              v-model="form.grade"
-              class="modal__checkbox"
-            >
-              {{ grade }}학년
-            </dimi-checkbox>
-          </div>
+          <div class="modal__label">학년</div>
+          <dimi-dropdown
+            v-model="form.grade"
+            :items="[1, 2, 3]"
+          />
         </div>
         <div class="modal__field">
           <div @click="modal.create.time = !modal.create.time">
-            <div class="modal__label">시간</div>
+            <div class="modal__label">멘토링 시간</div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.create.time ? 'up' : 'down'}`" />
             </div>
@@ -269,7 +280,36 @@ export default {
             v-if="modal.create.time"
             class="modal__input"
           >
-            <dimi-date-input />
+            <div class="modal__label--small">날짜</div>
+            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small">시간</div>
+            <dimi-input
+              v-model="form.time.hour"
+              class="modal__input--time"
+            />
+            <div class="modal__label--minimal">시</div>
+            <dimi-input
+              v-model="form.time.minute"
+              class="modal__input--time"
+            />
+            <div class="modal__label--minimal">분</div>
+          </div>
+        </div>
+        <div class="modal__field">
+          <div @click="modal.create.applyTime = !modal.create.applyTime">
+            <div class="modal__label">신청 시간</div>
+            <div class="modal__expand">
+              <span :class="`icon-arrow-${modal.create.applyTime ? 'up' : 'down'}`" />
+            </div>
+          </div>
+          <div
+            v-if="modal.create.applyTime"
+            class="modal__input"
+          >
+            <div class="modal__label--small">신청 시작</div>
+            <dimi-date-input v-model="form.startDate" />
+            <div class="modal__label--small">신청 마감</div>
+            <dimi-date-input v-model="form.endDate" />
           </div>
         </div>
         <span
@@ -434,6 +474,29 @@ export default {
     line-height: 1.15;
   }
 
+  &__label--small {
+    margin-top: 5px;
+    margin-bottom: 8px;
+    color: $gray;
+    font-size: 18px;
+    font-weight: $font-weight-bold;
+    line-height: 1.15;
+  }
+
+  &__label--minimal {
+    display: inline-block;
+    margin-right: 0.5em;
+    color: $black;
+    font-size: 16px;
+    line-height: 1.15;
+  }
+
+  &__input--time {
+    display: inline-block;
+    width: 15%;
+    margin-right: 3px;
+  }
+
   &__expand {
     display: inline-block;
     margin-bottom: 16px;
@@ -454,5 +517,16 @@ export default {
     font-size: 16px;
     font-weight: $font-weight-bold;
   }
+}
+
+.dropdown {
+  display: inline-flex;
+  margin-left: 0.5em;
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.date-input {
+  margin-bottom: 1em;
 }
 </style>
