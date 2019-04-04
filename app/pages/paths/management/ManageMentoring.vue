@@ -1,8 +1,8 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
+import { mentoringManager } from '../../../src/api/mentoring'
 // import timestamp from 'unix-timestamp'
-// import { mentoringManager } from '@/src/api/mentoring'
 
 export default {
   name: 'ManageMentoring',
@@ -83,11 +83,8 @@ export default {
 
   methods: {
     async updateAll () {
-      // const allMentorings = await mentoringManager.getAllMentorings()
-      // ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
-      //   await Promise.all([1, 2, 3].map(grade => allMentorings.filter(targetGrade =>
-      //     targetGrade === grade
-      //   )))
+      ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
+        await Promise.all([1, 2, 3].map(grade => mentoringManager.getGradeMentoring(grade)))
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
     },

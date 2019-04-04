@@ -64,10 +64,10 @@ export class MentoringManagerService extends MentoringService {
   }
 
   /**
-   * 멘토링 정보를 가져옵니다.
+   * 학년별 멘토링 정보를 가져옵니다.
    */
-  async getAllMentorings () {
-    const { data: { mentorings } } = await this.magician(() => this.r.get('/admin'))
-    return mentorings.map(Mentoring)
+  async getGradeMentoring (grade) {
+    const { data: { mentors } } = await this.magician(() => this.r.get(`/admin/${grade}`))
+    return mentors.map(Mentoring)
   }
 }
