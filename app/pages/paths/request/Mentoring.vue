@@ -141,7 +141,7 @@ export default {
                   <span class="icon-cross" /> 신청취소
                 </template>
 
-                <template v-else-if="!item.status">
+                <template v-else>
                   <template v-if="item.maxUser > item.present">
                     <span class="icon-ok" /> 신청하기
                   </template>
