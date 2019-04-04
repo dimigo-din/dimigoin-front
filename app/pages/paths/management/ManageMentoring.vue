@@ -84,7 +84,7 @@ export default {
   methods: {
     async updateAll () {
       ;[this.mentorings[0], this.mentorings[1], this.mentorings[2]] =
-        await Promise.all([1, 2, 3].map(grade => mentoringManager.getGradeMentoring(grade)))
+        await Promise.all([1, 2, 3].map(grade => mentoringManager.getMentoringByGrade(grade)))
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
     },
