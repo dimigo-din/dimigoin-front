@@ -521,6 +521,16 @@ export default {
   margin-left: 0.5em;
   font-size: 20px;
   line-height: 1.15;
+
+  &__item {
+    padding: 15px 24px;
+    background-color: $white;
+    text-align: center;
+  }
+
+  &__item:hover {
+    background-color: $gray-lighten;
+  }
 }
 
 .date-input {
