@@ -322,7 +322,7 @@ export default {
           class="modal__create"
           @click="addMentoring"
         >
-          <span class="icon-plus" />추가하기
+          <dimi-button>추가하기</dimi-button>
         </span>
       </dimi-modal>
     </dimi-card>
