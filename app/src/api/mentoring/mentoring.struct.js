@@ -1,5 +1,7 @@
 import timestamp from 'unix-timestamp'
 
+import days from '@/src/util/days'
+
 export const Mentoring = mentoring => ({
   idx: mentoring['idx'],
   day: mentoring['day'],
@@ -16,6 +18,18 @@ export const Mentoring = mentoring => ({
   present: mentoring['present'],
   maxUser: mentoring['max_user'],
   mentoringRequest: mentoring['mentoring_request']
+})
+
+export const CreateMentoringInput = mentoring => ({
+  'teacher_name': mentoring.teacher,
+  'day': days[new Date(mentoring.date).getDay() - 1].code,
+  'date': timestamp.fromDate(mentoring.date),
+  'start_time': timestamp.fromDate(mentoring.startTime),
+  'end_time': timestamp.fromDate(mentoring.endTime),
+  'subject': mentoring.subject,
+  'target_grade': mentoring.grade + 1,
+  'room': mentoring.room,
+  'max_user': mentoring.maxUser
 })
 
 export const Notice = notice => ({
