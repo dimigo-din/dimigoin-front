@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
-import { mentoringManager } from '../../../src/api/mentoring'
+import { mentoringManager } from '@/src/api/mentoring'
 // import timestamp from 'unix-timestamp'
 
 export default {
@@ -110,7 +110,7 @@ export default {
 
     async addMentoring () {
       try {
-        // await mentoringManager.addMentoring(this.form)
+        await mentoringManager.addMentoring(this.form)
         await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
         await this.updateAll()
