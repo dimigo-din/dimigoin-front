@@ -7,7 +7,7 @@
 * Git
 * Node.js &gt;= 8.9
 * Yarn
-* 좋아하는 코드 에디터 \(Webstorm 추천\)
+* 좋아하는 코드 에디터 \(VSCode, WebStorm 추천\)
 
 먼저 깃허브에서 소스코드를 클론받습니다.
 
