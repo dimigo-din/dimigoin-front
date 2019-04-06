@@ -128,7 +128,7 @@ export default {
 
     async deleteMentoring (idx) {
       await mentoringManager.deleteMentoringByAdmin(idx)
-      await updateAll()
+      await this.updateAll()
     },
 
     getDaySmallText (code) {
@@ -227,7 +227,7 @@ export default {
               </td>
               <td
                 class="mng-mentoring__cell mng-mentoring__cell--button-delete"
-                @click="deleteMentoring(idx)"
+                @click="deleteMentoring(item.idx)"
               >
                 <span class="icon-cross" /> 삭제
               </td>
