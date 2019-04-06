@@ -37,7 +37,7 @@ export default {
         room: '',
         startTime: new Date(),
         endTime: new Date(),
-        grade: 1,
+        grade: 0,
         maxUser: 0
       },
 
@@ -103,7 +103,7 @@ export default {
         room: '',
         startTime: new Date(),
         endTime: new Date(),
-        grade: 1,
+        grade: 0,
         maxUser: 0
       }
     },
