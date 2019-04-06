@@ -120,7 +120,15 @@ export default {
     },
 
     async deleteChecked () {
+      if (!this.checks.filter(v => v).length) return
+      await Promise.all(Object.keys(this.checks.filter(v => v))
+        .map(key => mentoringManager.deleteMentoringByAdmin(this.filteredList[key].idx)))
+      await this.updateAll()
+    },
 
+    async deleteMentoring (idx) {
+      await mentoringManager.deleteMentoringByAdmin(idx)
+      await updateAll()
     },
 
     getDaySmallText (code) {
@@ -219,6 +227,7 @@ export default {
               </td>
               <td
                 class="mng-mentoring__cell mng-mentoring__cell--button-delete"
+                @click="deleteMentoring(idx)"
               >
                 <span class="icon-cross" /> 삭제
               </td>
