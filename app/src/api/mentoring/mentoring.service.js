@@ -1,5 +1,5 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Mentoring, Notice } from './mentoring.struct'
+import { Mentoring, Notice, CreateMentoringInput } from './mentoring.struct'
 
 export class MentoringService extends ServiceBase {
   /**
@@ -69,5 +69,47 @@ export class MentoringManagerService extends MentoringService {
   async getMentoringByGrade (grade) {
     const { data: { mentors } } = await this.magician(() => this.r.get(`/admin/${grade}`))
     return mentors.map(Mentoring)
+  }
+
+  /**
+   * 멘토링을 삭제합니다. (관리자)
+   */
+  async deleteMentoringByAdmin (idx) {
+    await this.magician(() => this.r.delete(`/admin/${idx}`), {
+      404: '존재하지 않는 멘토링입니다.'
+    })
+  }
+
+  /**
+   * 멘토링을 삭제합니다. (선생님)
+   */
+  async deleteMentoringByTeacher (idx) {
+    await this.magician(() => this.r.delete(`/${idx}`), {
+      404: '존재하지 않는 멘토링입니다.'
+    })
+  }
+
+  /**
+   * 멘토링을 추가합니다.
+   */
+
+  async addMentoring (mentoring) {
+    mentoring = CreateMentoringInput(mentoring)
+    await this.magician(() => this.r.post('/admin', mentoring), {
+      400: '잘못된 입력입니다.',
+      403: '권한이 없습니다.'
+    })
+  }
+
+  /**
+    * 모든 멘토링 정보를 가져옵니다.
+    */
+
+  async getAllMentoring () {
+    const { data: { mentors } } = await this.magician(() => this.r.get('/admin'), {
+      403: '권한이 없습니다.',
+      404: '등록된 멘토링이 없습니다.'
+    })
+    return mentors
   }
 }
