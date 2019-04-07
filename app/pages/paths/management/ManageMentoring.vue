@@ -29,10 +29,6 @@ export default {
         teacher: '',
         day: 0,
         date: new Date(),
-        time: {
-          hour: 0,
-          minute: 0
-        },
         subject: '',
         room: '',
         startTime: new Date(),
@@ -95,10 +91,6 @@ export default {
         teacher: '',
         day: 0,
         date: new Date(),
-        time: {
-          hour: 0,
-          minute: 0
-        },
         subject: '',
         room: '',
         startTime: new Date(),
@@ -289,16 +281,6 @@ export default {
             <div class="modal__label--small">날짜</div>
             <dimi-date-input v-model="form.date" />
             <div class="modal__label--small">시간</div>
-            <dimi-input
-              v-model="form.time.hour"
-              class="modal__input--time"
-            />
-            <div class="modal__label--minimal">시</div>
-            <dimi-input
-              v-model="form.time.minute"
-              class="modal__input--time"
-            />
-            <div class="modal__label--minimal">분</div>
           </div>
         </div>
         <div class="modal__field">
