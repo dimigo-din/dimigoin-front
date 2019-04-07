@@ -1,4 +1,5 @@
 <script>
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import { mentoringManager } from '@/src/api/mentoring'
@@ -7,6 +8,18 @@ import { mentoringManager } from '@/src/api/mentoring'
 export default {
   name: 'ManageMentoring',
   components: { ContentWrapper },
+
+  filters: {
+    filterDay (time) {
+      return format(time, 'YYYY/MM/DD')
+    },
+    filterTime (time) {
+      return format(time, 'HH:mm')
+    },
+    filterDate (time) {
+      return format(time, 'YYYY/MM/DD HH:mm')
+    }
+  },
 
   data () {
     return {
@@ -29,10 +42,12 @@ export default {
         teacher: '',
         day: 0,
         date: new Date(),
-        subject: '',
-        room: '',
         startTime: new Date(),
         endTime: new Date(),
+        subject: '',
+        room: '',
+        startDate: new Date(),
+        endDate: new Date(),
         grade: 0,
         maxUser: 0
       },
@@ -304,6 +319,12 @@ export default {
         <div class="modal__field">
           <div @click="modal.create.time = !modal.create.time">
             <div class="modal__label">멘토링 시간</div>
+            <div
+              v-if="!modal.create.time"
+              class="modal__label-right"
+            >
+              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+            </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.create.time ? 'up' : 'down'}`" />
             </div>
@@ -323,6 +344,12 @@ export default {
         <div class="modal__field">
           <div @click="modal.create.applyTime = !modal.create.applyTime">
             <div class="modal__label">신청 시간</div>
+            <div
+              v-if="!modal.create.applyTime"
+              class="modal__label-right"
+            >
+              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
+            </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.create.applyTime ? 'up' : 'down'}`" />
             </div>
@@ -470,7 +497,6 @@ export default {
     width: 5em;
     max-width: 4em;
     padding-right: 1em;
-    text-align: right;
   }
 
   &__input {
@@ -488,6 +514,10 @@ export default {
 
   &__field {
     margin: 1.5rem 0;
+  }
+
+  &__field:last-of-type {
+    margin-bottom: 3em;
   }
 
   &__label {
@@ -516,6 +546,13 @@ export default {
     line-height: 1.15;
   }
 
+  &__label-right {
+    display: block;
+    margin-right: 20px;
+    float: right;
+    font-size: 16px;
+  }
+
   &__input--time {
     display: inline-block;
     width: 15%;
@@ -526,6 +563,7 @@ export default {
     display: inline-block;
     margin-bottom: 16px;
     margin-left: 8px;
+    cursor: pointer;
   }
 
   &__checkbox {
