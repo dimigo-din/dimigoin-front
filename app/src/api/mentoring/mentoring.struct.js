@@ -1,4 +1,5 @@
 import timestamp from 'unix-timestamp'
+import { format } from 'date-fns'
 
 import days from '@/src/util/days'
 
@@ -6,8 +7,8 @@ export const Mentoring = mentoring => ({
   idx: mentoring['idx'],
   day: mentoring['day'],
   date: timestamp.toDate(mentoring['date']),
-  startTime: mentoring['start_date'],
-  endTime: mentoring['end_date'],
+  startTime: mentoring['start_time'],
+  endTime: mentoring['end_time'],
   subject: mentoring['subject'],
   teacher: mentoring['teacher'],
   targetGrade: mentoring['target_grade'],
@@ -24,8 +25,8 @@ export const CreateMentoringInput = mentoring => ({
   'teacher_name': mentoring.teacher,
   'day': days[new Date(mentoring.date).getDay() - 1].code,
   'date': timestamp.fromDate(mentoring.date),
-  'start_time': timestamp.fromDate(mentoring.startTime),
-  'end_time': timestamp.fromDate(mentoring.endTime),
+  'start_time': format(mentoring.startTime, 'HH:mm'),
+  'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
   'target_grade': mentoring.grade + 1,
   'room': mentoring.room,
