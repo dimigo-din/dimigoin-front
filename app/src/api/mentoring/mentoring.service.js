@@ -72,10 +72,11 @@ export class MentoringManagerService extends MentoringService {
   }
 
   /**
-   * 멘토링을 삭제합니다. (관리자)
+   * 멘토링을 제합니다. (관리자)
    */
   async deleteMentoringByAdmin (idx) {
     await this.magician(() => this.r.delete(`/admin/${idx}`), {
+      403: '권한이 없습니다.',
       404: '존재하지 않는 멘토링입니다.'
     })
   }
