@@ -310,6 +310,10 @@ export default {
           >
             <div class="modal__label--small">날짜</div>
             <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small">시작 시간</div>
+            <dimi-date-input v-model="form.startTime" />
+            <div class="modal__label--small">종료 시간</div>
+            <dimi-date-input v-model="form.endTime" />
           </div>
         </div>
         <div class="modal__field">
