@@ -112,6 +112,7 @@ export default {
     },
 
     async deleteChecked () {
+      if (!this.checks.filter(v => v).length) return
       if (await this.$swal({
         type: 'warning',
         text: '정말 삭제하실 건가요? 이 작업은 되돌릴 수 없습니다.',
@@ -122,7 +123,6 @@ export default {
         showCancelButton: true
       })) {
         try {
-          if (!this.checks.filter(v => v).length) return
           await Promise.all(Object.keys(this.checks.filter(v => v))
             .map(key => mentoringManager.deleteMentoringByAdmin(this.filteredList[key].idx)))
           await this.$swal('삭제되었습니다', '', 'success')
