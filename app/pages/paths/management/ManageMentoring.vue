@@ -280,7 +280,6 @@ export default {
           >
             <div class="modal__label--small">날짜</div>
             <dimi-date-input v-model="form.date" />
-            <div class="modal__label--small">시간</div>
           </div>
         </div>
         <div class="modal__field">
