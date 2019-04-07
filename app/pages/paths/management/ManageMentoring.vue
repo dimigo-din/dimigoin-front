@@ -441,13 +441,13 @@ export default {
   }
 
   &__cell--name {
-    width: 28%;
+    width: 30%;
     color: $black;
     white-space: normal;
   }
 
   &__cell:not(:last-child):not(:nth-last-child(2)) {
-    padding-right: 84px;
+    padding-right: 54px;
   }
 
   &__cell--button-edit {
