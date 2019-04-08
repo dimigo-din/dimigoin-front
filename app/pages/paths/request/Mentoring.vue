@@ -171,7 +171,7 @@ export default {
         </h3>
         <div class="modal__field">
           <p class="modal__notice">
-            {{ notice.desc }}
+            {{ notice.description }}
           </p>
         </div>
       </dimi-modal>

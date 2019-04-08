@@ -28,10 +28,12 @@ export default {
       checks: [],
       selectAll: false,
       filter: 0,
+      notice: {},
 
       modal: {
         create: false,
         edit: false,
+        notice: false,
         tmp: {
           grade: false,
           time: false,
@@ -40,17 +42,18 @@ export default {
       },
 
       form: {
+        idx: 0,
         teacher: '',
         day: 0,
         date: new Date(),
-        startTime: new Date(),
-        endTime: new Date(),
         subject: '',
         room: '',
-        startDate: new Date(),
-        endDate: new Date(),
         grade: 0,
-        maxUser: 0
+        maxUser: 0,
+        startTime: new Date(),
+        endTime: new Date(),
+        startDate: new Date(),
+        endDate: new Date()
       },
 
       mentorings: [
@@ -99,6 +102,7 @@ export default {
         await Promise.all([1, 2, 3].map(grade => mentoringManager.getMentoringByGrade(grade)))
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
+      this.notice = await mentoringManager.getNotice()
     },
 
     closeModal () {
@@ -109,10 +113,12 @@ export default {
         date: new Date(),
         subject: '',
         room: '',
+        grade: 0,
+        maxUser: 0,
         startTime: new Date(),
         endTime: new Date(),
-        grade: 0,
-        maxUser: 0
+        startDate: new Date(),
+        endDate: new Date()
       }
     },
 
@@ -120,6 +126,17 @@ export default {
       try {
         await mentoringManager.addMentoring(this.form)
         await this.$swal('추가하였습니다', '', 'success')
+        this.closeModal()
+        await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
+    async updateMentoring () {
+      try {
+        await mentoringManager.editMentoring(this.form)
+        await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
         await this.updateAll()
       } catch (err) {
@@ -154,9 +171,14 @@ export default {
     editMentoring (item) {
       this.modal.edit = true
       this.form = {
+        idx: item.idx,
         teacher: item.teacher.name,
-        day: item.teacher.day,
+        day: item.day,
         date: item.date,
+        subject: item.subject,
+        room: item.room,
+        grade: item.targetGrade,
+        maxUser: item.maxUser,
         startTime: setMinutes(
           setHours(item.date, Number(item.startTime.split(':')[0])),
           Number(item.startTime.split(':')[1])
@@ -165,12 +187,8 @@ export default {
           setHours(item.date, Number(item.endTime.split(':')[0])),
           Number(item.endTime.split(':')[1])
         ),
-        subject: item.subject,
-        room: item.room,
         startDate: item.startDate,
-        endDate: item.endDate,
-        grade: item.targetGrade,
-        maxUser: item.maxUser
+        endDate: item.endDate
       }
     },
 
@@ -196,6 +214,17 @@ export default {
       }
     },
 
+    async updateNotice () {
+      try {
+        await mentoringManager.addNotice(this.notice)
+        await this.$swal('추가하였습니다', '', 'success')
+        this.closeModal()
+        await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -212,6 +241,12 @@ export default {
         @click="modal.create = true"
       >
         <span class="icon-plus" />추가하기
+      </span>
+      <span
+        class="mng-mentoring__notice"
+        @click="modal.notice = true"
+      >
+        <span class="icon-edit" />공지사항 관리
       </span>
     </h1>
     <dimi-card
@@ -342,6 +377,13 @@ export default {
           />
         </div>
         <div class="modal__field">
+          <div class="modal__label">최대 인원</div>
+          <dimi-input
+            v-model.number="form.maxUser"
+            class="mng-ing__input"
+          />
+        </div>
+        <div class="modal__field">
           <div @click="modal.tmp.time = !modal.tmp.time">
             <div class="modal__label">멘토링 시간</div>
             <div
@@ -437,6 +479,13 @@ export default {
           />
         </div>
         <div class="modal__field">
+          <div class="modal__label">최대 인원</div>
+          <dimi-input
+            v-model.number="form.maxUser"
+            class="mng-ing__input"
+          />
+        </div>
+        <div class="modal__field">
           <div @click="modal.tmp.time = !modal.tmp.time">
             <div class="modal__label">멘토링 시간</div>
             <div
@@ -486,7 +535,32 @@ export default {
         </div>
         <span
           class="modal__create"
-          @click="addMentoring"
+          @click="updateMentoring"
+        >
+          <dimi-button>수정하기</dimi-button>
+        </span>
+      </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.notice"
+        class="modal__modal"
+        @close="modal.notice = false"
+      >
+        <h3 class="modal__title">
+          공지사항 관리
+        </h3>
+        <div class="modal__field">
+          <div class="modal__label">공지사항</div>
+          <dimi-long-input
+            v-model.trim="notice.description"
+            :height="300"
+            class="modal__input"
+            placeholder="공지사항을 입력하세요."
+          />
+        </div>
+        <span
+          class="modal__create"
+          @click="updateNotice"
         >
           <dimi-button>수정하기</dimi-button>
         </span>
@@ -520,6 +594,15 @@ export default {
 
   &__section:last-child {
     padding-bottom: 0;
+  }
+
+  &__notice {
+    margin-top: 1em;
+    margin-right: 0.5em;
+    color: $orange;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
   }
 
   &__create {

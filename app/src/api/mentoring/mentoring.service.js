@@ -1,5 +1,5 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Mentoring, Notice, CreateMentoringInput } from './mentoring.struct'
+import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput } from './mentoring.struct'
 
 export class MentoringService extends ServiceBase {
   /**
@@ -72,7 +72,18 @@ export class MentoringManagerService extends MentoringService {
   }
 
   /**
-   * 멘토링을 제합니다. (관리자)
+   * 멘토링을 수정합니다.
+   */
+  async editMentoring (mentoring) {
+    mentoring = EditMentoringInput(mentoring)
+    await this.magician(() => this.r.put(`/admin/${mentoring.idx}`, mentoring), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 멘토링입니다.'
+    })
+  }
+
+  /**
+   * 멘토링을 삭제합니다. (관리자)
    */
   async deleteMentoringByAdmin (idx) {
     await this.magician(() => this.r.delete(`/admin/${idx}`), {
