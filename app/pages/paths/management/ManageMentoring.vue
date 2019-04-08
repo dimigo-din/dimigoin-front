@@ -1,5 +1,5 @@
 <script>
-import { format } from 'date-fns'
+import { format, setHours, setMinutes } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import { mentoringManager } from '@/src/api/mentoring'
@@ -30,8 +30,9 @@ export default {
       filter: 0,
 
       modal: {
-        create: {
-          open: false,
+        create: false,
+        edit: false,
+        tmp: {
           grade: false,
           time: false,
           applyTime: false
@@ -101,7 +102,7 @@ export default {
     },
 
     closeModal () {
-      this.modal.create.open = false
+      this.modal.create = false
       this.form = {
         teacher: '',
         day: 0,
@@ -150,6 +151,30 @@ export default {
       }
     },
 
+    editMentoring (item) {
+      this.modal.edit = true
+      console.log(item)
+      this.form = {
+        teacher: item.teacher.name,
+        day: item.teacher.day,
+        date: item.date,
+        startTime: setMinutes(
+          setHours(item.date, Number(item.startTime.split(':')[0])),
+          Number(item.startTime.split(':')[1])
+        ),
+        endTime: setMinutes(
+          setHours(item.date, Number(item.endTime.split(':')[0])),
+          Number(item.endTime.split(':')[1])
+        ),
+        subject: item.subject,
+        room: item.room,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        grade: item.targetGrade,
+        maxUser: item.maxUser
+      }
+    },
+
     async deleteMentoring (idx) {
       const { value: answer } = await this.$swal({
         type: 'warning',
@@ -185,7 +210,7 @@ export default {
       <span class="icon-comment" />멘토링 신청 관리
       <span
         class="mng-mentoring__create"
-        @click="modal.create.open = true"
+        @click="modal.create = true"
       >
         <span class="icon-plus" />추가하기
       </span>
@@ -263,6 +288,7 @@ export default {
               </td>
               <td
                 class="mng-mentoring__cell mng-mentoring__cell--button-edit"
+                @click="editMentoring(item)"
               >
                 <span class="icon-edit" /> 수정
               </td>
@@ -278,9 +304,9 @@ export default {
       </section>
 
       <dimi-modal
-        :opened="modal.create.open"
+        :opened="modal.create"
         class="modal__modal"
-        @close="modal.create.open = false"
+        @close="modal.create = false"
       >
         <h3 class="modal__title">
           멘토링 추가
@@ -317,20 +343,20 @@ export default {
           />
         </div>
         <div class="modal__field">
-          <div @click="modal.create.time = !modal.create.time">
+          <div @click="modal.tmp.time = !modal.tmp.time">
             <div class="modal__label">멘토링 시간</div>
             <div
-              v-if="!modal.create.time"
+              v-if="!modal.tmp.time"
               class="modal__label-right"
             >
               {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.create.time ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.tmp.time ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.create.time"
+            v-if="modal.tmp.time"
             class="modal__input"
           >
             <div class="modal__label--small">날짜</div>
@@ -342,20 +368,20 @@ export default {
           </div>
         </div>
         <div class="modal__field">
-          <div @click="modal.create.applyTime = !modal.create.applyTime">
+          <div @click="modal.tmp.applyTime = !modal.tmp.applyTime">
             <div class="modal__label">신청 시간</div>
             <div
-              v-if="!modal.create.applyTime"
+              v-if="!modal.tmp.applyTime"
               class="modal__label-right"
             >
               {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.create.applyTime ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.tmp.applyTime ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.create.applyTime"
+            v-if="modal.tmp.applyTime"
             class="modal__input"
           >
             <div class="modal__label--small">신청 시작</div>
@@ -369,6 +395,101 @@ export default {
           @click="addMentoring"
         >
           <dimi-button>추가하기</dimi-button>
+        </span>
+      </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.edit"
+        class="modal__modal"
+        @close="modal.edit = false"
+      >
+        <h3 class="modal__title">
+          멘토링 수정
+        </h3>
+        <div class="modal__field">
+          <div class="modal__label">선생님 명</div>
+          <dimi-input
+            v-model.trim="form.teacher"
+            class="modal__input"
+            placeholder="선생님 명을 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">장소</div>
+          <dimi-input
+            v-model.trim="form.room"
+            class="modal__input"
+            placeholder="장소를 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">과목</div>
+          <dimi-input
+            v-model.trim="form.subject"
+            class="modal__input"
+            placeholder="과목을 기입하세요."
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">학년</div>
+          <dimi-dropdown
+            v-model="form.grade"
+            :items="[1, 2, 3]"
+          />
+        </div>
+        <div class="modal__field">
+          <div @click="modal.tmp.time = !modal.tmp.time">
+            <div class="modal__label">멘토링 시간</div>
+            <div
+              v-if="!modal.tmp.time"
+              class="modal__label-right"
+            >
+              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+            </div>
+            <div class="modal__expand">
+              <span :class="`icon-arrow-${modal.tmp.time ? 'up' : 'down'}`" />
+            </div>
+          </div>
+          <div
+            v-if="modal.tmp.time"
+            class="modal__input"
+          >
+            <div class="modal__label--small">날짜</div>
+            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small">시작 시간</div>
+            <dimi-date-input v-model="form.startTime" />
+            <div class="modal__label--small">종료 시간</div>
+            <dimi-date-input v-model="form.endTime" />
+          </div>
+        </div>
+        <div class="modal__field">
+          <div @click="modal.tmp.applyTime = !modal.tmp.applyTime">
+            <div class="modal__label">신청 시간</div>
+            <div
+              v-if="!modal.tmp.applyTime"
+              class="modal__label-right"
+            >
+              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
+            </div>
+            <div class="modal__expand">
+              <span :class="`icon-arrow-${modal.tmp.applyTime ? 'up' : 'down'}`" />
+            </div>
+          </div>
+          <div
+            v-if="modal.tmp.applyTime"
+            class="modal__input"
+          >
+            <div class="modal__label--small">신청 시작</div>
+            <dimi-date-input v-model="form.startDate" />
+            <div class="modal__label--small">신청 마감</div>
+            <dimi-date-input v-model="form.endDate" />
+          </div>
+        </div>
+        <span
+          class="modal__create"
+          @click="addMentoring"
+        >
+          <dimi-button>수정하기</dimi-button>
         </span>
       </dimi-modal>
     </dimi-card>
@@ -551,12 +672,6 @@ export default {
     margin-right: 20px;
     float: right;
     font-size: 16px;
-  }
-
-  &__input--time {
-    display: inline-block;
-    width: 15%;
-    margin-right: 3px;
   }
 
   &__expand {
