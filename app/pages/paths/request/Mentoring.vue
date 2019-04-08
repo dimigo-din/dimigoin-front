@@ -128,6 +128,9 @@ export default {
               >
                 {{ item.startTime }} ~ {{ item.endTime }}
               </td>
+              <td class="mentoring__cell">
+                {{ item.room }}
+              </td>
               <td
                 :class="{
                   'mentoring__cell': true,
