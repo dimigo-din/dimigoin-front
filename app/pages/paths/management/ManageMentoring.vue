@@ -153,7 +153,6 @@ export default {
 
     editMentoring (item) {
       this.modal.edit = true
-      console.log(item)
       this.form = {
         teacher: item.teacher.name,
         day: item.teacher.day,
@@ -266,7 +265,7 @@ export default {
               :key="index"
               class="mng-mentoring__row"
             >
-              <td class="mng-mentoring__cell--name">
+              <td class="mng-mentoring__cell mng-mentoring__cell--name">
                 <dimi-checkbox
                   v-model="checks[index]"
                   class="mng-mentoring__item-check"
@@ -589,13 +588,13 @@ export default {
   }
 
   &__cell--name {
-    width: 30%;
+    width: 99%;
     color: $black;
     white-space: normal;
   }
 
   &__cell:not(:last-child):not(:nth-last-child(2)) {
-    padding-right: 54px;
+    padding-right: 1.5em;
   }
 
   &__cell--button-edit {
