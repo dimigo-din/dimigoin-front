@@ -323,7 +323,7 @@ export default {
               v-if="!modal.create.time"
               class="modal__label-right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ form.startTime }} {{ form.endTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.create.time ? 'up' : 'down'}`" />
