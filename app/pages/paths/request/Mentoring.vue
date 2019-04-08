@@ -117,10 +117,7 @@ export default {
                 {{ item.subject }}
               </td>
               <td class="mentoring__cell">
-                {{ item.room }}
-              </td>
-              <td class="mentoring__cell">
-                {{ item.date | filterDay }} ({{ getDaySmallText(item.day) }})
+                {{ item.startTime | filterDay }} ({{ getDaySmallText(item.day) }})
               </td>
               <td
                 :class="{
@@ -129,7 +126,7 @@ export default {
                 }"
                 class="mentoring__cell"
               >
-                {{ item.startTime }} ~ {{ item.endTime }}
+                {{ item.startTime | filterTime }} ~ {{ item.endTime | filterTime }}
               </td>
               <td
                 :class="{
