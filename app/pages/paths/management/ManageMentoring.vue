@@ -3,7 +3,6 @@ import { format, setHours, setMinutes } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import { mentoringManager } from '@/src/api/mentoring'
-// import timestamp from 'unix-timestamp'
 
 export default {
   name: 'ManageMentoring',

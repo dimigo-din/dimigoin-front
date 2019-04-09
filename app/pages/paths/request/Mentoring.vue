@@ -281,10 +281,6 @@ export default {
     white-space: normal;
   }
 
-  // &__cell--time {
-  //   color: $pink;
-  // }
-
   &__cell--disabled {
     color: $gray-light;
     text-decoration: line-through;
