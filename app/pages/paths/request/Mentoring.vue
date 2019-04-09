@@ -120,11 +120,10 @@ export default {
                 {{ item.date | filterDay }} ({{ getDaySmallText(item.day) }})
               </td>
               <td
+                class="mentoring__cell mentoring__cell--time"
                 :class="{
-                  'mentoring__cell--time': true,
                   'mentoring__cell--disabled': (item.maxUser === item.present)
                 }"
-                class="mentoring__cell"
               >
                 {{ item.startTime }} ~ {{ item.endTime }}
               </td>
@@ -132,9 +131,8 @@ export default {
                 {{ item.room }}
               </td>
               <td
+                class="mentoring__cell mentoring__cell--button"
                 :class="{
-                  'mentoring__cell': true,
-                  'mentoring__cell--button': true,
                   'mentoring__cell--full': (item.maxUser === item.present),
                   'mentoring__cell--applied': item.status
                 }"
