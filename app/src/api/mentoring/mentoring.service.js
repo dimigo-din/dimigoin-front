@@ -1,11 +1,11 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput } from './mentoring.struct'
+import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput, CreateNoticeInput } from './mentoring.struct'
 
 export class MentoringService extends ServiceBase {
   /**
    * 최신 공지사항을 가져옵니다.
    *
-   * @returns {Object}
+   * @returns {Notice}
    */
   async getNotice () {
     const { data: notice } = await this.magician(() => this.r.get('/notice'), {})
@@ -55,10 +55,11 @@ export class MentoringManagerService extends MentoringService {
   /**
    * 공지사항을 추가합니다.
    *
-   * @param {Object} notice
+   * @param {Notice} notice
    */
   async addNotice (notice) {
-    await this.magician(() => this.r.post('/notice', notice), {
+    notice = CreateNoticeInput(notice)
+    await this.magician(() => this.r.post('/notice', Notice(notice)), {
       403: '권한이 없습니다.'
     })
   }
