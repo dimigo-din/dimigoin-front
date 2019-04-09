@@ -33,7 +33,7 @@ export default {
         create: false,
         edit: false,
         notice: false,
-        tmp: {
+        expand: {
           grade: false,
           time: false,
           applyTime: false
@@ -382,20 +382,20 @@ export default {
           />
         </div>
         <div class="modal__field">
-          <div @click="modal.tmp.time = !modal.tmp.time">
+          <div @click="modal.expand.time = !modal.expand.time">
             <div class="modal__label">멘토링 시간</div>
             <div
-              v-if="!modal.tmp.time"
+              v-if="!modal.expand.time"
               class="modal__label-right"
             >
               {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.tmp.time ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.tmp.time"
+            v-if="modal.expand.time"
             class="modal__input"
           >
             <div class="modal__label--small">날짜</div>
@@ -407,20 +407,20 @@ export default {
           </div>
         </div>
         <div class="modal__field">
-          <div @click="modal.tmp.applyTime = !modal.tmp.applyTime">
+          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
             <div class="modal__label">신청 시간</div>
             <div
-              v-if="!modal.tmp.applyTime"
+              v-if="!modal.expand.applyTime"
               class="modal__label-right"
             >
               {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.tmp.applyTime ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.tmp.applyTime"
+            v-if="modal.expand.applyTime"
             class="modal__input"
           >
             <div class="modal__label--small">신청 시작</div>
@@ -484,20 +484,20 @@ export default {
           />
         </div>
         <div class="modal__field">
-          <div @click="modal.tmp.time = !modal.tmp.time">
+          <div @click="modal.expand.time = !modal.expand.time">
             <div class="modal__label">멘토링 시간</div>
             <div
-              v-if="!modal.tmp.time"
+              v-if="!modal.expand.time"
               class="modal__label-right"
             >
               {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.tmp.time ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.tmp.time"
+            v-if="modal.expand.time"
             class="modal__input"
           >
             <div class="modal__label--small">날짜</div>
@@ -509,20 +509,20 @@ export default {
           </div>
         </div>
         <div class="modal__field">
-          <div @click="modal.tmp.applyTime = !modal.tmp.applyTime">
+          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
             <div class="modal__label">신청 시간</div>
             <div
-              v-if="!modal.tmp.applyTime"
+              v-if="!modal.expand.applyTime"
               class="modal__label-right"
             >
               {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
             </div>
             <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.tmp.applyTime ? 'up' : 'down'}`" />
+              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
             </div>
           </div>
           <div
-            v-if="modal.tmp.applyTime"
+            v-if="modal.expand.applyTime"
             class="modal__input"
           >
             <div class="modal__label--small">신청 시작</div>
