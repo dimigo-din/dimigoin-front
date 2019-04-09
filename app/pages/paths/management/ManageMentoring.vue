@@ -1,7 +1,8 @@
 <script>
-import { format, setHours, setMinutes } from 'date-fns'
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
+import setTime from '@/src/util/time'
 import { mentoringManager } from '@/src/api/mentoring'
 
 export default {
@@ -167,6 +168,7 @@ export default {
     },
 
     editMentoring (item) {
+      const time = setTime(item.date)
       this.modal.edit = true
       this.form = {
         idx: item.idx,
@@ -177,14 +179,8 @@ export default {
         room: item.room,
         grade: item.targetGrade,
         maxUser: item.maxUser,
-        startTime: setMinutes(
-          setHours(item.date, Number(item.startTime.split(':')[0])),
-          Number(item.startTime.split(':')[1])
-        ),
-        endTime: setMinutes(
-          setHours(item.date, Number(item.endTime.split(':')[0])),
-          Number(item.endTime.split(':')[1])
-        ),
+        startTime: time(item.startTime),
+        endTime: time(item.endTime),
         startDate: item.startDate,
         endDate: item.endDate
       }
