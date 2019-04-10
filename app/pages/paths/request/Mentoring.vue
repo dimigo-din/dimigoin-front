@@ -59,7 +59,7 @@ export default {
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     },
-    
+
     getMentoringStatus (mentoring) {
       return mentoring.maxUser === mentoring.present
     }
