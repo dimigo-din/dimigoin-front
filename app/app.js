@@ -15,6 +15,7 @@ import store from './store'
 import router from './router'
 
 import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 
 NProgress.configure({ showSpinner: false })
 NProgress.start()
@@ -27,7 +28,12 @@ if (process.env.NODE_ENV === 'production') {
 
   Sentry.init({
     dsn: process.env.SENTRY_DSN,
-    integrations: [new Sentry.Integrations.Vue({ Vue })],
+    integrations: [
+      new Integrations.Vue({
+        Vue,
+        attachProps: true
+      })
+    ],
     release: process.env.SENTRY_PROPOSED_VERSION
   })
 }
