@@ -126,7 +126,7 @@ export default {
               <td
                 class="mentoring__cell mentoring__cell--time"
                 :class="{
-                  'mentoring__cell--disabled': getMentoringStatus(item)
+                  'mentoring__cell--disabled': isMentoringFull(item)
                 }"
               >
                 {{ item.startTime }} ~ {{ item.endTime }}
@@ -137,7 +137,7 @@ export default {
               <td
                 class="mentoring__cell mentoring__cell--button"
                 :class="{
-                  'mentoring__cell--full': getMentoringStatus(item),
+                  'mentoring__cell--full': isMentoringFull(item),
                   'mentoring__cell--applied': item.status
                 }"
                 @click="toggleApply(item)"

@@ -59,7 +59,7 @@ export class MentoringManagerService extends MentoringService {
    */
   async addNotice (notice) {
     notice = CreateNoticeInput(notice)
-    await this.magician(() => this.r.post('/notice', Notice(notice)), {
+    await this.magician(() => this.r.post('/notice', notice), {
       403: '권한이 없습니다.'
     })
   }
