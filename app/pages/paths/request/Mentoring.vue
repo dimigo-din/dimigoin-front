@@ -58,6 +58,10 @@ export default {
 
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
+    },
+    
+    getMentoringStatus (mentoring) {
+      return mentoring.maxUser === mentoring.present
     }
   }
 }
@@ -122,7 +126,7 @@ export default {
               <td
                 class="mentoring__cell mentoring__cell--time"
                 :class="{
-                  'mentoring__cell--disabled': (item.maxUser === item.present)
+                  'mentoring__cell--disabled': getMentoringStatus(item)
                 }"
               >
                 {{ item.startTime }} ~ {{ item.endTime }}
@@ -133,7 +137,7 @@ export default {
               <td
                 class="mentoring__cell mentoring__cell--button"
                 :class="{
-                  'mentoring__cell--full': (item.maxUser === item.present),
+                  'mentoring__cell--full': getMentoringStatus(item),
                   'mentoring__cell--applied': item.status
                 }"
                 @click="toggleApply(item)"
