@@ -10,15 +10,9 @@ export default {
   components: { ContentWrapper },
 
   filters: {
-    filterDay (time) {
-      return format(time, 'YYYY/MM/DD')
-    },
-    filterTime (time) {
-      return format(time, 'HH:mm')
-    },
-    filterDate (time) {
-      return format(time, 'YYYY/MM/DD HH:mm')
-    }
+    filterDay: time => format(time, 'YYYY/MM/DD'),
+    filterTime: time => format(time, 'HH:mm'),
+    filterDate: time => format(time, 'YYYY/MM/DD HH:mm')
   },
 
   data () {

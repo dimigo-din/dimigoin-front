@@ -10,12 +10,9 @@ export default {
   components: { ContentWrapper },
 
   filters: {
-    filterDay (time) {
-      return format(time, 'MM/DD')
-    },
-    filterTime (time) {
-      return format(time, 'HH:mm')
-    }
+    filterDay: time => format(time, 'MM/DD'),
+    filterTime: time => format(time, 'HH:mm'),
+    filterDate: time => format(time, 'YYYY-MM-DD')
   },
 
   data () {
@@ -167,7 +164,7 @@ export default {
         <h3 class="modal__title">
           멘토링 공지
           <span class="modal__date">
-            {{ notice.date }}
+            {{ notice.date | filterDate }}
           </span>
         </h3>
         <div class="modal__field">
