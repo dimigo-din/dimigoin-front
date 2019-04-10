@@ -15,6 +15,7 @@ export default {
   'dets': new ManagementService('dets', 'Dets 관리', 'dets'),
   'notice': new ManagementService('notice', '공지사항 관리', 'announcement'),
   'counsel': new ManagementService('counsel', '상담실 관리', 'counsel'),
+  'mentoring': new ManagementService('mentoring', '멘토링 신청 관리', 'mentoring'),
   'book': new ManagementService('book', '도서 신청 관리', 'book'),
   'assignment_master': new ManagementService('assignment_master', '과제 관리', 'assignment'),
   'circle': new ManagementService('circle', '동아리 신청 관리', 'circle'),

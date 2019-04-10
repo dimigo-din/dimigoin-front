@@ -24,6 +24,9 @@ export default {
       <dimi-menu-item :to="{ name: 'request/counsel' }">
         상담 신청
       </dimi-menu-item>
+      <dimi-menu-item :to="{ name: 'request/mentoring' }">
+        멘토링 신청
+      </dimi-menu-item>
       <dimi-menu-item :to="{ name: 'request/ingang' }">
         인강실 사용 신청
       </dimi-menu-item>
