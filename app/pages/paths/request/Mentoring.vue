@@ -15,9 +15,6 @@ export default {
     },
     filterTime (time) {
       return format(time, 'HH:mm')
-    },
-    filterNoticeDay (time) {
-      return format(time, 'YYYY-MM-DD')
     }
   },
 
@@ -166,7 +163,7 @@ export default {
         <h3 class="modal__title">
           멘토링 공지
           <span class="modal__date">
-            {{ notice.date | filterNoticeDay }}
+            {{ notice.date }}
           </span>
         </h3>
         <div class="modal__field">
