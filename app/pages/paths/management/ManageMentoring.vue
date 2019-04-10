@@ -4,6 +4,7 @@ import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import setTime from '@/src/util/time'
 import { mentoringManager } from '@/src/api/mentoring'
+import timestamp from 'unix-timestamp'
 
 export default {
   name: 'ManageMentoring',
@@ -210,6 +211,7 @@ export default {
 
     async updateNotice () {
       try {
+        this.notice.date = timestamp.fromDate(this.notice.date)
         await mentoringManager.addNotice(this.notice)
         await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()

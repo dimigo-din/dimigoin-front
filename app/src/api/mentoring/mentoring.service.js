@@ -1,5 +1,5 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput, CreateNoticeInput } from './mentoring.struct'
+import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput } from './mentoring.struct'
 
 export class MentoringService extends ServiceBase {
   /**
@@ -58,7 +58,6 @@ export class MentoringManagerService extends MentoringService {
    * @param {Notice} notice
    */
   async addNotice (notice) {
-    notice = CreateNoticeInput(notice)
     await this.magician(() => this.r.post('/notice', Notice(notice)), {
       403: '권한이 없습니다.'
     })
