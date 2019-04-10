@@ -104,7 +104,6 @@ export class MentoringManagerService extends MentoringService {
   /**
    * 멘토링을 추가합니다.
    */
-
   async addMentoring (mentoring) {
     mentoring = CreateMentoringInput(mentoring)
     await this.magician(() => this.r.post('/admin', mentoring), {
@@ -116,12 +115,11 @@ export class MentoringManagerService extends MentoringService {
   /**
     * 모든 멘토링 정보를 가져옵니다.
     */
-
   async getAllMentoring () {
     const { data: { mentors } } = await this.magician(() => this.r.get('/admin'), {
       403: '권한이 없습니다.',
       404: '등록된 멘토링이 없습니다.'
     })
-    return mentors
+    return mentors.map(Mentoring)
   }
 }
