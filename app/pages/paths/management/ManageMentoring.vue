@@ -577,7 +577,6 @@ export default {
   &__section {
     padding: 0 24px 24px;
     margin-top: 36px;
-    margin-bottom: 24px;
   }
 
   &__section:last-child {
