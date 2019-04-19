@@ -764,12 +764,15 @@ export default {
     font-size: 16px;
     font-weight: $font-weight-bold;
   }
+
+  .dropdown {
+    font-size: 20px;
+  }
 }
 
 .dropdown {
   display: inline-flex;
   margin-left: 0.5em;
-  font-size: 20px;
   line-height: 1.15;
 
   &__item {
