@@ -8017,13 +8017,21 @@ postcss-selector-parser@^5.0.0, postcss-selector-parser@^5.0.0-rc.3, postcss-sel
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss-sorting@^4.0.0, postcss-sorting@^4.0.1:
+postcss-sorting@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/postcss-sorting/-/postcss-sorting-4.0.1.tgz#4bb4eb40e07e2b74e49f6f97fd4317fa73bd65a8"
   integrity sha512-YNRq7ChWFsLsns78zutLBWp6kvfZr/3YYf9q54P/fBpIHhf8gwbKvr5XHAt2l69SS08lfGtB8gG8m/62gsuTgw==
   dependencies:
     lodash "^4.17.4"
     postcss "^7.0.0"
+
+postcss-sorting@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-sorting/-/postcss-sorting-5.0.0.tgz#4e4ce0a554c17d78d4287f08f792db8992bf62b5"
+  integrity sha512-m25mKLNq0fPAyZFElQ1hngRDFQDMlc+9ZwoWsL8oix6i1GsBzIxyke6sDeY9BXee7L86z4tex01fcH/9wTj3Jg==
+  dependencies:
+    lodash "^4.17.11"
+    postcss "^7.0.14"
 
 postcss-svgo@^4.0.1:
   version "4.0.1"
@@ -9616,22 +9624,13 @@ stylelint-config-idiomatic-order@^6.2.0:
     stylelint "^9.6.0"
     stylelint-order "^1.0.0"
 
-stylelint-config-sass-guidelines@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/stylelint-config-sass-guidelines/-/stylelint-config-sass-guidelines-5.3.0.tgz#145e8c10703c517e0961ef55b883091001104783"
-  integrity sha512-qZbYC7zDGkoPpY1WeEf4HXqHvOyV3Sv5SD51+8EEU+8CNAHSaqWOmB51GlGivSFtPCLGxPuUBjnIwojXskPAFA==
+stylelint-config-sass-guidelines@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-sass-guidelines/-/stylelint-config-sass-guidelines-6.0.0.tgz#e81a5452a52be2578dbb570a56dde1216514b6b6"
+  integrity sha512-roE+YUYTdB7Ald36fv/ZjSYhPJvyI9/24ZDn4M9O8fzrefl1hDvBGWKg1MHJ0a8d5s0a6LNP004WINcWouVlHA==
   dependencies:
-    stylelint-order ">=1.0.0"
+    stylelint-order "^3.0.0"
     stylelint-scss "^3.4.0"
-
-stylelint-order@>=1.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-2.0.0.tgz#f19400e1d42a844bfd149fae1daa02e671a9b2f2"
-  integrity sha512-rGmvP5zSCxvmBYP8DgzmdMhMMM+degsQCXrzYDmqPmeyU2bWmQTt2mH157Svj0WwHQn1LG9aQHdvKZfpfg2t4A==
-  dependencies:
-    lodash "^4.17.10"
-    postcss "^7.0.2"
-    postcss-sorting "^4.0.1"
 
 stylelint-order@^1.0.0:
   version "1.0.0"
@@ -9641,6 +9640,15 @@ stylelint-order@^1.0.0:
     lodash "^4.17.10"
     postcss "^7.0.2"
     postcss-sorting "^4.0.0"
+
+stylelint-order@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-3.0.0.tgz#ec44afb93a3183dcf8c91540d4486de776250506"
+  integrity sha512-CaK3ebU5qSDY4aQZ5yA5uCL1jjAeK+TQeyKcH1w1O/wxC1GjM6JCv0msrA3Wno29F1jW/1UoWIsRFeo7hk9gtg==
+  dependencies:
+    lodash "^4.17.11"
+    postcss "^7.0.14"
+    postcss-sorting "^5.0.0"
 
 stylelint-scss@^3.4.0:
   version "3.5.1"
