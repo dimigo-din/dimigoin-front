@@ -577,7 +577,6 @@ export default {
   &__section {
     padding: 0 24px 24px;
     margin-top: 36px;
-    margin-bottom: 24px;
   }
 
   &__section:last-child {
@@ -765,12 +764,15 @@ export default {
     font-size: 16px;
     font-weight: $font-weight-bold;
   }
+
+  .dropdown {
+    font-size: 20px;
+  }
 }
 
 .dropdown {
   display: inline-flex;
   margin-left: 0.5em;
-  font-size: 20px;
   line-height: 1.15;
 
   &__item {
