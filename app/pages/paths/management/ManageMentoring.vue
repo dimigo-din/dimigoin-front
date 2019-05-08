@@ -100,6 +100,7 @@ export default {
 
     closeModal () {
       this.modal.create = false
+      this.modal.edit = false
       this.form = {
         teacher: '',
         day: 0,
@@ -171,7 +172,7 @@ export default {
         date: item.date,
         subject: item.subject,
         room: item.room,
-        grade: item.targetGrade,
+        grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
         endTime: time(item.endTime),
