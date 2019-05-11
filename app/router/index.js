@@ -45,6 +45,7 @@ const router = new VueRouter({
     ...routers.request,
     ...routers.management,
     ...routers.assignment,
+    ...routers.sport,
 
     {
       path: '*',
