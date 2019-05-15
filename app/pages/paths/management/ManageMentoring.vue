@@ -214,6 +214,14 @@ export default {
       }
     },
 
+    async downloadExcel (grade) {
+      try {
+        await mentoringManager.downloadExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -273,6 +281,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-mentoring__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-mentoring__tool mng-mentoring__excel"
+            @click="downloadExcel(tab + 1)"
+          >
+            <span class="mng-afsc__excel-icon icon-long-arrow-down" /> 엑셀 다운로드
           </span>
 
           <dimi-dropdown
@@ -625,15 +640,12 @@ export default {
     user-select: none;
   }
 
-  &__delete {
+  &__delete,
+  &__excel {
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
-  }
-
-  &__sort {
-    margin-left: 1em !important;
   }
 
   &__delete-icon {
