@@ -100,6 +100,7 @@ export default {
 
     closeModal () {
       this.modal.create = false
+      this.modal.edit = false
       this.form = {
         teacher: '',
         day: 0,
@@ -171,7 +172,7 @@ export default {
         date: item.date,
         subject: item.subject,
         room: item.room,
-        grade: item.targetGrade,
+        grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
         endTime: time(item.endTime),
@@ -208,6 +209,14 @@ export default {
         await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
         await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
+    async downloadExcel (grade) {
+      try {
+        await mentoringManager.downloadExcel(grade)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -272,6 +281,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-mentoring__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-mentoring__tool mng-mentoring__excel"
+            @click="downloadExcel(tab + 1)"
+          >
+            <span class="mng-afsc__excel-icon icon-long-arrow-down" /> 엑셀 다운로드
           </span>
 
           <dimi-dropdown
@@ -624,15 +640,12 @@ export default {
     user-select: none;
   }
 
-  &__delete {
+  &__delete,
+  &__excel {
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
-  }
-
-  &__sort {
-    margin-left: 1em !important;
   }
 
   &__delete-icon {

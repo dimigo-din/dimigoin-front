@@ -123,4 +123,22 @@ export class MentoringManagerService extends MentoringService {
     })
     return mentors.map(Mentoring)
   }
+
+  /**
+   * 학년별 멘토링 엑셀 파일을 다운로드합니다.
+   */
+  async downloadExcel (grade) {
+    const { data } = await this.magician(() => this.r.get(`/excel/${grade}`, {
+      responseType: 'blob'
+    }), {
+      403: '권한이 없습니다.',
+      default: '파일을 다운로드하던 중 문제가 발생했습니다.'
+    })
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(new Blob([data]))
+    link.setAttribute('download', `${new Date().getFullYear()}년도 ${grade}학년 멘토링 신청 목록.xlsx`)
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+  }
 }
