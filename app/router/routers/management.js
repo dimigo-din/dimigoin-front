@@ -2,6 +2,7 @@ import withPrefix from '@/src/util/path-with-prefix'
 
 const ManageWrapper = () => import('@/pages/paths/management/ManageWrapper.vue')
 const ManageMain = () => import('@/pages/paths/management/ManageMain.vue')
+const ManageRequest = () => import('@/pages/paths/management/ManageRequest.vue')
 const ManageAssignment = () => import('@/pages/paths/management/ManageAssignment.vue')
 const ManageAfterschool = () => import('@/pages/paths/management/ManageAfterschool.vue')
 const ManageCounsel = () => import('@/pages/paths/management/ManageCounsel.vue')
@@ -27,6 +28,14 @@ export default [
       path: '/',
       component: ManageWrapper,
       children: [
+        {
+          path: 'request',
+          name: 'management/request',
+          component: ManageRequest,
+          meta: {
+            title: '디미고인 > 신청 현황'
+          }
+        },
         {
           path: 'assignment',
           name: 'management/assignment',
