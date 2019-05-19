@@ -646,10 +646,24 @@ export default {
     color: $gray-light;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    @include until($tablet) {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   }
-
+  
   &__tool:not(:first-child) {
     margin-left: 2em;
+  }
+
+  &__tool {
+    @include until($tablet) {
+      display: inline-block;
+      width: 40%;
+      justify-content: flex-start;
+      margin-left: unset !important;
+      text-align: left;
+    }
   }
 
   &__select-all {
@@ -682,14 +696,17 @@ export default {
 
   &__cell {
     padding: 24px 0;
-    color: $gray-dark;
+    color: $gray;
     white-space: nowrap;
   }
 
   &__cell--name {
     width: 99%;
-    color: $black;
-    white-space: normal;
+    color: $gray-dark;
+
+    @include until($tablet) {
+      width: unset;
+    }
   }
 
   &__cell:not(:last-child):not(:nth-last-child(2)) {
