@@ -28,13 +28,21 @@ export default {
               <span class="icon-muffin" /> {{ month }}월 간식 신청 현황
             </h1>
             <div class="dashboard__content">
-              <div class="dashboard__status">
-                총인원 620명 중<br>
-                0명 신청
+              <div class="dashboard__field">
+                <div class="dashboard__status">
+                  총인원 620명 중<br>
+                  150명 신청
+                </div>
+                <div class="dashboard__percent">
+                  24%
+                </div>
               </div>
-              <div class="dashboard__percent">
-                0%
-              </div>
+              <dimi-progressbar
+                class="snack"
+                :progress="24"
+                color="orange"
+                :small="false"
+              />
             </div>
           </div>
           <div class="dashboard__item dashboard__circle">
@@ -67,30 +75,46 @@ export default {
           </div>
         </div>
         <div class="dashboard__row">
-          <div class="dashboard__item dashboard__ingang">
+          <div class="dashboard__item">
             <h1 class="dashboard__title">
               <span class="icon-internet-class" /> {{ month }}월 {{ today }}일 인강실 사용 신청 현황
             </h1>
             <div class="dashboard__content">
               <div class="dashboard__ingang">
-                <div class="dashboard__time">
-                  1타임
+                <div class="dashboard__ingang--field">
+                  <div class="dashboard__time">
+                    1타임
+                  </div>
+                  <div class="dashboard__status">
+                    30석 중 24석 신청
+                  </div>
                 </div>
-                <div class="dashboard__status">
-                  30석 중 24석 신청
-                </div>
+                <dimi-progressbar
+                  class="ingang"
+                  :progress="80"
+                  color="red"
+                  :small="true"
+                />
               </div>
               <div class="dashboard__ingang">
-                <div class="dashboard__time">
-                  2타임
+                <div class="dashboard__ingang--field">
+                  <div class="dashboard__time">
+                    2타임
+                  </div>
+                  <div class="dashboard__status">
+                    30석 중 12석 신청
+                  </div>
                 </div>
-                <div class="dashboard__status">
-                  2타임 30석 중 12석 신청
-                </div>
+                <dimi-progressbar
+                  class="ingang"
+                  :progress="40"
+                  color="pink"
+                  :small="true"
+                />
               </div>
             </div>
           </div>
-          <div class="dashboard__item dashboard__ingang">
+          <div class="dashboard__item">
             <h1 class="dashboard__title">
               <span class="icon-hourglass" /> {{ month }}월 2주차 잔류 신청 현황
             </h1>
@@ -137,7 +161,13 @@ export default {
   &__content {
     display: flex;
     flex-direction: column;
-    padding-top: 1.5em;
+    margin-top: 1.5em;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     line-height: 1.8;
   }
 
@@ -151,10 +181,9 @@ export default {
     display: flex;
   }
 
-  &__snack &__content {
-    @include from($tablet) {
-      flex-direction: row;
-      justify-content: space-between;
+  &__snack &__field {
+    @include until($tablet) {
+      flex-direction: column;
     }
   }
 
@@ -164,6 +193,14 @@ export default {
 
   &__ingang {
     display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  &__ingang--field {
+    display: flex;
+    width: 50%;
     flex-direction: column;
   }
 
@@ -176,5 +213,15 @@ export default {
     font-size: 16px;
     font-weight: $font-weight-bold;
   }
+}
+
+.progress.snack {
+  display: flex;
+  margin-top: 1em;
+}
+
+.progress.ingang {
+  display: flex;
+  padding-left: 0.5em;
 }
 </style>
