@@ -56,18 +56,13 @@ export default {
   user-select: none;
 
   &__button {
-    display: table-cell;
+    display: inline-block;
     width: 205px;
     padding: 0.7em 2em;
     background-color: $red;
     cursor: pointer;
     text-align: center;
     transition: all 0.2s ease-in-out;
-    vertical-align: middle;
-
-    @include until($tablet) {
-      word-break: keep-all;
-    }
   }
 
   &__button:first-child {
