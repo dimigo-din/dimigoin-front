@@ -232,7 +232,9 @@ export default {
 <template>
   <content-wrapper class="mng-mentoring">
     <h1 slot="header">
-      <span class="icon-comment" />멘토링 신청 관리
+      <span class="mng-mentoring__head">
+        <span class="icon-comment" />멘토링 신청 관리
+      </span>
       <span
         class="mng-mentoring__create"
         @click="modal.create = true"
@@ -585,6 +587,14 @@ export default {
   }
 }
 
+.content {
+  @include until($tablet) {
+    &__header > h1 {
+      margin-bottom: 1.8em;
+    }
+  }
+}
+
 .mng-mentoring {
   &__main {
     padding: 0;
@@ -597,6 +607,12 @@ export default {
 
   &__section:last-child {
     padding-bottom: 0;
+  }
+
+  &__head {
+    @include until($tablet) {
+      display: block;
+    }
   }
 
   &__notice {
