@@ -651,7 +651,7 @@ export default {
       justify-content: space-between;
     }
   }
-  
+
   &__tool:not(:first-child) {
     margin-left: 2em;
   }
