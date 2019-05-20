@@ -701,11 +701,10 @@ export default {
   }
 
   &__cell--name {
-    width: 99%;
     color: $gray-dark;
 
-    @include until($tablet) {
-      width: unset;
+    @include from($tablet) {
+      width: 99%;
     }
   }
 
