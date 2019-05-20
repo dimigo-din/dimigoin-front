@@ -29,7 +29,7 @@ export default {
             </h1>
             <div class="dashboard__content">
               <div class="dashboard__field">
-                <div class="dashboard__status">
+                <div class="dashboard__day">
                   총인원 620명 중<br>
                   150명 신청
                 </div>
@@ -60,7 +60,71 @@ export default {
               <span class="icon-ball" /> {{ year }}년 상반기 방과 후 활동 신청 현황
             </h1>
             <div class="dashboard__content">
-              차트 컴포넌트를 만들자
+              <div class="dashboard__cell">
+                <div class="dashboard__day">
+                  월요일
+                </div>
+                <dimi-bar-chart
+                  class="afterschool"
+                  :progress="50"
+                  color="mustard"
+                />
+                <div class="dashboard__percent">
+                  50%(310명)
+                </div>
+              </div>
+              <div class="dashboard__cell">
+                <div class="dashboard__day">
+                  화요일
+                </div>
+                <dimi-bar-chart
+                  class="afterschool"
+                  :progress="25"
+                  color="mustard"
+                />
+                <div class="dashboard__percent">
+                  25%(155명)
+                </div>
+              </div>
+              <div class="dashboard__cell">
+                <div class="dashboard__day">
+                  수요일
+                </div>
+                <dimi-bar-chart
+                  class="afterschool"
+                  :progress="60"
+                  color="mustard"
+                />
+                <div class="dashboard__percent">
+                  60%(372명)
+                </div>
+              </div>
+              <div class="dashboard__cell">
+                <div class="dashboard__day">
+                  목요일
+                </div>
+                <dimi-bar-chart
+                  class="afterschool"
+                  :progress="50"
+                  color="mustard"
+                />
+                <div class="dashboard__percent">
+                  50%(310명)
+                </div>
+              </div>
+              <div class="dashboard__cell">
+                <div class="dashboard__day">
+                  금요일
+                </div>
+                <dimi-bar-chart
+                  class="afterschool"
+                  :progress="80"
+                  color="mustard"
+                />
+                <div class="dashboard__percent">
+                  80%(496명)
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -85,7 +149,7 @@ export default {
                   <div class="dashboard__time">
                     1타임
                   </div>
-                  <div class="dashboard__status">
+                  <div class="dashboard__day">
                     30석 중 24석 신청
                   </div>
                 </div>
@@ -101,7 +165,7 @@ export default {
                   <div class="dashboard__time">
                     2타임
                   </div>
-                  <div class="dashboard__status">
+                  <div class="dashboard__day">
                     30석 중 12석 신청
                   </div>
                 </div>
@@ -171,13 +235,13 @@ export default {
     line-height: 1.8;
   }
 
-  &__percent {
+  &__snack &__percent {
     color: $orange;
     font-size: 48px;
     font-weight: $font-weight-regular;
   }
 
-  &__status {
+  &__snack &__status {
     display: flex;
   }
 
@@ -189,6 +253,35 @@ export default {
 
   &__snack &__percent {
     line-height: normal;
+  }
+
+  &__afterschool &__title {
+    margin-bottom: 0.7em;
+  }
+
+  &__afterschool &__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 2.5em;
+    padding-left: 2.5em;
+  }
+
+  &__afterschool &__cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__afterschool &__day {
+    margin-bottom: 0.8em;
+    color: $gray-dark;
+    font-size: 18px;
+    font-weight: $font-weight-regular;
+  }
+
+  &__afterschool &__percent {
+    margin-top: 1em;
   }
 
   &__ingang {
@@ -223,5 +316,10 @@ export default {
 .progress.ingang {
   display: flex;
   padding-left: 0.5em;
+}
+
+.barchart.afterschool {
+  display: flex;
+  height: 120px;
 }
 </style>
