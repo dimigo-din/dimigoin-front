@@ -24,7 +24,6 @@ export const Mentoring = mentoring => ({
 export const CreateMentoringInput = mentoring => ({
   'teacher_name': mentoring.teacher,
   'day': days[new Date(mentoring.date).getDay() - 1].code,
-  'date': timestamp.fromDate(mentoring.date),
   'start_time': format(mentoring.startTime, 'HH:mm'),
   'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
