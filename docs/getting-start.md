@@ -7,7 +7,9 @@
 * Git
 * Node.js &gt;= 8.9
 * Yarn
-* 좋아하는 코드 에디터 \(VSCode, WebStorm 추천\)
+* 좋아하는 코드 에디터 \(WebStorm 추천\)
+
+WebStorm을 추천하는 이유는 WebStorm이 Vue 개발환경을 VSCode보다 더 잘 지원하기 때문입니다.
 
 먼저 깃허브에서 소스코드를 클론받습니다.
 
@@ -108,4 +110,3 @@ yarn lint # Lint All
 ## 배포하기
 
 디미고인 프론트의 배포는 자동화되어 있습니다. Github의 master 브랜치에 커밋이 생기면, CircleCI가 자동으로 빌드하여 지정된 서버에 SFTP로 배포합니다. CircleCI의 설정 파일은 `.circleci` 폴더에 담겨있으며, 해당 폴더 안에 있는 `deploy.js` 가 빌드된 파일을 서버로 배포하는 역할을 맡고 있습니다.
-

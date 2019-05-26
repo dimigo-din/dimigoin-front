@@ -118,6 +118,3 @@ const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue
 {% endcode-tabs %}
 
 `() => import( ... )` 를 사용하여 비동기 로딩을 구현하고 있습니다. 또한 Webpack 의 코드 분할 기능을 사용하기 위해 주석으로 `/* webpackChunkName: "service-management" */` 를 페이지 위치 앞에 붙여준 것을 확인할 수 있습니다. 같은 청크 이름을 지정하면 같은 파일에 묶여서 처리됩니다. 자세한 정보는 [여기](https://router.vuejs.org/kr/guide/advanced/lazy-loading.html)를 참고하세요.
-
-
-

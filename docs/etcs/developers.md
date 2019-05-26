@@ -13,9 +13,7 @@
 | 기수 | 이름 | 직책 | 이메일 |
 | :--- | :--- | :--- | :--- |
 | 16 | 박성민 | 화석 | dev.alpaca@gmail.com |
-| 17 | 권태훈 | 탈주 | taevel02@gmail.com |
+| 17 | 권태훈 | 메인테이너 | taevel02@gmail.com |
 | 18 | 엄서훈 | 관리자 | uhmtotow@gmail.com |
 | 18 | 여준호 | 관리자 | hanaro0704@naver.com |
 | 18 | 서동휘 | 핫산 | hwidongsuh@gmail.com |
-
-
