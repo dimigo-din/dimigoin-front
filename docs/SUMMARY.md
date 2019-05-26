@@ -37,6 +37,6 @@
 * [Sentry](etcs/sentry.md)
 * [Greenkeeper](etcs/greenkeeper.md)
 * [Codacy](etcs/codacy.md)
-* [Cloud Flare](etcs/cloudflare.md)
+* [Cloudflare](etcs/cloudflare.md)
 * [SSH 접속하기](etcs/ssh.md)
 * [개발자들](etcs/developers.md)
