@@ -1,6 +1,6 @@
 # 신청 현황 페이지
 
-![](../.gitbook/assets/image%20%283%29.png)
+![](../.gitbook/assets/image%20(3).png)
 
 자신의 신청 현황을 확인할 수 있는 페이지입니다.
 
