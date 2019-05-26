@@ -36,6 +36,9 @@ export default {
       <dimi-menu-item :to="{ name: 'request/book' }">
         도서 신청
       </dimi-menu-item>
+      <dimi-menu-item :to="{ name: 'request/etc' }">
+        기타 신청
+      </dimi-menu-item>
     </dimi-menu>
   </service-wrapper>
 </template>
