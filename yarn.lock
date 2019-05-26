@@ -5228,6 +5228,7 @@ ignore@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.6.tgz#562dacc7ec27d672dde433aa683c543b24c17694"
   integrity sha512-/+hp3kUf/Csa32ktIaj0OlRqQxrgs30n62M90UBpNd9k+ENEch5S+hmbW3DtcJGz3sYFTh4F3A6fQ0q7KWsp4w==
+
 ignore@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.1.tgz#2fc6b8f518aff48fef65a7f348ed85632448e4a5"
@@ -10053,10 +10054,10 @@ svgo@^1.0.0, svgo@^1.1.1:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@7.x:
-  version "7.33.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.33.1.tgz#7e3534d2c2962f875f419cfea5d75ee526d65cd4"
-  integrity sha512-69KYtyhtxejFG0HDb8aVhAwbpAWPSTZwaL5vxDHgojErD2KeFxTmRgmkbiLtMC8UdTFXRmvTPtZTF4459MUb7w==
+sweetalert2@8.x:
+  version "8.10.7"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-8.10.7.tgz#ebef1978d30e9c8ec4123f61425120133c5aa9f0"
+  integrity sha512-C+bW8QiN/sv1EgemKYZTz9FXWyAdYLzhXfgkVxCX1/JNsiS3e9CmZizpelvPqSBw5hPULlN5iAC2En1f7/G1DQ==
 
 symbol-observable@1.0.1:
   version "1.0.1"
@@ -10747,12 +10748,12 @@ vue-svg-loader@^0.12.0:
     loader-utils "^1.2.3"
     svg-to-vue "^0.4.0"
 
-vue-sweetalert2@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/vue-sweetalert2/-/vue-sweetalert2-1.6.4.tgz#64ea097d9cdb60d2321f74df7d142112a224de1c"
-  integrity sha512-MsVPeie+DjyP/rTPHlGxOsnR10DCXq/6xUiMZtBURZq8111Q/U6c8xJ0do55Yj99odf7ru2J2eJz6GeGs8i0kA==
+vue-sweetalert2@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/vue-sweetalert2/-/vue-sweetalert2-2.0.5.tgz#77e21f507d9b5c887c0620abd8cfdd73eb23f04c"
+  integrity sha512-O/qQdHBjRsbEDqJOMeYVNx2C96oPADjpk4dYnU+hdPSaaWxhZEPIV3s255oGzhjbxPSX1hIID/vdThYKCAnR7A==
   dependencies:
-    sweetalert2 "7.x"
+    sweetalert2 "8.x"
 
 vue-template-compiler@^2.6.4:
   version "2.6.4"
