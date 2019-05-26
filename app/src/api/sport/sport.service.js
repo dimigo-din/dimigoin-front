@@ -1,5 +1,7 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Notice, CreateNoticeInput, CreateSportEventInput, SportEvent, SportTeam, CreateSportTeamInput, AddMember, SportMatch, CreateSportMatch, AddMemberScore, EditMemberScore, AddTeamScore, EditTeamScore } from './sport.struct'
+import { Notice, CreateNoticeInput, CreateSportEventInput, SportEvent, SportTeam,
+  CreateSportTeamInput, AddMember, SportMatch, CreateSportMatch, AddMemberScore,
+  EditMemberScore, AddTeamScore, EditTeamScore } from './sport.struct'
 
 export class SportService extends ServiceBase {
   /**
