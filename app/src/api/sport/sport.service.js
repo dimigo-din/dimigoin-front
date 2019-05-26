@@ -17,6 +17,16 @@ export class SportService extends ServiceBase {
 
 export class SportPublicService extends SportService {
   /**
+    * 모든 스포츠 정보를 가져옵니다.
+    */
+  async getAllSports () {
+    const { data: sports } = await this.magician(() => this.r.get('/'), {
+      403: '권한이 없습니다.'
+    })
+    return sports
+  }
+
+  /**
    * 모든 스포츠 종목 목록을 가져옵니다.
    */
   async getAllSportEvent () {
