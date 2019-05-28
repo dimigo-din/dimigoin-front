@@ -122,7 +122,7 @@ export default {
       try {
         await Promise.all(Object.keys(this.checks.filter(v => v))
           .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
-        await this.$swal('삭제되었습니다', '', 'success')        
+        await this.$swal('삭제되었습니다', '', 'success')
         await this.updateAll()
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
