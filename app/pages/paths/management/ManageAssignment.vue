@@ -43,7 +43,7 @@ export default {
     },
 
     async deleteAss (ass) {
-      if (await this.$swal({
+      const { value: answer } = await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
         confirmButtonColor: '#d61315',
@@ -51,16 +51,17 @@ export default {
         confirmButtonText: '삭제',
         cancelButtonText: '취소',
         showCancelButton: true
-      })) {
-        try {
-          await assignmentPublisher.deleteAssignment(ass.idx)
-          this.assignments = await assignmentPublisher.getAssignmentList()
-          this.$swal('삭제되었습니다', 'success')
-        } catch (err) {
-          this.$swal('이런!', err.message, 'error')
-        }
-        await this.update()
+      })
+
+      if (!answer) return
+      try {
+        await assignmentPublisher.deleteAssignment(ass.idx)
+        this.assignments = await assignmentPublisher.getAssignmentList()
+        this.$swal('삭제되었습니다', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
       }
+      await this.update()
     },
 
     async create () {
