@@ -100,6 +100,7 @@ export default {
 
     closeModal () {
       this.modal.create = false
+      this.modal.edit = false
       this.form = {
         teacher: '',
         day: 0,
@@ -171,7 +172,7 @@ export default {
         date: item.date,
         subject: item.subject,
         room: item.room,
-        grade: item.targetGrade,
+        grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
         endTime: time(item.endTime),
@@ -213,6 +214,14 @@ export default {
       }
     },
 
+    async downloadExcel (grade) {
+      try {
+        await mentoringManager.downloadExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -223,7 +232,9 @@ export default {
 <template>
   <content-wrapper class="mng-mentoring">
     <h1 slot="header">
-      <span class="icon-comment" />멘토링 신청 관리
+      <span class="mng-mentoring__head">
+        <span class="icon-comment" />멘토링 신청 관리
+      </span>
       <span
         class="mng-mentoring__create"
         @click="modal.create = true"
@@ -272,6 +283,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-mentoring__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-mentoring__tool mng-mentoring__excel"
+            @click="downloadExcel(tab + 1)"
+          >
+            <span class="mng-afsc__excel-icon icon-long-arrow-down" /> 엑셀 다운로드
           </span>
 
           <dimi-dropdown
@@ -569,6 +587,14 @@ export default {
   }
 }
 
+.content {
+  @include until($tablet) {
+    &__header > h1 {
+      margin-bottom: 1.8em;
+    }
+  }
+}
+
 .mng-mentoring {
   &__main {
     padding: 0;
@@ -581,6 +607,12 @@ export default {
 
   &__section:last-child {
     padding-bottom: 0;
+  }
+
+  &__head {
+    @include until($tablet) {
+      display: block;
+    }
   }
 
   &__notice {
@@ -614,25 +646,36 @@ export default {
     color: $gray-light;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    @include until($tablet) {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   }
 
   &__tool:not(:first-child) {
     margin-left: 2em;
   }
 
+  &__tool {
+    @include until($tablet) {
+      display: inline-block;
+      width: 40%;
+      justify-content: flex-start;
+      margin-left: unset !important;
+      text-align: left;
+    }
+  }
+
   &__select-all {
     user-select: none;
   }
 
-  &__delete {
+  &__delete,
+  &__excel {
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
-  }
-
-  &__sort {
-    margin-left: 1em !important;
   }
 
   &__delete-icon {
@@ -653,14 +696,16 @@ export default {
 
   &__cell {
     padding: 24px 0;
-    color: $gray-dark;
+    color: $gray;
     white-space: nowrap;
   }
 
   &__cell--name {
-    width: 99%;
-    color: $black;
-    white-space: normal;
+    color: $gray-dark;
+
+    @include from($tablet) {
+      width: 99%;
+    }
   }
 
   &__cell:not(:last-child):not(:nth-last-child(2)) {
