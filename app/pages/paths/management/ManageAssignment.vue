@@ -87,7 +87,7 @@ export default {
       this.form = {
         title: ass['title'],
         description: ass['description'],
-        endDate: timestamp.fromDate(ass['end_date']),
+        endDate: timestamp.toDate(ass['end_date']),
         targetGrade: ass['target_grade'],
         targetClass: ass['target_class']
       }
