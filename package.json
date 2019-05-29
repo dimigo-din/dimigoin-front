@@ -40,7 +40,7 @@
     "vue-recaptcha": "^1.1.0",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.0.2",
-    "vue-sweetalert2": "^1.6.4",
+    "vue-sweetalert2": "^2.0.5",
     "vuex": "^3.1.0",
     "vuex-router-sync": "^5.0.0"
   },
@@ -91,7 +91,7 @@
     "start-server-and-test": "^1.7.11",
     "style-loader": "^0.23.1",
     "stylelint": "^10.0.0",
-    "stylelint-config-idiomatic-order": "^6.2.0",
+    "stylelint-config-idiomatic-order": "^7.0.0",
     "stylelint-config-sass-guidelines": "^6.0.0",
     "stylelint-webpack-plugin": "^0.10.5",
     "terser-webpack-plugin": "^1.2.2",

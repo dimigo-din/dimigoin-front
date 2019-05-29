@@ -136,7 +136,7 @@ export default {
     },
 
     async deleteDets (parameter) {
-      if (await this.$swal({
+      const { value: answer } = await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
         confirmButtonColor: '#d61315',
@@ -144,14 +144,15 @@ export default {
         confirmButtonText: '삭제',
         cancelButtonText: '취소',
         showCancelButton: true
-      })) {
-        try {
-          await detsManager.deleteDets(parameter.idx)
-          this.$swal('삭제되었습니다', '', 'success')
-          await this.refresh()
-        } catch (err) {
-          this.$swal('이런!', err.message, 'error')
-        }
+      })
+
+      if (!answer) return
+      try {
+        await detsManager.deleteDets(parameter.idx)
+        this.$swal('삭제되었습니다', '', 'success')
+        await this.refresh()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
       }
     },
 
