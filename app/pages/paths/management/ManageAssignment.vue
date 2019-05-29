@@ -11,7 +11,7 @@ export default {
   data: () => ({
     loading: false,
     assignments: [],
-    now: new Date(),
+    now: timestamp.fromDate(new Date()),
     modals: {
       create: false,
       edit: false,
@@ -57,7 +57,7 @@ export default {
       try {
         await assignmentPublisher.deleteAssignment(ass.idx)
         this.assignments = await assignmentPublisher.getAssignmentList()
-        this.$swal('삭제되었습니다', 'success')
+        this.$swal('삭제되었습니다', '', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -136,7 +136,7 @@ export default {
           <span class="icon-edit" /> 수정하기
         </span>
         <span
-          v-if="now.getTime() <= ass.end_date"
+          v-if="now <= ass.end_date"
           class="assignor__item--del"
           @click="deleteAss(ass)"
         >
