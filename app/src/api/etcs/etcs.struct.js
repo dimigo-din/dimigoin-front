@@ -1,10 +1,10 @@
 import timestamp from 'unix-timestamp'
 
 export const Application = etc => ({
-  idx: etc['idx'],
   applicationIdx: etc['application_idx'],
   requestIdx: etc['request_idx'],
   hostIdx: etc['host_idx'],
+  hostSerial: etc['host_serial'],
   title: etc['title'],
   startDate: timestamp.toDate(etc['request_start_date']),
   endDate: timestamp.toDate(etc['request_end_date']),
@@ -13,11 +13,13 @@ export const Application = etc => ({
   targetThird: etc['3_grade'],
   description: etc['description'],
   maxUser: etc['max_user'],
+  userCount: etc['user_count'],
   status: etc['status'],
   open: false
 })
 
 export const CreateApplication = etc => ({
+  'host_serial': etc.hostSerial,
   'title': etc.title,
   'request_start_date': timestamp.fromDate(etc.startDate),
   'request_end_date': timestamp.fromDate(etc.endDate),
@@ -29,6 +31,7 @@ export const CreateApplication = etc => ({
 })
 
 export const EditApplication = etc => ({
+  'host_serial': etc.hostSerial,
   'title': etc.title,
   'request_start_date': timestamp.fromDate(etc.startDate),
   'request_end_date': timestamp.fromDate(etc.endDate),

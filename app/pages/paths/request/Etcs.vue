@@ -1,23 +1,23 @@
 <script>
+import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { etcRequestor } from '@/src/api/etcs'
-import days from '@/src/util/days'
 
 export default {
   name: 'RequestEtcs',
 
   components: { ContentWrapper },
 
+  filters: {
+    filterEndTime (time) {
+      return format(time, 'YYYY년 MM월 DD일 HH시 mm분')
+    }
+  },
+
   data () {
     return {
       list: [],
       pending: false
-    }
-  },
-
-  computed: {
-    days () {
-      return days.filter(v => v.idx < 5)
     }
   },
 
@@ -29,23 +29,17 @@ export default {
     async refresh () {
       this.pending = true
       this.list = await etcRequestor.getApplications()
-      console.log(this.list)
       this.pending = false
     },
 
     async toggleApply (parameter) {
       try {
-        console.log(parameter)
-        if (parameter.status !== 'request') await etcRequestor.applyApplication(parameter.applicationIdx)
-        else await etcRequestor.cancelApplication(parameter.applicationIdx)
+        if (parameter.status !== true) await etcRequestor.applyApplication(parameter.applicationIdx)
+        else await etcRequestor.cancelApplication(parameter.requestIdx)
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
       await this.refresh()
-    },
-
-    getDayTextByCode (code) {
-      return this.days.filter(v => v.code === code)[0].text
     }
   }
 }
@@ -106,22 +100,35 @@ export default {
                   신청마감
                 </span>
                 <span class="etcs__item">
-                  {{ etcs.endDate }}
+                  {{ etcs.endDate | filterEndTime }}
+                </span>
+                <span class="etcs__item">
+                  인원
+                </span>
+                <span class="etcs__item">
+                  {{ etcs.userCount }} / {{ etcs.maxUser }} 명
                 </span>
               </div>
+
               <div
                 :class="{
                   'etcs__item': true,
                   'etcs__item--button': true,
+                  'etcs__item--full': etcs.userCount === etcs.maxUser,
                   'etcs__item--applied': etcs.status === 'request'
                 }"
                 @click="toggleApply(etcs)"
               >
-                <template v-if="etcs.status === 'request'">
+                <template v-if="etcs.status === true">
                   <span class="icon-cross" /> 신청취소
                 </template>
                 <template v-else>
-                  <span class="icon-ok" /> 신청하기
+                  <template v-if="etcs.maxUser > etcs.userCount">
+                    <span class="icon-ok" /> 신청하기
+                  </template>
+                  <template v-else>
+                    <span class="icon-alert" /> 신청불가
+                  </template>
                 </template>
               </div>
             </div>

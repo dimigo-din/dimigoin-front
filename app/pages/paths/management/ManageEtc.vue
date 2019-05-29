@@ -2,15 +2,14 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { etcManager } from '@/src/api/etcs'
-import timestamp from 'unix-timestamp'
 
 export default {
   name: 'ManageEtcs',
   components: { ContentWrapper },
 
   filters: {
-    deadline (val) {
-      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 HH시 mm분까지')
+    filterEndTime (time) {
+      return format(time, 'YYYY년 MM월 DD일 HH시 mm분')
     }
   },
 
@@ -24,14 +23,14 @@ export default {
       },
       currentEtcs: null,
       form: {
-        name: '',
-        startDate: new Date(),
+        hostSerial: '',
+        title: '',
         endDate: new Date(),
         targetFirst: false,
         targetSecond: false,
         targetThird: false,
         description: '',
-        needIntroduce: false
+        maxUser: null
       }
     }
   },
@@ -39,13 +38,15 @@ export default {
   computed: {
     etcsInput () {
       return {
-        name: this.form.name,
-        startDate: timestamp.fromDate((this.form.startDate).toISOString()),
-        endDate: timestamp.fromDate((this.form.endDate).toISOString()),
+        hostSerial: this.form.hostSerial,
+        title: this.form.title,
+        startDate: new Date(),
+        endDate: this.form.endDate,
         targetFirst: this.form.targetFirst,
         targetSecond: this.form.targetSecond,
         targetThird: this.form.targetThird,
-        description: this.form.description
+        description: this.form.description,
+        maxUser: this.form.maxUser
       }
     }
   },
@@ -87,13 +88,14 @@ export default {
       this.modals.edit = true
       this.currentEtcs = etcs
       this.form = {
+        hostSerial: etcs.hostSerial,
         title: etcs.title,
-        startDate: timestamp.fromDate(etcs.startDate),
-        endDate: timestamp.fromDate(etcs.endDate),
+        endDate: new Date(etcs.endDate),
         targetFirst: etcs.targetFirst,
         targetSecond: etcs.targetSecond,
         targetThird: etcs.targetThird,
-        description: etcs.description
+        description: etcs.description,
+        maxUser: etcs.maxUser
       }
     },
 
@@ -103,18 +105,19 @@ export default {
         create: false
       }
       this.form = {
+        hostSerial: '',
         title: '',
-        startDate: new Date(),
         endDate: new Date(),
         targetFirst: false,
         targetSecond: false,
         targetThird: false,
-        description: ''
+        description: '',
+        maxUser: null
       }
     },
 
     async deleteApplication (parameter) {
-      if (await this.$swal({
+      const { value: answer } = await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
         confirmButtonColor: '#d61315',
@@ -122,14 +125,24 @@ export default {
         confirmButtonText: '삭제',
         cancelButtonText: '취소',
         showCancelButton: true
-      })) {
-        try {
-          await etcManager.deleteApplication(parameter.idx)
-          this.$swal('삭제되었습니다', '', 'success')
-          await this.refresh()
-        } catch (err) {
-          this.$swal('이런!', err.message, 'error')
-        }
+      })
+
+      if (!answer) return
+      try {
+        await etcManager.deleteApplication(parameter.applicationIdx)
+        this.list = await etcManager.getAllApplications()
+        this.$swal('삭제되었습니다', '', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+      await this.update()
+    },
+
+    async downloadExcel (parameter) {
+      try {
+        await etcManager.downloadExcel(parameter.applicationIdx, parameter.title)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
       }
     }
   }
@@ -145,12 +158,6 @@ export default {
         @click="modals.create = true"
       >
         <span class="icon-plus" />추가하기
-      </span>
-      <span
-        class="etcs__excel"
-        @click="downloadExcel()"
-      >
-        <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
     </h1>
 
@@ -205,10 +212,16 @@ export default {
                   신청마감
                 </span>
                 <span class="etcs__item">
-                  {{ etcs.endDate | deadline }}
+                  {{ etcs.endDate | filterEndTime }}
                 </span>
               </div>
 
+              <div
+                class="etcs__item etcs__item--down"
+                @click="downloadExcel(etcs)"
+              >
+                <span class="icon-long-arrow-down" /> 엑셀 다운로드
+              </div>
               <div
                 class="etcs__item etcs__item--edit"
                 @click="openEditModal(etcs)"
@@ -258,26 +271,49 @@ export default {
         </div>
 
         <div class="modal__field">
-          <label class="modal__label">
+          <label class="modal__label modal__labelCheckbox">
             1학년
           </label>
           <dimi-checkbox
             id="etcs-grade"
             v-model="form.targetFirst"
+            class="modal__leftCheckbox"
           />
-          <label class="modal__label">
+          <label class="modal__label modal__labelCheckbox">
             2학년
           </label>
           <dimi-checkbox
             id="etcs-grade"
             v-model="form.targetSecond"
+            class="modal__leftCheckbox"
           />
-          <label class="modal__label">
+          <label class="modal__label modal__labelCheckbox">
             3학년
           </label>
           <dimi-checkbox
             id="etcs-grade"
             v-model="form.targetThird"
+            class="modal__leftCheckbox"
+          />
+        </div>
+
+        <div class="modal__field">
+          <label class="modal__label">
+            총인원
+          </label>
+          <dimi-input
+            id="etcs-max"
+            v-model="form.maxUser"
+            class="modal__leftInput"
+            placeholder="10"
+          />
+          <label class="modal__label">
+            대표 학번
+          </label>
+          <dimi-input
+            id="dets-host"
+            v-model="form.hostSerial"
+            placeholder="1234"
           />
         </div>
 
@@ -398,6 +434,11 @@ export default {
       flex: 1;
     }
 
+    &__item--down {
+      color: $aloes;
+      cursor: pointer;
+    }
+
     &__item--edit {
       color: $mustard;
       cursor: pointer;
@@ -434,8 +475,16 @@ export default {
       min-width: 6em;
     }
 
+    &__labelCheckbox {
+      min-width: 3em;
+    }
+
     &__leftInput {
       padding-right: 10px;
+    }
+
+    &__leftCheckbox {
+      padding-right: 20px;
     }
 
     &__button {
