@@ -107,9 +107,26 @@ export default {
 
     async deleteChecked () {
       if (!this.checks.filter(v => v).length) return
-      await Promise.all(Object.keys(this.checks.filter(v => v))
-        .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
-      await this.updateAll()
+      const { value: answer } = await this.$swal({
+        type: 'warning',
+        title: '경고',
+        text: '정말 삭제하실 건가요? 이 작업은 되돌릴 수 없습니다.',
+        confirmButtonColor: '#d61315',
+        cancelButtonColor: '#ababab',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        showCancelButton: true
+      })
+
+      if (!answer) return
+      try {
+        await Promise.all(Object.keys(this.checks.filter(v => v))
+          .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
+        await this.$swal('삭제되었습니다', '', 'success')
+        await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     },
 
     async downloadExcel (grade) {
