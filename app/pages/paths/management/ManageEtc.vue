@@ -135,7 +135,7 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
-      await this.update()
+      await this.refresh()
     },
 
     async downloadExcel (parameter) {
