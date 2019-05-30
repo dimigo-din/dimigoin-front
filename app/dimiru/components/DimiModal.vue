@@ -57,8 +57,8 @@ export default {
   max-width: 700px;
   box-sizing: border-box;
   padding: 24px;
-  margin: 5vh auto;
   border: solid 1px $gray-lighten;
+  margin: 5vh auto;
   background-color: $white;
   border-radius: 6px;
   box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
