@@ -34,8 +34,13 @@ export default {
 
     async toggleApply (parameter) {
       try {
-        if (parameter.status !== true) await etcRequestor.applyApplication(parameter.applicationIdx)
-        else await etcRequestor.cancelApplication(parameter.requestIdx)
+        if (parameter.status !== true) {
+          await etcRequestor.applyApplication(parameter.applicationIdx)
+          this.$swal('성공하였습니다', '', 'success')
+        } else {
+          await etcRequestor.cancelApplication(parameter.requestIdx)
+          this.$swal('성공하였습니다', '', 'success')
+        }
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
