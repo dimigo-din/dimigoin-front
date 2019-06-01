@@ -22,7 +22,7 @@ export default {
   },
 
   created () {
-    this.refresh()
+    await this.refresh()
   },
 
   methods: {
