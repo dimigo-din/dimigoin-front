@@ -11,19 +11,8 @@ export default {
   data: () => ({
     percentages: [],
     uploads: [],
-    assignments: [],
-    filter: {
-      deadline: false
-    }
+    assignments: []
   }),
-
-  computed: {
-    filteredAssignments () {
-      return this.assignments.filter(v => {
-        return this.filter.deadline || v.endDate < new Date().now
-      })
-    }
-  },
 
   async created () {
     this.assignments = await assignmentSubscriber.getAssignmentList()
@@ -59,7 +48,7 @@ export default {
     <default-navbar />
     <assignment-base
       class="container"
-      :assignments="filteredAssignments"
+      :assignments="assignments"
     >
       <template slot-scope="{ ass }">
         <span
@@ -72,18 +61,8 @@ export default {
           }}
         </span>
       </template>
-
       <span slot="header">
-        <span class="assignee__header">
-          <span class="icon-submission" />과제 제출 관리
-
-          <dimi-checkbox
-            v-model="filter.deadline"
-            class="assignee__filter"
-          >
-            지난 과제 보기
-          </dimi-checkbox>
-        </span>
+        <span class="icon-submission" /> 과제 제출
       </span>
 
       <span
@@ -111,19 +90,6 @@ export default {
 
 <style lang="scss">
   .assignee {
-    &__header {
-      position: relative;
-      display: block;
-    }
-
-    &__filter {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
     &__upload {
       cursor: pointer;
     }
