@@ -23,7 +23,7 @@ export const Mentoring = mentoring => ({
 
 export const CreateMentoringInput = mentoring => ({
   'teacher_name': mentoring.teacher,
-  'day': days[new Date(mentoring.date).getDay() - 1].code,
+  'day': days.find(v => v.idx === mentoring.day).code,
   'start_time': format(mentoring.startTime, 'HH:mm'),
   'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
@@ -35,8 +35,7 @@ export const CreateMentoringInput = mentoring => ({
 export const EditMentoringInput = mentoring => ({
   'idx': mentoring.idx,
   'teacher_name': mentoring.teacher,
-  'day': days[new Date(mentoring.date).getDay() - 1].code,
-  'date': timestamp.fromDate(mentoring.date),
+  'day': days.find(v => v.idx === mentoring.day).code,
   'start_time': format(mentoring.startTime, 'HH:mm'),
   'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
