@@ -31,8 +31,8 @@ export default {
     days: () => days
   },
 
-  created () {
-    this.refresh()
+  async created () {
+    await this.refresh()
   },
 
   methods: {
