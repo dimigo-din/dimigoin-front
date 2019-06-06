@@ -1,6 +1,6 @@
 import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
-import { Application, CreateApplication, EditApplication } from './etcs.struct'
+import { Application, CreateApplicationInput, EditApplicationInput } from './etcs.struct'
 
 function tempValidation (application) {
   const keys = [
@@ -55,7 +55,7 @@ export class EtcManagerService extends ServiceBase {
    * 기타 신청을 추가합니다.
    */
   async createApplication (application) {
-    application = CreateApplication(application)
+    application = CreateApplicationInput(application)
     tempValidation(application)
     await this.magician(() => this.r.post('/application/admin', application), {
       403: '권한이 없습니다.'
@@ -66,7 +66,7 @@ export class EtcManagerService extends ServiceBase {
    * 기타 신청을 수정합니다.
    */
   async editApplication (idx, application) {
-    application = EditApplication(application)
+    application = EditApplicationInput(application)
     await this.magician(() => this.r.put(`/application/${idx}/admin`, application), {
       403: '권한이 없습니다.'
     })
