@@ -114,7 +114,6 @@ export default {
 
     async addMentoring () {
       try {
-        console.log(this.form)
         await mentoringManager.addMentoring(this.form)
         await this.$swal('추가하였습니다', '', 'success')
         this.closeModal()
