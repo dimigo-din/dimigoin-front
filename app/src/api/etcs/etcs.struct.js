@@ -18,7 +18,7 @@ export const Application = etc => ({
   open: false
 })
 
-export const CreateApplication = etc => ({
+export const CreateApplicationInput = etc => ({
   'host_serial': etc.hostSerial,
   'title': etc.title,
   'request_start_date': timestamp.fromDate(etc.startDate),
@@ -30,7 +30,7 @@ export const CreateApplication = etc => ({
   'max_user': etc.maxUser
 })
 
-export const EditApplication = etc => ({
+export const EditApplicationInput = etc => ({
   'host_serial': etc.hostSerial,
   'title': etc.title,
   'request_start_date': timestamp.fromDate(etc.startDate),

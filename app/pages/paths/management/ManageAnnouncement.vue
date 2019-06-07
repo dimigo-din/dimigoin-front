@@ -14,7 +14,7 @@ export default {
   },
 
   async created () {
-    this.refresh()
+    await this.refresh()
   },
 
   methods: {
@@ -31,7 +31,7 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
-      this.refresh()
+      await this.refresh()
     },
 
     resturct (desc) {
