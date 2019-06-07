@@ -45,9 +45,7 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       },
 
       mentorings: [
@@ -110,9 +108,7 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       }
     },
 
@@ -163,21 +159,18 @@ export default {
     },
 
     editMentoring (item) {
-      const time = setTime(item.date)
+      const time = setTime(new Date())
       this.modal.edit = true
       this.form = {
         idx: item.idx,
         teacher: item.teacher.name,
-        day: item.day,
-        date: item.date,
+        day: this.getDayIdxByCode(item.day),
         subject: item.subject,
         room: item.room,
         grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
-        endTime: time(item.endTime),
-        startDate: item.startDate,
-        endDate: item.endDate
+        endTime: time(item.endTime)
       }
     },
 
@@ -220,6 +213,14 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
+    },
+
+    getDayTextByIdx (idx) {
+      return days.find(v => v.idx === idx).text
+    },
+
+    getDayIdxByCode (code) {
+      return days.find(v => v.code === code).idx
     },
 
     getDaySmallText (code) {
@@ -394,9 +395,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -406,35 +407,16 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -496,9 +478,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -508,35 +490,17 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+              class="dropdown-day"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -781,7 +745,7 @@ export default {
     line-height: 1.15;
   }
 
-  &__label-right {
+  &__label--right {
     display: block;
     margin-right: 20px;
     float: right;
@@ -811,6 +775,11 @@ export default {
   }
 
   .dropdown {
+    font-size: 20px;
+  }
+
+  &__label--day {
+    display: inline-block;
     font-size: 20px;
   }
 }
