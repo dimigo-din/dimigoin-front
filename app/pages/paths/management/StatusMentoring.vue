@@ -8,12 +8,6 @@ export default {
   name: 'StatusMentoring',
   components: { ContentWrapper },
 
-  filters: {
-    filterDay: time => format(time, 'YYYY/MM/DD'),
-    filterTime: time => format(time, 'HH:mm'),
-    filterDate: time => format(time, 'YYYY/MM/DD HH:mm')
-  },
-
   data () {
     return {
       pending: true,
@@ -42,17 +36,6 @@ export default {
     }
   },
 
-  watch: {
-    selectAll (val) {
-      this.checks = this.checks.map(() => val)
-    },
-
-    filteredList (val) {
-      this.checks = [...Array(val.length)].map(() => false)
-      this.selectAll = false
-    }
-  },
-
   async created () {
     this.pending = true
     await this.updateAll()
@@ -71,14 +54,6 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
-    },
-
-    getDayTextByIdx (idx) {
-      return days.find(v => v.idx === idx).text
-    },
-
-    getDayIdxByCode (code) {
-      return days.find(v => v.code === code).idx
     },
 
     getDaySmallText (code) {
