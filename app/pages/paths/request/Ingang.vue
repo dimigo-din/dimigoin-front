@@ -21,8 +21,8 @@ export default {
     }
   },
 
-  created () {
-    this.refresh()
+  async created () {
+    await this.refresh()
   },
 
   methods: {
