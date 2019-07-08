@@ -74,10 +74,7 @@ export default {
           :key="`etcslist_${index}`"
         >
           <div
-            :class="{
-              'etcs__etcs': true,
-              'etcs__etcs--border': index
-            }"
+            class="etcs__etcs"
             @click="etcs.open = !etcs.open"
           >
             <span class="etcs__item etcs__title">
@@ -162,11 +159,8 @@ export default {
       align-items: center;
       justify-content: flex-start;
       padding: 24px;
+      border-bottom: 1px solid $gray-lighter;
       cursor: pointer;
-    }
-
-    &__etcs--border {
-      border-top: 1px solid $gray-lighter;
     }
 
     &__item {
@@ -189,6 +183,7 @@ export default {
       align-items: stretch;
       justify-content: flex-start;
       padding: 24px;
+      border-bottom: 1px solid $gray-lighter;
       cursor: default;
     }
 
