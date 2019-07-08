@@ -13,6 +13,7 @@ const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
 const ManageBook = () => import('@/pages/paths/management/ManageBook.vue')
 const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue')
 const ManageSport = () => import('@/pages/paths/management/ManageSport.vue')
+const ManageEtc = () => import('@/pages/paths/management/ManageEtc.vue')
 
 export default [
   {
@@ -114,6 +115,14 @@ export default [
           component: ManageSport,
           meta: {
             title: '디미고인 > 디미리그 관리'
+          }
+        },
+        {
+          path: 'etc',
+          name: 'management/etc',
+          component: ManageEtc,
+          meta: {
+            title: '디미고인 > 기타 신청 관리'
           }
         }
       ]
