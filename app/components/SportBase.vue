@@ -10,7 +10,15 @@ export default {
       type: Array,
       default: () => []
     },
+    matchs: {
+      type: Array,
+      default: () => []
+    },
     loading: {
+      type: Boolean,
+      default: false
+    },
+    management: {
       type: Boolean,
       default: false
     }
@@ -18,13 +26,61 @@ export default {
 
   data () {
     return {
-      selection: []
+      modals: {
+        teamInfo: false
+      },
+      form: {}
     }
   },
 
   methods: {
-    toggle (i) {
-      this.$set(this.selection, i, !this.selection[i])
+    openTeamInfo (team) {
+      this.form = team
+      this.modals.teamInfo = true
+    },
+    closeTeamInfo () {
+      this.modals.teamInfo = false
+    },
+    getMemberInfo (member) {
+      return `${member.user.serial} ${member.user.name}
+        (${member.total_assist}도움 ${member.total_score}득점)`
+    },
+    getMatchsByTeam (idx) {
+      return this.matchs.filter(v => v.team1.idx === idx ||
+        v.team2.idx === idx)
+    },
+    getMatchInfo (match, team) {
+      let versus, win, score
+      if (match.team1.idx === team.idx) {
+        versus = match.team2
+        team = match.team1
+      } else {
+        versus = match.team1
+        team = match.team2
+      }
+
+      if (!match.end_date) return `${versus.name}`
+      if (team.score < versus.score) win = '패'
+      else if (team.score > versus.score) win = '승'
+      else win = '무'
+      score = `${team.score}:${versus.score}`
+      return `${versus.name} - ${score} ${win}`
+    },
+    totalStatus (team) {
+      return `총 ${team.total_win}승 ${team.total_defeat}패 ${team.total_score}득점`
+    },
+    computedColor (match, team) {
+      let versus
+      if (match.team1.idx === team.idx) {
+        versus = match.team2
+        team = match.team1
+      } else {
+        versus = match.team1
+        team = match.team2
+      }
+      if (team.score < versus.score) return 'orange'
+      else if (team.score > versus.score) return 'cyan'
+      else return 'gray'
     }
   }
 }
@@ -52,17 +108,45 @@ export default {
                 v-for="(spo, i) in sports"
               >
                 <div
-                  :key="i"
+                  :key="`title-${i}`"
                   class="sport__sport"
-                  @click="toggle(i)"
+                  @click="spo.open = !spo.open"
                 >
                   <slot
                     :spo="spo"
                     name="badge"
                   />
                   <span class="sport__item sport__title">
-                    {{ spo.name }}
+                    {{ spo.event }}
                   </span>
+                  <div
+                    class="sport__item sport__expand"
+                  >
+                    <span :class="`icon-arrow-${spo.open ? 'up' : 'down'}`" />
+                  </div>
+                </div>
+                <div
+                  v-if="spo.open"
+                  :key="`detail-${i}`"
+                  class="sport__open"
+                >
+                  <div class="sport__detail">
+                    <span class="sport__item">
+                      팀 목록
+                    </span>
+                    <dimi-badge
+                      v-for="(team, index) in spo.teams"
+                      :key="`team-${index}`"
+                      class="sport__badge"
+                      color="gray"
+                    >
+                      <span
+                        @click="openTeamInfo(team)"
+                      >
+                        {{ `${team.name}팀` }}
+                      </span>
+                    </dimi-badge>
+                  </div>
                 </div>
               </template>
               <div
@@ -71,6 +155,56 @@ export default {
               >
                 현재 진행 중인 디미리그가 없습니다.
               </div>
+              <dimi-modal
+                :opened="modals.teamInfo"
+                class="modal__modal"
+                @close="closeTeamInfo"
+              >
+                <h3 class="modal__title">
+                  {{ `${form.name}팀 정보` }}
+                </h3>
+
+                <div class="modal__field">
+                  <label class="modal__label">
+                    소개
+                  </label>
+                  <span>{{ form.introduction }}</span>
+                </div>
+
+                <div class="modal__field">
+                  <label class="modal__label">
+                    현재 현황
+                  </label>
+                  <span>{{ totalStatus(form) }}</span>
+                </div>
+
+                <div class="modal__field">
+                  <label class="modal__label">
+                    선수 목록
+                  </label>
+                  <span
+                    v-for="(member, index) in form.members"
+                    :key="`member-${index}`"
+                  >
+                    {{ `${getMemberInfo(member)}` }}
+                    <br>
+                  </span>
+                </div>
+
+                <div class="modal__field">
+                  <label class="modal__label">
+                    경기 목록
+                  </label>
+                  <dimi-badge
+                    v-for="(match, index) in getMatchsByTeam(form.idx)"
+                    :key="`badge-${index}`"
+                    class="sport__badge"
+                    :color="computedColor(match, form)"
+                  >
+                    {{ getMatchInfo(match, form) }}
+                  </dimi-badge>
+                </div>
+              </dimi-modal>
             </dimi-card>
           </content-wrapper>
         </main>
@@ -81,9 +215,19 @@ export default {
 
 <style lang="scss" scoped>
 .sport {
+  .c-card {
+    padding: 0;
+  }
+
   &__loading {
     display: flex;
     justify-content: center;
+  }
+
+  &__badge {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
   }
 
   &__sport {
@@ -96,6 +240,14 @@ export default {
 
   &__sport:not(:first-of-type) {
     border-top: 1px solid $gray-lighter;
+  }
+
+  &__open {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 24px;
+    cursor: default;
   }
 
   &__item {
@@ -118,6 +270,38 @@ export default {
     color: $gray;
     font-size: 16px;
     font-weight: $font-weight-bold;
+  }
+
+  &__detail {
+    flex: 1;
+  }
+
+  &__open {
+    padding-top: 0;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+  }
+
+  &__label {
+    min-width: 6em;
+  }
+
+  &__button {
+    position: absolute;
+    right: 25px;
+    padding-top: 20px;
   }
 }
 </style>
