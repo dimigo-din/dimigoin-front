@@ -27,7 +27,8 @@ export class EtcRequestService extends ServiceBase {
   async applyApplication (idx) {
     await this.magician(() => this.r.post(`/requests/application/${idx}`), {
       403: '본인 학년이 아닙니다.',
-      404: '존재하지 않는 신청입니다.'
+      404: '존재하지 않는 신청입니다.',
+      405: '마감 기한이 지난 신청입니다.'
     })
   }
 
