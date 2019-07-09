@@ -1,5 +1,12 @@
 import timestamp from 'unix-timestamp'
 
+export const Sport = sport => ({
+  idx: sport['idx'],
+  event: sport['event'],
+  teams: sport['teams'],
+  open: false
+})
+
 export const SportEvent = sport => ({
   idx: sport['idx'],
   name: sport['name']
@@ -16,12 +23,13 @@ export const SportTeam = sport => ({
   introduction: sport['introduction'],
   win: sport['win'],
   defeat: sport['defeat'],
-  total_score: sport['total_score'],
-  total_score_date: timestamp.toDate(sport['total_score_date'])
+  totalScore: sport['total_score'],
+  totalScoreDate: timestamp.toDate(sport['total_score_date']),
+  members: sport['members']
 })
 
 export const CreateSportTeamInput = sport => ({
-  event_idx: sport.event,
+  eventIdx: sport.event,
   name: sport.name,
   introduction: sport.introduction
 })
@@ -35,9 +43,9 @@ export const AddMember = sport => ({
 export const SportMatch = sport => ({
   idx: sport['idx'],
   event: sport['event'],
-  event_idx: sport['event_idx'],
-  start_date: timestamp.toDate(sport['start_date']),
-  end_date: timestamp.toDate(sport['end_date']),
+  eventIdx: sport['event_idx'],
+  startDate: timestamp.toDate(sport['start_date']),
+  endDate: timestamp.toDate(sport['end_date']),
   team1: sport['team1'],
   team2: sport['team2']
 })
@@ -51,8 +59,8 @@ export const CreateSportMatch = sport => ({
 })
 
 export const AddMemberScore = sport => ({
-  member_idx: sport['member_idx'],
-  match_idx: sport['match_idx'],
+  memberIdx: sport['member_idx'],
+  matchIdx: sport['match_idx'],
   score: sport['score'],
   assist: sport['assist']
 })
@@ -60,6 +68,29 @@ export const AddMemberScore = sport => ({
 export const EditMemberScore = sport => ({
   score: sport['score'],
   assist: sport['assist']
+})
+
+export const TotalMemberScore = scorebook => ({
+  idx: scorebook['idx'],
+  memberIdx: scorebook['member_idx'],
+  totalScore: scorebook['total_score'],
+  totalAssist: scorebook['total_assist']
+})
+
+export const TeamScore = scorebook => ({
+  idx: scorebook['idx'],
+  teamIdx: scorebook['team_idx'],
+  matchIdx: scorebook['match_idx'],
+  score: scorebook['score'],
+  result: scorebook['result']
+})
+
+export const MemberScore = scorebook => ({
+  idx: scorebook['idx'],
+  memberIdx: scorebook['member_idx'],
+  matchIdx: scorebook['match_idx'],
+  score: scorebook['score'],
+  result: scorebook['result']
 })
 
 export const AddTeamScore = sport => ({
@@ -82,4 +113,9 @@ export const Notice = notice => ({
 export const CreateNoticeInput = notice => ({
   date: timestamp.fromDate(notice['date']),
   description: notice['description']
+})
+
+export const Scorebook = scorebook => ({
+  idx: scorebook['idx'],
+  memberIdx: scorebook['member_idx']
 })
