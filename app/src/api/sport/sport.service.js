@@ -1,7 +1,7 @@
 import { ServiceBase } from '@/src/api/service-base'
 import { Notice, CreateNoticeInput, CreateSportEventInput, SportEvent, SportTeam,
-  CreateSportTeamInput, AddMember, SportMatch, CreateSportMatch, AddMemberScore,
-  EditMemberScore, AddTeamScore, EditTeamScore } from './sport.struct'
+  CreateSportTeamInput, AddMember, SportMatch, CreateSportMatch, MemberScore, AddMemberScore,
+  EditMemberScore, TeamScore, AddTeamScore, EditTeamScore, Sport, TotalMemberScore } from './sport.struct'
 
 export class SportService extends ServiceBase {
   /**
@@ -23,7 +23,7 @@ export class SportPublicService extends SportService {
     const { data: sports } = await this.magician(() => this.r.get('/'), {
       403: '권한이 없습니다.'
     })
-    return sports
+    return sports.map(Sport)
   }
 
   /**
@@ -38,9 +38,27 @@ export class SportPublicService extends SportService {
   }
 
   /**
-   * 현재 종목별 스포츠 팀 정보를 가져옵니다.
+   * 모든 스포츠 팀을 가져옵니다.
+   */
+  async getAllSportTeam () {
+    const { data: { teams } } = await this.magician(() => this.r.get('/teams', {}))
+    return teams.map(SportTeam)
+  }
+
+  /**
+   * 스포츠 팀 한 개를 가져옵니다.
    */
   async getSportTeam (idx) {
+    const { data: { team } } = await this.magician(() => this.r.get(`/team/${idx}`), {
+      404: '존재하지 않는 스포츠 팀입니다.'
+    })
+    return SportTeam(team)
+  }
+
+  /**
+   * 현재 종목별 스포츠 팀 정보를 가져옵니다.
+   */
+  async getSportTeamBySport (idx) {
     const { data: { teams } } = await this.magician(() => this.r.get(`/teams/event/${idx}`), {
       403: '권한이 없습니다.',
       404: '등록된 팀이 없습니다.'
@@ -57,6 +75,50 @@ export class SportPublicService extends SportService {
       404: '등록된 경기 일정이 없습니다.'
     })
     return matchs.map(SportMatch)
+  }
+
+  /**
+   * 해당 선수의 점수판을 불러옵니다.
+   */
+  async getMemberScoreBook (idx) {
+    const scorebook = await this.magician(() => this.r.get(`/scorebook/${idx}/member`), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 점수판입니다.'
+    })
+    return MemberScore(scorebook)
+  }
+
+  /**
+   * 점수판을 불러옵니다.
+   */
+  async getTeamScorebook (idx) {
+    const scorebook = await this.magician(() => this.r.get(`/scorebook/${idx}/team`, {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 점수판입니다.'
+    }))
+    return TeamScore(scorebook)
+  }
+
+  /**
+   * 해당 매치의 해당 선수의 점수를 불러옵니다.
+   */
+  async getScoreBookByMatchPlayer (matchIdx, playerIdx) {
+    const scorebook = await this.magician(() => this.r.get(`/scorebook/member/${playerIdx}/match/${matchIdx}`), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 점수판입니다.'
+    })
+    return MemberScore(scorebook)
+  }
+
+  /**
+   * 해당 선수의 전체 점수 정보를 불러옵니다.
+   */
+  async getScoreBookByPlayer (idx) {
+    const scorebook = await this.magician(() => this.r.get(`/scorebook/member/${idx}/total`), {
+      403: '권한이 없습니다',
+      404: '선수 또는 점수판이 존재하지 않습니다.'
+    })
+    return TotalMemberScore(scorebook)
   }
 }
 
@@ -140,6 +202,17 @@ export class SportManageService extends SportService {
       400: '잘못된 입력입니다.',
       403: '권한이 없습니다.'
     })
+  }
+
+  /**
+   * 해당 경기 일정을 불러옵니다.
+   */
+  async getSportMatch (idx) {
+    const match = this.magician(() => this.r.get(`/match/${idx}`), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 점수판입니다.'
+    })
+    return SportMatch(match)
   }
 
   /**
