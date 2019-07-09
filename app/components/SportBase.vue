@@ -186,7 +186,7 @@ export default {
                     v-for="(member, index) in form.members"
                     :key="`member-${index}`"
                   >
-                    {{ `${getMemberInfo(member)}` }}
+                    {{ getMemberInfo(member) }}
                     <br>
                   </span>
                 </div>
