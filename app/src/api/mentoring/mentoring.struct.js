@@ -44,6 +44,19 @@ export const EditMentoringInput = mentoring => ({
   'max_user': mentoring.maxUser
 })
 
+export const BlackUser = user => ({
+  idx: user['idx'],
+  date: user['date'],
+  name: user['name'],
+  serial: user['serial'],
+  userIdx: user['user_idx']
+})
+
+export const CreateBlackUser = user => ({
+  date: user.date,
+  serial: user.serial
+})
+
 export const Notice = notice => ({
   date: timestamp.toDate(notice['date']),
   description: notice['description']
