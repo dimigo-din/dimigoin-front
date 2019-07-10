@@ -47,12 +47,6 @@ export default {
         .map(v => `${v.time}타임`)
     },
 
-    todayAfters () {
-      return this.afters.filter(v => v.status)
-        .filter(v => v.day === this.today.code)
-        .map(v => v.name)
-    },
-
     today () {
       return days[new Date().getDay() - 1]
     }
@@ -60,7 +54,7 @@ export default {
 
   async created () {
     this.ingangs = (await ingangRequestor.getIngangs()).filter(v => v.status)
-    this.afters = (await afterschool.getStudentAfterschool()).filter(v => v.status)
+    this.afters = await afterschool.getTodayAfterschool()
     this.circles = await circleRequestor.getCircles()
   }
 }
@@ -119,10 +113,10 @@ export default {
         <tbody>
           <tr>
             <td
-              v-if="todayAfters.length"
+              v-if="afters.length"
               class="r-info__list-value"
             >
-              {{ todayAfters.join(', ') }}
+              {{ afters.join(', ') }}
             </td>
             <td
               v-else
