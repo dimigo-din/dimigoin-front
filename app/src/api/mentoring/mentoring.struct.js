@@ -50,6 +50,6 @@ export const Notice = notice => ({
 })
 
 export const CreateNoticeInput = notice => ({
-  date: timestamp.fromDate(notice['date']),
-  description: notice['description']
+  date: timestamp.fromDate(notice.date),
+  description: notice.description
 })
