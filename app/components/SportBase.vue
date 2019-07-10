@@ -50,36 +50,36 @@ export default {
         v.team2.idx === idx)
     },
     getMatchInfo (match, team) {
-      let versus, win, score
+      let opponent, win, score
       if (match.team1.idx === team.idx) {
-        versus = match.team2
+        opponent = match.team2
         team = match.team1
       } else {
-        versus = match.team1
+        opponent = match.team1
         team = match.team2
       }
 
-      if (!match.end_date) return `${versus.name}`
-      if (team.score < versus.score) win = '패'
-      else if (team.score > versus.score) win = '승'
+      if (!match.end_date) return `${opponent.name}`
+      if (team.score < opponent.score) win = '패'
+      else if (team.score > opponent.score) win = '승'
       else win = '무'
-      score = `${team.score}:${versus.score}`
-      return `${versus.name} - ${score} ${win}`
+      score = `${team.score}:${opponent.score}`
+      return `${opponent.name} - ${score} ${win}`
     },
     totalStatus (team) {
       return `총 ${team.total_win}승 ${team.total_defeat}패 ${team.total_score}득점`
     },
     computedColor (match, team) {
-      let versus
+      let opponent
       if (match.team1.idx === team.idx) {
-        versus = match.team2
+        opponent = match.team2
         team = match.team1
       } else {
-        versus = match.team1
+        opponent = match.team1
         team = match.team2
       }
-      if (team.score < versus.score) return 'orange'
-      else if (team.score > versus.score) return 'cyan'
+      if (team.score < opponent.score) return 'orange'
+      else if (team.score > opponent.score) return 'cyan'
       else return 'gray'
     }
   }
