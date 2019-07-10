@@ -1,5 +1,6 @@
 <script>
 import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import setTime from '@/src/util/time'
@@ -28,6 +29,7 @@ export default {
         create: false,
         edit: false,
         notice: false,
+        black: false,
         expand: {
           grade: false,
           time: false,
@@ -50,7 +52,8 @@ export default {
 
       mentorings: [
         [], [], []
-      ]
+      ],
+      blacks: []
     }
   },
 
@@ -94,6 +97,7 @@ export default {
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
       this.notice = await mentoringManager.getNotice()
+      this.blacks = await mentoringManager.getBlacklist()
     },
 
     closeModal () {
@@ -215,6 +219,18 @@ export default {
       }
     },
 
+    async addBlackuser (serial) {
+      await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
+      await this.updateAll()
+      this.form.serial = null
+    },
+
+    async deleteBlackuser (idx) {
+      await mentoringManager.deleteBlackuser(idx)
+      this.$swal('삭제했습니다.', '', 'success')
+      this.updateAll()
+    },
+
     getDayTextByIdx (idx) {
       return days.find(v => v.idx === idx).text
     },
@@ -247,6 +263,12 @@ export default {
         @click="modal.notice = true"
       >
         <span class="icon-edit" />공지사항 관리
+      </span>
+      <span
+        class="mng-mentoring__blacklist"
+        @click="modal.black = true"
+      >
+        <span class="icon-alert" />블랙리스트 추가
       </span>
     </h1>
     <dimi-card
@@ -535,6 +557,50 @@ export default {
           <dimi-button>수정하기</dimi-button>
         </span>
       </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.black"
+        class="modal__modal"
+        @close="modal.black = false"
+      >
+        <h3 class="modal__title">
+          블랙리스트 관리
+        </h3>
+        <div class="modal__label">블랙리스트 목록</div>
+        <table class="mng-mentoring__list">
+          <tbody>
+            <tr
+              v-for="(user, index) in blacks"
+              :key="index"
+              class="mng-mentoring__row"
+            >
+              <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                {{ `${user.serial} ${user.name}` }}
+              </td>
+              <td
+                class="mng-mentoring__cell mng-mentoring__cell--button-delete"
+                @click="deleteBlackuser(user.userIdx)"
+              >
+                <span class="icon-cross" /> 삭제
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="modal__field">
+          <div class="modal__label">블랙리스트 추가</div>
+          <dimi-input
+            v-model.number="form.serial"
+            class="mng-ing__input"
+            placeholder="해당 학생 학번"
+          />
+        </div>
+        <span
+          class="modal__create"
+          @click="addBlackuser(form.serial)"
+        >
+          <dimi-button>추가하기</dimi-button>
+        </span>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -579,7 +645,8 @@ export default {
     }
   }
 
-  &__notice {
+  &__notice,
+  &__blacklist {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $orange;
