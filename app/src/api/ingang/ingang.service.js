@@ -122,6 +122,11 @@ export class IngangManagerService extends IngangService {
     })
   }
 
+  /**
+   * 해당 학년의 인강실 현황 엑셀 파일을 다운로드합니다.
+   * 
+   * @param {Number} grade 
+   */
   async downloadExcel (grade) {
     const { data } = await this.magician(() => this.r.get(`/excel/${grade}`, {
       responseType: 'blob'
