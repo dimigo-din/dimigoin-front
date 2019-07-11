@@ -2,8 +2,6 @@
 import AssignmentBase from '@/components/AssignmentBase.vue'
 import { assignmentPublisher } from '@/src/api/assignment'
 
-import timestamp from 'unix-timestamp'
-
 export default {
   name: 'ManageAssignment',
   components: { AssignmentBase },
@@ -11,7 +9,7 @@ export default {
   data: () => ({
     loading: false,
     assignments: [],
-    now: timestamp.fromDate(new Date()),
+    now: new Date(),
     modals: {
       create: false,
       edit: false,
@@ -126,7 +124,7 @@ export default {
           <span class="icon-edit" /> 수정하기
         </span>
         <span
-          v-if="now <= ass.end_date"
+          v-if="now <= ass.endDate"
           class="assignor__item--del"
           @click="deleteAss(ass)"
         >
