@@ -2,7 +2,7 @@ import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
 
 import { format } from 'date-fns'
-import { Ingang, Status, CreateIngangInput, Announcement } from './ingang.struct'
+import { Ingang, Status, CreateIngangInput, IngangApplier, Announcement } from './ingang.struct'
 
 function tempValidation (ingang) {
   const keys = [
@@ -37,6 +37,30 @@ export class IngangRequestorService extends IngangService {
   async getIngangs () {
     const { data: { ingangs } } = await this.magician(() => this.r.get(`/`))
     return ingangs.map(Ingang)
+  }
+
+  /**
+   * 학년, 반을 받아 해당 반 인강실 신청자 목록을 가져옵니다.
+   * @returns {Object}
+   */
+  async getIngangAppliersByClass (grade, klass) {
+    const { data: { users } } = await this.magician(() => this.r.get(`/users/grade/${grade}/klass/${klass}`), {
+      403: '권한이 없습니다.',
+      404: '해당 반의 신청자가 없습니다.'
+    })
+    return users.map(IngangApplier)
+  }
+
+  /**
+   * 자신의 반 인강실 신청자 목록을 가져옵니다.
+   * @returns {Object}
+   */
+  async getIngangAppliersInMyClass () {
+    const { data: { users } } = await this.magician(() => this.r.get('/users/myklass'), {
+      403: '권한이 없습니다.',
+      404: '해당 반의 신청자가 없습니다.'
+    })
+    return users.map(IngangApplier)
   }
 
   /**
@@ -83,6 +107,11 @@ export class IngangManagerService extends IngangService {
   async getIngangs () {
     const { data: { ingangs } } = await this.magician(() => this.r.get(`/admin`), {})
     return ingangs.map(Ingang)
+  }
+
+  async getIngangAppliers () {
+    const { data: { users } } = await this.magician(() => this.r.get('/users'))
+    return users.map(IngangApplier)
   }
 
   /**

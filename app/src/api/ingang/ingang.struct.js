@@ -24,6 +24,15 @@ export const Status = ingang => ({
   dailyTicketNum: ingang['daily_ticket_num']
 })
 
+export const IngangApplier = user => ({
+  time: user['time'],
+  serial: user['serial'],
+  name: user['name'],
+  grade: user['grade'],
+  klass: user['klass'],
+  number: user['number']
+})
+
 export const CreateIngangInput = ingang => ({
   'target_grade': ingang.grade,
   'day': days[new Date(ingang.date).getDay() - 1].code,
