@@ -2,7 +2,6 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { ingangRequestor } from '@/src/api/ingang'
-import { mapState } from 'vuex'
 
 export default {
   name: 'Ingang',
@@ -26,13 +25,6 @@ export default {
     }
   },
 
-  computed: {
-    ...mapState('account', {
-      grade: ({ informations }) => informations.grade,
-      klass: ({ informations }) => informations.klass
-    })
-  },
-
   async created () {
     await this.refresh()
   },
@@ -43,7 +35,7 @@ export default {
       try {
         this.ingangs = await ingangRequestor.getIngangs()
         this.status = await ingangRequestor.getStatus()
-        this.appliers = await ingangRequestor.getIngangAppliersByClass(this.grade, this.klass)
+        this.appliers = await ingangRequestor.getIngangAppliersInMyClass()
         this.announcement = await ingangRequestor.getAnnouncement()
       } catch (err) {
         this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
