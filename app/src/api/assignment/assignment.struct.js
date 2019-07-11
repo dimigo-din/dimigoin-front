@@ -14,7 +14,7 @@ export const Assignment = assignment => ({
   idx: assignment['idx'],
   title: assignment['title'],
   description: assignment['description'],
-  end_date: timestamp.toDate(assignment['end_date']),
+  endDate: timestamp.toDate(assignment['end_date']),
   targetGrade: assignment['target_grade'],
   targetClass: assignment['target_class'],
   assignor: assignment['assignor'],
