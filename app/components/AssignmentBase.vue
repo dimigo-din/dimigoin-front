@@ -81,7 +81,7 @@ export default {
                   </span>
 
                   <span class="assignment__item">
-                    {{ ass.end_date | deadline }}
+                    {{ ass.endDate | deadline }}
                   </span>
 
                   <div class="assignment__item assignment__expand">
