@@ -27,7 +27,10 @@ export const Status = ingang => ({
 export const IngangApplier = user => ({
   time: user['time'],
   serial: user['serial'],
-  name: user['name']
+  name: user['name'],
+  grade: user['grade'],
+  klass: user['klass'],
+  number: user['number']
 })
 
 export const CreateIngangInput = ingang => ({
