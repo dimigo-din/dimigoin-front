@@ -575,7 +575,7 @@ export default {
               class="mng-mentoring__row"
             >
               <td class="mng-mentoring__cell mng-mentoring__cell--name">
-                {{ `${user.serial} ${user.name}` }}
+                {{ user.serial }} {{ user.name }}
               </td>
               <td
                 class="mng-mentoring__cell mng-mentoring__cell--button-delete"
