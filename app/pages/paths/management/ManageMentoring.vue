@@ -590,7 +590,7 @@ export default {
           <div class="modal__label">블랙리스트 추가</div>
           <dimi-input
             v-model.number="form.serial"
-            class="mng-ing__input"
+            class="modal__input"
             placeholder="해당 학생 학번"
           />
         </div>
