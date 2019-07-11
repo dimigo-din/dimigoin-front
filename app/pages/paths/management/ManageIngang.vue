@@ -90,6 +90,7 @@ export default {
       return this.users
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
+        .reverse()
     }
   }
 }

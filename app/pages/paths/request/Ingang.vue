@@ -43,7 +43,7 @@ export default {
       try {
         this.ingangs = await ingangRequestor.getIngangs()
         this.status = await ingangRequestor.getStatus()
-        this.appliers = (await ingangRequestor.getIngangAppliersByClass(this.grade, this.klass)).reverse()
+        this.appliers = await ingangRequestor.getIngangAppliersByClass(this.grade, this.klass)
         this.announcement = await ingangRequestor.getAnnouncement()
       } catch (err) {
         this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
@@ -69,6 +69,7 @@ export default {
       return this.appliers
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
+        .reverse()
     }
   }
 }
