@@ -2,6 +2,7 @@
 import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { ingangRequestor } from '@/src/api/ingang'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Ingang',
@@ -14,11 +15,22 @@ export default {
     return {
       pending: false,
       ingangs: [],
+      appliers: [],
       today: new Date(),
       announcement: {},
       status: {},
-      modal: false
+      modal: {
+        notice: false,
+        applier: false
+      }
     }
+  },
+
+  computed: {
+    ...mapState('account', {
+      grade: ({ informations }) => informations.grade,
+      klass: ({ informations }) => informations.klass
+    })
   },
 
   async created () {
@@ -31,6 +43,7 @@ export default {
       try {
         this.ingangs = await ingangRequestor.getIngangs()
         this.status = await ingangRequestor.getStatus()
+        this.appliers = (await ingangRequestor.getIngangAppliersByClass(this.grade, this.klass)).reverse()
         this.announcement = await ingangRequestor.getAnnouncement()
       } catch (err) {
         this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
@@ -50,6 +63,12 @@ export default {
 
     getStatusColor (ingang) {
       return ingang.status ? 'aloes' : 'red'
+    },
+
+    userAppliedTimes (serial) {
+      return this.appliers
+        .filter(v => v.serial === serial)
+        .map(v => `${v.time}타임`)
     }
   }
 }
@@ -61,9 +80,15 @@ export default {
       <span class="icon-internet-class" />인강실 사용 신청
       <span
         class="ingang__helper ingang__helper--link"
-        @click="modal = true"
+        @click="modal.notice = true"
       >
         <span class="icon-notice" />공지사항
+      </span>
+      <span
+        class="ingang__helper ingang__helper--link"
+        @click="modal.applier = true"
+      >
+        <span class="icon-search" />우리반 신청자
       </span>
       <span class="ingang__helper">
         <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
@@ -137,9 +162,9 @@ export default {
           </div>
 
           <dimi-modal
-            :opened="modal"
+            :opened="modal.notice"
             class="modal__modal"
-            @close="modal = false"
+            @close="modal.notice = false"
           >
             <h3 class="modal__title">
               인강실 공지사항
@@ -152,6 +177,36 @@ export default {
                 {{ announcement.desc }}
               </p>
             </div>
+          </dimi-modal>
+
+          <dimi-modal
+            :opened="modal.applier"
+            class="modal__modal"
+            @close="modal.applier = false"
+          >
+            <h3 class="modal__title">
+              우리반 인강실 신청자
+              <span class="modal__date">
+                {{ new Date() | filterDate }}
+              </span>
+            </h3>
+            <table class="list">
+              <tbody>
+                <tr
+                  v-for="(user, index) in appliers"
+                  :key="index"
+                  class="list__row"
+                >
+                  <td class="list__cell">
+                    {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                  </td>
+                  <td class="list__cell list__cell--time">
+                    {{ userAppliedTimes(user.serial).join(', ') }}
+                    인강실
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </dimi-modal>
         </dimi-card>
       </template>
@@ -294,6 +349,30 @@ export default {
   &__date {
     font-size: 14px;
     font-weight: $font-weight-light;
+  }
+}
+
+.list {
+  display: block;
+  width: 100%;
+  height: 600px;
+  color: $gray !important;
+  font-weight: $font-weight-bold;
+  overflow-y: auto;
+
+  &__row:not(:last-child) {
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  &__cell {
+    padding: 24px;
+    white-space: nowrap;
+  }
+
+  &__cell--time {
+    width: 99%;
+    line-height: 1.5;
+    white-space: normal;
   }
 }
 </style>
