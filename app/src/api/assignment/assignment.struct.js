@@ -20,3 +20,19 @@ export const Assignment = assignment => ({
   assignor: assignment['assignor'],
   reports: (assignment['reports'] || []).map(convertReport)
 })
+
+export const CreateAssignmentInput = assignment => ({
+  'title': assignment.title,
+  'description': assignment.description,
+  'end_date': timestamp.fromDate(assignment.endDate),
+  'target_grade': assignment.targetGrade,
+  'target_class': assignment.targetClass
+})
+
+export const EditAssignmentInput = assignment => ({
+  'title': assignment.title,
+  'description': assignment.description,
+  'end_date': timestamp.fromDate(assignment.endDate),
+  'target_grade': assignment.targetGrade,
+  'target_class': assignment.targetClass
+})
