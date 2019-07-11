@@ -567,7 +567,10 @@ export default {
           블랙리스트 관리
         </h3>
         <div class="modal__label">블랙리스트 목록</div>
-        <table class="mng-mentoring__list">
+        <table
+          v-if="blacks.length"
+          class="mng-mentoring__list"
+        >
           <tbody>
             <tr
               v-for="(user, index) in blacks"
@@ -586,6 +589,12 @@ export default {
             </tr>
           </tbody>
         </table>
+        <td
+          v-else
+          class="mng-mentoring__empty"
+        >
+          아직 블랙리스트에 추가된 학생이 없습니다.
+        </td>
         <div class="modal__field">
           <div class="modal__label">블랙리스트 추가</div>
           <dimi-input
@@ -767,6 +776,14 @@ export default {
 
   &__input {
     font-size: 16px;
+  }
+
+  &__empty {
+    padding: 24px 0;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
