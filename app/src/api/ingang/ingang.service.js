@@ -52,6 +52,18 @@ export class IngangRequestorService extends IngangService {
   }
 
   /**
+   * 자신의 반 인강실 신청자 목록을 가져옵니다.
+   * @returns {Object}
+   */
+  async getIngangAppliersInMyClass () {
+    const { data: { users } } = await this.magician(() => this.r.get('/users/myklass'), {
+      403: '권한이 없습니다.',
+      404: '해당 반의 신청자가 없습니다.'
+    })
+    return users.map(IngangApplier)
+  }
+
+  /**
    * 자신의 신청 현황을 반환합니다.
    *
    * @returns {Promise<{daily_request_count, weekly_ticket_num, daily_ticket_num, weekly_request_count}>}
