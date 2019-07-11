@@ -10,7 +10,7 @@ const convertReport = v => (v && {
   fileName: v['file_name']
 })
 
-export const Assignments = assignment => ({
+export const Assignment = assignment => ({
   idx: assignment['idx'],
   title: assignment['title'],
   description: assignment['description'],
