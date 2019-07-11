@@ -186,7 +186,7 @@ export default {
         </label>
         <dimi-input
           id="ass-target-grade"
-          v-model="form.targetGrade"
+          v-model.number="form.targetGrade"
           class="assignor__form-input assignor__form-input--target"
         />
         <label class="assignor__form-label assignor__form-label--target">
@@ -194,7 +194,7 @@ export default {
         </label>
         <dimi-input
           id="ass-target-class"
-          v-model="form.targetClass"
+          v-model.number="form.targetClass"
           class="assignor__form-input assignor__form-input--target"
         />
       </div>
