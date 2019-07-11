@@ -20,7 +20,7 @@ export default {
   computed: {
     filteredAssignments () {
       return this.assignments.filter(v => {
-        return this.filter.deadline || v.endDate < new Date().now
+        return this.filter.deadline || v.endDate >= new Date()
       })
     }
   },
