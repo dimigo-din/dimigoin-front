@@ -70,7 +70,7 @@ export default {
       return this.applies
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
-        .reverse()
+        .sort()
     }
   }
 }
