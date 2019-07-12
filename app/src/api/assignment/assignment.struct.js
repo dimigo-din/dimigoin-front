@@ -1,14 +1,4 @@
-import { parse } from 'date-fns'
 import timestamp from 'unix-timestamp'
-
-const convertReport = v => (v && {
-  author: {
-    name: v['author']['name'],
-    studentSerial: v['author']['student_serial']
-  },
-  uploadedDate: parse(v['uploaded_date']),
-  fileName: v['file_name']
-})
 
 export const Assignment = assignment => ({
   idx: assignment['idx'],
@@ -18,7 +8,7 @@ export const Assignment = assignment => ({
   targetGrade: assignment['target_grade'],
   targetClass: assignment['target_class'],
   assignor: assignment['assignor'],
-  reports: (assignment['reports'] || []).map(convertReport)
+  report: assignment['report']
 })
 
 export const CreateAssignmentInput = assignment => ({
