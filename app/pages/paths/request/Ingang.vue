@@ -14,7 +14,7 @@ export default {
     return {
       pending: false,
       ingangs: [],
-      applys: [],
+      applies: [],
       users: [],
       today: new Date(),
       announcement: {},
@@ -45,8 +45,8 @@ export default {
     },
 
     async updateAppliers () {
-      this.applys = await ingangRequestor.getIngangAppliersInMyClass()
-      this.users = this.applys
+      this.applies = await ingangRequestor.getIngangAppliersInMyClass()
+      this.users = this.applies
       this.users = this.users.filter((v, i) => {
         return i === this.users.findIndex(V => v.serial === V.serial)
       })
@@ -67,7 +67,7 @@ export default {
     },
 
     userAppliedTimes (serial) {
-      return this.applys
+      return this.applies
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
         .reverse()

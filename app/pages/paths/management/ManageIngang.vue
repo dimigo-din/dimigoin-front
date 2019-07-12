@@ -12,7 +12,7 @@ export default {
     currentTab: 0,
     ingangs: [],
     users: [],
-    applys: [],
+    applies: [],
     notice: {
       grade: '',
       desc: ''
@@ -47,8 +47,8 @@ export default {
     },
 
     async updateAppliers () {
-      this.applys = await ingangManager.getIngangAppliers()
-      this.users = this.applys
+      this.applies = await ingangManager.getIngangAppliers()
+      this.users = this.applies
       this.users = this.users.filter((v, i) => {
         return i === this.users.findIndex(V => v.serial === V.serial)
       })
@@ -96,7 +96,7 @@ export default {
     },
 
     userAppliedTimes (serial) {
-      return this.applys
+      return this.applies
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
         .reverse()
