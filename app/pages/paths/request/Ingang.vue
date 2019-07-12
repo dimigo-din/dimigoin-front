@@ -14,7 +14,8 @@ export default {
     return {
       pending: false,
       ingangs: [],
-      appliers: [],
+      applys: [],
+      users: [],
       today: new Date(),
       announcement: {},
       status: {},
@@ -35,12 +36,20 @@ export default {
       try {
         this.ingangs = await ingangRequestor.getIngangs()
         this.status = await ingangRequestor.getStatus()
-        this.appliers = await ingangRequestor.getIngangAppliersInMyClass()
         this.announcement = await ingangRequestor.getAnnouncement()
+        this.updateAppliers()
       } catch (err) {
         this.$swal('이런!', '선생님은 인강실 신청을 사용할 수 없습니다.', 'error')
       }
       this.pending = false
+    },
+
+    async updateAppliers () {
+      this.applys = await ingangRequestor.getIngangAppliersInMyClass()
+      this.users = this.applys
+      this.users = this.users.filter((v, i) => {
+        return i === this.users.findIndex(V => v.serial === V.serial)
+      })
     },
 
     async handleSubmitButton (ingang) {
@@ -58,7 +67,7 @@ export default {
     },
 
     userAppliedTimes (serial) {
-      return this.appliers
+      return this.applys
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
         .reverse()
@@ -186,7 +195,7 @@ export default {
             <table class="list">
               <tbody>
                 <tr
-                  v-for="(user, index) in appliers"
+                  v-for="(user, index) in users"
                   :key="index"
                   class="list__row"
                 >
