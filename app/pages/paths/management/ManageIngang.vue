@@ -11,6 +11,8 @@ export default {
     pending: false,
     currentTab: 0,
     ingangs: [],
+    users: [],
+    applies: [],
     notice: {
       grade: '',
       desc: ''
@@ -40,7 +42,16 @@ export default {
       this.pending = true
       this.ingangs = await ingangManager.getIngangs()
       this.notice.desc = (await ingangManager.getAnnouncement()).description
+      this.updateAppliers()
       this.pending = false
+    },
+
+    async updateAppliers () {
+      this.applies = await ingangManager.getIngangAppliers()
+      this.users = this.applies
+      this.users = this.users.filter((v, i) => {
+        return i === this.users.findIndex(_v => v.serial === _v.serial)
+      })
     },
 
     async addNotice () {
@@ -82,6 +93,13 @@ export default {
 
     getDayText (code) {
       return days.find(v => v.code === code).text
+    },
+
+    userAppliedTimes (serial) {
+      return this.applies
+        .filter(v => v.serial === serial)
+        .map(v => `${v.time}타임`)
+        .sort()
     }
   }
 }
@@ -98,7 +116,7 @@ export default {
     >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['엑셀', '공지', '인강실']"
+        :tabs="['엑셀', '공지', '인강실', '신청자']"
       />
       <div
         v-if="pending"
@@ -261,6 +279,28 @@ export default {
                 </div>
               </div>
             </div>
+          </section>
+        </div>
+        <div
+          v-if="currentTab === 3"
+        >
+          <section class="mng-ing__section">
+            <table class="mng-ing__list">
+              <tbody>
+                <tr
+                  v-for="(user, index) in users"
+                  :key="index"
+                  class="mng-ing__row"
+                >
+                  <td class="mng-ing__cell">
+                    {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                  </td>
+                  <td class="mng-ing__cell mng-ing__cell--time">
+                    {{ userAppliedTimes(user.serial).join(', ') }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         </div>
       </template>
