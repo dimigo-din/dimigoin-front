@@ -12,6 +12,7 @@ export default {
     currentTab: 0,
     ingangs: [],
     users: [],
+    applies: [],
     notice: {
       grade: '',
       desc: ''
@@ -41,8 +42,16 @@ export default {
       this.pending = true
       this.ingangs = await ingangManager.getIngangs()
       this.notice.desc = (await ingangManager.getAnnouncement()).description
-      this.users = await ingangManager.getIngangAppliers()
+      this.updateAppliers()
       this.pending = false
+    },
+
+    async updateAppliers () {
+      this.applies = await ingangManager.getIngangAppliers()
+      this.users = this.applies
+      this.users = this.users.filter((v, i) => {
+        return i === this.users.findIndex(_v => v.serial === _v.serial)
+      })
     },
 
     async addNotice () {
@@ -87,10 +96,10 @@ export default {
     },
 
     userAppliedTimes (serial) {
-      return this.users
+      return this.applies
         .filter(v => v.serial === serial)
         .map(v => `${v.time}타임`)
-        .reverse()
+        .sort()
     }
   }
 }
