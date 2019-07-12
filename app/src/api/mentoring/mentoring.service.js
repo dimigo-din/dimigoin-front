@@ -1,5 +1,7 @@
 import { ServiceBase } from '@/src/api/service-base'
-import { Mentoring, Notice, CreateMentoringInput, EditMentoringInput, CreateNoticeInput } from './mentoring.struct'
+import { Mentoring, Notice, CreateMentoringInput,
+  EditMentoringInput, CreateNoticeInput,
+  BlackUser, CreateBlackUser } from './mentoring.struct'
 
 export class MentoringService extends ServiceBase {
   /**
@@ -122,6 +124,37 @@ export class MentoringManagerService extends MentoringService {
       404: '등록된 멘토링이 없습니다.'
     })
     return mentors.map(Mentoring)
+  }
+
+  /**
+   * 모든 블랙리스트 학생을 가져옵니다.
+   */
+  async getBlacklist () {
+    const { data: { blacks } } = await this.magician(() => this.r.get('/blacklist'), {
+      403: '권한이 없습니다.'
+    })
+    return blacks.map(BlackUser)
+  }
+
+  /**
+   * 블랙리스트에서 학생을 제거합니다.
+   */
+  async deleteBlackuser (idx) {
+    await this.magician(() => this.r.delete(`/blacklist/${idx}`), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 학생입니다.'
+    })
+  }
+
+  /**
+   * 블랙리스트에 학생을 추가합니다.
+   */
+  async addBlackuser (serial, date) {
+    const user = CreateBlackUser({ serial, date })
+    await this.magician(() => this.r.post('/blacklist', user), {
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 학생입니다.'
+    })
   }
 
   /**

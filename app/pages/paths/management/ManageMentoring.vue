@@ -1,5 +1,6 @@
 <script>
 import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import setTime from '@/src/util/time'
@@ -28,6 +29,7 @@ export default {
         create: false,
         edit: false,
         notice: false,
+        black: false,
         expand: {
           grade: false,
           time: false,
@@ -45,14 +47,13 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       },
 
       mentorings: [
         [], [], []
-      ]
+      ],
+      blacks: []
     }
   },
 
@@ -96,6 +97,7 @@ export default {
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
       this.notice = await mentoringManager.getNotice()
+      this.blacks = await mentoringManager.getBlacklist()
     },
 
     closeModal () {
@@ -110,9 +112,7 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       }
     },
 
@@ -163,21 +163,18 @@ export default {
     },
 
     editMentoring (item) {
-      const time = setTime(item.date)
+      const time = setTime(new Date())
       this.modal.edit = true
       this.form = {
         idx: item.idx,
         teacher: item.teacher.name,
-        day: item.day,
-        date: item.date,
+        day: this.getDayIdxByCode(item.day),
         subject: item.subject,
         room: item.room,
         grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
-        endTime: time(item.endTime),
-        startDate: item.startDate,
-        endDate: item.endDate
+        endTime: time(item.endTime)
       }
     },
 
@@ -222,6 +219,26 @@ export default {
       }
     },
 
+    async addBlackuser (serial) {
+      await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
+      await this.updateAll()
+      this.form.serial = null
+    },
+
+    async deleteBlackuser (idx) {
+      await mentoringManager.deleteBlackuser(idx)
+      this.$swal('삭제했습니다.', '', 'success')
+      this.updateAll()
+    },
+
+    getDayTextByIdx (idx) {
+      return days.find(v => v.idx === idx).text
+    },
+
+    getDayIdxByCode (code) {
+      return days.find(v => v.code === code).idx
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -232,7 +249,9 @@ export default {
 <template>
   <content-wrapper class="mng-mentoring">
     <h1 slot="header">
-      <span class="icon-comment" />멘토링 신청 관리
+      <span class="mng-mentoring__head">
+        <span class="icon-comment" />멘토링 신청 관리
+      </span>
       <span
         class="mng-mentoring__create"
         @click="modal.create = true"
@@ -244,6 +263,12 @@ export default {
         @click="modal.notice = true"
       >
         <span class="icon-edit" />공지사항 관리
+      </span>
+      <span
+        class="mng-mentoring__blacklist"
+        @click="modal.black = true"
+      >
+        <span class="icon-alert" />블랙리스트 추가
       </span>
     </h1>
     <dimi-card
@@ -392,9 +417,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -404,35 +429,16 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -494,9 +500,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -506,35 +512,17 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+              class="dropdown-day"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -569,6 +557,59 @@ export default {
           <dimi-button>수정하기</dimi-button>
         </span>
       </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.black"
+        class="modal__modal"
+        @close="modal.black = false"
+      >
+        <h3 class="modal__title">
+          블랙리스트 관리
+        </h3>
+        <div class="modal__label">블랙리스트 목록</div>
+        <table
+          v-if="blacks.length"
+          class="mng-mentoring__list"
+        >
+          <tbody>
+            <tr
+              v-for="(user, index) in blacks"
+              :key="index"
+              class="mng-mentoring__row"
+            >
+              <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                {{ `${user.serial} ${user.name}` }}
+              </td>
+              <td
+                class="mng-mentoring__cell mng-mentoring__cell--button-delete"
+                @click="deleteBlackuser(user.userIdx)"
+              >
+                <span class="icon-cross" /> 삭제
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <td
+          v-else
+          class="mng-mentoring__empty"
+        >
+          아직 블랙리스트에 추가된 학생이 없습니다.
+        </td>
+        <div class="modal__field">
+          <div class="modal__label">블랙리스트 추가</div>
+          <dimi-input
+            v-model.number="form.serial"
+            class="modal__input"
+            placeholder="해당 학생 학번"
+          />
+        </div>
+        <span
+          class="modal__create"
+          @click="addBlackuser(form.serial)"
+        >
+          <dimi-button>추가하기</dimi-button>
+        </span>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -582,6 +623,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.content {
+  @include until($tablet) {
+    &__header > h1 {
+      margin-bottom: 1.8em;
+    }
   }
 }
 
@@ -599,7 +648,14 @@ export default {
     padding-bottom: 0;
   }
 
-  &__notice {
+  &__head {
+    @include until($tablet) {
+      display: block;
+    }
+  }
+
+  &__notice,
+  &__blacklist {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $orange;
@@ -630,10 +686,24 @@ export default {
     color: $gray-light;
     font-size: 16px;
     font-weight: $font-weight-bold;
+    @include until($tablet) {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
   }
 
   &__tool:not(:first-child) {
     margin-left: 2em;
+  }
+
+  &__tool {
+    @include until($tablet) {
+      display: inline-block;
+      width: 40%;
+      justify-content: flex-start;
+      margin-left: unset !important;
+      text-align: left;
+    }
   }
 
   &__select-all {
@@ -666,14 +736,16 @@ export default {
 
   &__cell {
     padding: 24px 0;
-    color: $gray-dark;
+    color: $gray;
     white-space: nowrap;
   }
 
   &__cell--name {
-    width: 99%;
-    color: $black;
-    white-space: normal;
+    color: $gray-dark;
+
+    @include from($tablet) {
+      width: 99%;
+    }
   }
 
   &__cell:not(:last-child):not(:nth-last-child(2)) {
@@ -704,6 +776,14 @@ export default {
 
   &__input {
     font-size: 16px;
+  }
+
+  &__empty {
+    padding: 24px 0;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
@@ -749,7 +829,7 @@ export default {
     line-height: 1.15;
   }
 
-  &__label-right {
+  &__label--right {
     display: block;
     margin-right: 20px;
     float: right;
@@ -779,6 +859,11 @@ export default {
   }
 
   .dropdown {
+    font-size: 20px;
+  }
+
+  &__label--day {
+    display: inline-block;
     font-size: 20px;
   }
 }

@@ -36,7 +36,7 @@ export default {
   },
 
   async created () {
-    this.refresh()
+    await this.refresh()
   },
 
   methods: {
@@ -98,7 +98,7 @@ export default {
     },
 
     async deleteBook (book) {
-      if (await this.$swal({
+      const { value: answer } = await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
         confirmButtonColor: '#d61315',
@@ -106,14 +106,15 @@ export default {
         confirmButtonText: '삭제',
         cancelButtonText: '취소',
         showCancelButton: true
-      })) {
-        try {
-          await bookRequestor.deleteBook(book.idx)
-          this.$swal('삭제되었습니다', '', 'success')
-          await this.refresh()
-        } catch (err) {
-          this.$swal('이런!', err.message, 'error')
-        }
+      })
+
+      if (!answer) return
+      try {
+        await bookRequestor.deleteBook(book.idx)
+        this.$swal('삭제되었습니다', '', 'success')
+        await this.refresh()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
       }
     }
   }

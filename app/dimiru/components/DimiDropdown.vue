@@ -166,6 +166,7 @@ export default {
 
   &__item {
     padding: 15px 24px;
+    background-color: $white;
     text-align: center;
   }
 

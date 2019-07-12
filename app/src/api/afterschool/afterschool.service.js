@@ -20,6 +20,11 @@ export class AfterschoolService extends ServiceBase {
     })
   }
 
+  async getTodayAfterschool () {
+    const { data: { afterschools } } = await this.magician(() => this.r.get('/student/today'))
+    return afterschools.map(Afterschool)
+  }
+
   async getGradeAfterschool (grade) {
     const { data: { afterschools } } = await this.magician(() => this.r.get(`/grade/${grade}`))
     return afterschools.map(Afterschool)

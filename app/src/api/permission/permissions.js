@@ -19,5 +19,6 @@ export default {
   'book': new ManagementService('book', '도서 신청 관리', 'book'),
   'assignment_master': new ManagementService('assignment_master', '과제 관리', 'assignment'),
   'circle': new ManagementService('circle', '동아리 신청 관리', 'circle'),
-  'freshman_admin': new ManagementService('freshman_admin', '신입생 공지 관리', 'freshman')
+  'freshman_admin': new ManagementService('freshman_admin', '신입생 공지 관리', 'freshman'),
+  'etc': new ManagementService('etc', '기타 신청 관리', 'etc')
 }

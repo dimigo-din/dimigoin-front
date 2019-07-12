@@ -11,7 +11,7 @@ export default {
   data: () => ({
     loading: false,
     assignments: [],
-    now: new Date(),
+    now: timestamp.fromDate(new Date()),
     modals: {
       create: false,
       edit: false,
@@ -43,7 +43,7 @@ export default {
     },
 
     async deleteAss (ass) {
-      if (await this.$swal({
+      const { value: answer } = await this.$swal({
         type: 'warning',
         text: '정말 삭제하시겠습니까?',
         confirmButtonColor: '#d61315',
@@ -51,16 +51,17 @@ export default {
         confirmButtonText: '삭제',
         cancelButtonText: '취소',
         showCancelButton: true
-      })) {
-        try {
-          await assignmentPublisher.deleteAssignment(ass.idx)
-          this.assignments = await assignmentPublisher.getAssignmentList()
-          this.$swal('삭제되었습니다', 'success')
-        } catch (err) {
-          this.$swal('이런!', err.message, 'error')
-        }
-        await this.update()
+      })
+
+      if (!answer) return
+      try {
+        await assignmentPublisher.deleteAssignment(ass.idx)
+        this.assignments = await assignmentPublisher.getAssignmentList()
+        this.$swal('삭제되었습니다', '', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
       }
+      await this.update()
     },
 
     async create () {
@@ -86,7 +87,7 @@ export default {
       this.form = {
         title: ass['title'],
         description: ass['description'],
-        endDate: timestamp.fromDate(ass['end_date']),
+        endDate: timestamp.toDate(ass['end_date']),
         targetGrade: ass['target_grade'],
         targetClass: ass['target_class']
       }
@@ -135,7 +136,7 @@ export default {
           <span class="icon-edit" /> 수정하기
         </span>
         <span
-          v-if="now.getTime() <= ass.end_date"
+          v-if="now <= ass.end_date"
           class="assignor__item--del"
           @click="deleteAss(ass)"
         >
