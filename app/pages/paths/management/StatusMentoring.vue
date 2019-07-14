@@ -1,5 +1,4 @@
 <script>
-import { format } from 'date-fns'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import { mentoringManager } from '@/src/api/mentoring'
@@ -13,9 +12,7 @@ export default {
       pending: true,
       tab: 0,
       filter: 0,
-      mentorings: [
-        [], [], []
-      ]
+      mentorings: []
     }
   },
 
@@ -32,7 +29,8 @@ export default {
     },
 
     currentCount () {
-      return this.mentorings[this.tab].length
+      return this.mentorings[this.tab].map((mentor) =>
+        mentor.mentoringRequest.length).reduce((a, b) => a + b, 0)
     }
   },
 
@@ -46,14 +44,6 @@ export default {
     async updateAll () {
       this.mentorings = await Promise.all([...Array(3)].map((_, grade) => mentoringManager.getMentoringByGrade(grade + 1)))
       this.mentorings = Object.assign({}, this.mentorings)
-    },
-
-    async downloadExcel (grade) {
-      try {
-        await mentoringManager.downloadExcel(grade)
-      } catch (err) {
-        this.$swal('이런!', err.message, 'error')
-      }
     },
 
     getDaySmallText (code) {
@@ -93,13 +83,6 @@ export default {
         </h2>
 
         <nav class="stat-mentoring__toolbar">
-          <span
-            class="stat-mentoring__tool stat-mentoring__excel"
-            @click="downloadExcel(tab + 1)"
-          >
-            <span class="stat-afsc__excel-icon icon-long-arrow-down" /> 엑셀 다운로드
-          </span>
-
           <dimi-dropdown
             v-model="filter"
             :items="['필터 없음', ...days.map(v => v.text)]"
@@ -109,30 +92,34 @@ export default {
 
         <table class="stat-mentoring__list">
           <tbody>
-            <tr
-              v-for="(item, index) in filteredList"
-              :key="index"
-              class="stat-mentoring__row"
+            <template
+              v-for="mentoring in filteredList"
             >
-              <td class="stat-mentoring__cell stat-mentoring__cell--name">
-                {{ item.teacher.name }} 선생님
-              </td>
-              <td class="stat-mentoring__cell">
-                {{ item.subject }}
-              </td>
-              <td class="stat-mentoring__cell">
-                {{ getDaySmallText(item.day) }}
-              </td>
-              <td class="stat-mentoring__cell">
-                {{ item.startTime }} ~ {{ item.endTime }}
-              </td>
-              <td class="stat-mentoring__cell">
-                {{ item.room }}
-              </td>
-              <td class="stat-mentoring__cell">
-                신청자 없음
-              </td>
-            </tr>
+              <tr
+                v-for="(item, idx) in mentoring.mentoringRequest"
+                :key="idx"
+                class="stat-mentoring__row"
+              >
+                <td class="stat-mentoring__cell stat-mentoring__cell--name">
+                  {{ mentoring.teacher.name }} 선생님
+                </td>
+                <td class="stat-mentoring__cell">
+                  {{ mentoring.subject }}
+                </td>
+                <td class="stat-mentoring__cell">
+                  {{ getDaySmallText(mentoring.day) }}
+                </td>
+                <td class="stat-mentoring__cell">
+                  {{ mentoring.startTime }} ~ {{ mentoring.endTime }}
+                </td>
+                <td class="stat-mentoring__cell">
+                  {{ mentoring.room }}
+                </td>
+                <td class="stat-mentoring__cell">
+                  {{ item.requester.serial }} {{ item.requester.name }}
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </section>
