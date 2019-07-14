@@ -46,6 +46,14 @@ export default {
       this.mentorings = Object.assign({}, this.mentorings)
     },
 
+    async downloadExcel (grade) {
+      try {
+        await mentoringManager.downloadExcel(grade)
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -58,6 +66,12 @@ export default {
     <h1 slot="header">
       <span class="stat-mentoring__head">
         <span class="icon-list" />멘토링 신청 현황
+      </span>
+      <span
+        class="stat-mentoring__excel"
+        @click="downloadExcel(tab + 1)"
+      >
+        <span class="icon-long-arrow-down" />엑셀 다운로드
       </span>
     </h1>
     <dimi-card
@@ -165,6 +179,15 @@ export default {
     @include until($tablet) {
       display: block;
     }
+  }
+
+  &__excel {
+    margin-top: 1em;
+    margin-right: 0.5em;
+    color: $aloes;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
   }
 
   &__title {
