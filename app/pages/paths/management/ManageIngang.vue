@@ -285,22 +285,40 @@ export default {
           v-if="currentTab === 3"
         >
           <section class="mng-ing__section">
-            <table class="mng-ing__list">
-              <tbody>
-                <tr
-                  v-for="(user, index) in users"
-                  :key="index"
-                  class="mng-ing__row"
-                >
-                  <td class="mng-ing__cell">
-                    {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
-                  </td>
-                  <td class="mng-ing__cell mng-ing__cell--time">
-                    {{ userAppliedTimes(user.serial).join(', ') }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="mng-ing__list-wrap">
+              <table class="mng-ing__list">
+                <tbody>
+                  <tr
+                    v-for="(user, index) in users"
+                    :key="index"
+                    class="mng-ing__row"
+                  >
+                    <td class="mng-ing__cell">
+                      {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                    </td>
+                    <td class="mng-ing__cell mng-ing__cell--time">
+                      {{ userAppliedTimes(user.serial).join(', ') }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="mng-ing__list">
+                <tbody>
+                  <tr
+                    v-for="(user, index) in users"
+                    :key="index"
+                    class="mng-ing__row"
+                  >
+                    <td class="mng-ing__cell">
+                      {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                    </td>
+                    <td class="mng-ing__cell mng-ing__cell--time">
+                      {{ userAppliedTimes(user.serial).join(', ') }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </section>
         </div>
       </template>
@@ -336,6 +354,11 @@ export default {
 
   &__delete-icon {
     font-size: 18px;
+  }
+
+  &__list-wrap {
+    display: flex;
+    flex-direction: row;
   }
 
   &__list {
