@@ -62,7 +62,15 @@ export default {
       return days
     },
 
+    mentoringFullList () {
+      return [].concat.apply([], Object.values(this.mentorings))
+    },
+
     filteredList () {
+      if (this.tab === 3) {
+        if (this.filter === 0) return this.mentoringFullList
+        return this.mentorings[this.filter - 1]
+      }
       if (this.filter === 0) return this.mentorings[this.tab]
 
       return this.mentorings[this.tab].filter(v => v.day ===
@@ -70,6 +78,10 @@ export default {
     },
 
     currentCount () {
+      if (this.tab === 3) {
+        return this.mentoringFullList.map((mentor) =>
+          mentor.mentoringRequest.length).reduce((a, b) => a + b, 0)
+      }
       return this.mentorings[this.tab].length
     }
   },
@@ -277,7 +289,7 @@ export default {
     >
       <dimi-tab
         v-model="tab"
-        :tabs="['1학년', '2학년', '3학년']"
+        :tabs="['1학년', '2학년', '3학년', '신청자']"
       />
       <div
         v-if="pending"
@@ -286,7 +298,7 @@ export default {
         <dimi-loader />
       </div>
       <section
-        v-else
+        v-else-if="tab < 3"
         class="mng-mentoring__section"
       >
         <h2 class="mng-mentoring__title">
@@ -362,6 +374,55 @@ export default {
                 <span class="icon-cross" /> 삭제
               </td>
             </tr>
+          </tbody>
+        </table>
+      </section>
+      <section
+        v-else
+        class="mng-mentoring__section"
+      >
+        <h2 class="mng-mentoring__title">
+          멘토링 신청 현황 ({{ currentCount }}개)
+        </h2>
+
+        <nav class="mng-mentoring__toolbar">
+          <dimi-dropdown
+            v-model="filter"
+            :items="['필터 없음', '1학년', '2학년', '3학년']"
+            class="mng-mentoring__tool mng-mentoring__sort"
+          />
+        </nav>
+
+        <table class="mng-mentoring__list">
+          <tbody>
+            <template
+              v-for="(mentoring, index) in filteredList"
+            >
+              <tr
+                v-for="(item, idx) in mentoring.mentoringRequest"
+                :key="`req-${index}-${idx}`"
+                class="mng-mentoring__row"
+              >
+                <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                  {{ mentoring.teacher.name }} 선생님
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.subject }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ getDaySmallText(mentoring.day) }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.startTime }} ~ {{ mentoring.endTime }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.room }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ item.requester.serial }} {{ item.requester.name }}
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </section>
@@ -748,7 +809,7 @@ export default {
     }
   }
 
-  &__cell:not(:last-child):not(:nth-last-child(2)) {
+  &__cell:not(:last-child) {
     padding-right: 1.5em;
   }
 

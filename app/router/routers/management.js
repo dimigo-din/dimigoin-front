@@ -13,7 +13,6 @@ const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
 const ManageBook = () => import('@/pages/paths/management/ManageBook.vue')
 const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue')
 const ManageEtc = () => import('@/pages/paths/management/ManageEtc.vue')
-const StatusMentoring = () => import('@/pages/paths/management/StatusMentoring.vue')
 
 export default [
   {
@@ -59,14 +58,6 @@ export default [
           component: ManageMentoring,
           meta: {
             title: '디미고인 > 멘토링 신청 관리'
-          }
-        },
-        {
-          path: 'mentoring/status',
-          name: 'management/mentoring/status',
-          component: StatusMentoring,
-          meta: {
-            title: '디미고인 > 멘토링 신청 현황'
           }
         },
         {
