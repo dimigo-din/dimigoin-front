@@ -20,7 +20,7 @@ export default {
   computed: {
     filteredAssignments () {
       return this.assignments.filter(v => {
-        return this.filter.deadline || v.endDate < new Date().now
+        return this.filter.deadline || v.endDate >= new Date()
       })
     }
   },
@@ -75,7 +75,7 @@ export default {
 
       <span slot="header">
         <span class="assignee__header">
-          <span class="icon-submission" />과제 제출 관리
+          <span class="icon-submission" />과제 제출
 
           <dimi-checkbox
             v-model="filter.deadline"
