@@ -22,7 +22,10 @@ export default {
       tab: 0,
       checks: [],
       selectAll: false,
-      filter: 0,
+      filter: {
+        day: 0,
+        grade: 0
+      },
       notice: {},
 
       modal: {
@@ -68,13 +71,13 @@ export default {
 
     filteredList () {
       if (this.tab === 3) {
-        if (this.filter === 0) return this.mentoringFullList
-        return this.mentorings[this.filter - 1]
+        if (this.filter.grade === 0) return this.mentoringFullList
+        return this.mentorings[this.filter.grade - 1]
       }
-      if (this.filter === 0) return this.mentorings[this.tab]
+      if (this.filter.day === 0) return this.mentorings[this.tab]
 
       return this.mentorings[this.tab].filter(v => v.day ===
-        this.days[this.filter - 1].code)
+        this.days[this.filter.day - 1].code)
     },
 
     currentCount () {
@@ -328,7 +331,7 @@ export default {
           </span>
 
           <dimi-dropdown
-            v-model="filter"
+            v-model="filter.day"
             :items="['필터 없음', ...days.map(v => v.text)]"
             class="mng-mentoring__tool mng-mentoring__sort"
           />
@@ -387,7 +390,7 @@ export default {
 
         <nav class="mng-mentoring__toolbar">
           <dimi-dropdown
-            v-model="filter"
+            v-model="filter.grade"
             :items="['필터 없음', '1학년', '2학년', '3학년']"
             class="mng-mentoring__tool mng-mentoring__sort"
           />
