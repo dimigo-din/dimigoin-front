@@ -1,6 +1,5 @@
 <script>
 import { format } from 'date-fns'
-import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 export default {
@@ -9,7 +8,7 @@ export default {
 
   filters: {
     deadline (val) {
-      return format(timestamp.toDate(val), 'YYYY년 MM월 DD일 HH시 mm분까지')
+      return format(val, 'YYYY년 MM월 DD일 HH시 mm분까지')
     }
   },
 
@@ -81,7 +80,7 @@ export default {
                   </span>
 
                   <span class="assignment__item">
-                    {{ ass.end_date | deadline }}
+                    {{ ass.endDate | deadline }}
                   </span>
 
                   <div class="assignment__item assignment__expand">

@@ -2,8 +2,6 @@
 import AssignmentBase from '@/components/AssignmentBase.vue'
 import { assignmentPublisher } from '@/src/api/assignment'
 
-import timestamp from 'unix-timestamp'
-
 export default {
   name: 'ManageAssignment',
   components: { AssignmentBase },
@@ -11,7 +9,7 @@ export default {
   data: () => ({
     loading: false,
     assignments: [],
-    now: timestamp.fromDate(new Date()),
+    now: new Date(),
     modals: {
       create: false,
       edit: false,
@@ -32,7 +30,7 @@ export default {
 
   methods: {
     async edit (ass) {
-      await assignmentPublisher.editAssignment(ass.idx, this.restructure(this.form))
+      await assignmentPublisher.editAssignment(ass.idx, this.form)
       await this.$swal('수정되었습니다', '', 'success')
       this.closeModal()
       await this.update()
@@ -66,7 +64,7 @@ export default {
 
     async create () {
       try {
-        await assignmentPublisher.createAssignment(this.restructure(this.form))
+        await assignmentPublisher.createAssignment(this.form)
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
         await this.update()
@@ -85,11 +83,11 @@ export default {
       this.modals.edit = true
       this.modals.temp = ass
       this.form = {
-        title: ass['title'],
-        description: ass['description'],
-        endDate: timestamp.toDate(ass['end_date']),
-        targetGrade: ass['target_grade'],
-        targetClass: ass['target_class']
+        title: ass.title,
+        description: ass.description,
+        endDate: ass.endDate,
+        targetGrade: ass.targetGrade,
+        targetClass: ass.targetClass
       }
     },
 
@@ -106,16 +104,6 @@ export default {
         endDate: new Date(),
         targetGrade: null,
         targetClass: null
-      }
-    },
-
-    restructure (ass) {
-      return {
-        'title': ass.title,
-        'description': ass.description,
-        'target_grade': parseInt(ass.targetGrade),
-        'target_class': parseInt(ass.targetClass),
-        'end_date': timestamp.fromDate((ass.endDate).toISOString())
       }
     }
   }
@@ -136,7 +124,7 @@ export default {
           <span class="icon-edit" /> 수정하기
         </span>
         <span
-          v-if="now <= ass.end_date"
+          v-if="now <= ass.endDate"
           class="assignor__item--del"
           @click="deleteAss(ass)"
         >
@@ -168,8 +156,8 @@ export default {
         slot="opponent"
         slot-scope="{ ass }"
       >
-        {{ ass.target_grade }}학년
-        {{ ass.target_class }}반 대상
+        {{ ass.targetGrade }}학년
+        {{ ass.targetClass }}반 대상
       </span>
     </assignment-base>
 
@@ -196,7 +184,7 @@ export default {
         </label>
         <dimi-input
           id="ass-target-grade"
-          v-model="form.targetGrade"
+          v-model.number="form.targetGrade"
           class="assignor__form-input assignor__form-input--target"
         />
         <label class="assignor__form-label assignor__form-label--target">
@@ -204,7 +192,7 @@ export default {
         </label>
         <dimi-input
           id="ass-target-class"
-          v-model="form.targetClass"
+          v-model.number="form.targetClass"
           class="assignor__form-input assignor__form-input--target"
         />
       </div>
