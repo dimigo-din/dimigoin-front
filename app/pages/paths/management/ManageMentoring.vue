@@ -235,6 +235,22 @@ export default {
       }
     },
 
+    async downloadPeriodExcel () {
+      try {
+        const { grade, startTime, endTime } = this.form
+        await mentoringManager.downloadPeriodExcel(
+          grade,
+          timestamp.fromDate(startTime),
+          timestamp.fromDate(endTime)
+        )
+        this.modal.excel = false
+        this.form.grade = 0
+        this.form.startTime = this.form.endTime = new Date()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async addBlackuser (serial) {
       await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
       await this.updateAll()
@@ -691,16 +707,24 @@ export default {
           멘토링 신청자 엑셀 다운로드
         </h3>
         <div class="modal__field">
+          <div class="modal__label">학년</div>
+          <dimi-dropdown
+            v-model="form.grade"
+            :items="[1, 2, 3]"
+          />
+        </div>
+        <div class="modal__field">
           <div class="modal__label">조회할 기간</div>
           <div class="modal__input">
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input />
+            <dimi-date-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input />
+            <dimi-date-input v-model="form.endTime" />
           </div>
         </div>
         <span
           class="modal__create"
+          @click="downloadPeriodExcel()"
         >
           <dimi-button>다운로드</dimi-button>
         </span>
