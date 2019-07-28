@@ -70,6 +70,34 @@ export default {
       slot="main"
       class="r-info"
     >
+      <span class="r-info__title">
+        <span class="icon-ball" /> 오늘의 방과후
+      </span>
+
+      <table class="r-info__list">
+        <tbody>
+          <tr>
+            <td
+              v-if="afters.length"
+              class="r-info__list-value"
+            >
+              {{ afters.join(', ') }}
+            </td>
+            <td
+              v-else
+              class="r-info__list-value"
+            >
+              오늘은 방과후 수업이 없습니다.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </dimi-card>
+
+    <dimi-card
+      slot="main"
+      class="r-info"
+    >
       <dimi-badge
         :color="isIngangApplied ? 'aloes' : 'orange'"
         class="r-info__badge"
@@ -99,34 +127,6 @@ export default {
       >
         아직 신청한 인강실이 없습니다.
       </td>
-    </dimi-card>
-
-    <dimi-card
-      slot="main"
-      class="r-info"
-    >
-      <span class="r-info__title">
-        <span class="icon-ball" /> 오늘의 방과후
-      </span>
-
-      <table class="r-info__list">
-        <tbody>
-          <tr>
-            <td
-              v-if="afters.length"
-              class="r-info__list-value"
-            >
-              {{ afters.join(', ') }}
-            </td>
-            <td
-              v-else
-              class="r-info__list-value"
-            >
-              오늘은 방과후 수업이 없습니다.
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </dimi-card>
 
     <dimi-card
