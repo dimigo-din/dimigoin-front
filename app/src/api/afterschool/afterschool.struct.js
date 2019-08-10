@@ -19,7 +19,8 @@ export const CreateAfterschoolInput = afterschool => ({
   'request_start_date': afterschool.startDate,
   'request_end_date': afterschool.endDate,
   'day': afterschool.day,
-  'time': afterschool.time,
+  'time': Object.keys(afterschool.time)
+    .filter(v => afterschool.time[v]),
   'target_grade': afterschool.grade,
   'max_of_count': afterschool.maxCount,
   'teacher_name': afterschool.teacherName
