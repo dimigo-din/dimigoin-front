@@ -100,6 +100,11 @@ export default {
         this.captchaResponse = null
         this.$refs.recaptcha.reset()
       }
+    },
+
+    getAfscTime (item) {
+      if (item.time.length === 2) return '연강'
+      return `${item.time.join()}타임`
     }
   }
 }
@@ -144,6 +149,9 @@ export default {
             :key="`aftc-${currentDay}-${idx}`"
             class="req-afsc__row"
           >
+            <td class="req-afsc__cell">
+              {{ getAfscTime(item) }}
+            </td>
             <td class="req-afsc__cell req-afsc__cell--name">
               {{ item.name }}
             </td>
