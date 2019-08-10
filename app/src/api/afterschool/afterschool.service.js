@@ -3,7 +3,7 @@ import { ServiceBase } from '@/src/api/service-base'
 import { Afterschool, CreateAfterschoolInput } from './afterschool.struct'
 
 function tempValidation (afterschool) {
-  const keys = ['name', 'request_start_date', 'request_end_date', 'day', 'target_grade', 'max_of_count', 'teacher_name']
+  const keys = ['name', 'request_start_date', 'request_end_date', 'day', 'time', 'target_grade', 'max_of_count', 'teacher_name']
   const missingArguments = keys.filter(key => !afterschool[key])
   if (missingArguments.length > 0) {
     throw new ValidationError('모든 입력란을 채워주세요.', missingArguments)
