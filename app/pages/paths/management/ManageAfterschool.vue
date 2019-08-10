@@ -322,6 +322,7 @@ export default {
               >
                 {{ i }}타임
               </dimi-checkbox>
+              <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
             </div>
           </div>
 
@@ -484,6 +485,10 @@ export default {
     border: 0;
     background-color: $gray-lighten;
     border-radius: 20px;
+  }
+
+  &__helper {
+    margin-left: 0.5rem;
   }
 }
 </style>
