@@ -67,6 +67,13 @@ export default {
       }
     },
 
+    isAvailable (item) {
+      return !this.list.filter(v => v.day === item.day) // 신청 대상과 같은 요일에 있는 방과후 필터링
+        .filter(v => item.time.filter(_v => v.time.includes(_v)).length > 0) // 신청 대상의 타임에 포함되는 방과후 필터링
+        .filter(v => v.status === 'request') // 그 중, 신청한 것만 필터링
+        .length && item.maxCount > item.count // 꽉 차지 않은 방과후만 필터링
+    },
+
     async toggleApply (item) {
       try {
         if (item.status === null && !this.applied) await this.apply(item)
@@ -164,7 +171,7 @@ export default {
               </template>
 
               <template v-else-if="!applied">
-                <template v-if="item.maxCount > item.count">
+                <template v-if="isAvailable(item)">
                   <span class="icon-ok" /> 신청하기
                 </template><template v-else>
                   <span class="icon-alert" /> 신청불가
