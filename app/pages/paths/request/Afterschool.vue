@@ -75,7 +75,7 @@ export default {
     },
 
     async toggleApply (item) {
-      if (!this.isAvailable(item)) return
+      if (!item.status && !this.isAvailable(item)) return
 
       try {
         if (item.status === null && !this.applied) await this.apply(item)
