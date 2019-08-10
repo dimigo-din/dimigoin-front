@@ -179,11 +179,6 @@ export default {
               </template>
             </td>
           </tr>
-          <!-- <tr
-            v-if="currentList.length === 0"
-            class="req-afsc__row">
-            <td class="req-afsc__cell req-afsc__cell--placeholder">(없음)</td>
-          </tr> -->
         </tbody>
       </table>
 
