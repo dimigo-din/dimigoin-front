@@ -22,7 +22,11 @@ export default {
         endDate: new Date(),
         day: 0,
         maxCount: null,
-        teacherName: ''
+        teacherName: '',
+        time: {
+          1: false,
+          2: false
+        }
       },
 
       afterschools: [
@@ -296,6 +300,22 @@ export default {
             </div>
           </div>
 
+          <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">
+                타임
+              </label>
+              <dimi-checkbox
+                v-for="i in 2"
+                :key="`time-${i}`"
+                v-model="form.time[i]"
+                class="mng-afsc__input--time"
+              >
+                {{ i }}타임
+              </dimi-checkbox>
+            </div>
+          </div>
+
           <div class="mng-afsc__form-row mng-afsc__form-row--submit">
             <div class="mng-afsc__field mng-afsc__field--right">
               <dimi-button @click="addAfterschool">
@@ -444,6 +464,10 @@ export default {
 
   &__input--maxCount {
     width: 6em;
+  }
+
+  &__input--time:not(:last-child) {
+    margin-right: 1rem;
   }
 
   &__input--day {
