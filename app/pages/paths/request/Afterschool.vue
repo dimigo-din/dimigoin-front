@@ -75,6 +75,8 @@ export default {
     },
 
     async toggleApply (item) {
+      if (!this.isAvailable(item)) return
+
       try {
         if (item.status === null && !this.applied) await this.apply(item)
         else await afterschool.cancelAfterschool(item.idx)
@@ -161,7 +163,8 @@ export default {
                 'req-afsc__cell': true,
                 'req-afsc__cell--button': true,
                 'req-afsc__cell--full': item.maxCount === item.count,
-                'req-afsc__cell--applied': item.status === 'request'
+                'req-afsc__cell--applied': item.status === 'request',
+                'req-afsc__cell--disabled': !item.status && !isAvailable(item)
               }"
               :title="item | dateRange"
               @click="toggleApply(item)"
@@ -287,6 +290,10 @@ export default {
 
   &__cell--applied {
     color: $gray-light;
+  }
+
+  &__cell--disabled {
+    cursor: not-allowed;
   }
 
   &__empty {
