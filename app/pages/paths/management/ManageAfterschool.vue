@@ -59,6 +59,7 @@ export default {
         startDate: timestamp.fromDate(this.form.startDate),
         endDate: timestamp.fromDate(this.form.endDate),
         day: days[this.form.day].code,
+        time: this.form.time,
         grade: this.tab + 1,
         maxCount: parseInt(this.form.maxCount),
         teacherName: this.form.teacherName

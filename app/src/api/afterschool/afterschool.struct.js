@@ -20,6 +20,7 @@ export const CreateAfterschoolInput = afterschool => ({
   'request_end_date': afterschool.endDate,
   'day': afterschool.day,
   'time': Object.keys(afterschool.time)
+    .map(v => parseInt(v))
     .filter(v => afterschool.time[v]),
   'target_grade': afterschool.grade,
   'max_of_count': afterschool.maxCount,
