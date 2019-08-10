@@ -1,5 +1,6 @@
 <script>
 import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import days from '@/src/util/days'
 import setTime from '@/src/util/time'
@@ -21,13 +22,17 @@ export default {
       tab: 0,
       checks: [],
       selectAll: false,
-      filter: 0,
+      filter: {
+        day: 0,
+        grade: 0
+      },
       notice: {},
 
       modal: {
         create: false,
         edit: false,
         notice: false,
+        black: false,
         expand: {
           grade: false,
           time: false,
@@ -45,14 +50,13 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       },
 
       mentorings: [
         [], [], []
-      ]
+      ],
+      blacks: []
     }
   },
 
@@ -61,14 +65,26 @@ export default {
       return days
     },
 
+    mentoringFullList () {
+      return [].concat.apply([], Object.values(this.mentorings))
+    },
+
     filteredList () {
-      if (this.filter === 0) return this.mentorings[this.tab]
+      if (this.tab === 3) {
+        if (this.filter.grade === 0) return this.mentoringFullList
+        return this.mentorings[this.filter.grade - 1]
+      }
+      if (this.filter.day === 0) return this.mentorings[this.tab]
 
       return this.mentorings[this.tab].filter(v => v.day ===
-        this.days[this.filter - 1].code)
+        this.days[this.filter.day - 1].code)
     },
 
     currentCount () {
+      if (this.tab === 3) {
+        return this.mentoringFullList.map((mentor) =>
+          mentor.mentoringRequest.length).reduce((a, b) => a + b, 0)
+      }
       return this.mentorings[this.tab].length
     }
   },
@@ -96,6 +112,7 @@ export default {
       this.checks = [...Array(this.mentorings[this.tab].length)].map(() => false)
       this.mentorings = Object.assign({}, this.mentorings)
       this.notice = await mentoringManager.getNotice()
+      this.blacks = await mentoringManager.getBlacklist()
     },
 
     closeModal () {
@@ -110,9 +127,7 @@ export default {
         grade: 0,
         maxUser: 0,
         startTime: new Date(),
-        endTime: new Date(),
-        startDate: new Date(),
-        endDate: new Date()
+        endTime: new Date()
       }
     },
 
@@ -163,21 +178,18 @@ export default {
     },
 
     editMentoring (item) {
-      const time = setTime(item.date)
+      const time = setTime(new Date())
       this.modal.edit = true
       this.form = {
         idx: item.idx,
         teacher: item.teacher.name,
-        day: item.day,
-        date: item.date,
+        day: this.getDayIdxByCode(item.day),
         subject: item.subject,
         room: item.room,
         grade: item.targetGrade - 1,
         maxUser: item.maxUser,
         startTime: time(item.startTime),
-        endTime: time(item.endTime),
-        startDate: item.startDate,
-        endDate: item.endDate
+        endTime: time(item.endTime)
       }
     },
 
@@ -222,6 +234,26 @@ export default {
       }
     },
 
+    async addBlackuser (serial) {
+      await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
+      await this.updateAll()
+      this.form.serial = null
+    },
+
+    async deleteBlackuser (idx) {
+      await mentoringManager.deleteBlackuser(idx)
+      this.$swal('삭제했습니다.', '', 'success')
+      this.updateAll()
+    },
+
+    getDayTextByIdx (idx) {
+      return days.find(v => v.idx === idx).text
+    },
+
+    getDayIdxByCode (code) {
+      return days.find(v => v.code === code).idx
+    },
+
     getDaySmallText (code) {
       return days.find(v => v.code === code).smallText
     }
@@ -247,6 +279,12 @@ export default {
       >
         <span class="icon-edit" />공지사항 관리
       </span>
+      <span
+        class="mng-mentoring__blacklist"
+        @click="modal.black = true"
+      >
+        <span class="icon-alert" />블랙리스트 추가
+      </span>
     </h1>
     <dimi-card
       slot="main"
@@ -254,7 +292,7 @@ export default {
     >
       <dimi-tab
         v-model="tab"
-        :tabs="['1학년', '2학년', '3학년']"
+        :tabs="['1학년', '2학년', '3학년', '신청자']"
       />
       <div
         v-if="pending"
@@ -263,7 +301,7 @@ export default {
         <dimi-loader />
       </div>
       <section
-        v-else
+        v-else-if="tab < 3"
         class="mng-mentoring__section"
       >
         <h2 class="mng-mentoring__title">
@@ -293,7 +331,7 @@ export default {
           </span>
 
           <dimi-dropdown
-            v-model="filter"
+            v-model="filter.day"
             :items="['필터 없음', ...days.map(v => v.text)]"
             class="mng-mentoring__tool mng-mentoring__sort"
           />
@@ -339,6 +377,55 @@ export default {
                 <span class="icon-cross" /> 삭제
               </td>
             </tr>
+          </tbody>
+        </table>
+      </section>
+      <section
+        v-else
+        class="mng-mentoring__section"
+      >
+        <h2 class="mng-mentoring__title">
+          멘토링 신청 현황 ({{ currentCount }}개)
+        </h2>
+
+        <nav class="mng-mentoring__toolbar">
+          <dimi-dropdown
+            v-model="filter.grade"
+            :items="['필터 없음', '1학년', '2학년', '3학년']"
+            class="mng-mentoring__tool mng-mentoring__sort"
+          />
+        </nav>
+
+        <table class="mng-mentoring__list">
+          <tbody>
+            <template
+              v-for="(mentoring, index) in filteredList"
+            >
+              <tr
+                v-for="(item, idx) in mentoring.mentoringRequest"
+                :key="`req-${index}-${idx}`"
+                class="mng-mentoring__row"
+              >
+                <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                  {{ mentoring.teacher.name }} 선생님
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.subject }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ getDaySmallText(mentoring.day) }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.startTime }} ~ {{ mentoring.endTime }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.room }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ item.requester.serial }} {{ item.requester.name }}
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </section>
@@ -394,9 +481,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -406,35 +493,16 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -496,9 +564,9 @@ export default {
             <div class="modal__label">멘토링 시간</div>
             <div
               v-if="!modal.expand.time"
-              class="modal__label-right"
+              class="modal__label--right"
             >
-              {{ form.date | filterDay }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
+              {{ getDayTextByIdx(form.day) }} {{ form.startTime | filterTime }} ~ {{ form.endTime | filterTime }}
             </div>
             <div class="modal__expand">
               <span :class="`icon-arrow-${modal.expand.time ? 'up' : 'down'}`" />
@@ -508,35 +576,17 @@ export default {
             v-if="modal.expand.time"
             class="modal__input"
           >
-            <div class="modal__label--small">날짜</div>
-            <dimi-date-input v-model="form.date" />
+            <div class="modal__label--small modal__label--day">요일</div>
+            <dimi-dropdown
+              v-model="form.day"
+              :items="days.map(v => v.text)"
+              :dropup="true"
+              class="dropdown-day"
+            />
             <div class="modal__label--small">시작 시간</div>
-            <dimi-date-input v-model="form.startTime" />
+            <dimi-time-input v-model="form.startTime" />
             <div class="modal__label--small">종료 시간</div>
-            <dimi-date-input v-model="form.endTime" />
-          </div>
-        </div>
-        <div class="modal__field">
-          <div @click="modal.expand.applyTime = !modal.expand.applyTime">
-            <div class="modal__label">신청 시간</div>
-            <div
-              v-if="!modal.expand.applyTime"
-              class="modal__label-right"
-            >
-              {{ form.startDate | filterDate }} ~ {{ form.endDate | filterDate }}
-            </div>
-            <div class="modal__expand">
-              <span :class="`icon-arrow-${modal.expand.applyTime ? 'up' : 'down'}`" />
-            </div>
-          </div>
-          <div
-            v-if="modal.expand.applyTime"
-            class="modal__input"
-          >
-            <div class="modal__label--small">신청 시작</div>
-            <dimi-date-input v-model="form.startDate" />
-            <div class="modal__label--small">신청 마감</div>
-            <dimi-date-input v-model="form.endDate" />
+            <dimi-time-input v-model="form.endTime" />
           </div>
         </div>
         <span
@@ -569,6 +619,59 @@ export default {
           @click="updateNotice"
         >
           <dimi-button>수정하기</dimi-button>
+        </span>
+      </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.black"
+        class="modal__modal"
+        @close="modal.black = false"
+      >
+        <h3 class="modal__title">
+          블랙리스트 관리
+        </h3>
+        <div class="modal__label">블랙리스트 목록</div>
+        <table
+          v-if="blacks.length"
+          class="mng-mentoring__list"
+        >
+          <tbody>
+            <tr
+              v-for="(user, index) in blacks"
+              :key="index"
+              class="mng-mentoring__row"
+            >
+              <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                {{ `${user.serial} ${user.name}` }}
+              </td>
+              <td
+                class="mng-mentoring__cell mng-mentoring__cell--button-delete"
+                @click="deleteBlackuser(user.userIdx)"
+              >
+                <span class="icon-cross" /> 삭제
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <td
+          v-else
+          class="mng-mentoring__empty"
+        >
+          아직 블랙리스트에 추가된 학생이 없습니다.
+        </td>
+        <div class="modal__field">
+          <div class="modal__label">블랙리스트 추가</div>
+          <dimi-input
+            v-model.number="form.serial"
+            class="modal__input"
+            placeholder="해당 학생 학번"
+          />
+        </div>
+        <span
+          class="modal__create"
+          @click="addBlackuser(form.serial)"
+        >
+          <dimi-button>추가하기</dimi-button>
         </span>
       </dimi-modal>
     </dimi-card>
@@ -615,7 +718,8 @@ export default {
     }
   }
 
-  &__notice {
+  &__notice,
+  &__blacklist {
     margin-top: 1em;
     margin-right: 0.5em;
     color: $orange;
@@ -708,7 +812,7 @@ export default {
     }
   }
 
-  &__cell:not(:last-child):not(:nth-last-child(2)) {
+  &__cell:not(:last-child) {
     padding-right: 1.5em;
   }
 
@@ -736,6 +840,14 @@ export default {
 
   &__input {
     font-size: 16px;
+  }
+
+  &__empty {
+    padding: 24px 0;
+    margin-right: 16px;
+    color: $gray;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 }
 
@@ -781,7 +893,7 @@ export default {
     line-height: 1.15;
   }
 
-  &__label-right {
+  &__label--right {
     display: block;
     margin-right: 20px;
     float: right;
@@ -811,6 +923,11 @@ export default {
   }
 
   .dropdown {
+    font-size: 20px;
+  }
+
+  &__label--day {
+    display: inline-block;
     font-size: 20px;
   }
 }

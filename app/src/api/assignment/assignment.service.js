@@ -1,4 +1,5 @@
 import { ServiceBase } from '@/src/api/service-base'
+import { Assignment, CreateAssignmentInput, EditAssignmentInput } from './assignment.struct'
 
 export class AssignmentManagerService extends ServiceBase {
   /**
@@ -11,7 +12,7 @@ export class AssignmentManagerService extends ServiceBase {
       403: '권한이 없습니다'
     })
 
-    return assignments
+    return assignments.map(Assignment)
   }
 
   /**
@@ -21,6 +22,8 @@ export class AssignmentManagerService extends ServiceBase {
    * @param {Object} assignment
    */
   async createAssignment (assignment) {
+    assignment = CreateAssignmentInput(assignment)
+
     await this.magician(() => this.r.post('/', assignment), {
       403: '권한이 없습니다',
       default: '과제를 추가하던 중 문제가 발생했습니다.'
@@ -39,7 +42,7 @@ export class AssignmentManagerService extends ServiceBase {
       404: '과제를 찾을 수 없습니다.'
     })
 
-    return assignment
+    return Assignment(assignment)
   }
 
   /**
@@ -61,6 +64,8 @@ export class AssignmentManagerService extends ServiceBase {
    * @param {Object} assignment
    */
   async editAssignment (idx, assignment) {
+    assignment = EditAssignmentInput(assignment)
+
     await this.magician(() => this.r.put(`/${idx}`, assignment), {
       403: '권한이 없습니다',
       404: '과제를 찾을 수 없습니다.'
@@ -76,8 +81,7 @@ export class AssignmentSubscriberService extends ServiceBase {
    */
   async getAssignmentList () {
     const { data: { assignments } } = await this.magician(() => this.r.get('/assignee'))
-
-    return assignments
+    return assignments.map(Assignment)
   }
 
   /**
@@ -89,7 +93,7 @@ export class AssignmentSubscriberService extends ServiceBase {
   async getAssignment (idx) {
     const { data: assignment } = await this.magician(() => this.r.get(`/assignee/${idx}`))
 
-    return assignment
+    return Assignment(assignment)
   }
 
   /**
@@ -141,6 +145,8 @@ export class AssignmentPublisherService extends ServiceBase {
    * @param {Object} assignment
    */
   async createAssignment (assignment) {
+    assignment = CreateAssignmentInput(assignment)
+
     await this.magician(() => this.r.post('/', assignment), {
       403: '권한이 없습니다',
       default: '과제를 추가하던 중 문제가 발생했습니다.'
@@ -155,7 +161,7 @@ export class AssignmentPublisherService extends ServiceBase {
   async getAssignmentList () {
     const { data: { assignments } } = await this.magician(() => this.r.get('/assignor'))
 
-    return assignments
+    return assignments.map(Assignment)
   }
 
   /**
@@ -170,7 +176,7 @@ export class AssignmentPublisherService extends ServiceBase {
       404: '과제를 찾을 수 없습니다.'
     })
 
-    return assignment
+    return Assignment(assignment)
   }
 
   /**
@@ -192,6 +198,8 @@ export class AssignmentPublisherService extends ServiceBase {
    * @param {Object} assignment
    */
   async editAssignment (idx, assignment) {
+    assignment = EditAssignmentInput(assignment)
+
     await this.magician(() => this.r.put(`/assignor/${idx}`, assignment), {
       403: '과제에 접근할 권한이 없습니다.',
       404: '과제를 찾을 수 없습니다.'

@@ -7,6 +7,7 @@ const Dets = () => import(/* webpackPrefetch: true, webpackChunkName: "service-r
 const Counsel = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Counsel.vue')
 const Mentoring = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Mentoring.vue')
 const Book = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Book.vue')
+const Etcs = () => import(/* webpackPrefetch: true, webpackChunkName: "service-request" */ '@/pages/paths/request/Etcs.vue')
 
 export default [{
   path: '/request',
@@ -59,6 +60,12 @@ export default [{
       name: 'request/book',
       component: Book,
       meta: { title: '신청 > 도서 신청' }
+    },
+    {
+      path: 'etc',
+      name: 'request/etc',
+      component: Etcs,
+      meta: { title: '신청 > 기타 신청' }
     }
   ]
 }]

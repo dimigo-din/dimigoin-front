@@ -2,6 +2,11 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import { circleRequestor } from '@/src/api/circle'
+import { ingangRequestor } from '@/src/api/ingang'
+import { afterschool } from '@/src/api/afterschool'
+
+import days from '@/src/util/days'
+
 import * as handleCircle from '@/src/util/handle-circle-status'
 
 export default {
@@ -11,7 +16,9 @@ export default {
 
   data () {
     return {
-      circles: []
+      circles: [],
+      ingangs: [],
+      afters: []
     }
   },
 
@@ -27,12 +34,27 @@ export default {
       }
     },
 
-    applied () {
+    isCircleApplied () {
       return [...Object.values(this.circleGroup)].some(a => a.length > 0)
+    },
+
+    isIngangApplied () {
+      return this.appliedIngangs.length > 0
+    },
+
+    appliedIngangs () {
+      return this.ingangs.filter(v => v.status)
+        .map(v => `${v.time}타임`)
+    },
+
+    today () {
+      return days[new Date().getDay() - 1]
     }
   },
 
   async created () {
+    this.ingangs = (await ingangRequestor.getIngangs()).filter(v => v.status)
+    this.afters = await afterschool.getTodayAfterschool()
     this.circles = await circleRequestor.getCircles()
   }
 }
@@ -48,11 +70,39 @@ export default {
       slot="main"
       class="r-info"
     >
+      <span class="r-info__title">
+        <span class="icon-ball" /> 오늘의 방과후
+      </span>
+
+      <table class="r-info__list">
+        <tbody>
+          <tr>
+            <td
+              v-if="afters.length"
+              class="r-info__list-value"
+            >
+              {{ afters.join(', ') }}
+            </td>
+            <td
+              v-else
+              class="r-info__list-value"
+            >
+              오늘은 방과후 수업이 없습니다.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </dimi-card>
+
+    <dimi-card
+      slot="main"
+      class="r-info"
+    >
       <dimi-badge
-        :color="applied ? 'aloes' : 'orange'"
+        :color="isIngangApplied ? 'aloes' : 'orange'"
         class="r-info__badge"
       >
-        <template v-if="applied">
+        <template v-if="isIngangApplied">
           <span class="icon-ok r-info__badge-icon" /> 신청
         </template>
         <template v-else>
@@ -61,7 +111,42 @@ export default {
       </dimi-badge>
 
       <span class="r-info__title">
-        <span class="icon-club" /> 2019년 동아리 가입 신청
+        <span class="icon-internet-class" /> 오늘의 인강실
+      </span>
+
+      <td
+        v-if="appliedIngangs.length"
+        class="r-info__list-value"
+      >
+        {{ appliedIngangs.join(', ') }}
+        인강실
+      </td>
+      <td
+        v-else
+        class="r-info__list-value"
+      >
+        아직 신청한 인강실이 없습니다.
+      </td>
+    </dimi-card>
+
+    <dimi-card
+      slot="main"
+      class="r-info"
+    >
+      <dimi-badge
+        :color="isCircleApplied ? 'aloes' : 'orange'"
+        class="r-info__badge"
+      >
+        <template v-if="isCircleApplied">
+          <span class="icon-ok r-info__badge-icon" /> 신청
+        </template>
+        <template v-else>
+          <span class="icon-cross r-info__badge-icon" /> 미신청
+        </template>
+      </dimi-badge>
+
+      <span class="r-info__title">
+        <span class="icon-club-sm" /> 2019년 동아리 가입 신청
       </span>
 
       <table class="r-info__list">
@@ -106,6 +191,8 @@ export default {
 
 <style lang="scss" scoped>
 .r-info {
+  margin-bottom: 0.5rem;
+
   &__badge {
     display: inline-block;
     margin-right: 10px;

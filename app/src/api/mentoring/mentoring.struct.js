@@ -23,7 +23,7 @@ export const Mentoring = mentoring => ({
 
 export const CreateMentoringInput = mentoring => ({
   'teacher_name': mentoring.teacher,
-  'day': days[new Date(mentoring.date).getDay() - 1].code,
+  'day': days.find(v => v.idx === mentoring.day).code,
   'start_time': format(mentoring.startTime, 'HH:mm'),
   'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
@@ -35,8 +35,7 @@ export const CreateMentoringInput = mentoring => ({
 export const EditMentoringInput = mentoring => ({
   'idx': mentoring.idx,
   'teacher_name': mentoring.teacher,
-  'day': days[new Date(mentoring.date).getDay() - 1].code,
-  'date': timestamp.fromDate(mentoring.date),
+  'day': days.find(v => v.idx === mentoring.day).code,
   'start_time': format(mentoring.startTime, 'HH:mm'),
   'end_time': format(mentoring.endTime, 'HH:mm'),
   'subject': mentoring.subject,
@@ -45,12 +44,25 @@ export const EditMentoringInput = mentoring => ({
   'max_user': mentoring.maxUser
 })
 
+export const BlackUser = user => ({
+  idx: user['idx'],
+  date: user['date'],
+  name: user['name'],
+  serial: user['serial'],
+  userIdx: user['user_idx']
+})
+
+export const CreateBlackUser = user => ({
+  date: user.date,
+  serial: user.serial
+})
+
 export const Notice = notice => ({
   date: timestamp.toDate(notice['date']),
   description: notice['description']
 })
 
 export const CreateNoticeInput = notice => ({
-  date: timestamp.fromDate(notice['date']),
-  description: notice['description']
+  date: timestamp.fromDate(notice.date),
+  description: notice.description
 })
