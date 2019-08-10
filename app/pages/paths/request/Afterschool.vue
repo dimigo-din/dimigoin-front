@@ -40,7 +40,8 @@ export default {
 
     currentList () {
       return this.list.filter(item => item.day === days[this.currentDay].code)
-        .sort((a, b) => a.status ? -1 : 1)
+        .sort((a, b) => a.time.length === 2 ? -1 : 1)
+        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] < b.time[0] ? -1 : 1)
     }
   },
 
