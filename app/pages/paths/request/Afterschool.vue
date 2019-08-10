@@ -40,6 +40,7 @@ export default {
 
     currentList () {
       return this.list.filter(item => item.day === days[this.currentDay].code)
+        .sort((a, b) => a.status ? -1 : 1)
     }
   },
 
