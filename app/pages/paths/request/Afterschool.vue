@@ -40,10 +40,6 @@ export default {
 
     currentList () {
       return this.list.filter(item => item.day === days[this.currentDay].code)
-    },
-
-    applied () {
-      return this.currentList.filter(item => item.status === 'request').length === 2
     }
   },
 
@@ -173,7 +169,7 @@ export default {
                 <span class="icon-cross" /> 신청취소
               </template>
 
-              <template v-else-if="!applied">
+              <template v-else>
                 <template v-if="isAvailable(item)">
                   <span class="icon-ok" /> 신청하기
                 </template><template v-else>
