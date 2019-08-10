@@ -103,8 +103,8 @@ export default {
     },
 
     getAfscTime (item) {
-      if (item.time.length === 2) return '연강'
-      return `${item.time.join()}타임`
+      return item.time.length === 2 ? '연강'
+        : `${item.time.join()}타임`
     }
   }
 }
