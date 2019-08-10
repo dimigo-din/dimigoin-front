@@ -140,6 +140,11 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
+    },
+
+    getAfscTime (item) {
+      if (item.time.length === 2) return '연강'
+      return `${item.time.join()}타임`
     }
   }
 }
@@ -209,6 +214,9 @@ export default {
                 </dimi-checkbox>
               </td>
 
+              <td class="mng-afsc__cell">
+                {{ getAfscTime(item) }}
+              </td>
               <td class="mng-afsc__cell">
                 {{ item.teacherName }}
               </td>
