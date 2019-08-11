@@ -239,9 +239,9 @@ export default {
       try {
         const { grade, startTime, endTime } = this.form
         await mentoringManager.downloadPeriodExcel(
-          grade,
-          timestamp.fromDate(startTime),
-          timestamp.fromDate(endTime)
+          grade + 1,
+          parseInt(timestamp.fromDate(startTime)),
+          parseInt(timestamp.fromDate(endTime))
         )
         this.modal.excel = false
         this.form.grade = 0
