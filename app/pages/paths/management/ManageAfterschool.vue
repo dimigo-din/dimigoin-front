@@ -120,7 +120,7 @@ export default {
 
       if (!answer) return
       try {
-        await Promise.all(Object.keys(this.checks.filter(v => v))
+        await Promise.all(Object.keys(this.checks).filter(v => this.checks[v])
           .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
         await this.$swal('삭제되었습니다', '', 'success')
         await this.updateAll()
