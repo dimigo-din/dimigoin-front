@@ -275,12 +275,6 @@ export default {
     white-space: normal;
   }
 
-  // &__cell--placeholder {
-  //   color: $gray;
-  //   font-size: 25px;
-  //   text-align: center;
-  // }
-
   &__cell--button {
     color: $pink;
     cursor: pointer;
