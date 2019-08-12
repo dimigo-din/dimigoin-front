@@ -49,6 +49,10 @@ export default {
 
     today () {
       return days[new Date().getDay() - 1]
+    },
+
+    formedAfters () {
+      return this.afters.map(v => `${v.time.join(', ')}타임 ${v.name}`)
     }
   },
 
@@ -81,7 +85,7 @@ export default {
               v-if="afters.length"
               class="r-info__list-value"
             >
-              {{ afters.join(', ') }}
+              {{ formedAfters.join(', ') }}
             </td>
             <td
               v-else
