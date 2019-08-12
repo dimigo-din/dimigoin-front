@@ -149,6 +149,9 @@ export default {
             :key="`aftc-${currentDay}-${idx}`"
             class="req-afsc__row"
           >
+            <td class="req-afsc__cell">
+              {{ getAfscTime(item) }}
+            </td>
             <td class="req-afsc__cell req-afsc__cell--name">
               <span class="req-afsc__cell--time">
                 {{ getAfscTime(item) }}
