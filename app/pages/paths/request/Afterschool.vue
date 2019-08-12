@@ -149,10 +149,10 @@ export default {
             :key="`aftc-${currentDay}-${idx}`"
             class="req-afsc__row"
           >
-            <td class="req-afsc__cell">
-              {{ getAfscTime(item) }}
-            </td>
             <td class="req-afsc__cell req-afsc__cell--name">
+              <span class="req-afsc__cell--time">
+                {{ getAfscTime(item) }}
+              </span>
               {{ item.name }}
             </td>
             <td class="req-afsc__cell">
@@ -273,6 +273,15 @@ export default {
     color: $black;
     line-height: 1.5;
     white-space: normal;
+  }
+
+  &__cell--time {
+    padding-right: 24px;
+    color: $gray;
+
+    @include until($tablet) {
+      padding: 0;
+    }
   }
 
   &__cell--button {
