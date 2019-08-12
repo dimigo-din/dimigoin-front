@@ -40,10 +40,8 @@ export default {
 
     currentList () {
       return this.list.filter(item => item.day === days[this.currentDay].code)
-    },
-
-    applied () {
-      return this.currentList.filter(item => item.status === 'request').length === 2
+        .sort((a, b) => a.time.length === 2 ? -1 : 1)
+        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] < b.time[0] ? -1 : 1)
     }
   },
 
@@ -67,7 +65,16 @@ export default {
       }
     },
 
+    isAvailable (item) {
+      return !this.currentList
+        .filter(v => item.time.filter(_v => v.time.includes(_v)).length > 0) // 신청 대상의 타임에 포함되는 방과후 필터링
+        .filter(v => v.status === 'request') // 그 중, 신청한 것만 필터링
+        .length && item.maxCount > item.count // 꽉 차지 않은 방과후만 필터링
+    },
+
     async toggleApply (item) {
+      if (!item.status && !this.isAvailable(item)) return
+
       try {
         if (item.status === null && !this.applied) await this.apply(item)
         else await afterschool.cancelAfterschool(item.idx)
@@ -93,6 +100,11 @@ export default {
         this.captchaResponse = null
         this.$refs.recaptcha.reset()
       }
+    },
+
+    getAfscTime (item) {
+      return item.time.length === 2 ? '연강'
+        : `${item.time.join()}타임`
     }
   }
 }
@@ -137,6 +149,9 @@ export default {
             :key="`aftc-${currentDay}-${idx}`"
             class="req-afsc__row"
           >
+            <td class="req-afsc__cell">
+              {{ getAfscTime(item) }}
+            </td>
             <td class="req-afsc__cell req-afsc__cell--name">
               {{ item.name }}
             </td>
@@ -154,7 +169,8 @@ export default {
                 'req-afsc__cell': true,
                 'req-afsc__cell--button': true,
                 'req-afsc__cell--full': item.maxCount === item.count,
-                'req-afsc__cell--applied': item.status === 'request'
+                'req-afsc__cell--applied': item.status === 'request',
+                'req-afsc__cell--disabled': !item.status && !isAvailable(item)
               }"
               :title="item | dateRange"
               @click="toggleApply(item)"
@@ -163,8 +179,8 @@ export default {
                 <span class="icon-cross" /> 신청취소
               </template>
 
-              <template v-else-if="!applied">
-                <template v-if="item.maxCount > item.count">
+              <template v-else>
+                <template v-if="isAvailable(item)">
                   <span class="icon-ok" /> 신청하기
                 </template><template v-else>
                   <span class="icon-alert" /> 신청불가
@@ -172,11 +188,6 @@ export default {
               </template>
             </td>
           </tr>
-          <!-- <tr
-            v-if="currentList.length === 0"
-            class="req-afsc__row">
-            <td class="req-afsc__cell req-afsc__cell--placeholder">(없음)</td>
-          </tr> -->
         </tbody>
       </table>
 
@@ -285,6 +296,10 @@ export default {
 
   &__cell--applied {
     color: $gray-light;
+  }
+
+  &__cell--disabled {
+    cursor: not-allowed;
   }
 
   &__empty {
