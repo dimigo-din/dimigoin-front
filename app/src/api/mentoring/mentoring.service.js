@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+import timestamp from 'unix-timestamp'
 import { ServiceBase } from '@/src/api/service-base'
 import { Mentoring, Notice, CreateMentoringInput,
   EditMentoringInput, CreateNoticeInput,
@@ -188,7 +190,9 @@ export class MentoringManagerService extends MentoringService {
     })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(new Blob([data]))
-    link.setAttribute('download', `${new Date().getFullYear()}년도 ${grade}학년 멘토링 신청 목록.xlsx`)
+    const startFormat = format(timestamp.toDate(startTime), 'YYYY년도 MM월 DD일')
+    const endFormat = format(timestamp.toDate(endTime), 'YYYY년도 MM월 DD일')
+    link.setAttribute('download', `${startFormat}부터 ${endFormat}까지 ${grade}학년 멘토링 신청 목록.xlsx`)
     document.body.appendChild(link)
     link.click()
     link.remove()
