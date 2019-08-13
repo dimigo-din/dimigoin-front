@@ -20,12 +20,14 @@ export default {
       const endFormat = format(b, 'YYYY년 MM월 DD일 dddd A h시 m분', { locale: koLocale })
 
       return `${startSince}에 시작 (${startFormat})\n${endSince}에 마감 (${endFormat})`
-    }
+    },
+    filterTime: time => format(time, 'HH:mm:ss')
   },
 
   data () {
     return {
       list: [],
+      now: new Date(),
       pending: false,
       currentDay: 0,
       captchaOpen: false,
@@ -47,6 +49,10 @@ export default {
 
   async created () {
     await this.refresh()
+
+    setInterval(() => {
+      this.now = new Date()
+    }, 1000)
   },
 
   methods: {
@@ -65,14 +71,20 @@ export default {
       }
     },
 
+    checkApplyRange (item) {
+      return item.startDate <= this.now && this.now <= item.endDate
+    },
+
     isAvailable (item) {
       return !this.currentList
         .filter(v => item.time.filter(_v => v.time.includes(_v)).length > 0) // 신청 대상의 타임에 포함되는 방과후 필터링
         .filter(v => v.status === 'request') // 그 중, 신청한 것만 필터링
-        .length && item.maxCount > item.count // 꽉 차지 않은 방과후만 필터링
+        .length && item.maxCount > item.count && // 꽉 차지 않은 방과후만 필터링
+        this.checkApplyRange(item) // 신청 기간
     },
 
     async toggleApply (item) {
+      if (!this.checkApplyRange(item)) return
       if (!item.status && !this.isAvailable(item)) return
 
       try {
@@ -119,6 +131,11 @@ export default {
         @click="refresh"
       >
         새로고침
+      </span>
+      <span
+        class="req-afsc__time"
+      >
+        {{ now | filterTime }}
       </span>
     </h1>
 
@@ -170,6 +187,7 @@ export default {
                 'req-afsc__cell--button': true,
                 'req-afsc__cell--full': item.maxCount === item.count,
                 'req-afsc__cell--applied': item.status === 'request',
+                'req-afsc__cell--applied--ended': item.status === 'request' && !checkApplyRange(item),
                 'req-afsc__cell--disabled': !item.status && !isAvailable(item)
               }"
               :title="item | dateRange"
@@ -232,6 +250,13 @@ export default {
   &__main {
     padding-top: 0;
     padding-bottom: 0;
+  }
+
+  &__time {
+    margin-top: 1em;
+    margin-right: 0.5em;
+    float: right;
+    font-size: 16px;
   }
 
   &__refresh {
@@ -304,6 +329,11 @@ export default {
 
   &__cell--applied {
     color: $gray-light;
+  }
+
+  &__cell--applied--ended {
+    color: $gray-light;
+    cursor: not-allowed;
   }
 
   &__cell--disabled {
