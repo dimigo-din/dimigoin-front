@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
 
+import { meal } from '@/src/api/meal'
 import MealGroup from '@/components/MealGroup.vue'
 
 export default {
@@ -17,6 +18,7 @@ export default {
   },
 
   computed: {
+    tomorrow: () => meal.isTomorrow(),
     ...mapGetters(['isLoggedIn'])
   },
 
@@ -91,7 +93,7 @@ export default {
       <dimi-divider horizontal />
       <div class="section">
         <h2 class="section__title">
-          오늘의 급식
+          {{ (tomorrow) ? '내일의 급식' : '오늘의 급식' }}
         </h2>
         <div class="section__content">
           <meal-group />
