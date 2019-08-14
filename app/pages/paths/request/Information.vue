@@ -49,6 +49,10 @@ export default {
 
     today () {
       return days[new Date().getDay() - 1]
+    },
+
+    formedAfters () {
+      return this.afters.map(v => `${v.time.join(', ')}타임 ${v.name}`)
     }
   },
 
@@ -65,6 +69,34 @@ export default {
     <h1 slot="header">
       <span class="icon-list" />나의 신청 현황
     </h1>
+
+    <dimi-card
+      slot="main"
+      class="r-info"
+    >
+      <span class="r-info__title">
+        <span class="icon-ball" /> 오늘의 방과후
+      </span>
+
+      <table class="r-info__list">
+        <tbody>
+          <tr>
+            <td
+              v-if="afters.length"
+              class="r-info__list-value"
+            >
+              {{ formedAfters.join(', ') }}
+            </td>
+            <td
+              v-else
+              class="r-info__list-value"
+            >
+              오늘은 방과후 수업이 없습니다.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </dimi-card>
 
     <dimi-card
       slot="main"
@@ -99,34 +131,6 @@ export default {
       >
         아직 신청한 인강실이 없습니다.
       </td>
-    </dimi-card>
-
-    <dimi-card
-      slot="main"
-      class="r-info"
-    >
-      <span class="r-info__title">
-        <span class="icon-ball" /> 오늘의 방과후
-      </span>
-
-      <table class="r-info__list">
-        <tbody>
-          <tr>
-            <td
-              v-if="afters.length"
-              class="r-info__list-value"
-            >
-              {{ afters.join(', ') }}
-            </td>
-            <td
-              v-else
-              class="r-info__list-value"
-            >
-              오늘은 방과후 수업이 없습니다.
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </dimi-card>
 
     <dimi-card
