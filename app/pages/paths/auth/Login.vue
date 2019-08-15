@@ -93,7 +93,7 @@ export default {
       <dimi-divider horizontal />
       <div class="section">
         <h2 class="section__title">
-          {{ (tomorrow) ? '내일의 급식' : '오늘의 급식' }}
+          {{ tomorrow ? '내일의 급식' : '오늘의 급식' }}
         </h2>
         <div class="section__content">
           <meal-group />
