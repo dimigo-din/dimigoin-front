@@ -6,6 +6,12 @@ export class MealService extends ServiceBase {
     return this.getMeal(new Date())
   }
 
+  isTomorrow (date = new Date()) {
+    const endDate = new Date()
+    endDate.setHours(19, 20)
+    return date > endDate
+  }
+
   async getMeal (date) {
     const formattedDate = format(date, 'YYYY-MM-DD')
 
