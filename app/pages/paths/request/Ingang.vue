@@ -120,7 +120,7 @@ export default {
           class="ingang__card"
         >
           <h2 class="ingang__title">
-            {{ today.getMonth() + 1 }}월 {{ today.getDate() }}일 야간자율학습 {{ ingang.time }}타임
+            {{ ingang.title }}
           </h2>
 
           <div class="ingang__content">
