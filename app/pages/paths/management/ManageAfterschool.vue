@@ -20,7 +20,7 @@ export default {
         name: '',
         startDate: new Date(),
         endDate: new Date(),
-        day: 0,
+        day: {},
         maxCount: null,
         teacherName: '',
         time: {
@@ -58,7 +58,8 @@ export default {
         name: this.form.name,
         startDate: timestamp.fromDate(this.form.startDate),
         endDate: timestamp.fromDate(this.form.endDate),
-        day: days[this.form.day].code,
+        day: Object.keys(this.form.day)
+          .filter(v => this.form.day[v]),
         time: this.form.time,
         grade: this.tab + 1,
         maxCount: parseInt(this.form.maxCount),
@@ -277,18 +278,6 @@ export default {
                 명
               </span>
             </div>
-
-            <div class="mng-afsc__field">
-              <label class="mng-afsc__label">
-                요일
-              </label>
-              <dimi-dropdown
-                v-model="form.day"
-                :items="days.map(v => v.text)"
-                :dropup="true"
-                class="mng-afsc__input mng-afsc__input--day"
-              />
-            </div>
           </div>
 
           <div class="mng-afsc__form-row">
@@ -323,6 +312,22 @@ export default {
                 {{ i }}타임
               </dimi-checkbox>
               <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
+            </div>
+          </div>
+
+          <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">
+                요일
+              </label>
+              <dimi-checkbox
+                v-for="(day, i) in days"
+                :key="`day-${i}`"
+                v-model="form.day[day.code]"
+                class="mng-afsc__input--time"
+              >
+                {{ day.text }}
+              </dimi-checkbox>
             </div>
           </div>
 
