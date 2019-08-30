@@ -16,13 +16,14 @@ export const Afterschool = afterschool => ({
 
 export const CreateAfterschoolInput = afterschool => ({
   'name': afterschool.name,
-  'request_start_date': afterschool.startDate,
-  'request_end_date': afterschool.endDate,
-  'day': afterschool.day,
+  'request_start_date': timestamp.fromDate(afterschool.startDate),
+  'request_end_date': timestamp.fromDate(afterschool.endDate),
+  'day': Object.keys(afterschool.day)
+    .filter(v => afterschool.day[v]),
   'time': Object.keys(afterschool.time)
     .map(v => parseInt(v))
     .filter(v => afterschool.time[v]),
   'target_grade': afterschool.grade,
-  'max_of_count': afterschool.maxCount,
+  'max_of_count': parseInt(afterschool.maxCount),
   'teacher_name': afterschool.teacherName
 })

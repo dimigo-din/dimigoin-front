@@ -2,7 +2,6 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import days from '@/src/util/days'
-import timestamp from 'unix-timestamp'
 import { afterschool } from '@/src/api/afterschool'
 
 export default {
@@ -56,13 +55,12 @@ export default {
     afterschoolInput () {
       return {
         name: this.form.name,
-        startDate: timestamp.fromDate(this.form.startDate),
-        endDate: timestamp.fromDate(this.form.endDate),
-        day: Object.keys(this.form.day)
-          .filter(v => this.form.day[v]),
+        startDate: this.form.startDate,
+        endDate: this.form.endDate,
+        day: this.form.day,
         time: this.form.time,
         grade: this.tab + 1,
-        maxCount: parseInt(this.form.maxCount),
+        maxCount: this.form.maxCount,
         teacherName: this.form.teacherName
       }
     }
