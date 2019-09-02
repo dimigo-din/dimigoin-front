@@ -4,6 +4,7 @@ import days from '@/src/util/days'
 
 export const Ingang = ingang => ({
   idx: ingang['idx'],
+  title: ingang['title'],
   grade: ingang['target_grade'],
   klass: ingang['klass'],
   day: ingang['day'],

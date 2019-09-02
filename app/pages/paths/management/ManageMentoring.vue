@@ -22,12 +22,16 @@ export default {
       tab: 0,
       checks: [],
       selectAll: false,
-      filter: 0,
+      filter: {
+        day: 0,
+        grade: 0
+      },
       notice: {},
 
       modal: {
         create: false,
         edit: false,
+        excel: false,
         notice: false,
         black: false,
         expand: {
@@ -62,14 +66,26 @@ export default {
       return days
     },
 
+    mentoringFullList () {
+      return [].concat.apply([], Object.values(this.mentorings))
+    },
+
     filteredList () {
-      if (this.filter === 0) return this.mentorings[this.tab]
+      if (this.tab === 3) {
+        if (this.filter.grade === 0) return this.mentoringFullList
+        return this.mentorings[this.filter.grade - 1]
+      }
+      if (this.filter.day === 0) return this.mentorings[this.tab]
 
       return this.mentorings[this.tab].filter(v => v.day ===
-        this.days[this.filter - 1].code)
+        this.days[this.filter.day - 1].code)
     },
 
     currentCount () {
+      if (this.tab === 3) {
+        return this.mentoringFullList.map((mentor) =>
+          mentor.mentoringRequest.length).reduce((a, b) => a + b, 0)
+      }
       return this.mentorings[this.tab].length
     }
   },
@@ -219,6 +235,22 @@ export default {
       }
     },
 
+    async downloadPeriodExcel () {
+      try {
+        const { grade, startTime, endTime } = this.form
+        await mentoringManager.downloadPeriodExcel(
+          grade + 1,
+          parseInt(timestamp.fromDate(startTime)),
+          parseInt(timestamp.fromDate(endTime))
+        )
+        this.modal.excel = false
+        this.form.grade = 0
+        this.form.startTime = this.form.endTime = new Date()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async addBlackuser (serial) {
       await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
       await this.updateAll()
@@ -277,7 +309,7 @@ export default {
     >
       <dimi-tab
         v-model="tab"
-        :tabs="['1학년', '2학년', '3학년']"
+        :tabs="['1학년', '2학년', '3학년', '신청자']"
       />
       <div
         v-if="pending"
@@ -286,7 +318,7 @@ export default {
         <dimi-loader />
       </div>
       <section
-        v-else
+        v-else-if="tab < 3"
         class="mng-mentoring__section"
       >
         <h2 class="mng-mentoring__title">
@@ -316,7 +348,7 @@ export default {
           </span>
 
           <dimi-dropdown
-            v-model="filter"
+            v-model="filter.day"
             :items="['필터 없음', ...days.map(v => v.text)]"
             class="mng-mentoring__tool mng-mentoring__sort"
           />
@@ -362,6 +394,61 @@ export default {
                 <span class="icon-cross" /> 삭제
               </td>
             </tr>
+          </tbody>
+        </table>
+      </section>
+      <section
+        v-else
+        class="mng-mentoring__section"
+      >
+        <h2 class="mng-mentoring__title">
+          멘토링 신청 현황 ({{ currentCount }}개)
+        </h2>
+
+        <nav class="mng-mentoring__toolbar">
+          <dimi-dropdown
+            v-model="filter.grade"
+            :items="['필터 없음', '1학년', '2학년', '3학년']"
+            class="mng-mentoring__tool mng-mentoring__sort"
+          />
+          <span
+            class="mng-mentoring__excel"
+            @click="modal.excel = true"
+          >
+            <span class="icon-long-arrow-down" />엑셀 다운로드
+          </span>
+        </nav>
+
+        <table class="mng-mentoring__list">
+          <tbody>
+            <template
+              v-for="(mentoring, index) in filteredList"
+            >
+              <tr
+                v-for="(item, idx) in mentoring.mentoringRequest"
+                :key="`req-${index}-${idx}`"
+                class="mng-mentoring__row"
+              >
+                <td class="mng-mentoring__cell mng-mentoring__cell--name">
+                  {{ mentoring.teacher.name }} 선생님
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.subject }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ getDaySmallText(mentoring.day) }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.startTime }} ~ {{ mentoring.endTime }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ mentoring.room }}
+                </td>
+                <td class="mng-mentoring__cell">
+                  {{ item.requester.serial }} {{ item.requester.name }}
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </section>
@@ -610,6 +697,38 @@ export default {
           <dimi-button>추가하기</dimi-button>
         </span>
       </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.excel"
+        class="modal__excel"
+        @close="modal.excel = false"
+      >
+        <h3 class="modal__title">
+          멘토링 신청자 엑셀 다운로드
+        </h3>
+        <div class="modal__field">
+          <div class="modal__label">학년</div>
+          <dimi-dropdown
+            v-model="form.grade"
+            :items="[1, 2, 3]"
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">조회할 기간</div>
+          <div class="modal__input">
+            <div class="modal__label--small">시작 시간</div>
+            <dimi-date-input v-model="form.startTime" />
+            <div class="modal__label--small">종료 시간</div>
+            <dimi-date-input v-model="form.endTime" />
+          </div>
+        </div>
+        <span
+          class="modal__create"
+          @click="downloadPeriodExcel()"
+        >
+          <dimi-button>다운로드</dimi-button>
+        </span>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
@@ -748,7 +867,7 @@ export default {
     }
   }
 
-  &__cell:not(:last-child):not(:nth-last-child(2)) {
+  &__cell:not(:last-child) {
     padding-right: 1.5em;
   }
 

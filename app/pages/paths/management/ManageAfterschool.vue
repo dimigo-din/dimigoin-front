@@ -22,7 +22,11 @@ export default {
         endDate: new Date(),
         day: 0,
         maxCount: null,
-        teacherName: ''
+        teacherName: '',
+        time: {
+          1: false,
+          2: false
+        }
       },
 
       afterschools: [
@@ -55,6 +59,7 @@ export default {
         startDate: timestamp.fromDate(this.form.startDate),
         endDate: timestamp.fromDate(this.form.endDate),
         day: days[this.form.day].code,
+        time: this.form.time,
         grade: this.tab + 1,
         maxCount: parseInt(this.form.maxCount),
         teacherName: this.form.teacherName
@@ -120,7 +125,7 @@ export default {
 
       if (!answer) return
       try {
-        await Promise.all(Object.keys(this.checks.filter(v => v))
+        await Promise.all(Object.keys(this.checks).filter(v => this.checks[v])
           .map(key => afterschool.deleteAfterschool(this.filteredList[key].idx)))
         await this.$swal('삭제되었습니다', '', 'success')
         await this.updateAll()
@@ -135,6 +140,11 @@ export default {
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
+    },
+
+    getAfscTime (item) {
+      return item.time.length === 2 ? '연강'
+        : `${item.time.join()}타임`
     }
   }
 }
@@ -204,6 +214,9 @@ export default {
                 </dimi-checkbox>
               </td>
 
+              <td class="mng-afsc__cell">
+                {{ getAfscTime(item) }}
+              </td>
               <td class="mng-afsc__cell">
                 {{ item.teacherName }}
               </td>
@@ -293,6 +306,23 @@ export default {
                 신청 마감
               </label>
               <dimi-date-input v-model="form.endDate" />
+            </div>
+          </div>
+
+          <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">
+                타임
+              </label>
+              <dimi-checkbox
+                v-for="i in 2"
+                :key="`time-${i}`"
+                v-model="form.time[i]"
+                class="mng-afsc__input--time"
+              >
+                {{ i }}타임
+              </dimi-checkbox>
+              <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
             </div>
           </div>
 
@@ -446,11 +476,19 @@ export default {
     width: 6em;
   }
 
+  &__input--time:not(:last-child) {
+    margin-right: 1rem;
+  }
+
   &__input--day {
     padding: 0.75em 1em;
     border: 0;
     background-color: $gray-lighten;
     border-radius: 20px;
+  }
+
+  &__helper {
+    margin-left: 0.5rem;
   }
 }
 </style>
