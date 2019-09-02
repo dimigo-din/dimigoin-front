@@ -31,6 +31,7 @@ export default {
       modal: {
         create: false,
         edit: false,
+        excel: false,
         notice: false,
         black: false,
         expand: {
@@ -234,6 +235,22 @@ export default {
       }
     },
 
+    async downloadPeriodExcel () {
+      try {
+        const { grade, startTime, endTime } = this.form
+        await mentoringManager.downloadPeriodExcel(
+          grade + 1,
+          parseInt(timestamp.fromDate(startTime)),
+          parseInt(timestamp.fromDate(endTime))
+        )
+        this.modal.excel = false
+        this.form.grade = 0
+        this.form.startTime = this.form.endTime = new Date()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async addBlackuser (serial) {
       await mentoringManager.addBlackuser(serial, timestamp.fromDate(new Date()))
       await this.updateAll()
@@ -394,6 +411,12 @@ export default {
             :items="['필터 없음', '1학년', '2학년', '3학년']"
             class="mng-mentoring__tool mng-mentoring__sort"
           />
+          <span
+            class="mng-mentoring__excel"
+            @click="modal.excel = true"
+          >
+            <span class="icon-long-arrow-down" />엑셀 다운로드
+          </span>
         </nav>
 
         <table class="mng-mentoring__list">
@@ -672,6 +695,38 @@ export default {
           @click="addBlackuser(form.serial)"
         >
           <dimi-button>추가하기</dimi-button>
+        </span>
+      </dimi-modal>
+
+      <dimi-modal
+        :opened="modal.excel"
+        class="modal__excel"
+        @close="modal.excel = false"
+      >
+        <h3 class="modal__title">
+          멘토링 신청자 엑셀 다운로드
+        </h3>
+        <div class="modal__field">
+          <div class="modal__label">학년</div>
+          <dimi-dropdown
+            v-model="form.grade"
+            :items="[1, 2, 3]"
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__label">조회할 기간</div>
+          <div class="modal__input">
+            <div class="modal__label--small">시작 시간</div>
+            <dimi-date-input v-model="form.startTime" />
+            <div class="modal__label--small">종료 시간</div>
+            <dimi-date-input v-model="form.endTime" />
+          </div>
+        </div>
+        <span
+          class="modal__create"
+          @click="downloadPeriodExcel()"
+        >
+          <dimi-button>다운로드</dimi-button>
         </span>
       </dimi-modal>
     </dimi-card>
