@@ -95,7 +95,8 @@ export class IngangRequestorService extends IngangService {
   async cancelIngang (idx) {
     await this.magician(() => this.r.delete(`/${idx}`), {
       403: '모든 티켓을 사용했습니다.',
-      404: '존재하지 않는 인강실 신청입니다.'
+      404: '존재하지 않는 인강실 신청입니다.',
+      405: '취소 기한이 지났습니다.'
     })
   }
 }
