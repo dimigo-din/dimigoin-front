@@ -83,6 +83,7 @@ export class IngangRequestorService extends IngangService {
       403: '모든 티켓을 사용했습니다.',
       404: '존재하지 않는 인강실 신청입니다.',
       405: '신청 기간이 아닙니다.',
+      406: '딴짓하다 걸리셨네요?',
       409: '이미 신청을 완료했거나 인원이 꽉 찼습니다.'
     })
   }
