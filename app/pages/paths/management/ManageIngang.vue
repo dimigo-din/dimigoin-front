@@ -116,7 +116,7 @@ export default {
     >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['엑셀', '공지', '인강실', '신청자']"
+        :tabs="['엑셀', '공지', '인강실', '사용자']"
       />
       <div
         v-if="pending"
@@ -301,6 +301,39 @@ export default {
                 </tr>
               </tbody>
             </table>
+          </section>
+          <section class="mng-ing__section">
+            <h2 class="mng-ing__title">
+              블랙리스트 추가
+            </h2>
+            <div class="mng-ing__form">
+              <div class="mng-ing__form-row">
+                <div class="mng-ing__field">
+                  <label class="mng-ing__label">
+                    학번
+                  </label>
+                  <dimi-input
+                    class="mng-ing__input"
+                  />
+                </div>
+                <div class="mng-ing__field">
+                  <label class="mng-ing__label">
+                    해제 일
+                  </label>
+                  <dimi-input
+                    class="mng-ing__input"
+                  />
+                </div>
+              </div>
+
+              <div class="mng-ing__form-row mng-ing__form-row--submit">
+                <div class="mng-ing__field mng-ing__field--right">
+                  <dimi-button @click="addIngang">
+                    추가하기
+                  </dimi-button>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </template>
