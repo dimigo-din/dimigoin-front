@@ -350,7 +350,7 @@ export default {
               <div class="mng-ing__form-row">
                 <div class="mng-ing__field">
                   <label class="mng-ing__label">
-                    정지일
+                    해제 날짜
                   </label>
                   <dimi-date-input
                     v-model="black.date"
