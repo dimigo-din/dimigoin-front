@@ -31,7 +31,7 @@ export default {
     black: {
       serial: null,
       count: null,
-      date: null
+      date: new Date()
     }
   }),
 
@@ -90,7 +90,7 @@ export default {
         this.black = {
           serial: null,
           count: null,
-          date: null
+          date: new Date()
         }
         this.$swal('성공!', '추가되었습니다.', 'success')
       } catch (err) {
@@ -339,21 +339,22 @@ export default {
                 </div>
                 <div class="mng-ing__field">
                   <label class="mng-ing__label">
-                    적발 회수
+                    적발 횟수
                   </label>
                   <dimi-input
                     v-model.number="black.count"
                     class="mng-ing__input"
                   />
                 </div>
+              </div>
+              <div class="mng-ing__form-row">
                 <div class="mng-ing__field">
                   <label class="mng-ing__label">
-                    기간
+                    정지일
                   </label>
-                  <dimi-input
-                    v-model.number="black.date"
+                  <dimi-date-input
+                    v-model="black.date"
                     class="mng-ing__input"
-                    placeholder="오늘로부터 정지 일 수"
                   />
                 </div>
               </div>

@@ -36,7 +36,7 @@ export const IngangApplier = user => ({
 
 export const CreateIngangBlack = black => ({
   'count': black.count,
-  'date': black.date
+  'date': timestamp.fromDate(black.date)
 })
 
 export const CreateIngangInput = ingang => ({
