@@ -2,7 +2,7 @@ import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
 
 import { format } from 'date-fns'
-import { Ingang, Status, CreateIngangInput, IngangApplier, Announcement } from './ingang.struct'
+import { Ingang, Status, CreateIngangInput, IngangApplier, Announcement, CreateIngangBlack } from './ingang.struct'
 
 function tempValidation (ingang) {
   const keys = [
@@ -150,6 +150,15 @@ export class IngangManagerService extends IngangService {
   async addAnnouncement (notice) {
     await this.magician(() => this.r.post(`/notice`, notice), {
       403: '권한이 없습니다.'
+    })
+  }
+
+  async createIngangBlack (form) {
+    await this.magician(() => this.r.post(`/blacklist/${form.serial}`,
+      CreateIngangBlack(form)), {
+      403: '권한이 없습니다.',
+      404: '해당 사용자가 존재하지 않습니다.',
+      500: '알 수 없는 오류가 발생했습니다.'
     })
   }
 
