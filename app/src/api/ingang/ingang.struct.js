@@ -34,6 +34,11 @@ export const IngangApplier = user => ({
   number: user['number']
 })
 
+export const CreateIngangBlack = black => ({
+  'count': black.count,
+  'date': black.date
+})
+
 export const CreateIngangInput = ingang => ({
   'target_grade': ingang.grade,
   'day': days[new Date(ingang.date).getDay() - 1].code,
