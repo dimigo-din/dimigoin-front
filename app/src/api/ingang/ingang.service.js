@@ -2,7 +2,7 @@ import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
 
 import { format } from 'date-fns'
-import { Ingang, Status, CreateIngangInput, IngangApplier, Announcement } from './ingang.struct'
+import { Ingang, Status, CreateIngangInput, IngangApplier, Announcement, CreateIngangBlack } from './ingang.struct'
 
 function tempValidation (ingang) {
   const keys = [
@@ -83,6 +83,7 @@ export class IngangRequestorService extends IngangService {
       403: '모든 티켓을 사용했습니다.',
       404: '존재하지 않는 인강실 신청입니다.',
       405: '신청 기간이 아닙니다.',
+      406: '딴짓하다 걸리셨네요?',
       409: '이미 신청을 완료했거나 인원이 꽉 찼습니다.'
     })
   }
@@ -149,6 +150,15 @@ export class IngangManagerService extends IngangService {
   async addAnnouncement (notice) {
     await this.magician(() => this.r.post(`/notice`, notice), {
       403: '권한이 없습니다.'
+    })
+  }
+
+  async createIngangBlack (form) {
+    await this.magician(() => this.r.post(`/blacklist/${form.serial}`,
+      CreateIngangBlack(form)), {
+      403: '권한이 없습니다.',
+      404: '해당 사용자가 존재하지 않습니다.',
+      500: '알 수 없는 오류가 발생했습니다.'
     })
   }
 
