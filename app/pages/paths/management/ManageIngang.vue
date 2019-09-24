@@ -30,7 +30,13 @@ export default {
   }),
 
   computed: {
-    days: () => days
+    days: () => days,
+    userFirst () {
+      return this.users.filter(v => v.time === 1)
+    },
+    userSecond () {
+      return this.users.filter(v => v.time === 2)
+    }
   },
 
   async created () {
@@ -286,38 +292,48 @@ export default {
         >
           <section class="mng-ing__section">
             <div class="mng-ing__list-wrap">
-              <table class="mng-ing__list">
-                <tbody>
-                  <tr
-                    v-for="(user, index) in users"
-                    :key="index"
-                    class="mng-ing__row"
-                  >
-                    <td class="mng-ing__cell">
-                      {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
-                    </td>
-                    <td class="mng-ing__cell mng-ing__cell--time">
-                      {{ userAppliedTimes(user.serial).join(', ') }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <table class="mng-ing__list">
-                <tbody>
-                  <tr
-                    v-for="(user, index) in users"
-                    :key="index"
-                    class="mng-ing__row"
-                  >
-                    <td class="mng-ing__cell">
-                      {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
-                    </td>
-                    <td class="mng-ing__cell mng-ing__cell--time">
-                      {{ userAppliedTimes(user.serial).join(', ') }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="mng-ing__list-section">
+                <h2 class="mng-ing__list-title">
+                  1타임 인강실 신청자 목록
+                </h2>
+                <table class="mng-ing__list">
+                  <tbody>
+                    <tr
+                      v-for="(user, index) in userFirst"
+                      :key="index"
+                      class="mng-ing__row"
+                    >
+                      <td class="mng-ing__cell">
+                        {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                      </td>
+                      <td class="mng-ing__cell mng-ing__cell--time">
+                        {{ userAppliedTimes(user.serial).join(', ') }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mng-ing__list-section">
+                <h2 class="mng-ing__list-title">
+                  2타임 인강실 신청자 목록
+                </h2>
+                <table class="mng-ing__list">
+                  <tbody>
+                    <tr
+                      v-for="(user, index) in userSecond"
+                      :key="index"
+                      class="mng-ing__row"
+                    >
+                      <td class="mng-ing__cell">
+                        {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                      </td>
+                      <td class="mng-ing__cell mng-ing__cell--time">
+                        {{ userAppliedTimes(user.serial).join(', ') }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
         </div>
@@ -359,6 +375,22 @@ export default {
   &__list-wrap {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    padding-bottom: 1.5rem;
+  }
+
+  &__list-section {
+    display: flex;
+    width: 48%;
+    flex-direction: column;
+  }
+
+  &__list-title {
+    padding: 24px;
+    padding-top: 0;
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
   }
 
   &__list {
@@ -368,6 +400,10 @@ export default {
     color: $gray !important;
     font-weight: $font-weight-bold;
     overflow-y: auto;
+  }
+
+  &__list::-webkit-scrollbar {
+    display: none;
   }
 
   &__row:not(:last-child) {
