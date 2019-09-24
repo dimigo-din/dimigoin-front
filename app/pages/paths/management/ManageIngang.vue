@@ -54,7 +54,7 @@ export default {
 
     async updateAppliers () {
       this.applies = await ingangManager.getIngangAppliers()
-      this.users = this.applies
+      this.users = this.applies.sort((a, b) => a.grade - b.grade)
       this.users = this.users.filter((v, i) => {
         return i === this.users.findIndex(_v => v.serial === _v.serial)
       })
