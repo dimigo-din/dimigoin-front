@@ -104,7 +104,8 @@ export default {
     },
 
     getDayTextByCode (code) {
-      return code.map(v => days.find(_v => _v.code === v).smallText).join(',')
+      return code.map(v =>
+        days.find(_v => _v.code === v).smallText).join(',')
     },
 
     async deleteChecked () {
