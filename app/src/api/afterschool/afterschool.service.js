@@ -20,6 +20,18 @@ export class AfterschoolService extends ServiceBase {
     })
   }
 
+  async editAfterschool (afterschool) {
+    const idx = afterschool.idx
+    afterschool = CreateAfterschoolInput(afterschool)
+    tempValidation(afterschool)
+    await this.magician(() => this.r.post(`/${idx}`, afterschool), {
+      400: '잘못된 입력입니다.',
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 방과 후입니다.',
+      405: '수정된 사항이 없습니다.'
+    })
+  }
+
   async getTodayAfterschool () {
     const { data: { afterschools } } = await this.magician(() => this.r.get('/student/today'))
     return afterschools.map(Afterschool)
