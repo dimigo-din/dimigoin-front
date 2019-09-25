@@ -44,8 +44,7 @@ export default {
     filteredList () {
       if (this.filter === 0) return this.afterschools[this.tab]
 
-      return this.afterschools[this.tab].filter(v => v.day ===
-        this.days[this.filter - 1].code)
+      return this.afterschools[this.tab]
     },
 
     currentCount () {
@@ -105,8 +104,7 @@ export default {
     },
 
     getDayTextByCode (code) {
-      if (!code) return '?'
-      return this.days.filter(v => v.code === code)[0].text
+      return code.map(v => days.find(_v => _v.code === v).smallText).join(',')
     },
 
     async deleteChecked () {
