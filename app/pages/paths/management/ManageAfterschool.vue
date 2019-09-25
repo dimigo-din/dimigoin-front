@@ -33,9 +33,10 @@ export default {
 
       modal: {
         show: false,
-        afsc: {},
-        day: Array(6).fill(false),
-        time: [false, false]
+        afsc: {
+          day: Array(6).fill(false),
+          time: [false, false]
+        }
       }
     }
   },
@@ -153,12 +154,15 @@ export default {
 
     openModal (item) {
       this.modal.show = true
-      this.modal.afsc = item
+      this.modal.afsc = Object.assign({}, item, {
+        day: Array(6).fill(false),
+        time: [false, false]
+      })
       item.day.forEach(v => {
-        this.modal.day[this.getDayIdxByCode(v)] = true
+        this.modal.afsc.day[this.getDayIdxByCode(v)] = true
       })
       item.time.forEach(v => {
-        this.modal.time[v - 1] = true
+        this.modal.afsc.time[v - 1] = true
       })
     },
 
@@ -423,7 +427,7 @@ export default {
           <dimi-checkbox
             v-for="(day, i) in days"
             :key="`day-${i}`"
-            v-model="modal.day[i]"
+            v-model="modal.afsc.day[i]"
             class="mng-afsc__input--time"
           >
             {{ day.text }}
@@ -436,7 +440,7 @@ export default {
           <dimi-checkbox
             v-for="i in 2"
             :key="`time-${i}`"
-            v-model="modal.time[i-1]"
+            v-model="modal.afsc.time[i-1]"
             class="modal__input--time"
           >
             {{ i }}타임
