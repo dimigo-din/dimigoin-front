@@ -19,13 +19,10 @@ export default {
         name: '',
         startDate: new Date(),
         endDate: new Date(),
-        day: {},
+        day: [],
         maxCount: null,
         teacherName: '',
-        time: {
-          1: false,
-          2: false
-        }
+        time: []
       },
 
       afterschools: [
@@ -36,15 +33,15 @@ export default {
 
       modal: {
         show: false,
-        afsc: {}
+        afsc: {},
+        day: Array(6).fill(false),
+        time: [false, false]
       }
     }
   },
 
   computed: {
-    days () {
-      return days
-    },
+    days: () => days,
 
     filteredList () {
       if (this.filter === 0) return this.afterschools[this.tab]
@@ -113,6 +110,10 @@ export default {
         days.find(_v => _v.code === v).smallText).join(',')
     },
 
+    getDayIdxByCode (code) {
+      return days.find(v => v.code === code).idx
+    },
+
     async deleteChecked () {
       if (!this.checks.filter(v => v).length) return
       const { value: answer } = await this.$swal({
@@ -153,6 +154,12 @@ export default {
     openModal (item) {
       this.modal.show = true
       this.modal.afsc = item
+      item.day.forEach(v => {
+        this.modal.day[this.getDayIdxByCode(v)] = true
+      })
+      item.time.forEach(v => {
+        this.modal.time[v - 1] = true
+      })
     },
 
     closeModal () {
@@ -416,6 +423,7 @@ export default {
           <dimi-checkbox
             v-for="(day, i) in days"
             :key="`day-${i}`"
+            v-model="modal.day[i]"
             class="mng-afsc__input--time"
           >
             {{ day.text }}
@@ -428,6 +436,7 @@ export default {
           <dimi-checkbox
             v-for="i in 2"
             :key="`time-${i}`"
+            v-model="modal.time[i-1]"
             class="modal__input--time"
           >
             {{ i }}타임
