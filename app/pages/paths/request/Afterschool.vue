@@ -41,9 +41,9 @@ export default {
     sitekey () { return process.env.RECAPTCHA_SITE_KEY },
 
     currentList () {
-      return this.list.filter(item => item.day === days[this.currentDay].code)
+      return this.list.filter(item => item.day.includes(days[this.currentDay].code))
         .sort((a, b) => a.time.length === 2 ? -1 : 1)
-        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] < b.time[0] ? -1 : 1)
+        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] - b.time[0])
     }
   },
 
