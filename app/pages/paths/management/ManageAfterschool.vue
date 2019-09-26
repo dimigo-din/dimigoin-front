@@ -168,7 +168,6 @@ export default {
 
     closeModal () {
       this.modal.show = false
-      this.modal.afsc = {}
     },
 
     async editAfterschool () {
