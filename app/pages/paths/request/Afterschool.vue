@@ -41,9 +41,9 @@ export default {
     sitekey () { return process.env.RECAPTCHA_SITE_KEY },
 
     currentList () {
-      return this.list.filter(item => item.day === days[this.currentDay].code)
+      return this.list.filter(item => item.day.includes(days[this.currentDay].code))
         .sort((a, b) => a.time.length === 2 ? -1 : 1)
-        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] < b.time[0] ? -1 : 1)
+        .sort((a, b) => a.time.length === 2 ? -1 : a.time[0] - b.time[0])
     }
   },
 
@@ -76,7 +76,7 @@ export default {
     },
 
     isAvailable (item) {
-      return !this.currentList
+      return !this.list.filter(v => item.day.filter(_v => v.day.includes(_v)).length > 0) // 날짜가 겹치는 방과후 모두 필터링
         .filter(v => item.time.filter(_v => v.time.includes(_v)).length > 0) // 신청 대상의 타임에 포함되는 방과후 필터링
         .filter(v => v.status === 'request') // 그 중, 신청한 것만 필터링
         .length && item.maxCount > item.count && // 꽉 차지 않은 방과후만 필터링

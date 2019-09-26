@@ -1,5 +1,7 @@
 import timestamp from 'unix-timestamp'
 
+import days from '@/src/util/days'
+
 export const Afterschool = afterschool => ({
   idx: afterschool['idx'],
   name: afterschool['name'],
@@ -16,13 +18,12 @@ export const Afterschool = afterschool => ({
 
 export const CreateAfterschoolInput = afterschool => ({
   'name': afterschool.name,
-  'request_start_date': afterschool.startDate,
-  'request_end_date': afterschool.endDate,
-  'day': afterschool.day,
-  'time': Object.keys(afterschool.time)
-    .map(v => parseInt(v))
-    .filter(v => afterschool.time[v]),
+  'request_start_date': timestamp.fromDate(afterschool.startDate),
+  'request_end_date': timestamp.fromDate(afterschool.endDate),
+  'day': afterschool.day.reduce((out, v, idx) =>
+    v ? out.concat(days[idx].code) : out, []),
+  'time': afterschool.time.reduce((out, v, idx) => v ? out.concat(idx + 1) : out, []),
   'target_grade': afterschool.grade,
-  'max_of_count': afterschool.maxCount,
+  'max_of_count': parseInt(afterschool.maxCount),
   'teacher_name': afterschool.teacherName
 })
