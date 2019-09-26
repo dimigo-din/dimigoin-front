@@ -19,10 +19,10 @@ export default {
         name: '',
         startDate: new Date(),
         endDate: new Date(),
-        day: [],
+        day: Array(6).fill(false),
         maxCount: null,
         teacherName: '',
-        time: []
+        time: [false, false]
       },
 
       afterschools: [
@@ -341,7 +341,7 @@ export default {
               <dimi-checkbox
                 v-for="i in 2"
                 :key="`time-${i}`"
-                v-model="form.time[i]"
+                v-model="form.time[i-1]"
                 class="mng-afsc__input--time"
               >
                 {{ i }}타임
@@ -358,7 +358,7 @@ export default {
               <dimi-checkbox
                 v-for="(day, i) in days"
                 :key="`day-${i}`"
-                v-model="form.day[day.code]"
+                v-model="form.day[i]"
                 class="mng-afsc__input--time"
               >
                 {{ day.text }}
