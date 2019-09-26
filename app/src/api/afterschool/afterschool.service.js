@@ -24,7 +24,7 @@ export class AfterschoolService extends ServiceBase {
     const idx = afterschool.idx
     afterschool = CreateAfterschoolInput(afterschool)
     tempValidation(afterschool)
-    await this.magician(() => this.r.post(`/${idx}`, afterschool), {
+    await this.magician(() => this.r.put(`/${idx}`, afterschool), {
       400: '잘못된 입력입니다.',
       403: '권한이 없습니다.',
       404: '존재하지 않는 방과 후입니다.',
