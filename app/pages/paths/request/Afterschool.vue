@@ -76,7 +76,7 @@ export default {
     },
 
     isAvailable (item) {
-      return !this.currentList
+      return !this.list.filter(v => item.day.filter(_v => v.day.includes(_v)).length > 0) // 날짜가 겹치는 방과후 모두 필터링
         .filter(v => item.time.filter(_v => v.time.includes(_v)).length > 0) // 신청 대상의 타임에 포함되는 방과후 필터링
         .filter(v => v.status === 'request') // 그 중, 신청한 것만 필터링
         .length && item.maxCount > item.count && // 꽉 차지 않은 방과후만 필터링
