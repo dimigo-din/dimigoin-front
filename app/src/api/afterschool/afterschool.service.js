@@ -1,6 +1,6 @@
 import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
-import { Afterschool, CreateAfterschoolInput } from './afterschool.struct'
+import { Afterschool, CreateAfterschoolInput, ChangeRequestTime } from './afterschool.struct'
 
 function tempValidation (afterschool) {
   const keys = ['name', 'request_start_date', 'request_end_date', 'time', 'target_grade', 'max_of_count', 'teacher_name']
@@ -69,6 +69,13 @@ export class AfterschoolService extends ServiceBase {
   async deleteAfterschool (idx) {
     await this.magician(() => this.r.delete(`/${idx}`), {
       404: '존재하지 않는 방과후 신청입니다.'
+    })
+  }
+
+  async changeRequestTime (time, grade) {
+    time = ChangeRequestTime(time)
+    await this.magician(() => this.r.put(`/grade/${grade}`, time), {
+      403: '입력값을 확인해주세요'
     })
   }
 

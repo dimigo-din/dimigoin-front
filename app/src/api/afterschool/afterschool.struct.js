@@ -27,3 +27,9 @@ export const CreateAfterschoolInput = afterschool => ({
   'max_of_count': parseInt(afterschool.maxCount),
   'teacher_name': afterschool.teacherName
 })
+
+export const ChangeRequestTime = time => ({
+  'request_start_date': timestamp.fromDate(time.start),
+  'request_end_date': timestamp.fromDate(time.end),
+  'day': days[time.day].code
+})
