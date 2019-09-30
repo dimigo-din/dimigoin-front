@@ -152,7 +152,7 @@ export default {
         : `${item.time.join()}타임`
     },
 
-    openModal (item) {
+    openEditModal (item) {
       this.editModal.show = true
       this.editModal.afsc = Object.assign({}, item, {
         day: Array(6).fill(false),
@@ -166,7 +166,7 @@ export default {
       })
     },
 
-    closeModal () {
+    closeEditModal () {
       this.editModal.show = false
     },
 
@@ -264,7 +264,7 @@ export default {
               </td>
               <td
                 class="mng-afsc__cell mng-afsc__cell--button"
-                @click="openModal(item)"
+                @click="openEditModal(item)"
               >
                 <span class="icon-long-arrow-right" /> 세부관리
               </td>
@@ -378,7 +378,7 @@ export default {
       <dimi-modal
         class="modal__modal"
         :opened="editModal.show"
-        @close="closeModal"
+        @close="closeEditModal"
       >
         <h3 class="modal__title">
           방과 후 활동 세부 관리
