@@ -31,7 +31,7 @@ export default {
         []
       ],
 
-      modal: {
+      editModal: {
         show: false,
         afsc: {
           day: Array(6).fill(false),
@@ -153,26 +153,26 @@ export default {
     },
 
     openModal (item) {
-      this.modal.show = true
-      this.modal.afsc = Object.assign({}, item, {
+      this.editModal.show = true
+      this.editModal.afsc = Object.assign({}, item, {
         day: Array(6).fill(false),
         time: [false, false]
       })
       item.day.forEach(v => {
-        this.modal.afsc.day[this.getDayIdxByCode(v)] = true
+        this.editModal.afsc.day[this.getDayIdxByCode(v)] = true
       })
       item.time.forEach(v => {
-        this.modal.afsc.time[v - 1] = true
+        this.editModal.afsc.time[v - 1] = true
       })
     },
 
     closeModal () {
-      this.modal.show = false
+      this.editModal.show = false
     },
 
     async editAfterschool () {
       try {
-        await afterschool.editAfterschool(this.modal.afsc)
+        await afterschool.editAfterschool(this.editModal.afsc)
         this.$swal('성공!', '수정되었습니다.', 'success')
         await this.updateAll()
       } catch (err) {
@@ -377,7 +377,7 @@ export default {
       </section>
       <dimi-modal
         class="modal__modal"
-        :opened="modal.show"
+        :opened="editModal.show"
         @close="closeModal"
       >
         <h3 class="modal__title">
@@ -388,7 +388,7 @@ export default {
             방과후 이름
           </label>
           <dimi-input
-            v-model="modal.afsc.name"
+            v-model="editModal.afsc.name"
             placeholder="방과 후 수업의 제목을 기입하세요"
           />
         </div>
@@ -397,7 +397,7 @@ export default {
             수강 학년
           </label>
           <dimi-input
-            v-model="modal.afsc.grade"
+            v-model="editModal.afsc.grade"
             placeholder="방과 후 수업의 대상 학년을 기입하세요"
           />
         </div>
@@ -406,7 +406,7 @@ export default {
             수강 인원
           </label>
           <dimi-input
-            v-model="modal.afsc.maxCount"
+            v-model="editModal.afsc.maxCount"
             placeholder="방과 후 수업의 수강 인원을 기입하세요"
           />
         </div>
@@ -415,7 +415,7 @@ export default {
             강사 이름
           </label>
           <dimi-input
-            v-model="modal.afsc.teacherName"
+            v-model="editModal.afsc.teacherName"
             placeholder="방과 후 수업의 강사 이름을 기입하세요"
           />
         </div>
@@ -426,7 +426,7 @@ export default {
           <dimi-checkbox
             v-for="(day, i) in days"
             :key="`day-${i}`"
-            v-model="modal.afsc.day[i]"
+            v-model="editModal.afsc.day[i]"
             class="mng-afsc__input--time"
           >
             {{ day.text }}
@@ -439,7 +439,7 @@ export default {
           <dimi-checkbox
             v-for="i in 2"
             :key="`time-${i}`"
-            v-model="modal.afsc.time[i-1]"
+            v-model="editModal.afsc.time[i-1]"
             class="modal__input--time"
           >
             {{ i }}타임
@@ -451,7 +451,7 @@ export default {
             신청 시작
           </label>
           <dimi-date-input
-            v-model="modal.afsc.startDate"
+            v-model="editModal.afsc.startDate"
             class="modal__input--time"
           />
         </div>
@@ -460,7 +460,7 @@ export default {
             신청 마감
           </label>
           <dimi-date-input
-            v-model="modal.afsc.endDate"
+            v-model="editModal.afsc.endDate"
           />
         </div>
         <div class="modal__field">
