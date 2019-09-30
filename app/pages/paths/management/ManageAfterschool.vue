@@ -37,6 +37,15 @@ export default {
           day: Array(6).fill(false),
           time: [false, false]
         }
+      },
+
+      timeModal: {
+        show: false,
+        time: {
+          start: new Date(),
+          end: new Date(),
+          day: 0
+        }
       }
     }
   },
@@ -139,6 +148,28 @@ export default {
       }
     },
 
+    async changeRequestTime () {
+      const day = days[this.timeModal.time.day]
+      const { value: answer } = await this.$swal({
+        type: 'warning',
+        title: '경고',
+        text: `정말 ${this.tab + 1}학년 ${day.text} 수업의 수강 신청 기간을 모두 변경하시겠습니까?`,
+        confirmButtonColor: '#d61315',
+        cancelButtonColor: '#ababab',
+        confirmButtonText: '변경',
+        cancelButtonText: '취소',
+        showCancelButton: true
+      })
+      if (!answer) return
+
+      try {
+        afterschool.changeRequestTime(this.timeModal.time, this.tab + 1)
+        await this.$swal('수정되었습니다.', '', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async downloadExcel (grade) {
       try {
         await afterschool.downloadExcel(grade)
@@ -166,8 +197,16 @@ export default {
       })
     },
 
+    openTimeModal () {
+      this.timeModal.show = true
+    },
+
     closeEditModal () {
       this.editModal.show = false
+    },
+
+    closeTimeModal () {
+      this.timeModal.show = false
     },
 
     async editAfterschool () {
@@ -215,6 +254,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-afsc__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-afsc__tool mng-afsc__time"
+            @click="openTimeModal"
+          >
+            <span class="mng-afsc__time-icon icon-edit" /> 신청 기간 일괄 수정
           </span>
 
           <span
@@ -473,11 +519,56 @@ export default {
           </div>
         </div>
       </dimi-modal>
+
+      <dimi-modal
+        class="modal__modal"
+        :opened="timeModal.show"
+        @close="closeTimeModal"
+      >
+        <h3 class="modal__title">
+          {{ `${tab + 1}학년 방과 후 활동 신청 기간 일괄 수정` }}
+        </h3>
+        <div class="modal__field">
+          <label class="modal__label">
+            수업 요일
+          </label>
+          <dimi-dropdown
+            v-model="timeModal.time.day"
+            :items="days.map(v => v.text)"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 시작
+          </label>
+          <dimi-date-input
+            v-model="timeModal.time.start"
+            class="modal__input--time"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 마감
+          </label>
+          <dimi-date-input
+            v-model="timeModal.time.end"
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__button">
+            <dimi-button
+              @click="changeRequestTime"
+            >
+              적용하기
+            </dimi-button>
+          </div>
+        </div>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .mng-afsc {
   &__main {
     padding: 0;
@@ -517,7 +608,8 @@ export default {
   }
 
   &__delete,
-  &__excel {
+  &__excel,
+  &__time {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -529,7 +621,8 @@ export default {
   }
 
   &__delete-icon,
-  &__excel-icon {
+  &__excel-icon,
+  &__time-icon {
     font-size: 18px;
   }
 
