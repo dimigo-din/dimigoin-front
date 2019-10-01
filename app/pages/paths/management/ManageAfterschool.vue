@@ -497,7 +497,7 @@ export default {
             신청 시작
           </label>
           <dimi-date-input
-            v-model="editModal.afsc.startDate"
+            :value="editModal.afsc.startDate"
             class="modal__input--time"
           />
         </div>
@@ -506,7 +506,7 @@ export default {
             신청 마감
           </label>
           <dimi-date-input
-            v-model="editModal.afsc.endDate"
+            :value="editModal.afsc.endDate"
           />
         </div>
         <div class="modal__field">
