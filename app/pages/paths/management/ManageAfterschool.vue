@@ -9,6 +9,10 @@ export default {
   name: 'ManageAfterschool',
   components: { ContentWrapper },
 
+  filters: {
+    filterDate: time => format(time, 'YYYY년 MM월 DD일 HH시 mm분 ss초')
+  },
+
   data () {
     return {
       tab: 0,
@@ -49,10 +53,6 @@ export default {
         }
       }
     }
-  },
-
-  filters: {
-    filterDate: time => format(time, 'YYYY년 MM월 DD일 HH시 mm분 ss초')
   },
 
   computed: {
