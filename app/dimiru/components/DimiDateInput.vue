@@ -31,15 +31,6 @@ export default {
         ))
       },
       deep: true
-    },
-    value (val) {
-      this.date = {
-        year: this.value.getFullYear(),
-        month: this.value.getMonth() + 1,
-        date: this.value.getDate(),
-        hours: this.value.getHours(),
-        minutes: this.value.getMinutes()
-      }
     }
   }
 }
