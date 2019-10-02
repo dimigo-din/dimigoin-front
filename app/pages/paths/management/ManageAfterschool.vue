@@ -2,6 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import days from '@/src/util/days'
+import { format } from 'date-fns'
 import { afterschool } from '@/src/api/afterschool'
 
 export default {
@@ -48,6 +49,10 @@ export default {
         }
       }
     }
+  },
+
+  filters: {
+    filterDate: time => format(time, 'YYYY년 MM월 DD일 HH시 mm분 ss초')
   },
 
   computed: {
@@ -491,6 +496,12 @@ export default {
             {{ i }}타임
           </dimi-checkbox>
           <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            기존 신청 기간
+            {{ editModal.afsc.startDate | filterDate }} ~ {{ editModal.afsc.endDate | filterDate }}
+          </label>
         </div>
         <div class="modal__field">
           <label class="modal__label">
