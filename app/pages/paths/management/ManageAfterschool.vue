@@ -2,12 +2,16 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
 import days from '@/src/util/days'
-import timestamp from 'unix-timestamp'
+import { format } from 'date-fns'
 import { afterschool } from '@/src/api/afterschool'
 
 export default {
   name: 'ManageAfterschool',
   components: { ContentWrapper },
+
+  filters: {
+    filterDate: time => format(time, 'YYYY년 MM월 DD일 HH시 mm분 ss초')
+  },
 
   data () {
     return {
@@ -20,33 +24,44 @@ export default {
         name: '',
         startDate: new Date(),
         endDate: new Date(),
-        day: 0,
+        day: Array(6).fill(false),
         maxCount: null,
         teacherName: '',
-        time: {
-          1: false,
-          2: false
-        }
+        time: [false, false]
       },
 
       afterschools: [
         [],
         [],
         []
-      ]
+      ],
+
+      editModal: {
+        show: false,
+        afsc: {
+          day: Array(6).fill(false),
+          time: [false, false]
+        }
+      },
+
+      timeModal: {
+        show: false,
+        time: {
+          start: new Date(),
+          end: new Date(),
+          day: 0
+        }
+      }
     }
   },
 
   computed: {
-    days () {
-      return days
-    },
+    days: () => days,
 
     filteredList () {
       if (this.filter === 0) return this.afterschools[this.tab]
 
-      return this.afterschools[this.tab].filter(v => v.day ===
-        this.days[this.filter - 1].code)
+      return this.afterschools[this.tab]
     },
 
     currentCount () {
@@ -56,12 +71,12 @@ export default {
     afterschoolInput () {
       return {
         name: this.form.name,
-        startDate: timestamp.fromDate(this.form.startDate),
-        endDate: timestamp.fromDate(this.form.endDate),
-        day: days[this.form.day].code,
+        startDate: this.form.startDate,
+        endDate: this.form.endDate,
+        day: this.form.day,
         time: this.form.time,
         grade: this.tab + 1,
-        maxCount: parseInt(this.form.maxCount),
+        maxCount: this.form.maxCount,
         teacherName: this.form.teacherName
       }
     }
@@ -106,8 +121,12 @@ export default {
     },
 
     getDayTextByCode (code) {
-      if (!code) return '?'
-      return this.days.filter(v => v.code === code)[0].text
+      return code.map(v =>
+        days.find(_v => _v.code === v).smallText).join(',')
+    },
+
+    getDayIdxByCode (code) {
+      return days.find(v => v.code === code).idx
     },
 
     async deleteChecked () {
@@ -134,6 +153,28 @@ export default {
       }
     },
 
+    async changeRequestTime () {
+      const day = days[this.timeModal.time.day]
+      const { value: answer } = await this.$swal({
+        type: 'warning',
+        title: '경고',
+        text: `정말 ${this.tab + 1}학년 ${day.text} 수업의 수강 신청 기간을 모두 변경하시겠습니까?`,
+        confirmButtonColor: '#d61315',
+        cancelButtonColor: '#ababab',
+        confirmButtonText: '변경',
+        cancelButtonText: '취소',
+        showCancelButton: true
+      })
+      if (!answer) return
+
+      try {
+        afterschool.changeRequestTime(this.timeModal.time, this.tab + 1)
+        await this.$swal('수정되었습니다.', '', 'success')
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
     async downloadExcel (grade) {
       try {
         await afterschool.downloadExcel(grade)
@@ -145,6 +186,42 @@ export default {
     getAfscTime (item) {
       return item.time.length === 2 ? '연강'
         : `${item.time.join()}타임`
+    },
+
+    openEditModal (item) {
+      this.editModal.show = true
+      this.editModal.afsc = Object.assign({}, item, {
+        day: Array(6).fill(false),
+        time: [false, false]
+      })
+      item.day.forEach(v => {
+        this.editModal.afsc.day[this.getDayIdxByCode(v)] = true
+      })
+      item.time.forEach(v => {
+        this.editModal.afsc.time[v - 1] = true
+      })
+    },
+
+    openTimeModal () {
+      this.timeModal.show = true
+    },
+
+    closeEditModal () {
+      this.editModal.show = false
+    },
+
+    closeTimeModal () {
+      this.timeModal.show = false
+    },
+
+    async editAfterschool () {
+      try {
+        await afterschool.editAfterschool(this.editModal.afsc)
+        this.$swal('성공!', '수정되었습니다.', 'success')
+        await this.updateAll()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
     }
   }
 }
@@ -182,6 +259,13 @@ export default {
             @click="deleteChecked"
           >
             <span class="mng-afsc__delete-icon icon-delete" /> 선택 삭제
+          </span>
+
+          <span
+            class="mng-afsc__tool mng-afsc__time"
+            @click="openTimeModal"
+          >
+            <span class="mng-afsc__time-icon icon-edit" /> 신청 기간 일괄 수정
           </span>
 
           <span
@@ -229,7 +313,10 @@ export default {
               <td class="mng-afsc__cell">
                 {{ item.count }}명 신청
               </td>
-              <td class="mng-afsc__cell mng-afsc__cell--button">
+              <td
+                class="mng-afsc__cell mng-afsc__cell--button"
+                @click="openEditModal(item)"
+              >
                 <span class="icon-long-arrow-right" /> 세부관리
               </td>
             </tr>
@@ -277,18 +364,6 @@ export default {
                 명
               </span>
             </div>
-
-            <div class="mng-afsc__field">
-              <label class="mng-afsc__label">
-                요일
-              </label>
-              <dimi-dropdown
-                v-model="form.day"
-                :items="days.map(v => v.text)"
-                :dropup="true"
-                class="mng-afsc__input mng-afsc__input--day"
-              />
-            </div>
           </div>
 
           <div class="mng-afsc__form-row">
@@ -317,12 +392,28 @@ export default {
               <dimi-checkbox
                 v-for="i in 2"
                 :key="`time-${i}`"
-                v-model="form.time[i]"
+                v-model="form.time[i-1]"
                 class="mng-afsc__input--time"
               >
                 {{ i }}타임
               </dimi-checkbox>
               <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
+            </div>
+          </div>
+
+          <div class="mng-afsc__form-row">
+            <div class="mng-afsc__field">
+              <label class="mng-afsc__label">
+                요일
+              </label>
+              <dimi-checkbox
+                v-for="(day, i) in days"
+                :key="`day-${i}`"
+                v-model="form.day[i]"
+                class="mng-afsc__input--time"
+              >
+                {{ day.text }}
+              </dimi-checkbox>
             </div>
           </div>
 
@@ -335,11 +426,160 @@ export default {
           </div>
         </div>
       </section>
+      <dimi-modal
+        class="modal__modal"
+        :opened="editModal.show"
+        @close="closeEditModal"
+      >
+        <h3 class="modal__title">
+          방과 후 활동 세부 관리
+        </h3>
+        <div class="modal__field">
+          <label class="modal__label">
+            방과후 이름
+          </label>
+          <dimi-input
+            v-model="editModal.afsc.name"
+            placeholder="방과 후 수업의 제목을 기입하세요"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            수강 학년
+          </label>
+          <dimi-input
+            v-model="editModal.afsc.grade"
+            placeholder="방과 후 수업의 대상 학년을 기입하세요"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            수강 인원
+          </label>
+          <dimi-input
+            v-model="editModal.afsc.maxCount"
+            placeholder="방과 후 수업의 수강 인원을 기입하세요"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            강사 이름
+          </label>
+          <dimi-input
+            v-model="editModal.afsc.teacherName"
+            placeholder="방과 후 수업의 강사 이름을 기입하세요"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            요일
+          </label>
+          <dimi-checkbox
+            v-for="(day, i) in days"
+            :key="`day-${i}`"
+            v-model="editModal.afsc.day[i]"
+            class="mng-afsc__input--time"
+          >
+            {{ day.text }}
+          </dimi-checkbox>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            타임
+          </label>
+          <dimi-checkbox
+            v-for="i in 2"
+            :key="`time-${i}`"
+            v-model="editModal.afsc.time[i-1]"
+            class="modal__input--time"
+          >
+            {{ i }}타임
+          </dimi-checkbox>
+          <span class="mng-afsc__helper">(연강일 경우 두 타임 모두 체크하세요.)</span>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            기존 신청 기간
+            {{ editModal.afsc.startDate | filterDate }} ~ {{ editModal.afsc.endDate | filterDate }}
+          </label>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 시작
+          </label>
+          <dimi-date-input
+            :value="editModal.afsc.startDate"
+            class="modal__input--time"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 마감
+          </label>
+          <dimi-date-input
+            :value="editModal.afsc.endDate"
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__button">
+            <dimi-button
+              @click="editAfterschool"
+            >
+              적용하기
+            </dimi-button>
+          </div>
+        </div>
+      </dimi-modal>
+
+      <dimi-modal
+        class="modal__modal"
+        :opened="timeModal.show"
+        @close="closeTimeModal"
+      >
+        <h3 class="modal__title">
+          {{ `${tab + 1}학년 방과 후 활동 신청 기간 일괄 수정` }}
+        </h3>
+        <div class="modal__field">
+          <label class="modal__label">
+            수업 요일
+          </label>
+          <dimi-dropdown
+            v-model="timeModal.time.day"
+            :items="days.map(v => v.text)"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 시작
+          </label>
+          <dimi-date-input
+            v-model="timeModal.time.start"
+            class="modal__input--time"
+          />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">
+            신청 마감
+          </label>
+          <dimi-date-input
+            v-model="timeModal.time.end"
+          />
+        </div>
+        <div class="modal__field">
+          <div class="modal__button">
+            <dimi-button
+              @click="changeRequestTime"
+            >
+              적용하기
+            </dimi-button>
+          </div>
+        </div>
+      </dimi-modal>
     </dimi-card>
   </content-wrapper>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .mng-afsc {
   &__main {
     padding: 0;
@@ -379,7 +619,8 @@ export default {
   }
 
   &__delete,
-  &__excel {
+  &__excel,
+  &__time {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -391,7 +632,8 @@ export default {
   }
 
   &__delete-icon,
-  &__excel-icon {
+  &__excel-icon,
+  &__time-icon {
     font-size: 18px;
   }
 
@@ -425,7 +667,7 @@ export default {
 
   &__cell--button {
     color: $pink;
-    cursor: not-allowed;
+    cursor: pointer;
   }
 
   &__form {
@@ -485,6 +727,38 @@ export default {
     border: 0;
     background-color: $gray-lighten;
     border-radius: 20px;
+  }
+
+  &__helper {
+    margin-left: 0.5rem;
+  }
+}
+
+.modal {
+  &__title {
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+  }
+
+  &__label {
+    min-width: 6em;
+  }
+
+  &__button {
+    position: absolute;
+    right: 25px;
+    padding-top: 20px;
+  }
+
+  &__input--time:not(:last-child) {
+    margin-right: 1rem;
   }
 
   &__helper {
