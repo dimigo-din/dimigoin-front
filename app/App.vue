@@ -2,10 +2,14 @@
 import './scss/theme.scss'
 import AwesomeFooter from './components/AwesomeFooter.vue'
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
+import Snowf from 'vue-snowf'
 
 export default {
   name: 'App',
-  components: { AwesomeFooter },
+  components: {
+    AwesomeFooter,
+    Snowf
+  },
   data: () => ({
     loaded: false
   }),
@@ -42,6 +46,13 @@ export default {
     class="root"
     data-test="app-root"
   >
+    <Snowf
+      :amount="70"
+      :size="9"
+      :speed="2.2"
+      :opacity="0.7"
+      :resize="true"
+    />
     <main class="root__router">
       <router-view v-if="loaded" />
     </main>
