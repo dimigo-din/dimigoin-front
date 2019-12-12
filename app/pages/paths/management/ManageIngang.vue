@@ -26,11 +26,23 @@ export default {
       startDate: new Date(),
       endDate: new Date(),
       maxUser: {}
+    },
+
+    black: {
+      serial: null,
+      count: null,
+      date: new Date()
     }
   }),
 
   computed: {
-    days: () => days
+    days: () => days,
+    userFirst () {
+      return this.users.filter(v => v.time === 1)
+    },
+    userSecond () {
+      return this.users.filter(v => v.time === 2)
+    }
   },
 
   async created () {
@@ -48,7 +60,7 @@ export default {
 
     async updateAppliers () {
       this.applies = await ingangManager.getIngangAppliers()
-      this.users = this.applies
+      this.users = this.applies.sort((a, b) => a.grade - b.grade)
       this.users = this.users.filter((v, i) => {
         return i === this.users.findIndex(_v => v.serial === _v.serial)
       })
@@ -73,6 +85,20 @@ export default {
 
         this.$swal('성공!', '추가되었습니다.', 'success')
         await this.refresh()
+      } catch (err) {
+        this.$swal('이런!', err.message, 'error')
+      }
+    },
+
+    async addBlacklist () {
+      try {
+        await ingangManager.createIngangBlack(this.black)
+        this.black = {
+          serial: null,
+          count: null,
+          date: new Date()
+        }
+        this.$swal('성공!', '추가되었습니다.', 'success')
       } catch (err) {
         this.$swal('이런!', err.message, 'error')
       }
@@ -116,7 +142,7 @@ export default {
     >
       <dimi-tab
         v-model="currentTab"
-        :tabs="['엑셀', '공지', '인강실', '신청자']"
+        :tabs="['엑셀', '공지', '인강실', '사용자']"
       />
       <div
         v-if="pending"
@@ -285,22 +311,95 @@ export default {
           v-if="currentTab === 3"
         >
           <section class="mng-ing__section">
-            <table class="mng-ing__list">
-              <tbody>
-                <tr
-                  v-for="(user, index) in users"
-                  :key="index"
-                  class="mng-ing__row"
-                >
-                  <td class="mng-ing__cell">
-                    {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
-                  </td>
-                  <td class="mng-ing__cell mng-ing__cell--time">
-                    {{ userAppliedTimes(user.serial).join(', ') }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="mng-ing__list-wrap">
+              <div class="mng-ing__list-section">
+                <h2 class="mng-ing__list-title">
+                  1타임 인강실 신청자 목록
+                </h2>
+                <table class="mng-ing__list">
+                  <tbody>
+                    <tr
+                      v-for="(user, index) in userFirst"
+                      :key="index"
+                      class="mng-ing__row"
+                    >
+                      <td class="mng-ing__cell">
+                        {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                      </td>
+                      <td class="mng-ing__cell mng-ing__cell--time">
+                        {{ userAppliedTimes(user.serial).join(', ') }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mng-ing__list-section">
+                <h2 class="mng-ing__list-title">
+                  2타임 인강실 신청자 목록
+                </h2>
+                <table class="mng-ing__list">
+                  <tbody>
+                    <tr
+                      v-for="(user, index) in userSecond"
+                      :key="index"
+                      class="mng-ing__row"
+                    >
+                      <td class="mng-ing__cell">
+                        {{ `${user.grade}학년 ${user.klass}반 ${user.number}번 ${user.name}` }}
+                      </td>
+                      <td class="mng-ing__cell mng-ing__cell--time">
+                        {{ userAppliedTimes(user.serial).join(', ') }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+          <section class="mng-ing__section">
+            <h2 class="mng-ing__title">
+              블랙리스트 추가
+            </h2>
+            <div class="mng-ing__form">
+              <div class="mng-ing__form-row">
+                <div class="mng-ing__field">
+                  <label class="mng-ing__label">
+                    학번
+                  </label>
+                  <dimi-input
+                    v-model.number="black.serial"
+                    class="mng-ing__input"
+                  />
+                </div>
+                <div class="mng-ing__field">
+                  <label class="mng-ing__label">
+                    적발 횟수
+                  </label>
+                  <dimi-input
+                    v-model.number="black.count"
+                    class="mng-ing__input"
+                  />
+                </div>
+              </div>
+              <div class="mng-ing__form-row">
+                <div class="mng-ing__field">
+                  <label class="mng-ing__label">
+                    해제 날짜
+                  </label>
+                  <dimi-date-input
+                    v-model="black.date"
+                    class="mng-ing__input"
+                  />
+                </div>
+              </div>
+              <div class="mng-ing__form-row mng-ing__form-row--submit">
+                <div class="mng-ing__field mng-ing__field--right">
+                  <dimi-button @click="addBlacklist">
+                    추가하기
+                  </dimi-button>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </template>
@@ -338,6 +437,27 @@ export default {
     font-size: 18px;
   }
 
+  &__list-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-bottom: 1.5rem;
+  }
+
+  &__list-section {
+    display: flex;
+    width: 48%;
+    flex-direction: column;
+  }
+
+  &__list-title {
+    padding: 24px;
+    padding-top: 0;
+    color: $gray-dark;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+  }
+
   &__list {
     display: block;
     width: 100%;
@@ -345,6 +465,10 @@ export default {
     color: $gray !important;
     font-weight: $font-weight-bold;
     overflow-y: auto;
+  }
+
+  &__list::-webkit-scrollbar {
+    display: none;
   }
 
   &__row:not(:last-child) {
