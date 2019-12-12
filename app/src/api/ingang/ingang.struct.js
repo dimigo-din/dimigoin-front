@@ -4,6 +4,7 @@ import days from '@/src/util/days'
 
 export const Ingang = ingang => ({
   idx: ingang['idx'],
+  title: ingang['title'],
   grade: ingang['target_grade'],
   klass: ingang['klass'],
   day: ingang['day'],
@@ -31,6 +32,11 @@ export const IngangApplier = user => ({
   grade: user['grade'],
   klass: user['klass'],
   number: user['number']
+})
+
+export const CreateIngangBlack = black => ({
+  'count': black.count,
+  'date': timestamp.fromDate(black.date)
 })
 
 export const CreateIngangInput = ingang => ({
