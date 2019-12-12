@@ -1,9 +1,9 @@
 import ValidationError from '@/src/errors/validation-error'
 import { ServiceBase } from '@/src/api/service-base'
-import { Afterschool, CreateAfterschoolInput } from './afterschool.struct'
+import { Afterschool, CreateAfterschoolInput, ChangeRequestTime } from './afterschool.struct'
 
 function tempValidation (afterschool) {
-  const keys = ['name', 'request_start_date', 'request_end_date', 'day', 'target_grade', 'max_of_count', 'teacher_name']
+  const keys = ['name', 'request_start_date', 'request_end_date', 'time', 'target_grade', 'max_of_count', 'teacher_name']
   const missingArguments = keys.filter(key => !afterschool[key])
   if (missingArguments.length > 0) {
     throw new ValidationError('모든 입력란을 채워주세요.', missingArguments)
@@ -17,6 +17,18 @@ export class AfterschoolService extends ServiceBase {
     await this.magician(() => this.r.post(`/`, afterschool), {
       400: '잘못된 입력입니다.',
       403: '권한이 없습니다.'
+    })
+  }
+
+  async editAfterschool (afterschool) {
+    const idx = afterschool.idx
+    afterschool = CreateAfterschoolInput(afterschool)
+    tempValidation(afterschool)
+    await this.magician(() => this.r.put(`/${idx}`, afterschool), {
+      400: '잘못된 입력입니다.',
+      403: '권한이 없습니다.',
+      404: '존재하지 않는 방과 후입니다.',
+      405: '수정된 사항이 없습니다.'
     })
   }
 
@@ -57,6 +69,13 @@ export class AfterschoolService extends ServiceBase {
   async deleteAfterschool (idx) {
     await this.magician(() => this.r.delete(`/${idx}`), {
       404: '존재하지 않는 방과후 신청입니다.'
+    })
+  }
+
+  async changeRequestTime (time, grade) {
+    time = ChangeRequestTime(time)
+    await this.magician(() => this.r.put(`/grade/${grade}`, time), {
+      403: '입력값을 확인해주세요'
     })
   }
 

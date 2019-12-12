@@ -21,7 +21,10 @@ export default {
   },
 
   async created () {
-    this.meal = await meal.getTodayMeal()
+    if (meal.isTomorrow()) {
+      const tomorrow = new Date(Date.now() + (24 * 60 * 60 * 1000))
+      this.meal = await meal.getMeal(tomorrow)
+    } else this.meal = await meal.getTodayMeal()
   }
 }
 </script>
