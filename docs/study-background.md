@@ -4,9 +4,9 @@
 
 ## ES6+ 자바스크립트 활용
 
-자바스크립트는 ECMA에서 발행하는 ECMAScript 라는 표준이 있습니다. 매년 새로운 표준이 나오고 있습니다. 예를 들어 2019년의 표준은 `ECMAScript 2019` 라고 연도와 함께 부르기도 하고, 줄여서 8번째 표준이라는 뜻으로 `ES8`이라고 부르기도 합니다.
+자바스크립트는 ECMA에서 발행하는 ECMAScript라는 표준이 있습니다. 매년 새로운 표준이 나오고 있습니다. 예를 들어 2019년의 표준은 `ECMAScript 2019` 라고 연도와 함께 부르기도 하고, 줄여서 10번째 표준이라는 뜻으로 `ES10` 이라고 부르기도 합니다.
 
-디미고인에서는 효율적이고 가독성 높은 코드를 작성하기 위해 ES6 이상의 자바스크립트의 최신 문법들을 사용하고 있습니다. 이러한 최신 문법을 사용하기 위해서 [Babel](https://babeljs.io/) 이라는 자바스크립트 Preprocessor를 사용하고 있고, 자바스크립트 번들러인 [Webpack](https://webpack.js.org/)을 사용하고 있습니다.
+디미고인에서는 효율적이고 가독성 높은 코드를 작성하기 위해 ES6 이상의 자바스크립트의 최신 문법들을 사용하고 있습니다. 이러한 최신 문법을 사용하기 위해서 [Babel](https://babeljs.io/)이라는 자바스크립트 Preprocessor를 사용하고 있고, 자바스크립트 번들러인 [Webpack](https://webpack.js.org/)을 사용하고 있습니다.
 
 ### 관련 링크들
 
@@ -47,4 +47,3 @@
 ### 디자인 패턴
 
 * [Javascript Pattern 요약](https://joshua1988.github.io/web-development/javascript/javascript-pattern-design/)
-* 
