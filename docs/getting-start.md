@@ -7,9 +7,7 @@
 * Git
 * Node.js &gt;= 8.9
 * Yarn
-* 좋아하는 코드 에디터 \(WebStorm 추천\)
-
-WebStorm을 추천하는 이유는 WebStorm이 Vue 개발환경을 VSCode보다 더 잘 지원하기 때문입니다.
+* 좋아하는 코드 에디터
 
 먼저 깃허브에서 소스코드를 클론받습니다.
 
