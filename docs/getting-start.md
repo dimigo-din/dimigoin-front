@@ -75,7 +75,7 @@ dimigoin-front
 
 `env/` 폴더에 `.prod.env.example`, `.dev.env.example`, `.webpack.env.example` 파일이 환경변수 파일의 예시를 보여주고 있습니다. 개발을 시작하려면, 배포용 빌드 때 필요한 환경변수 파일 `.prod.env` , 개발 서버용 환경변수 파일 `.dev.env` , 그리고 최종 빌드 파일에는 포함되지 않는\(포함돼서는 안되는\) 웹팩 빌드 전용 환경변수 파일 `.webpack.env` 가 필요합니다. `.prod.env`, `.dev.env`, `.webpack.env` 에 각각 `.*.env.example` 파일의 변수들을 복사/붙여넣기 하여 채워주시기 바랍니다.
 
-환경변수에 입력해야될 변수들은 [여기](etcs/env-setting.md)에 정리하였습니다.
+환경변수에 입력해야 될 변수들은 [여기](etcs/env-setting.md)에 정리하였습니다.
 
 ## 코드 스타일
 
