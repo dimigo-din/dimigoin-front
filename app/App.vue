@@ -66,7 +66,7 @@ export default {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  
+
   &__snowf {
     z-index: -1;
   }
