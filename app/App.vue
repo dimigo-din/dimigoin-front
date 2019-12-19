@@ -47,6 +47,7 @@ export default {
     data-test="app-root"
   >
     <Snowf
+      class="root__snowf"
       :amount="70"
       :size="9"
       :speed="2.2"
@@ -65,6 +66,10 @@ export default {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  
+  &__snowf {
+    z-index: -1;
+  }
 
   &__router {
     flex: 1 0 auto;
