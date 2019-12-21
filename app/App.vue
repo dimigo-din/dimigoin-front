@@ -68,7 +68,7 @@ export default {
   flex-direction: column;
 
   &__snowf {
-    z-index: -1;
+    z-index: -1 !important;
   }
 
   &__router {
