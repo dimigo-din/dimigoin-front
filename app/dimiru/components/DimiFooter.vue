@@ -78,7 +78,8 @@ export default {
   }
 
   &__mail > *,
-  &__facebook > * {
+  &__facebook > *,
+  &__copyright > * {
     color: $gray;
     text-decoration: none;
   }
