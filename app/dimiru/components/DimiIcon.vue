@@ -42,18 +42,18 @@ export default {
 @import '../scss/vars';
 
 .wrapper {
-  display:inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: -5px -5px 20px $white,
-    5px 5px 20px $shadow;
-  transition: all 0.2s ease-in-out;
-  border: 0;
-  outline: 0;
-  border-radius: 100%;
-  padding: 0.5em;
+  display: inline-flex;
   width: 1em;
   height: 1em;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+  border: 0;
+  border-radius: 100%;
+  box-shadow: -5px -5px 20px $white,
+    5px 5px 20px $shadow;
+  outline: 0;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     box-shadow: -2px -2px 5px $white, 2px 2px 5px $shadow;
