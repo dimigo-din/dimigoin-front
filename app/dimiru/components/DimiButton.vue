@@ -60,7 +60,7 @@ export default {
 
 <template>
   <a
-    v-ripple="'rgba(255, 255, 255, .2)'"
+    v-ripple="'rgba(255, 0, 0, .2)'"
     :class="computedClass"
     :href="href"
     @click="click"
@@ -82,13 +82,21 @@ export default {
   appearance: none;
   background-color: $red;
   border-radius: 2rem;
+  box-shadow: 0 10px 24px 0 rgba(234, 51, 51, 0.61);
   color: $white;
   cursor: pointer;
   font-weight: $font-weight-bold;
   text-decoration: none;
-  transition: 0.5s background-color ease;
+  text-shadow: 2px 2px 3px rgba(248, 105, 105, 0.9);
+  transition:
+    all 0.2s ease-in-out,
+    0.5s background-color ease;
   user-select: none;
   white-space: nowrap;
+
+  &:hover {
+    box-shadow: 0 5px 12px 0 rgba(234, 51, 51, 0.41);
+  }
 
   &--gray {
     background-color: $gray-lighten;
