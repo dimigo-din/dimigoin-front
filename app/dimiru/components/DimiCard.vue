@@ -51,8 +51,9 @@ export default {
   padding: 25px;
   background-color: $white;
   border-radius: 3.3rem;
-  box-shadow:  20px 20px 60px #d9d9d9,
-    -20px -20px 60px #fff;
+  box-shadow:
+    5px 5px 20px #d9d9d9,
+    -10px -10px 14px #fff;
 
   &--hover {
     transition: 0.5s box-shadow ease;
