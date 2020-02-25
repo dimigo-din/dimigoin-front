@@ -36,26 +36,26 @@ export default {
 
   &--aloes {
     background-color: $aloes;
-    color: $white;
     box-shadow: 0 5px 15px rgba(0, 180, 162, 0.41);
+    color: $white;
   }
 
   &--orange {
     background-color: $orange;
-    color: $white;
     box-shadow: 0 5px 15px rgba(245, 105, 61, 0.41);
+    color: $white;
   }
 
   &--gray {
     background-color: $gray-lighter;
-    color: $gray-dark;
     box-shadow: 0 5px 15px rgba(231, 231, 231, 0.41);
+    color: $gray-dark;
   }
 
   &--cyan {
     background-color: $cyan;
-    color: $white;
     box-shadow: 0 5px 15px rgba(17, 157, 230, 0.41);
+    color: $white;
   }
 }
 </style>
