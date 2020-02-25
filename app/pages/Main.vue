@@ -77,7 +77,7 @@ export default {
                 class="profile-info__default-photo icon-profile"
               />
 
-              <span class="profile-info">
+              <div class="profile-info">
                 <template v-if="userType === 'T'">
                   <span class="profile-info__name">
                     {{ name }}
@@ -94,7 +94,7 @@ export default {
                     {{ name }}
                   </span>
                 </template>
-              </span>
+              </div>
             </div>
 
             <nav>
@@ -243,10 +243,13 @@ export default {
 }
 
 .profile-info {
+  display: flex;
+  flex-wrap: wrap;
   font-size: 20px;
 
   &__left {
     display: flex;
+    flex: 1;
     align-items: center;
   }
 
@@ -270,6 +273,7 @@ export default {
   }
 
   &__serial {
+    margin-right: 5px;
     color: $gray;
   }
 
