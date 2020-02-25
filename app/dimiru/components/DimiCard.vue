@@ -52,7 +52,7 @@ export default {
   background-color: $white;
   border-radius: 3.3rem;
   box-shadow:  20px 20px 60px #d9d9d9,
-    -20px -20px 60px #ffffff;
+    -20px -20px 60px #fff;
 
   &--hover {
     transition: 0.5s box-shadow ease;
