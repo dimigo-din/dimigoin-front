@@ -104,9 +104,9 @@ export default {
 
   &--gray {
     background-color: $gray-lighten;
-    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.35);
     box-shadow: 0 10px 24px 0 rgba(50, 50, 50, 0.11);
     color: $gray-dark;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.35);
   }
 
   &--gray:hover {

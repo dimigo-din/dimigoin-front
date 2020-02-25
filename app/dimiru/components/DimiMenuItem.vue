@@ -38,13 +38,13 @@ export default {
 
   &--active.menu-item {
     background-color: $red !important;
-    box-shadow: 0 5px 15px 0 rgba(234, 51, 51, 0.41);
-    text-shadow: 2px 2px 3px rgba(248, 105, 105, 0.9);
+    box-shadow: 0 5px 15px rgba(234, 51, 51, 0.41);
     color: $white;
+    text-shadow: 2px 2px 3px rgba(248, 105, 105, 0.9);
   }
 
   &--active.menu-item:hover {
-    box-shadow: 0px 3px 15px 0 rgba(234, 51, 51, 0.41);
+    box-shadow: 0 3px 15px rgba(234, 51, 51, 0.41);
   }
 }
 </style>
