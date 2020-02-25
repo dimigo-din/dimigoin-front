@@ -98,14 +98,18 @@ export default {
             </div>
 
             <nav>
-              <a
-                class="icon-setting profile-info__btn"
+              <dimi-icon
+                class="profile-info__btn"
+                icon="setting"
                 title="설정"
+                pointer
                 @click="openSetting"
               />
-              <a
-                class="icon-logout profile-info__btn"
+              <dimi-icon
+                class="profile-info__btn"
+                icon="logout"
                 title="로그아웃"
+                pointer
                 @click="logout"
               />
             </nav>
