@@ -94,8 +94,18 @@ export default {
   appearance: none;
   background-color: $gray-lighten;
   border-radius: 30px;
+  box-shadow:
+    inset 2px 2px 12px $shadow,
+    inset -5px -5px 8px $white;
   font-family: 'NanumSquareRound', sans-serif;
   font-size: inherit;
+  transition: all 0.2s ease-in-out;
+
+  &:focus {
+    box-shadow:
+      inset 1px 1px 16px $shadow,
+      inset -2px -2px 3px $white;
+  }
 
   &::placeholder {
     color: $gray;

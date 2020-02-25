@@ -53,11 +53,15 @@ export default {
   padding: 25px;
   background-color: $white;
   border-radius: 3.3rem;
-  box-shadow: -5px -5px 20px $white,
-    5px 5px 20px $shadow;
+  box-shadow:
+    5px 5px 20px #d9d9d9,
+    -10px -10px 14px #fff;
 
   &--hover:hover {
-    box-shadow: -2px -2px 5px $white, 2px 2px 5px $shadow;
+    z-index: 1;
+    box-shadow:
+      2px 16px 36px rgba(21, 19, 19, 0.15),
+      -5px -5px 10px #fff;
   }
 
   &--click:active {
