@@ -60,14 +60,20 @@ export default {
     width: 205px;
     padding: 0.7em 2em;
     background-color: $red;
+    box-shadow: 0 10px 24px 0 rgba(234, 51, 51, 0.61);
     cursor: pointer;
     text-align: center;
+    text-shadow: 2px 2px 3px rgba(248, 105, 105, 0.9);
     transition: all 0.2s ease-in-out;
     vertical-align: middle;
 
     @include until($tablet) {
       word-break: keep-all;
     }
+  }
+
+  &__button:hover {
+    box-shadow: 0 5px 12px 0 rgba(234, 51, 51, 0.41);
   }
 
   &__button:first-child {
