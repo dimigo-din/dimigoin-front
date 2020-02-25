@@ -45,6 +45,10 @@ export default {
       }
     },
 
+    computedRipple () {
+      return this.gray ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 0, 0, .2)'
+    },
+
     isActive () {
       return !this.loading && this.active
     }
@@ -60,7 +64,7 @@ export default {
 
 <template>
   <a
-    v-ripple="'rgba(255, 0, 0, .2)'"
+    v-ripple="computedRipple"
     :class="computedClass"
     :href="href"
     @click="click"
