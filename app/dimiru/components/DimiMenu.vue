@@ -18,7 +18,7 @@ export default {
 @import '../scss/vars';
 
 .menu {
-  padding: 0.75rem 0.75rem 0.75rem 0 !important;
+  padding: 1.5rem 0.75rem 1.5rem 0 !important;
   margin-bottom: 2rem;
 }
 </style>

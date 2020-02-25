@@ -64,7 +64,6 @@ export default {
       <div class="column">
         <section class="info__profile info-section">
           <dimi-card
-            shadow
             class="info__profile-card info-section__content"
           >
             <div class="profile-info__left">
@@ -115,7 +114,6 @@ export default {
         <section class="info__notification info-section">
           <dimi-card
             class="info__notice info-section__content"
-            shadow
           >
             <p class="info__notice--content">{{ notice }}</p>
           </dimi-card>
@@ -124,7 +122,6 @@ export default {
       <div class="column">
         <section class="info__meal info-section">
           <dimi-card
-            shadow
             class="info-section__content"
             @button="$router.push({ name: 'meal' })"
           >

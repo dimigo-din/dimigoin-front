@@ -27,8 +27,10 @@ export default {
 
 .menu-item {
   display: block;
-  padding: 0.6em 0 0.6em 1.5em;
-  border-radius: 0 4em 4em 0;
+  width: fit-content;
+  padding: 0.6em;
+  margin-left: 0.6em;
+  border-radius: 4em;
   color: $gray-light;
   font-size: 16px;
   font-weight: $font-weight-bold;

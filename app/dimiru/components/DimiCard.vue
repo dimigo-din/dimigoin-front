@@ -6,16 +6,13 @@ export default {
   components: { DimiDivider },
 
   props: {
-    hover: { type: Boolean, default: false },
-    shadow: { type: Boolean, default: false }
+    hover: { type: Boolean, default: false }
   },
   computed: {
     computedClass () {
       return {
         'c-card': true,
-        'c-card--shadow': this.shadow,
         'c-card--hover': this.hover,
-        'c-card--border': !this.shadow,
         'c-card--button': !!this.$slots.button
       }
     }
@@ -51,17 +48,11 @@ export default {
 <style lang="scss">
 .c-card {
   position: relative;
-  padding: 1.5rem;
+  padding: 25px;
   background-color: $white;
-  border-radius: 15px;
-
-  &--shadow {
-    box-shadow: 15px 19px 32px -18px rgba(21, 19, 19, 0.07);
-  }
-
-  &--border {
-    border: solid 1px $gray-lighten;
-  }
+  border-radius: 3.3rem;
+  box-shadow:  20px 20px 60px #d9d9d9,
+    -20px -20px 60px #fff;
 
   &--hover {
     transition: 0.5s box-shadow ease;
@@ -75,11 +66,11 @@ export default {
   &--button {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding-bottom: 0;
   }
 
   &__content {
-    padding: 1.25rem;
+    padding: 0.5rem;
   }
 
   &__divider {

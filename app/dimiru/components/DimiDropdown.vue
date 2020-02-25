@@ -95,7 +95,6 @@ export default {
     <dimi-card
       ref="list"
       class="dropdown__list"
-      shadow
     >
       <template v-for="(item, index) in items">
         <p

@@ -33,6 +33,9 @@ export default {
   min-height: 8rem;
   align-items: center;
   background-color: $gray-lighter;
+  border-radius: 3.3em 3.3em 0 0;
+  box-shadow: 20px 20px 41px #c4c4c4,
+    -20px -20px 41px $white;
 
   @include until($tablet) {
     min-height: 12rem;
@@ -75,7 +78,8 @@ export default {
   }
 
   &__mail > *,
-  &__facebook > * {
+  &__facebook > *,
+  &__copyright > * {
     color: $gray;
     text-decoration: none;
   }

@@ -195,7 +195,7 @@ export default {
 
 <style lang="scss" scoped>
 .r-info {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 
   &__badge {
     display: inline-block;

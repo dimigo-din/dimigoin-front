@@ -79,7 +79,6 @@ export default {
         ref="cards"
         :key="`service-${index}`"
         :class="['services__card', !service.url && 'services__card--disabled']"
-        shadow
         hover
         @click.native="clickServiceCard(service)"
       >
