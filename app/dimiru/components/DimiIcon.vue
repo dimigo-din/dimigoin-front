@@ -18,7 +18,7 @@ export default {
   computed: {
     computedStyle () {
       return {
-        'cursor': this.pointer
+        cursor: this.pointer
           ? 'pointer' : 'default'
       }
     }
