@@ -36,6 +36,11 @@ export default {
   font-weight: $font-weight-bold;
   text-decoration: none;
 
+  &:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.41);
+    transition: all 0.3s ease 0s;
+  }
+
   &--active.menu-item {
     background-color: $red !important;
     box-shadow: 0 5px 15px rgba(234, 51, 51, 0.41);
