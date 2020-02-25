@@ -46,7 +46,7 @@ export default {
     },
 
     computedRipple () {
-      return this.gray ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 0, 0, .2)'
+      return this.gray ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 0, 0, 0.2)'
     },
 
     isActive () {
