@@ -100,7 +100,13 @@ export default {
 
   &--gray {
     background-color: $gray-lighten;
+    text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.35);
+    box-shadow: 0 10px 24px 0 rgba(50, 50, 50, 0.11);
     color: $gray-dark;
+  }
+
+  &--gray:hover {
+    box-shadow: 0 5px 12px 0 rgba(234, 234, 234, 0.41);
   }
 
   &--text {
