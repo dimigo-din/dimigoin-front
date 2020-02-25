@@ -6,7 +6,7 @@ export default {
   components: { DimiDivider },
 
   props: {
-    hover: { type: Boolean, default: false },
+    hover: { type: Boolean, default: false }
   },
   computed: {
     computedClass () {
