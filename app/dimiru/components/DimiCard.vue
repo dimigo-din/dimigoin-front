@@ -61,7 +61,9 @@ export default {
 
   &--hover:hover {
     z-index: 1;
-    box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
+    box-shadow:
+      2px 16px 36px rgba(21, 19, 19, 0.15),
+      -5px -5px 10px #fff;
   }
 
   &--button {
