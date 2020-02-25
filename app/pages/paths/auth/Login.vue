@@ -47,10 +47,7 @@ export default {
 
 <template>
   <div class="container container--naive">
-    <dimi-card
-      class="c-login"
-      shadow
-    >
+    <dimi-card class="c-login">
       <div class="section">
         <h2 class="section__title">
           로그인

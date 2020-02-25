@@ -24,10 +24,7 @@ export default {
         <h3 class="register__subtitle"><slot name="title" /></h3>
       </div>
       <div class="col-xs">
-        <dimi-card
-          class="register__form"
-          shadow
-        >
+        <dimi-card class="register__form">
           <slot name="form" />
         </dimi-card>
       </div>
