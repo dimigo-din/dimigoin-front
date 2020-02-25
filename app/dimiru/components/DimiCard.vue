@@ -6,13 +6,15 @@ export default {
   components: { DimiDivider },
 
   props: {
-    hover: { type: Boolean, default: false }
+    hover: { type: Boolean, default: false },
+    clickable: { type: Boolean, defualt: false }
   },
   computed: {
     computedClass () {
       return {
         'c-card': true,
         'c-card--hover': this.hover,
+        'c-card--click': this.clickable,
         'c-card--button': !!this.$slots.button
       }
     }
@@ -54,13 +56,12 @@ export default {
   box-shadow:  20px 20px 60px #d9d9d9,
     -20px -20px 60px #fff;
 
-  &--hover {
-    transition: 0.5s box-shadow ease;
+  &--hover:hover {
+    box-shadow: -2px -2px 5px $white, 2px 2px 5px $shadow;
   }
 
-  &--hover:hover {
-    z-index: 1;
-    box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
+  &--click:active {
+    box-shadow: inset 1px 1px 2px $shadow, inset -1px -1px 2px $white;
   }
 
   &--button {

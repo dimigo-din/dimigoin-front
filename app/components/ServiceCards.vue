@@ -80,6 +80,7 @@ export default {
         :key="`service-${index}`"
         :class="['services__card', !service.url && 'services__card--disabled']"
         hover
+        clickable
         @click.native="clickServiceCard(service)"
       >
         <div class="services__card-icon">
@@ -122,10 +123,6 @@ export default {
     justify-content: center;
     cursor: pointer;
     transition: 0.2s;
-  }
-
-  &__card:hover {
-    transform: scale(1.05);
   }
 
   &__card--disable {
