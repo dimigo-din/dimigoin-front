@@ -29,6 +29,7 @@ export default {
         <dimi-icon
           class="logout-btn"
           icon="logout"
+          pointer
           title="로그아웃"
           @click="logout"
         />
