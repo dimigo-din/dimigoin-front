@@ -56,6 +56,7 @@ export default {
   box-shadow:
     5px 5px 20px #d9d9d9,
     -10px -10px 14px #fff;
+  transition: 0.3s;
 
   &--hover:hover {
     z-index: 1;
