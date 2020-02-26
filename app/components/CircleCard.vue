@@ -129,8 +129,9 @@ export default {
 <template>
   <div>
     <dimi-card
-      v-ripple="'rgba(0, 0, 0, 0.05)'"
       class="circle-card"
+      hover
+      clickable
       @click.native="opened = true"
     >
       <dimi-badge
