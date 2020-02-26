@@ -64,7 +64,6 @@ export default {
 
 <template>
   <a
-    v-ripple="computedRipple"
     :class="computedClass"
     :href="href"
     @click="click"
@@ -100,6 +99,10 @@ export default {
 
   &:hover {
     box-shadow: 0 5px 12px 0 rgba(234, 51, 51, 0.41);
+  }
+
+  &:active {
+    box-shadow: inset 1px 1px 2px $shadow, inset -1px -1px 2px $white;
   }
 
   &--gray {
