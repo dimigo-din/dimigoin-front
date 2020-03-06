@@ -228,8 +228,8 @@ export default {
   &__badge {
     display: inline-block;
     margin-right: 10px;
-    font-size: 14px;
     cursor: pointer;
+    font-size: 14px;
   }
 
   &__sport {
