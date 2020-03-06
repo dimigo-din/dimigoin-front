@@ -1,6 +1,5 @@
 # 인강실 신청 페이지
 
-![](../.gitbook/assets/image%20%287%29.png)
+![](../.gitbook/assets/image%20(7).png)
 
 학생들이 급식 조회 다음으로 많이 이용하는 인강실 신청 페이지입니다.
-

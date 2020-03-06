@@ -7,9 +7,12 @@ export default {
 <template>
   <footer>
     <dimi-footer>
-      <span slot="copyright">
-        © 2019 JNJ Communications
-      </span>
+      <a
+        slot="copyright"
+        href="https://jnjcomu.github.io/landing"
+      >
+        © 2020 JnJ Communications
+      </a>
       <a
         slot="mail"
         href="mailto:contact@dimigo.in"

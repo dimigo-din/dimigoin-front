@@ -26,8 +26,10 @@ export default {
       </router-link>
       <span slot="end">
         {{ $store.state.account.informations.name }}
-        <a
-          class="icon-logout logout-btn"
+        <dimi-icon
+          class="logout-btn"
+          icon="logout"
+          pointer
           title="로그아웃"
           @click="logout"
         />
@@ -42,6 +44,7 @@ export default {
 }
 
 .logout-btn {
+  margin-left: 0.5rem;
   cursor: pointer;
 }
 </style>

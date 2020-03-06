@@ -26,11 +26,17 @@
 * [인강실 신청 페이지](pages/ingang-page.md)
 * [Dets 신청 페이지](pages/dets-page.md)
 * [동아리 신청 페이지](pages/circle-page.md)
+* [멘토링 신청 페이지](pages/mentoring-page.md)
 * [과제 제출 페이지](pages/assignment-page.md)
 
 ## 기타
 
+* [환경변수 설정](etcs/env-setting.md)
 * [Google Analytics](etcs/google-analytics.md)
+* [Jennifer](etcs/jennifer.md)
 * [Sentry](etcs/sentry.md)
+* [Greenkeeper](etcs/greenkeeper.md)
+* [Codacy](etcs/codacy.md)
+* [Cloudflare](etcs/cloudflare.md)
+* [SSH 접속하기](etcs/ssh.md)
 * [개발자들](etcs/developers.md)
-

@@ -34,7 +34,6 @@ export default {
           ref="cards"
           :key="`manage-${index}`"
           class="main__card"
-          shadow
           hover
           @click.native="clickService(item)"
         >

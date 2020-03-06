@@ -64,7 +64,6 @@ export default {
       <div class="column">
         <section class="info__profile info-section">
           <dimi-card
-            shadow
             class="info__profile-card info-section__content"
           >
             <div class="profile-info__left">
@@ -78,7 +77,7 @@ export default {
                 class="profile-info__default-photo icon-profile"
               />
 
-              <span class="profile-info">
+              <div class="profile-info">
                 <template v-if="userType === 'T'">
                   <span class="profile-info__name">
                     {{ name }}
@@ -95,18 +94,22 @@ export default {
                     {{ name }}
                   </span>
                 </template>
-              </span>
+              </div>
             </div>
 
             <nav>
-              <a
-                class="icon-setting profile-info__btn"
+              <dimi-icon
+                class="profile-info__btn"
+                icon="setting"
                 title="설정"
+                pointer
                 @click="openSetting"
               />
-              <a
-                class="icon-logout profile-info__btn"
+              <dimi-icon
+                class="profile-info__btn"
+                icon="logout"
                 title="로그아웃"
+                pointer
                 @click="logout"
               />
             </nav>
@@ -115,7 +118,6 @@ export default {
         <section class="info__notification info-section">
           <dimi-card
             class="info__notice info-section__content"
-            shadow
           >
             <p class="info__notice--content">{{ notice }}</p>
           </dimi-card>
@@ -124,7 +126,6 @@ export default {
       <div class="column">
         <section class="info__meal info-section">
           <dimi-card
-            shadow
             class="info-section__content"
             @button="$router.push({ name: 'meal' })"
           >
@@ -242,10 +243,13 @@ export default {
 }
 
 .profile-info {
+  display: flex;
+  flex-wrap: wrap;
   font-size: 20px;
 
   &__left {
     display: flex;
+    flex: 1;
     align-items: center;
   }
 
@@ -269,6 +273,7 @@ export default {
   }
 
   &__serial {
+    margin-right: 5px;
     color: $gray;
   }
 

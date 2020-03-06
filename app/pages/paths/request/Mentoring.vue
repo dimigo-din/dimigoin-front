@@ -72,7 +72,7 @@ export default {
         class="mentoring__notice"
         @click="modal = true"
       >
-        <span class="icon-notice" />멘토링 공지
+        <span class="icon-notice" />멘토링 주의사항
       </span>
     </h1>
 
@@ -88,13 +88,6 @@ export default {
       </div>
 
       <template v-else>
-        <h2 class="mentoring__notice-title">
-          주의사항
-        </h2>
-        <div class="mentoring__notice-article">
-          매주 월요일 08시 30분부터 멘토링 신청이 가능합니다. <br>
-          자신의 학년 담당 선생님에게만 멘토링 신청이 가능하며, 일주일에 2회 이상은 신청하실 수 없습니다.
-        </div>
         <div
           v-if="!list.length"
           class="mentoring__empty"
@@ -162,7 +155,7 @@ export default {
         @close="modal = false"
       >
         <h3 class="modal__title">
-          멘토링 공지
+          멘토링 주의사항
           <span class="modal__date">
             {{ notice.date | filterDate }}
           </span>

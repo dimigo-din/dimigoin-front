@@ -27,16 +27,29 @@ export default {
 
 .menu-item {
   display: block;
-  padding: 0.6em 0 0.6em 1.5em;
-  border-radius: 0 4em 4em 0;
+  width: fit-content;
+  padding: 0.6em;
+  margin-left: 0.6em;
+  border-radius: 4em;
   color: $gray-light;
   font-size: 16px;
   font-weight: $font-weight-bold;
   text-decoration: none;
 
+  &:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.41);
+    transition: all 0.3s ease 0s;
+  }
+
   &--active.menu-item {
     background-color: $red !important;
+    box-shadow: 0 5px 15px rgba(234, 51, 51, 0.41);
     color: $white;
+    text-shadow: 2px 2px 3px rgba(248, 105, 105, 0.9);
+  }
+
+  &--active.menu-item:hover {
+    box-shadow: 0 3px 15px rgba(234, 51, 51, 0.41);
   }
 }
 </style>

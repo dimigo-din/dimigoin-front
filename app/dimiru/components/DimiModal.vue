@@ -60,7 +60,7 @@ export default {
   border: solid 1px $gray-lighten;
   margin: 5vh auto;
   background-color: $white;
-  border-radius: 6px;
+  border-radius: 3.3em;
   box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
 
   &__overlay {

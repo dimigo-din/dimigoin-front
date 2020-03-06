@@ -7,15 +7,14 @@ export default {
 
   props: {
     hover: { type: Boolean, default: false },
-    shadow: { type: Boolean, default: false }
+    clickable: { type: Boolean, defualt: false }
   },
   computed: {
     computedClass () {
       return {
         'c-card': true,
-        'c-card--shadow': this.shadow,
         'c-card--hover': this.hover,
-        'c-card--border': !this.shadow,
+        'c-card--click': this.clickable,
         'c-card--button': !!this.$slots.button
       }
     }
@@ -51,35 +50,32 @@ export default {
 <style lang="scss">
 .c-card {
   position: relative;
-  padding: 1.5rem;
+  padding: 25px;
   background-color: $white;
-  border-radius: 15px;
-
-  &--shadow {
-    box-shadow: 15px 19px 32px -18px rgba(21, 19, 19, 0.07);
-  }
-
-  &--border {
-    border: solid 1px $gray-lighten;
-  }
-
-  &--hover {
-    transition: 0.5s box-shadow ease;
-  }
+  border-radius: 3.3rem;
+  box-shadow:
+    5px 5px 20px #d9d9d9,
+    -10px -10px 14px #fff;
 
   &--hover:hover {
     z-index: 1;
-    box-shadow: 0 16px 36px 0 rgba(21, 19, 19, 0.15);
+    box-shadow:
+      2px 16px 36px rgba(21, 19, 19, 0.15),
+      -5px -5px 10px #fff;
+  }
+
+  &--click:active {
+    box-shadow: inset 1px 1px 2px $shadow, inset -1px -1px 2px $white;
   }
 
   &--button {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding-bottom: 0;
   }
 
   &__content {
-    padding: 1.25rem;
+    padding: 0.5rem;
   }
 
   &__divider {

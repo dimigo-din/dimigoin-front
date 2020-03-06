@@ -6,7 +6,4 @@
 
 ### magician\(action, handler\)
 
-magician은 axios의 예외 처리를 처리하도록 설계되었습니다.
-
-
-
+magician은 axios의 예외 처리를 처리하도록 설계되었습니다. 모듈 전문은 [여기](https://github.com/dimigoin/dimigoin-front/blob/master/app/src/api/magician.js)에서 볼 수 있습니다.
