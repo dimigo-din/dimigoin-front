@@ -24,7 +24,7 @@ export const SportTeam = sport => ({
   win: sport['win'],
   defeat: sport['defeat'],
   totalScore: sport['total_score'],
-  totalScoreDate: timestamp.toDate(sport['total_score_date']),
+  totalScoreDate: sport['total_score_date'],
   members: sport['members']
 })
 

@@ -17,7 +17,7 @@ export default {
     form: {},
     events: [],
     teams: [],
-    matchs: []
+    matches: []
   }),
 
   async created () {
@@ -72,7 +72,7 @@ export default {
       this.sports = await sportPublicService.getAllSports()
       this.events = await sportPublicService.getAllSportEvent()
       this.teams = await sportPublicService.getAllSportTeam()
-      this.matchs = await sportPublicService.getAllSportMatch()
+      this.matches = await sportPublicService.getAllSportMatch()
 
       this.loading = false
     }
@@ -85,7 +85,7 @@ export default {
     <sport-base
       :loading="loading"
       :sports="sports"
-      :matchs="matchs"
+      :matches="matches"
       :management="true"
     >
       <span slot="header">

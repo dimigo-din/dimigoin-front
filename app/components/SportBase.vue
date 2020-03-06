@@ -10,7 +10,7 @@ export default {
       type: Array,
       default: () => []
     },
-    matchs: {
+    matches: {
       type: Array,
       default: () => []
     },
@@ -42,11 +42,12 @@ export default {
       this.modals.teamInfo = false
     },
     getMemberInfo (member) {
-      return `${member.user.serial} ${member.user.name}
+      console.log(member)
+      return `${member.user.name}
         (${member.total_assist}도움 ${member.total_score}득점)`
     },
-    getMatchsByTeam (idx) {
-      return this.matchs.filter(v => v.team1.idx === idx ||
+    getmatchesByTeam (idx) {
+      return this.matches.filter(v => v.team1.idx === idx ||
         v.team2.idx === idx)
     },
     getMatchInfo (match, team) {
@@ -196,7 +197,7 @@ export default {
                     경기 목록
                   </label>
                   <dimi-badge
-                    v-for="(match, index) in getMatchsByTeam(form.idx)"
+                    v-for="(match, index) in getmatchesByTeam(form.idx)"
                     :key="`badge-${index}`"
                     class="sport__badge"
                     :color="computedColor(match, form)"
