@@ -229,6 +229,7 @@ export default {
     display: inline-block;
     margin-right: 10px;
     font-size: 14px;
+    cursor: pointer;
   }
 
   &__sport {
