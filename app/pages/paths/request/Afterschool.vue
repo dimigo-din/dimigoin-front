@@ -2,7 +2,7 @@
 import { format, distanceInWordsToNow } from 'date-fns'
 import koLocale from 'date-fns/locale/ko'
 import { afterschool } from '@/src/api/afterschool'
-import days from '@/src/util/days'
+import { daysWithSun as days } from '@/src/util/days'
 
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import VueRecaptcha from 'vue-recaptcha'
