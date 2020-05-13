@@ -9,7 +9,7 @@ const days = [
 
 export default days
 
-export const daysWithSun = [
+export const daysWithNight = [
   ...days,
-  { idx: 6, code: 'sun', text: '일요일', smallText: '일' }
+  { idx: 6, code: 'night', text: '야자 시간', smallText: '야자' }
 ]
