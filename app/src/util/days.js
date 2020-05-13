@@ -11,5 +11,5 @@ export default days
 
 export const daysWithNight = [
   ...days,
-  { idx: 6, code: 'night', text: '야자 시간', smallText: '야자' }
+  { idx: 6, code: 'sun', text: '야자 시간', smallText: '야자' }
 ]
