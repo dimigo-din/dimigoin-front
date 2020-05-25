@@ -37,7 +37,7 @@ export default {
   text-decoration: none;
 
   &:hover {
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.41);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 3px 8px;
     transition: all 0.3s ease 0s;
   }
 
