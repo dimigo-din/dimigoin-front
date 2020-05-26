@@ -2,6 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { detsManager } from '@/src/api/dets'
 import days from '@/src/util/days'
+import { getPosterURL, uploadPosterURL } from '@/src/util/imageUpload'
 
 export default {
   name: 'ManageDets',
@@ -83,7 +84,12 @@ export default {
     },
 
     async editDets () {
+      if (!this.formPosterURL) {
+        this.$swal('이런!', '포스터 이미지 URL을 입력하세요.', 'error')
+        return
+      }
       try {
+        await uploadPosterURL(this.form.title, this.formPosterURL)
         await detsManager.updateDets(this.currentDets.idx, this.detsInput)
         await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
@@ -94,7 +100,12 @@ export default {
     },
 
     async createDets () {
+      if (!this.formPosterURL) {
+        this.$swal('이런!', '포스터 이미지 URL을 입력하세요.', 'error')
+        return
+      }
       try {
+        await uploadPosterURL(this.form.title, this.formPosterURL)
         await detsManager.createDets(this.detsInput)
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
@@ -112,7 +123,7 @@ export default {
       }
     },
 
-    openEditModal (dets) {
+    async openEditModal (dets) {
       this.modals.edit = true
       this.currentDets = dets
       this.form = {
@@ -126,6 +137,7 @@ export default {
         targetGrade: dets.targetGrade,
         endDate: new Date(dets.endDate)
       }
+      this.formPosterURL = await getPosterURL(dets.title)
     },
 
     closeModal () {
