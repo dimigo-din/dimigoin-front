@@ -108,9 +108,10 @@ export default {
             v-if="dets.open"
             class="dets__open"
           >
-            <span class="dets__item dets__description">
-              {{ dets.description }}
-            </span>
+            <span
+              class="dets__item dets__description"
+              v-html="dets.description"
+            />
             <div
               class="dets__down"
             >
