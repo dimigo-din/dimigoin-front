@@ -51,7 +51,7 @@ export default {
 
     async openPoster (dets) {
       const { title } = dets
-      const { url } = getPosterURL(title)
+      const url = await getPosterURL(title)
       const win = window.open(url, '_blank')
       win.focus()
     },
