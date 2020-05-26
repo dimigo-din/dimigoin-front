@@ -2,6 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { detsManager } from '@/src/api/dets'
 import days from '@/src/util/days'
+import { getPosterURL, uploadPosterURL } from '@/src/util/imageUpload'
 
 export default {
   name: 'ManageDets',
@@ -31,7 +32,8 @@ export default {
         maxCount: null,
         targetGrade: null,
         endDate: new Date()
-      }
+      },
+      formPosterURL: ''
     }
   },
 
@@ -53,6 +55,16 @@ export default {
         maxCount: this.form.maxCount,
         targetGrade: this.form.targetGrade
       }
+    },
+
+    posterHelperMessage () {
+      if (!this.formPosterURL) {
+        return '☁️ 포스터 이미지를 SNS나 클라우드 등에 업로드한 뒤 URL 주소를 복사해서 넣어주세요.'
+      }
+      if (!this.formPosterURL.startsWith('http')) {
+        return '🚫 올바른 형식의 URL이 아닙니다.'
+      }
+      return '🙏 좋아요! 포스터 이미지의 URL이 맞는지 한번 확인해주세요.'
     }
   },
 
@@ -72,7 +84,12 @@ export default {
     },
 
     async editDets () {
+      if (!this.formPosterURL) {
+        this.$swal('이런!', '포스터 이미지 URL을 입력하세요.', 'error')
+        return
+      }
       try {
+        await uploadPosterURL(this.form.title, this.formPosterURL)
         await detsManager.updateDets(this.currentDets.idx, this.detsInput)
         await this.$swal('수정되었습니다', '', 'success')
         this.closeModal()
@@ -83,7 +100,12 @@ export default {
     },
 
     async createDets () {
+      if (!this.formPosterURL) {
+        this.$swal('이런!', '포스터 이미지 URL을 입력하세요.', 'error')
+        return
+      }
       try {
+        await uploadPosterURL(this.form.title, this.formPosterURL)
         await detsManager.createDets(this.detsInput)
         await this.$swal('추가되었습니다', '', 'success')
         this.closeModal()
@@ -101,7 +123,7 @@ export default {
       }
     },
 
-    openEditModal (dets) {
+    async openEditModal (dets) {
       this.modals.edit = true
       this.currentDets = dets
       this.form = {
@@ -115,6 +137,7 @@ export default {
         targetGrade: dets.targetGrade,
         endDate: new Date(dets.endDate)
       }
+      this.formPosterURL = await getPosterURL(dets.title)
     },
 
     closeModal () {
@@ -367,7 +390,22 @@ export default {
           <dimi-date-input v-model="form.endDate" />
         </div>
 
-        <div class="modal__field">
+        <div class="modal__poster-input-column">
+          <div class="modal__field">
+            <label class="modal__label">
+              포스터 URL
+            </label>
+            <dimi-input
+              v-model="formPosterURL"
+              placeholder="https://..."
+            />
+          </div>
+          <p class="modal__poster-input-help">
+            {{ posterHelperMessage }}
+          </p>
+        </div>
+
+        <div class="modal__button-wrapper">
           <div class="modal__button">
             <template
               v-if="modals.create"
@@ -517,10 +555,30 @@ export default {
     padding-right: 10px;
   }
 
+  &__poster-input-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__poster-input-column div {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  &__poster-input-help {
+    color: $gray-dark;
+    font-size: 95%;
+    font-weight: $font-weight-bold;
+  }
+
+  &__button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   &__button {
-    position: absolute;
-    right: 25px;
-    padding-top: 20px;
+    padding-top: 15px;
   }
 }
 </style>

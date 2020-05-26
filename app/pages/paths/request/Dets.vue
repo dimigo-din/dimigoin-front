@@ -2,6 +2,7 @@
 import ContentWrapper from '@/components/ContentWrapper.vue'
 import { detsRequestor } from '@/src/api/dets'
 import days from '@/src/util/days'
+import { getPosterURL } from '@/src/util/imageUpload'
 
 export default {
   name: 'RequestDets',
@@ -46,6 +47,13 @@ export default {
         this.$swal('이런!', err.message, 'error')
       }
       await this.refresh()
+    },
+
+    async openPoster (dets) {
+      const { title } = dets
+      const { url } = getPosterURL(title)
+      const win = window.open(url, '_blank')
+      win.focus()
     },
 
     getDayTextByCode (code) {
@@ -127,6 +135,12 @@ export default {
                 <span class="dets__item">
                   {{ dets.count }} / {{ dets.maxCount }} 명
                 </span>
+              </div>
+              <div
+                class="dets__poster"
+                @click="openPoster(dets)"
+              >
+                <span class="icon-dets-sm" /> 포스터 확인하기
               </div>
               <div
                 :class="{
@@ -220,6 +234,14 @@ export default {
 
   &__detail {
     flex: 1;
+  }
+
+  &__poster {
+    margin-right: 0.8em;
+    color: #00b4a1;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
   }
 
   &__item--button {
