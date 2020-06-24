@@ -1,5 +1,6 @@
 <script>
 import './scss/theme.scss'
+import 'sweetalert2/dist/sweetalert2.min.css';
 import AwesomeFooter from './components/AwesomeFooter.vue'
 import { mapActions, mapGetters } from '@/store/modules/account/helpers'
 
