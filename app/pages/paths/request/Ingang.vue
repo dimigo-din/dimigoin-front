@@ -82,23 +82,23 @@ export default {
       <span class="icon-internet-class" />인강실 사용 신청
       <div>
         <span
-        class="ingang__helper ingang__helper--link"
-        @click="modal.notice = true"
-      >
-        <span class="icon-notice" />공지사항
-      </span>
-      <span
-        class="ingang__helper ingang__helper--link"
-        @click="modal.applier = true"
-      >
-        <span class="icon-search" />우리반 신청자
-      </span>
-      <span class="ingang__helper">
-        <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
-        <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.dailyTicketNum - status.dailyRequestCount }}회
-      </span>
+          class="ingang__helper ingang__helper--link"
+          @click="modal.notice = true"
+        >
+          <span class="icon-notice" />공지사항
+        </span>
+        <span
+          class="ingang__helper ingang__helper--link"
+          @click="modal.applier = true"
+        >
+          <span class="icon-search" />우리반 신청자
+        </span>
+        <span class="ingang__helper">
+          <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
+          <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.dailyTicketNum - status.dailyRequestCount }}회
+        </span>
       </div>
-      <div style="clear: both;"></div>
+      <div style="clear: both;" />
     </h1>
 
     <div
