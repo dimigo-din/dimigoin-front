@@ -80,7 +80,8 @@ export default {
   <content-wrapper>
     <h1 slot="header">
       <span class="icon-internet-class" />인강실 사용 신청
-      <span
+      <div>
+        <span
         class="ingang__helper ingang__helper--link"
         @click="modal.notice = true"
       >
@@ -96,6 +97,8 @@ export default {
         <span class="ingang__ticket" />이번 주 신청 가능 횟수 : {{ status.weeklyTicketNum - status.weeklyRequestCount }}회 /
         <span class="ingang__ticket" />오늘 신청 가능 횟수 : {{ status.dailyTicketNum - status.dailyRequestCount }}회
       </span>
+      </div>
+      <div style="clear: both;"></div>
     </h1>
 
     <div
