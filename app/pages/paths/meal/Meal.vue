@@ -26,7 +26,11 @@ export default {
     today: () => new Date().getDay(),
     month: () => 1 + new Date().getMonth(),
     week () {
-      return 1 + getISOWeek(this.currentDate) - getISOWeek(startOfMonth(this.currentDate))
+      const todayWeak = getISOWeek(this.currentDate)
+      const thisMonthWeak = getISOWeek(startOfMonth(this.currentDate))
+      console.log(todayWeak, thisMonthWeak)
+      if (todayWeak < thisMonthWeak) { return 1 }
+      return 1 + todayWeak - thisMonthWeak
     },
     currentMeals () { return this.list[this.currentDay] }
   },
