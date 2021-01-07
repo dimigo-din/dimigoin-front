@@ -81,7 +81,7 @@ export default {
       }
       if (team.score < opponent.score) return 'orange'
       else if (team.score > opponent.score) return 'cyan'
-      else return 'gray'
+      return 'gray'
     }
   }
 }
