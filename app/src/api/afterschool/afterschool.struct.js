@@ -1,6 +1,6 @@
 import timestamp from 'unix-timestamp'
 
-import days from '@/src/util/days'
+import { daysWithNight as days } from '@/src/util/days'
 
 export const Afterschool = afterschool => ({
   idx: afterschool['idx'],

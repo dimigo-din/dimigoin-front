@@ -1,7 +1,7 @@
 <script>
 import ContentWrapper from '@/components/ContentWrapper.vue'
 
-import days from '@/src/util/days'
+import { daysWithNight as days } from '@/src/util/days'
 import { format } from 'date-fns'
 import { afterschool } from '@/src/api/afterschool'
 

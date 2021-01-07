@@ -18,6 +18,7 @@
     "parser": "babel-eslint"
   },
   "rules": {
-    "vue/singleline-html-element-content-newline": "off"
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/no-v-html": "off"
   }
 }
