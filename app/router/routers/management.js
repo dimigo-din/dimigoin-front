@@ -12,6 +12,7 @@ const ManageCircle = () => import('@/pages/paths/management/ManageCircle.vue')
 const ManageDets = () => import('@/pages/paths/management/ManageDets.vue')
 const ManageBook = () => import('@/pages/paths/management/ManageBook.vue')
 const ManageFreshman = () => import('@/pages/paths/management/ManageFreshman.vue')
+const ManageSport = () => import('@/pages/paths/management/ManageSport.vue')
 const ManageEtc = () => import('@/pages/paths/management/ManageEtc.vue')
 
 export default [
@@ -106,6 +107,14 @@ export default [
           component: ManageFreshman,
           meta: {
             title: '디미고인 > 신입생 공지 관리'
+          }
+        },
+        {
+          path: 'sport',
+          name: 'management/sport',
+          component: ManageSport,
+          meta: {
+            title: '디미고인 > 디미리그 관리'
           }
         },
         {
